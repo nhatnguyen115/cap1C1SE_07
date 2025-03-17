@@ -12,12 +12,11 @@ import lombok.Setter;
 @Table(name = "user_login_external")
 @PrimaryKeyJoinColumn(name = "user_id")
 public class UserLoginExternal extends UserAccount {
-    @NotNull
-    @Column(name = "provider_id", nullable = false)
-    private Integer providerId;
-
     @Size(max = 255)
     @Column(name = "external_token")
     private String externalToken;
 
+    @ManyToOne
+    @JoinColumn(name = "provider_id", nullable = false)
+    private ExternalProvider provider;
 }

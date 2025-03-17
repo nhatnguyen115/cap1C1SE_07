@@ -39,7 +39,10 @@ public class UserAccount extends AbstractEntity<UUID> {
     @Column(name = "dob")
     private Date dob;
 
-    @Column(name = "role_id")
-    private Integer roleId;
+    @Column(name = "active")
+    private boolean active;
 
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 }

@@ -15,7 +15,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/toeic_z9tkvtu
       SPRING_DATASOURCE_USERNAME: root

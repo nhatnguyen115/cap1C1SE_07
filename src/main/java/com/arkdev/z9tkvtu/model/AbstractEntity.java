@@ -22,6 +22,7 @@ public abstract class AbstractEntity<T> implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false, updatable = false)
+    @GeneratedValue
     T id;
 
     @CreationTimestamp

@@ -4,10 +4,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -27,10 +29,6 @@ public class UserLoginData extends UserAccount implements UserDetails {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @Size(max = 255)
-    @Column(name = "password_salt")
-    private String passwordSalt;
-
     @Size(max = 20)
     @Column(name = "email", length = 20)
     private String email;
@@ -41,7 +39,11 @@ public class UserLoginData extends UserAccount implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return super.getRole().getPermissions()
+                .stream()
+                .map(permission ->
+                        new SimpleGrantedAuthority("PERMISSION_" + permission.getPermissionName().toUpperCase()))
+                .toList();
     }
 
     @Override
