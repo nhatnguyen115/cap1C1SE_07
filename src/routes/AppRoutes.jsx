@@ -13,6 +13,8 @@ import { MockTest } from "../pages/MockTest/MockTest";
 import { Test } from "../pages/MockTest/Test";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
+import Leaderboard from "../pages/Leaderboard/Leaderboard";
+import Result from "../pages/MockTest/Result";
  // Giả lập trạng thái Auth
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
@@ -88,6 +90,23 @@ const routes = [
       </MainLayout>
     ),
   },
+  {
+    path: "/leaderboard",
+    element: (
+      <MainLayout>
+        <Leaderboard />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/result/:id",
+    element: (
+      <MainLayout>
+        <Result totalQuestions={100} correctAnswers={90} wrongAnswers={10} skippedQuestions={0} score={90}/>
+      </MainLayout>
+    ),
+  },
+
 ];
 
 const AppRoutes = () => {
