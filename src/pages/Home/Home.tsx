@@ -12,7 +12,7 @@ export interface Exam {
   level: "Beginner" | "Intermediate" | "Advanced";
 }
 
-const Home= ({ setIsOpen }) => {
+const Home = ({ setIsOpen }) => {
   const examData = [toeicTest];
   return (
     <div className="w-full">
@@ -28,9 +28,11 @@ const Home= ({ setIsOpen }) => {
               Học và luyện thi TOEIC với hệ thống bài tập thông minh, bài thi mô
               phỏng thực tế và chatbot AI hỗ trợ 24/7.
             </p>
-            <button className="bg-yellow-400 text-gray-900 font-semibold px-6 py-3 rounded-lg hover:bg-yellow-500 transition">
-              Bắt đầu ngay
-            </button>
+            <Link to={"/register"}>
+              <button className="bg-yellow-400 text-gray-900 font-semibold px-6 py-3 rounded-lg hover:bg-yellow-500 transition">
+                Bắt đầu ngay
+              </button>
+            </Link>
           </div>
 
           {/* Right Section (Illustration) */}
@@ -169,7 +171,10 @@ const Home= ({ setIsOpen }) => {
               Cần lời khuyên về cách làm bài TOEIC? Bạn có câu hỏi về ngữ pháp,
               từ vựng hay mẹo làm bài? Chatbot AI có thể giúp bạn ngay lập tức!
             </p>
-            <button onClick={()=>setIsOpen(true)} className="mt-6 px-8 py-2 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 focus:outline-none">
+            <button
+              onClick={() => setIsOpen(true)}
+              className="mt-6 px-8 py-2 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 focus:outline-none"
+            >
               Trò chuyện ngay
             </button>
           </div>
