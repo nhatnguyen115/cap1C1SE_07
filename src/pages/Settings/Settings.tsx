@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Thêm Link từ react-router-dom
-import LeftSidebar from "../../components/LeftSidebar";
+import LeftSidebarUser from "../../components/LeftSideBarUser";
 
 const Settings: React.FC = () => {
 	return (
 		<div className="min-h-screen flex">
 			{/* Left Sidebar */}
-			<LeftSidebar customHeight="h-auto w-64" />
+			<LeftSidebarUser customHeight="h-auto w-64" />
 			{/* Form Cài đặt */}
 			<div className="flex-1 bg-gray-50 flex justify-center pt-5 pb-96">
 				<div className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">

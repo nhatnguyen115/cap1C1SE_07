@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Sử dụng react-icons cho biểu tượng mắt (hiển thị/ẩn mật khẩu)
-import LeftSidebar from "../../../components/LeftSidebar";
+import LeftSidebarUser from "../../../components/LeftSideBarUser";
 import { Link } from "react-router-dom";
 const EditSettings: React.FC = () => {
 	// State để quản lý hiển thị/ẩn mật khẩu
@@ -10,7 +10,7 @@ const EditSettings: React.FC = () => {
 	return (
 		<div className="min-h-screen flex">
 			{/* Left Sidebar */}
-			<LeftSidebar customHeight="h-auto w-64" />
+			<LeftSidebarUser customHeight="h-auto w-64" />
 			{/* Form Cài đặt */}
 			<div className="flex-1 bg-gray-50 flex items-center justify-center">
 				<div className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">
