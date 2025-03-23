@@ -44,7 +44,7 @@ const Header: React.FC = () => {
 
       {/* Login Button */}
       <div className="flex items-center space-x-4">
-        <Link to={"/login"}>
+        <Link to={"/settings"}>
           <CiUser size={20} />
         </Link>
 

@@ -21,6 +21,8 @@ import Payment from "../pages/Payment/Payment";
 import PaymentForm from "../pages/Payment/PaymentForm/PaymentForm"; // Giả lập trạng thái Auth
 import Resource from "../pages/Resource/Resource";
 import History from "../pages/History/History";
+import { Practice } from "../pages/Practice/Practice";
+import ResourceDetail from "../pages/Resource/ResourceDetail";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -91,10 +93,19 @@ const routes = [
 		path: "/mock-test/:id",
 		element: (
 			<MainLayout>
-				<Test />
+				<Test isView={false}/>
 			</MainLayout>
 		),
 	},
+  {
+		path: "/mock-test/view/:id",
+		element: (
+			<MainLayout>
+				<Test isView={true} />
+			</MainLayout>
+		),
+	},
+
   {
     path: "/leaderboard",
     element: (
@@ -152,6 +163,14 @@ const routes = [
 			</MainLayout>
 		),
 	},
+  {
+		path: "/resource/:id",
+		element: (
+			<MainLayout>
+				<ResourceDetail />
+			</MainLayout>
+		),
+	},
 	{
 		path: "/history",
 		element: (
@@ -160,6 +179,15 @@ const routes = [
 			</MainLayout>
 		),
 	},
+  {
+		path: "/practice",
+		element: (
+			<MainLayout>
+				<Practice />
+			</MainLayout>
+		),
+	},
+
 ];
 
 const AppRoutes = () => {

@@ -2,7 +2,7 @@ import React from "react";
 import ExamCard from "../Home/component/ExamCard";
 import { toeicTest } from "../../data/toeicMockData";
 
-export const MockTest = () => {
+export const Practice = () => {
   const examData = [toeicTest];
   return (
     <div>

@@ -3,9 +3,13 @@ import { toeicTest } from "../../data/toeicMockData";
 import Navigation from "./component/Navigation";
 import { useNavigate } from "react-router-dom";
 import IcBreadcrumbGbk from "../../assets/icons/IcBreadcrumbGbk";
-
-export const Test = () => {
+interface TestProps {
+  isView: boolean;
+}
+export const Test: React.FC<TestProps> = ({ isView = false }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  if (isView) console.log("viewing");
+
   const [answers, setAnswers] = useState(
     new Array(toeicTest.questions).fill(null)
   );
@@ -282,7 +286,7 @@ export const Test = () => {
             onClick={handleGoBack}
           >
             <IcBreadcrumbGbk />
-            <span>{'Return'}</span>
+            <span>{"Return"}</span>
           </div>
 
           <div className="w-full max-w-2xl bg-gray-100 top-0 z-10 rounded-full my-10">
@@ -308,6 +312,7 @@ export const Test = () => {
 
         <div className=" p-4 bg-white h-full w-fit overflow-y-scroll">
           <Navigation
+            isView={isView}
             toeicTest={toeicTest}
             currentQuestion={currentQuestion}
             answers={answers}

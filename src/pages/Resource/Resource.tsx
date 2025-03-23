@@ -204,6 +204,7 @@ const ResourcePage: React.FC = () => {
 							{currentData.map((res) => (
 								<ResourceCard
 									key={res.id}
+									id={res.id}
 									imageSrc={res.imageSrc}
 									title={res.title}
 									views={res.views}

@@ -12,7 +12,7 @@ export interface Exam {
   level: "Beginner" | "Intermediate" | "Advanced";
 }
 
-const Home: React.FC = () => {
+const Home= ({ setIsOpen }) => {
   const examData = [toeicTest];
   return (
     <div className="w-full">
@@ -169,7 +169,7 @@ const Home: React.FC = () => {
               Cần lời khuyên về cách làm bài TOEIC? Bạn có câu hỏi về ngữ pháp,
               từ vựng hay mẹo làm bài? Chatbot AI có thể giúp bạn ngay lập tức!
             </p>
-            <button className="mt-6 px-8 py-2 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 focus:outline-none">
+            <button onClick={()=>setIsOpen(true)} className="mt-6 px-8 py-2 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 focus:outline-none">
               Trò chuyện ngay
             </button>
           </div>
