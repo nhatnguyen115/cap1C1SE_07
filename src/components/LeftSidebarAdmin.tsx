@@ -66,7 +66,7 @@ const LeftSidebarAdmin: React.FC<LeftSidebarAdminProps> = ({
 					</li>
 					<li className="mb-2">
 						<Link
-							to="/tests"
+							to="/admin/testmanagement"
 							className="flex items-center p-2 text-gray-700 hover:bg-blue-100 rounded"
 						>
 							<FaFileAlt className="mr-3" />
