@@ -3,11 +3,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaUser, FaHistory, FaCog, FaSignOutAlt } from "react-icons/fa";
 
-interface LeftSidebarProps {
+interface LeftSidebarUserProps {
   customHeight?: string; // Cho phép truyền chiều cao tùy ý
 }
 
-const LeftSidebar: React.FC<LeftSidebarProps> = ({ customHeight }) => {
+const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
   return (
     <div
       className={`bg-gray-100 flex flex-col p-4 ${
@@ -65,4 +65,4 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ customHeight }) => {
   );
 };
 
-export default LeftSidebar;
+export default LeftSidebarUser;
