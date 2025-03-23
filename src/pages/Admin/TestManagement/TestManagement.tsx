@@ -4,6 +4,10 @@ import { FaEllipsisH, FaTimes, FaUpload } from "react-icons/fa";
 
 const TestManagementPage: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [questionText, setQuestionText] = useState(
+		"_ ............. dinner when the phone rang."
+	);
+	const [answers, setAnswers] = useState({ A: "A", B: "B", C: "C", D: "D" });
 
 	const testsdata = [
 		{
@@ -38,26 +42,73 @@ const TestManagementPage: React.FC = () => {
 			time: "2h",
 			date: "23/03/2025",
 		},
+		{
+			id: "BT5",
+			name: "TOEIC Listening Practice 1",
+			type: "LISTENING",
+			questions: 50,
+			time: "1h",
+			date: "24/03/2025",
+		},
+		{
+			id: "BT6",
+			name: "TOEIC Reading Practice 1",
+			type: "READING",
+			questions: 50,
+			time: "1h",
+			date: "25/03/2025",
+		},
+		{
+			id: "BT7",
+			name: "TOEIC Full Test 5",
+			type: "FULL TEST",
+			questions: 100,
+			time: "2h",
+			date: "26/03/2025",
+		},
+		{
+			id: "BT8",
+			name: "TOEIC Listening Practice 2",
+			type: "LISTENING",
+			questions: 50,
+			time: "1h",
+			date: "27/03/2025",
+		},
+		{
+			id: "BT9",
+			name: "TOEIC Reading Practice 2",
+			type: "READING",
+			questions: 50,
+			time: "1h",
+			date: "28/03/2025",
+		},
+		{
+			id: "BT10",
+			name: "TOEIC Full Test 6",
+			type: "FULL TEST",
+			questions: 100,
+			time: "2h",
+			date: "29/03/2025",
+		},
 	];
 
 	return (
 		<div className="min-h-screen flex bg-gray-100">
 			<LeftSidebarAdmin customHeight="h-auto w-64" />
-
 			<div className="flex-1 p-8">
 				<div className="flex justify-between items-center mb-6">
 					<h1 className="text-3xl font-bold text-gray-800">
 						Quản lý Đề thi
 					</h1>
 					<button
-						className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition duration-300 shadow"
+						className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition"
 						onClick={() => setIsModalOpen(true)}
 					>
 						Thêm đề thi mới
 					</button>
 				</div>
 
-				{/* Table */}
+				{/* Bảng danh sách đề thi */}
 				<div className="bg-white shadow-lg rounded-xl overflow-hidden">
 					<table className="w-full table-auto">
 						<thead>
@@ -115,55 +166,43 @@ const TestManagementPage: React.FC = () => {
 				</div>
 			</div>
 
-			{/* Modal */}
+			{/* Modal Thêm Câu Hỏi */}
 			{isModalOpen && (
 				<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
 					<div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
-						{/* Nút đóng modal */}
 						<button
 							className="absolute top-3 right-3 text-red-600 text-xl"
 							onClick={() => setIsModalOpen(false)}
 						>
 							<FaTimes />
 						</button>
-
-						{/* Nội dung câu hỏi */}
-						<h2 className="text-lg font-semibold mb-3">Question 1:</h2>
-						<p className="text-gray-800 mb-4">
-							_ ............. dinner when the phone rang.
-						</p>
+						<h2 className="text-lg font-semibold mb-3">Câu hỏi:</h2>
+						<textarea
+							className="w-full border p-2 rounded text-gray-800"
+							value={questionText}
+							onChange={(e) => setQuestionText(e.target.value)}
+						/>
 
 						{/* Các lựa chọn A, B, C, D */}
-						<div className="grid grid-cols-2 gap-2 mb-4">
-							<input
-								type="text"
-								className="border p-2 rounded text-center text-blue-600 font-semibold"
-								value="A"
-							/>
-							<input
-								type="text"
-								className="border p-2 rounded text-center text-blue-600 font-semibold"
-								value="B"
-							/>
-							<input
-								type="text"
-								className="border p-2 rounded text-center text-blue-600 font-semibold"
-								value="C"
-							/>
-							<input
-								type="text"
-								className="border p-2 rounded text-center text-blue-600 font-semibold"
-								value="D"
-							/>
+						<div className="grid grid-cols-2 gap-2 my-4">
+							{Object.keys(answers).map((key) => (
+								<input
+									key={key}
+									type="text"
+									className="border p-2 rounded text-center"
+									value={answers[key]}
+									onChange={(e) =>
+										setAnswers({ ...answers, [key]: e.target.value })
+									}
+								/>
+							))}
 						</div>
 
-						{/* Nút tải file */}
 						<button className="flex items-center gap-2 border border-gray-400 px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition">
 							<FaUpload />
 							Upload File
 						</button>
 
-						{/* Nút thêm câu hỏi */}
 						<button className="mt-4 w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
 							Thêm câu hỏi
 						</button>
