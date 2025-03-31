@@ -1,9 +1,6 @@
 package com.arkdev.z9tkvtu.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -14,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -25,16 +23,13 @@ public class UserLoginData extends UserAccount implements UserDetails {
     @Column(name = "username", length = 20)
     private String username;
 
-    @Size(max = 255)
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @Size(max = 20)
-    @Column(name = "email", length = 20)
+    @Column(name = "email")
     private String email;
 
-    @Size(max = 10)
-    @Column(name = "phone_number", length = 10)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @Override
@@ -70,4 +65,6 @@ public class UserLoginData extends UserAccount implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
+
 }

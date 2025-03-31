@@ -1,9 +1,12 @@
 package com.arkdev.z9tkvtu.model;
 
+import com.arkdev.z9tkvtu.util.RoleType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.Set;
 
@@ -16,11 +19,12 @@ import java.util.Set;
                 nullable = false))
 })
 public class Role extends AbstractEntity<Integer> {
-    @Size(max = 10)
-    @Column(name = "role_name", length = 10)
-    private String roleName;
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "role_type")
+    private RoleType roleType;
 
-    @Column(name = "description", length = Integer.MAX_VALUE)
+    @Column(name = "description")
     private String description;
 
     @ManyToMany(fetch = FetchType.EAGER)

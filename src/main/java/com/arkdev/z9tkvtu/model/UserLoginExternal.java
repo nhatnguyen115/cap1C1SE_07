@@ -17,6 +17,6 @@ public class UserLoginExternal extends UserAccount {
     private String externalToken;
 
     @ManyToOne
-    @JoinColumn(name = "provider_id", nullable = false)
+    @JoinColumn(name = "provider_id")
     private ExternalProvider provider;
 }

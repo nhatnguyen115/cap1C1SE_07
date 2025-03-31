@@ -14,12 +14,10 @@ import lombok.Setter;
                 nullable = false))
 })
 public class ExternalProvider extends AbstractEntity<Integer> {
-    @Size(max = 20)
-    @Column(name = "provider_name", length = 20)
+    @Column(name = "provider_name")
     private String providerName;
 
-    @Size(max = 50)
-    @Column(name = "ws_endpoint", length = 50)
+    @Column(name = "ws_endpoint")
     private String wsEndpoint;
 
 }

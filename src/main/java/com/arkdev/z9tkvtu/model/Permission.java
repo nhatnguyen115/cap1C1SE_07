@@ -14,11 +14,10 @@ import lombok.Setter;
                 nullable = false))
 })
 public class Permission extends AbstractEntity<Integer> {
-    @Size(max = 20)
-    @Column(name = "permission_name", length = 20)
+    @Column(name = "permission_name")
     private String permissionName;
 
-    @Column(name = "description", length = Integer.MAX_VALUE)
+    @Column(name = "description")
     private String description;
 
 }
