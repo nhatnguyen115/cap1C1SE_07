@@ -24,6 +24,7 @@ public class PermissionMapper {
     public PermissionResponse toPermissionResponse(Permission permission) {
         if (permission == null) return null;
         return new PermissionResponse(
+                permission.getId(),
                 permission.getPermissionName(),
                 permission.getDescription()
         );

@@ -34,6 +34,7 @@ public class UserLoginDataMapper {
     public UserResponse toUserResponse(UserLoginData userLoginData) {
         if (userLoginData == null) return null;
         return new UserResponse(
+                userLoginData.getId(),
                 userLoginData.getFirstName(),
                 userLoginData.getLastName(),
                 userLoginData.getGender(),
