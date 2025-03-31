@@ -5,6 +5,7 @@ import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.service.JwtService;
 import com.arkdev.z9tkvtu.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -14,11 +15,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
 @RequestMapping("/auth")
+@Validated
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class AuthController {
@@ -26,7 +29,7 @@ public class AuthController {
     AuthenticationManager manager;
 
     @PostMapping("/introspect")
-    public ResponseData<?> introspect(@RequestBody SignInRequest request) {
+    public ResponseData<?> introspect(@RequestBody @Valid SignInRequest request) {
         try {
             Authentication auth = manager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(),
