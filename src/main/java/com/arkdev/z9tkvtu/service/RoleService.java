@@ -32,7 +32,7 @@ public class RoleService {
     }
 
     public void addRole(RoleRequest request) {
-        Role role = roleRepository.findByRoleName(request.getRoleName()).orElse(null);
+        Role role = roleRepository.findByRoleType(request.getRoleType()).orElse(null);
         if (role != null)
             throw new RuntimeException("Role already exists");
         role = roleMapper.toRole(request);

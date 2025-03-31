@@ -4,8 +4,11 @@ import com.arkdev.z9tkvtu.dto.Request.UserCreationRequest;
 import com.arkdev.z9tkvtu.dto.Request.UserUpdateRequest;
 import com.arkdev.z9tkvtu.dto.Response.UserResponse;
 import com.arkdev.z9tkvtu.mapper.UserLoginDataMapper;
+import com.arkdev.z9tkvtu.model.Role;
 import com.arkdev.z9tkvtu.model.UserLoginData;
+import com.arkdev.z9tkvtu.repository.RoleRepository;
 import com.arkdev.z9tkvtu.repository.UserLoginDataRepository;
+import com.arkdev.z9tkvtu.util.RoleType;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,6 +25,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
     UserLoginDataRepository userRepository;
+    RoleRepository roleRepository;
     UserLoginDataMapper dataMapper;
 
 
@@ -31,6 +35,7 @@ public class UserService {
     }
 
     public List<UserResponse> getUsers() {
+        List<UserLoginData> list = userRepository.findAll();
         return userRepository.findAll().stream()
                 .map(dataMapper::toUserResponse)
                 .toList();
@@ -46,7 +51,11 @@ public class UserService {
         UserLoginData user = userRepository.findByUsername(request.getUsername()).orElse(null);
         if (user != null)
             throw new RuntimeException("User already exists");
+        Role role = roleRepository.findByRoleType(RoleType.USER)
+                .orElseThrow(() -> new RuntimeException("Role not found"));
         user = dataMapper.toUserLoginData(request);
+        user.setRole(role);
+        user.setActive(true);
         user.setPasswordHash(new BCryptPasswordEncoder().encode(request.getPassword()));
         userRepository.save(user);
     }
