@@ -13,11 +13,12 @@ import org.hibernate.type.SqlTypes;
 @Setter
 @Entity
 @Table(name = "media")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "media_id",
-                nullable = false))
-})
-public class Media extends AbstractEntity<Integer> {
+public class Media extends AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "media_id", nullable = false, updatable = false)
+    Integer id;
+
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "media_type")

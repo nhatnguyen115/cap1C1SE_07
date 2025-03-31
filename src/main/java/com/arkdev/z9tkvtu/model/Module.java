@@ -18,11 +18,12 @@ import java.util.Set;
 @Table(name = "module")
 @AllArgsConstructor
 @NoArgsConstructor
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "module_id",
-                nullable = false, updatable = false))
-})
-public class Module extends AbstractEntity<Integer> {
+public class Module extends AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "module_id", nullable = false, updatable = false)
+    Integer id;
+
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "module_type")

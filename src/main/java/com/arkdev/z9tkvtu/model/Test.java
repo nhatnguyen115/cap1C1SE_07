@@ -14,11 +14,12 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "test")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "test_id",
-                nullable = false))
-})
-public class Test extends AbstractEntity<Integer> {
+public class Test extends AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "test_id", nullable = false, updatable = false)
+    Integer id;
+
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "test_type")

@@ -14,11 +14,12 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "part")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "part_id",
-                nullable = false))
-})
-public class Part extends AbstractEntity<Integer> {
+public class Part extends AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "part_id", nullable = false, updatable = false)
+    Integer id;
+
     @Column(name = "part_name")
     private String partName;
 
@@ -39,10 +40,16 @@ public class Part extends AbstractEntity<Integer> {
     @Column(name = "order_number")
     private Integer orderNumber;
 
-    @OneToOne
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Question> questions = new HashSet<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "media_id")
     private Media media;
 
-    @OneToMany
-    private Set<Question> questions = new HashSet<>();
+    @ManyToMany(mappedBy = "parts")
+    private Set<Section> sections = new HashSet<>();
+
+    @ManyToMany(mappedBy = "parts")
+    private Set<Exam> exams = new HashSet<>();
 }

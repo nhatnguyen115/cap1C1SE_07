@@ -11,11 +11,12 @@ import lombok.Setter;
 @Entity
 @Table(name = "user_answer")
 @NoArgsConstructor
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "answer_id",
-                nullable = false))
-})
-public class UserAnswer extends AbstractEntity<Integer> {
+public class UserAnswer extends AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "answer_id", nullable = false, updatable = false)
+    Integer id;
+
     @Column(name = "selected_answer")
     private String selectedAnswer;
 

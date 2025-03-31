@@ -16,27 +16,23 @@ import java.util.UUID;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class AbstractEntity<T> implements Serializable {
+public abstract class AbstractEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    T id;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     Timestamp createdAt;
 
-    @CreatedBy
-    @Column(name = "created_by", nullable = false, updatable = false)
-    UUID createdBy;
-
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     Timestamp updatedAt;
+
+    @CreatedBy
+    @Column(name = "created_by", nullable = false, updatable = false)
+    UUID createdBy;
 
     @LastModifiedBy
     @Column(name = "updated_by")

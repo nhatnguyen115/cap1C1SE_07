@@ -15,7 +15,11 @@ import org.hibernate.type.SqlTypes;
         @AttributeOverride(name = "id", column = @Column(name = "lesson_id",
                 nullable = false))
 })
-public class Lesson extends AbstractEntity<Integer> {
+public class Lesson extends AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "lesson_id", nullable = false, updatable = false)
+    Integer id;
 
     @Column(name = "lesson_name")
     private String lessonName;
@@ -34,11 +38,11 @@ public class Lesson extends AbstractEntity<Integer> {
     @Column(name = "order_number")
     private Integer orderNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "section_id", nullable = false)
     private Section section;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "media_id")
     private Media media;
 }

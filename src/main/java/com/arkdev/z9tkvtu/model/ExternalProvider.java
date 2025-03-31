@@ -9,11 +9,12 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "external_provider")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "provider_id",
-                nullable = false))
-})
-public class ExternalProvider extends AbstractEntity<Integer> {
+public class ExternalProvider extends AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "provider_id", nullable = false, updatable = false)
+    Integer id;
+
     @Column(name = "provider_name")
     private String providerName;
 

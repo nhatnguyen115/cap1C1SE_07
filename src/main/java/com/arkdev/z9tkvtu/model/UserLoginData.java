@@ -3,8 +3,10 @@ package com.arkdev.z9tkvtu.model;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,20 +19,20 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "user_login_data")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @PrimaryKeyJoinColumn(name = "user_id")
 public class UserLoginData extends UserAccount implements UserDetails {
-    @Size(max = 20)
-    @Column(name = "username", length = 20)
-    private String username;
+    @Column(name = "username")
+    String username;
 
     @Column(name = "password_hash")
-    private String passwordHash;
+    String passwordHash;
 
     @Column(name = "email")
-    private String email;
+    String email;
 
     @Column(name = "phone_number")
-    private String phoneNumber;
+    String phoneNumber;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -65,6 +67,4 @@ public class UserLoginData extends UserAccount implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
-
-
 }

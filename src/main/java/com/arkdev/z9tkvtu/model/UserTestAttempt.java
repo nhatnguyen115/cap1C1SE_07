@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Set;
@@ -14,11 +15,12 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "user_test_attempt")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "attempt_id",
-                nullable = false))
-})
-public class UserTestAttempt extends AbstractEntity<Integer> {
+public class UserTestAttempt implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "attempt_id", nullable = false, updatable = false)
+    Integer id;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_time")
     private Timestamp startTime;

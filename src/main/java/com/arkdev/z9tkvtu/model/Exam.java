@@ -11,11 +11,12 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "exam")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "exam_id",
-                nullable = false))
-})
-public class Exam extends AbstractEntity<Integer> {
+public class Exam extends AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "exam_id", nullable = false, updatable = false)
+    Integer id;
+
     @Column(name = "exam_name")
     private String examName;
 

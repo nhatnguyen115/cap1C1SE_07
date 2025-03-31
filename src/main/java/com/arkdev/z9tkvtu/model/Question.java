@@ -15,11 +15,12 @@ import java.util.Map;
 @Setter
 @Entity
 @Table(name = "question")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "question_id",
-                nullable = false))
-})
-public class Question extends AbstractEntity<Integer> {
+public class Question extends AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "question_id", nullable = false, updatable = false)
+    Integer id;
+
     @Column(name = "content")
     private String content;
 
@@ -41,6 +42,11 @@ public class Question extends AbstractEntity<Integer> {
     @Column(name = "difficulty")
     private DifficultyLevel difficulty;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "part_id")
+    private Part part;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "media_id")
     private Media media;
 }
