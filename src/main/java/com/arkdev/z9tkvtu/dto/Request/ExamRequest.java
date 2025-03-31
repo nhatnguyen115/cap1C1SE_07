@@ -1,6 +1,5 @@
 package com.arkdev.z9tkvtu.dto.Request;
 
-import com.arkdev.z9tkvtu.util.RoleType;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,14 +9,17 @@ import lombok.experimental.FieldDefaults;
 import java.io.Serializable;
 
 /**
- * DTO for {@link com.arkdev.z9tkvtu.model.Role}
+ * DTO for {@link com.arkdev.z9tkvtu.model.Exam}
  */
 @AllArgsConstructor
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RoleRequest implements Serializable {
-    @NotNull(message = "Role name must be not null")
-    RoleType roleType;
-
-    String description;
+public class ExamRequest implements Serializable {
+    @NotNull(message = "Exam name must be not null")
+    String examName;
+    
+    @NotNull(message = "Total score must be not null")
+    Integer totalScore;
+    
+    Integer duration;
 }
