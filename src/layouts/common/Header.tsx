@@ -17,7 +17,7 @@ const Header: React.FC = () => {
     <header className="bg-white shadow-md px-4 flex items-center justify-between py-5">
       {/* Logo Section */}
       <Link to={"/"} className="flex items-center">
-        <span className="text-blue-600 font-bold text-lg">LOGO</span>
+        <span className="text-blue-600 font-bold text-lg">Nguyễn Gia Trường</span>
       </Link>
 
       {/* Navigation Links */}
