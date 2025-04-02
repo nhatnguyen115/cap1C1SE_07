@@ -38,7 +38,7 @@ public class Lesson extends AbstractEntity {
     @Column(name = "order_number")
     private Integer orderNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "section_id", nullable = false)
     private Section section;
 
