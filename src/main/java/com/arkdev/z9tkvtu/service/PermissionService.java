@@ -5,6 +5,7 @@ import com.arkdev.z9tkvtu.dto.Response.PermissionResponse;
 import com.arkdev.z9tkvtu.mapper.PermissionMapper;
 import com.arkdev.z9tkvtu.model.Permission;
 import com.arkdev.z9tkvtu.repository.PermissionRepository;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -32,24 +33,25 @@ public class PermissionService {
                 .orElseThrow(() -> new RuntimeException("Permission not found"));
     }
 
+    @Transactional
     public void addPermission(PermissionRequest request) {
-        Permission permission = permissionRepository.findByPermissionName(request.getPermissionName())
-                .orElse(null);
-        if (permission != null)
-            throw new RuntimeException("Permission already exists");
-        permission = permissionMapper.toPermission(request);
+        permissionRepository.findByPermissionName(request.getPermissionName())
+                .ifPresent(permission -> {
+                    throw new RuntimeException("Permission already exists");
+                });
+        Permission permission = permissionMapper.toPermission(request);
         permissionRepository.save(permission);
     }
 
+    @Transactional
     public void updatePermission(Integer permissionId, PermissionRequest request) {
         Permission permission = permissionRepository.findById(permissionId)
-                .map(item -> {
-                    permissionMapper.updatePermission(item, request);
-                    return item;
-                }).orElseThrow(() -> new RuntimeException("Permission not found"));
+                .orElseThrow(() -> new RuntimeException("Permission not found"));
+        permissionMapper.updatePermission(permission, request);
         permissionRepository.save(permission);
     }
 
+    @Transactional
     public void deletePermission(Integer permissionId) {
         Permission permission = permissionRepository.findById(permissionId)
                 .orElseThrow(() -> new RuntimeException("Permission not found"));

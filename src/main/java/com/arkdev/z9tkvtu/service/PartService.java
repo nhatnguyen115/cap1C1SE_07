@@ -9,6 +9,7 @@ import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
 import com.arkdev.z9tkvtu.repository.PartRepository;
 import com.arkdev.z9tkvtu.repository.SectionRepository;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,19 +29,15 @@ public class PartService {
     PartMapper partMapper;
 
     public List<PartResponse> getPartsToSection(Integer sectionId) {
-        return sectionRepository.findById(sectionId)
-                .orElseThrow(() -> new RuntimeException("section not found"))
-                .getParts().stream()
-                .sorted(Comparator.comparing(Part::getOrderNumber))
+        return partRepository.findBySectionsIdOrderByOrderNumber(sectionId)
+                .stream()
                 .map(partMapper::toPartResponse)
                 .toList();
     }
 
     public List<PartResponse> getPartsToExam(Integer examId) {
-        return examRepository.findById(examId)
-                .orElseThrow(() -> new RuntimeException("exam not found"))
-                .getParts().stream()
-                .sorted(Comparator.comparing(Part::getOrderNumber))
+        return partRepository.findByExamsIdOrderByOrderNumber(examId)
+                .stream()
                 .map(partMapper::toPartResponse)
                 .toList();
     }
@@ -51,30 +48,33 @@ public class PartService {
                 .orElseThrow(() -> new RuntimeException("part not found"));
     }
 
+    @Transactional
     public void addPartToSection(Integer sectionId, PartRequest request) {
-        Part part = partRepository.findByPartName(request.getPartName())
-                .orElse(null);
-        Section section = sectionRepository.findById(sectionId)
-                .orElseThrow(() -> new RuntimeException("section not found"));
-        if(part != null)
-            throw new RuntimeException("part already exists");
-        part = partMapper.toPart(request);
+        partRepository.findByPartNameAndSectionsId(request.getPartName(), sectionId)
+            .ifPresent(part -> {
+                throw new RuntimeException("Part already exists");
+            });
+        Section section = sectionRepository.getReferenceById(sectionId);
+        Part part = partMapper.toPart(request);
+        part.getSections().add(section);
         section.getParts().add(part);
-        sectionRepository.save(section);
+        partRepository.save(part);
     }
 
+    @Transactional
     public void addPartToExam(Integer examId, PartRequest request) {
-        Part part = partRepository.findByPartName(request.getPartName())
-                .orElse(null);
-        Exam exam = examRepository.findById(examId)
-                .orElseThrow(() -> new RuntimeException("exam not found"));
-        if(part != null)
-            throw new RuntimeException("part already exists");
-        part = partMapper.toPart(request);
+        partRepository.findByPartNameAndExamsId(request.getPartName(), examId)
+                .ifPresent(part -> {
+                    throw new RuntimeException("Part already exists");
+                });
+        Exam exam = examRepository.getReferenceById(examId);
+        Part part = partMapper.toPart(request);
+        part.getExams().add(exam);
         exam.getParts().add(part);
-        examRepository.save(exam);
+        partRepository.save(part);
     }
 
+    @Transactional
     public void updatePart(Integer partId, PartRequest request) {
         Part part = partRepository.findById(partId)
                 .orElseThrow(() -> new RuntimeException("part not found"));
@@ -82,12 +82,14 @@ public class PartService {
         partRepository.save(part);
     }
 
+    @Transactional
     public void deletePart(Integer partId) {
         Part part= partRepository.findById(partId)
                 .orElseThrow(() -> new RuntimeException("part not found"));
         partRepository.delete(part);
     }
 
+    @Transactional
     public void addMediaToPart(Integer partId, MediaRequest request) {
         Part part = partRepository.findById(partId)
                 .orElseThrow(() -> new RuntimeException("Lesson not found"));

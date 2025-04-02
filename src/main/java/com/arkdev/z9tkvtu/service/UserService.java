@@ -9,12 +9,12 @@ import com.arkdev.z9tkvtu.model.UserLoginData;
 import com.arkdev.z9tkvtu.repository.RoleRepository;
 import com.arkdev.z9tkvtu.repository.UserLoginDataRepository;
 import com.arkdev.z9tkvtu.util.RoleType;
-import lombok.AccessLevel;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +22,18 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
-    UserLoginDataRepository userRepository;
-    RoleRepository roleRepository;
-    UserLoginDataMapper dataMapper;
+    private final UserLoginDataRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final UserLoginDataMapper dataMapper;
+    private final PasswordEncoder passwordEncoder;
+    private Role userRole;
 
+    @PostConstruct
+    private void init() {
+        userRole = roleRepository.findByRoleType(RoleType.USER)
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+    }
 
     public UserDetailsService getUserDetailsService() {
         return username -> userRepository.findByUsername(username)
@@ -35,7 +41,6 @@ public class UserService {
     }
 
     public List<UserResponse> getUsers() {
-        List<UserLoginData> list = userRepository.findAll();
         return userRepository.findAll().stream()
                 .map(dataMapper::toUserResponse)
                 .toList();
@@ -47,28 +52,25 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
+    @Transactional
     public void addUser(UserCreationRequest request) {
-        UserLoginData user = userRepository.findByUsername(request.getUsername()).orElse(null);
-        if (user != null)
-            throw new RuntimeException("User already exists");
-        Role role = roleRepository.findByRoleType(RoleType.USER)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
-        user = dataMapper.toUserLoginData(request);
-        user.setRole(role);
+        if (userRepository.existsByUsername(request.getUsername()))
+            throw new RuntimeException("Username already exists");
+        UserLoginData user = dataMapper.toUserLoginData(request);
+        user.setRole(userRole);
         user.setActive(true);
-        user.setPasswordHash(new BCryptPasswordEncoder().encode(request.getPassword()));
+        user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
     }
 
+    @Transactional
     public void updateUser(UUID userId, UserUpdateRequest request) {
         UserLoginData user = userRepository.findById(userId)
-                .map(item -> {
-                    dataMapper.updateUserLoginData(item, request);
-                    return item;
-                }).orElseThrow(() -> new RuntimeException("User not found"));
-        userRepository.save(user);
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        dataMapper.updateUserLoginData(user, request);
     }
 
+    @Transactional
     public void deleteUser(UUID userId) {
         UserLoginData userLoginData = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));

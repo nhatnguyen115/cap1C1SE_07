@@ -10,6 +10,7 @@ import com.arkdev.z9tkvtu.model.Media;
 import com.arkdev.z9tkvtu.model.Section;
 import com.arkdev.z9tkvtu.repository.LessonRepository;
 import com.arkdev.z9tkvtu.repository.SectionRepository;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,10 +29,8 @@ public class LessonService {
     LessonMapper lessonMapper;
 
     public List<LessonResponse> getLessons(Integer sectionId) {
-        return sectionRepository.findById(sectionId)
-                .orElseThrow(() -> new RuntimeException("Section not found"))
-                .getLessons().stream()
-                .sorted(Comparator.comparing(Lesson::getOrderNumber))
+        return lessonRepository.findBySectionIdOrderByOrderNumber(sectionId)
+                .stream()
                 .map(lessonMapper::toLessonResponse)
                 .toList();
     }
@@ -42,31 +41,35 @@ public class LessonService {
                 .orElseThrow(() -> new RuntimeException("Lesson not found"));
     }
 
+    @Transactional
     public void addLesson(Integer sectionId, LessonRequest request) {
-        Lesson lesson = lessonRepository.findByLessonName(request.getLessonName())
-                .orElse(null);
-        Section section = sectionRepository.findById(sectionId)
-                .orElseThrow(() -> new RuntimeException("Section not found"));
-        if (lesson != null)
-            throw new RuntimeException("Lesson already exists");
-        lesson = lessonMapper.toLesson(request);
-        section.getLessons().add(lesson);
-        sectionRepository.save(section);
+        lessonRepository.findByLessonName(request.getLessonName())
+                .ifPresent(lesson -> {
+                    throw new RuntimeException("Lesson already exists");
+                });
+        if (!sectionRepository.existsById(sectionId))
+            throw new RuntimeException("Section not found");
+        Section section = sectionRepository.getReferenceById(sectionId);
+        Lesson lesson = lessonMapper.toLesson(request);
+        lesson.setSection(section);
+        lessonRepository.save(lesson);
     }
 
+    @Transactional
     public void updateLesson(Integer lessonId, LessonRequest request) {
         Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new RuntimeException("Lesson not found"));
         lessonMapper.updateLesson(lesson, request);
-        lessonRepository.save(lesson);
     }
 
+    @Transactional
     public void deleteLesson(Integer lessonId) {
         Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new RuntimeException("Lesson not found"));
         lessonRepository.delete(lesson);
     }
 
+    @Transactional
     public void addMediaToLesson(Integer lessonId, MediaRequest request) {
         Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new RuntimeException("Lesson not found"));

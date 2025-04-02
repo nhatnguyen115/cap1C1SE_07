@@ -5,6 +5,7 @@ import com.arkdev.z9tkvtu.dto.Response.RoleResponse;
 import com.arkdev.z9tkvtu.mapper.RoleMapper;
 import com.arkdev.z9tkvtu.model.Role;
 import com.arkdev.z9tkvtu.repository.RoleRepository;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -31,28 +32,27 @@ public class RoleService {
                 .orElseThrow(() -> new RuntimeException("Role not found"));
     }
 
+    @Transactional
     public void addRole(RoleRequest request) {
-        Role role = roleRepository.findByRoleType(request.getRoleType()).orElse(null);
-        if (role != null)
-            throw new RuntimeException("Role already exists");
-        role = roleMapper.toRole(request);
+        roleRepository.findByRoleType(request.getRoleType())
+                .ifPresent(role -> {
+                    throw new RuntimeException("Role already exists");
+                });
+        Role role = roleMapper.toRole(request);
         roleRepository.save(role);
     }
 
+    @Transactional
     public void updateRole(Integer roleId, RoleRequest request) {
         Role role = roleRepository.findById(roleId)
-                .map(item -> {
-                    roleMapper.updateRole(item, request);
-                    return item;
-                }).orElseThrow(() -> new RuntimeException("Role not found")
-        );
-        roleRepository.save(role);
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+        roleMapper.updateRole(role, request);
     }
 
+    @Transactional
     public void deleteRole(Integer roleId) {
-        Role role = roleRepository.findById(roleId).orElseThrow(
-                () -> new RuntimeException("Role not found")
-        );
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new RuntimeException("Role not found"));
         roleRepository.delete(role);
     }
 }

@@ -7,6 +7,7 @@ import com.arkdev.z9tkvtu.model.Module;
 import com.arkdev.z9tkvtu.model.Section;
 import com.arkdev.z9tkvtu.repository.ModuleRepository;
 import com.arkdev.z9tkvtu.repository.SectionRepository;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,10 +25,8 @@ public class SectionService {
     SectionMapper sectionMapper;
 
     public List<SectionResponse> getSections(Integer moduleId) {
-        return moduleRepository.findById(moduleId)
-                .orElseThrow(() -> new RuntimeException("Module not found"))
-                .getSections().stream()
-                .sorted(Comparator.comparing(Section::getOrderNumber))
+        return sectionRepository.findByModuleIdOrderByOrderNumber(moduleId)
+                .stream()
                 .map(sectionMapper::toSectionResponse)
                 .toList();
     }
@@ -38,26 +37,28 @@ public class SectionService {
                 .orElseThrow(() -> new RuntimeException("Section not found"));
     }
 
+    @Transactional
     public void addSection(Integer moduleId, SectionRequest request) {
-        Section section = sectionRepository.findBySectionName(request.getSectionName())
-                .orElse(null);
-        Module module = moduleRepository.findById(moduleId)
-                .orElseThrow(() -> new RuntimeException("Module not found"));
-        if (section != null)
-            throw new RuntimeException("Section already exists");
-        section = sectionMapper.toSection(request);
+        sectionRepository.findBySectionName(request.getSectionName())
+                .ifPresent(section -> {
+                    throw new RuntimeException("Section already exists");
+                });
+        if (!moduleRepository.existsById(moduleId))
+            throw new RuntimeException("Module not found");
+        Module module = moduleRepository.getReferenceById(moduleId);
+        Section section = sectionMapper.toSection(request);
         section.setModule(module);
-        module.getSections().add(section);
-        moduleRepository.save(module);
+        sectionRepository.save(section);
     }
 
+    @Transactional
     public void updateSection(Integer sectionId, SectionRequest request) {
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new RuntimeException("Section not found"));
         sectionMapper.updateSection(section, request);
-        sectionRepository.save(section);
     }
 
+    @Transactional
     public void deleteSection(Integer sectionId) {
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new RuntimeException("Section not found"));

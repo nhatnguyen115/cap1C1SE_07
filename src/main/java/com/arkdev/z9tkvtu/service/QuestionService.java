@@ -13,6 +13,7 @@ import com.arkdev.z9tkvtu.repository.QuestionRepository;
 import com.arkdev.z9tkvtu.util.DifficultyLevel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -37,9 +38,9 @@ public class QuestionService {
     QuestionMapper questionMapper;
 
     public List<QuestionResponse> getQuestions(Integer partId) {
-        return partRepository.findById(partId)
-                .orElseThrow(() -> new RuntimeException("part not found"))
-                .getQuestions().stream().map(questionMapper::toQuestionResponse)
+        return questionRepository.findByPartIdOrderByOrderNumber(partId)
+                .stream()
+                .map(questionMapper::toQuestionResponse)
                 .toList();
     }
 
@@ -49,27 +50,31 @@ public class QuestionService {
                 .orElseThrow(() -> new RuntimeException("question not found"));
     }
 
+    @Transactional
     public void addQuestion(Integer partId,QuestionRequest request) {
-        Part part = partRepository.findById(partId)
-                .orElseThrow(() -> new RuntimeException("part not found"));
+        if (!partRepository.existsById(partId))
+            throw new RuntimeException("part not found");
+        Part part = partRepository.getReferenceById(partId);
         Question question = questionMapper.toQuestion(request);
-        part.getQuestions().add(question);
-        partRepository.save(part);
-    }
-
-    public void updateQuestion(Integer questionId,QuestionRequest request) {
-        Question question = questionRepository.findById(questionId)
-                .orElseThrow(() -> new RuntimeException("question not found"));
-        questionMapper.updateQuestion(question, request);
+        question.setPart(part);
         questionRepository.save(question);
     }
 
+    @Transactional
+    public void updateQuestion(Integer questionId, QuestionRequest request) {
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new RuntimeException("question not found"));
+        questionMapper.updateQuestion(question, request);
+    }
+
+    @Transactional
     public void deleteQuestion(Integer questionId) {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new RuntimeException("question not found"));
         questionRepository.delete(question);
     }
 
+    @Transactional
     public void addMediaToQuestion(Integer questionId, MediaRequest request) {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new RuntimeException("Lesson not found"));

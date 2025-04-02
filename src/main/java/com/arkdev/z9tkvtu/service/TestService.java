@@ -6,11 +6,15 @@ import com.arkdev.z9tkvtu.mapper.TestMapper;
 import com.arkdev.z9tkvtu.model.Test;
 import com.arkdev.z9tkvtu.repository.TestRepository;
 import com.arkdev.z9tkvtu.util.TestType;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +26,7 @@ public class TestService {
     TestMapper testMapper;
 
     public List<TestResponse> getTests() {
-        return testRepository.findAll()
+        return testRepository.findAllByOrderByTestType()
                 .stream()
                 .map(testMapper::toTestResponse)
                 .toList();
@@ -31,29 +35,31 @@ public class TestService {
     public TestResponse getTest(Integer testId) {
         return testRepository.findById(testId)
                 .map(testMapper::toTestResponse)
-                .orElseThrow(() -> new RuntimeException("Test not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Test not found"));
     }
 
+    @Transactional
     public void addTest(TestRequest request) {
-        Test test = testRepository.findByTestType(request.getTestType())
-                .orElse(null);
-        if (test != null)
-            throw new IllegalArgumentException("Test already exists");
-        test = testMapper.toTest(request);
+        testRepository.findByTestType(request.getTestType())
+                .ifPresent(test -> {
+                    throw new EntityExistsException("Test " + request.getTestType() + " already exists");
+                });
+        Test test = testMapper.toTest(request);
         testRepository.save(test);
     }
 
+    @Transactional
     public void updateTest(Integer testId, TestRequest request) {
         Test test = testRepository.findById(testId)
                 .orElseThrow(() -> new RuntimeException("Test not found"));
         testMapper.updateTest(test, request);
-        testRepository.save(test);
     }
 
+    @Transactional
     public void deleteTest(Integer testId) {
-        Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new RuntimeException("Test not found"));
-        testRepository.delete(test);
+        if (!testRepository.existsById(testId))
+            throw new RuntimeException("Test not found");
+        testRepository.deleteById(testId);
     }
 }
 
