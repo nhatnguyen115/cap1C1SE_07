@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
@@ -11,8 +12,9 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.Exam}
  */
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ExamRequest implements Serializable {
     @NotNull(message = "Exam name must be not null")

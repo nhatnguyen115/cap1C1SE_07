@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
@@ -12,8 +13,9 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.Permission}
  */
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PermissionRequest implements Serializable {
     @NotNull(message = "Permission name must be not null")

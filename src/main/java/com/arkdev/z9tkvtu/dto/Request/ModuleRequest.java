@@ -13,9 +13,9 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.Module}
  */
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ModuleRequest implements Serializable {
     @NotNull(message = "Module type must be not null")
