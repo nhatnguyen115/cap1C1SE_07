@@ -28,8 +28,8 @@ public class QuestionController {
 
     @GetMapping("")
     public ResponseData<?> getQuestions(@RequestParam Integer partId,
-                                        @RequestParam int page,
-                                        @RequestParam int size) {
+                                        @RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "10") int size) {
         try {
             return new ResponseData<>(HttpStatus.OK.value(), "Get Questions Successfully",
                     Pagination.paginate(questionService.getQuestions(partId), PageRequest.of(page, size)));

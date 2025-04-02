@@ -26,7 +26,8 @@ public class PartController {
     @GetMapping("")
     public ResponseData<?> getParts(@RequestParam Integer selectedId,
                                     @RequestParam boolean checked,
-                                    @RequestParam int page, @RequestParam int size) {
+                                    @RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size) {
         try {
             if (checked) {
                 return new ResponseData<>(HttpStatus.OK.value(), "Get Parts To Section Successfully",
