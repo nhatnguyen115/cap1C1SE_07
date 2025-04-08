@@ -5,13 +5,11 @@ import com.arkdev.z9tkvtu.dto.Request.PartRequest;
 import com.arkdev.z9tkvtu.dto.Response.PartResponse;
 import com.arkdev.z9tkvtu.mapper.MediaMapper;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
-import com.arkdev.z9tkvtu.model.Exam;
-import com.arkdev.z9tkvtu.model.Media;
-import com.arkdev.z9tkvtu.model.Part;
-import com.arkdev.z9tkvtu.model.Section;
+import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
 import com.arkdev.z9tkvtu.repository.PartRepository;
 import com.arkdev.z9tkvtu.repository.SectionRepository;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -49,11 +47,12 @@ public class PartService {
                 .orElseThrow(() -> new RuntimeException("part not found"));
     }
 
+    @Transactional
     public void addPartToSection(Integer sectionId, PartRequest request) {
         partRepository.findByPartNameAndSectionsId(request.getPartName(), sectionId)
-            .ifPresent(part -> {
-                throw new RuntimeException("Part already exists");
-            });
+                .ifPresent(part -> {
+                    throw new RuntimeException("Part already exists");
+                });
         Section section = sectionRepository.getReferenceById(sectionId);
         Part part = partMapper.toPart(request);
         part.getSections().add(section);
@@ -61,6 +60,7 @@ public class PartService {
         partRepository.save(part);
     }
 
+    @Transactional
     public void addPartToExam(Integer examId, PartRequest request) {
         partRepository.findByPartNameAndExamsId(request.getPartName(), examId)
                 .ifPresent(part -> {
@@ -73,6 +73,7 @@ public class PartService {
         partRepository.save(part);
     }
 
+    @Transactional
     public void updatePart(Integer partId, PartRequest request) {
         Part part = partRepository.findById(partId)
                 .orElseThrow(() -> new RuntimeException("part not found"));
@@ -80,12 +81,14 @@ public class PartService {
         partRepository.save(part);
     }
 
+    @Transactional
     public void deletePart(Integer partId) {
         Part part= partRepository.findById(partId)
                 .orElseThrow(() -> new RuntimeException("part not found"));
         partRepository.delete(part);
     }
 
+    @Transactional
     public void addMediaToPart(Integer partId, MediaRequest request) {
         Part part = partRepository.findById(partId)
                 .orElseThrow(() -> new RuntimeException("Lesson not found"));

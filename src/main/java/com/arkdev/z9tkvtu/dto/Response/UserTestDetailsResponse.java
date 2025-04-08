@@ -1,12 +1,15 @@
 package com.arkdev.z9tkvtu.dto.Response;
 
 import java.io.Serializable;
-import java.util.List;
+import java.sql.Timestamp;
 
-
-public record UserTestDetailsResponse(
-        Integer attemptId,
-        List<ResultPartResponse> resultPartResponses
-) implements Serializable {
+/**
+ * DTO for {@link com.arkdev.z9tkvtu.model.UserTestAttempt}
+ */
+public record UserTestHistoryResponse(
+        Integer  id,
+        String examName,
+        Timestamp startTime,
+        Timestamp endTime,
+        Integer totalScore) implements Serializable {
 }
-
