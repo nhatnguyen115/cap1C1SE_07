@@ -30,6 +30,7 @@ public class LessonMapper {
     public LessonResponse toLessonResponse(Lesson lesson) {
         if (lesson == null) return null;
         return new LessonResponse(
+                lesson.getId(),
                 lesson.getLessonName(),
                 lesson.getContentType(),
                 lesson.getArticleText(),

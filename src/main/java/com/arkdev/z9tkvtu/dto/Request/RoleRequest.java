@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.dto.Request;
 
+import com.arkdev.z9tkvtu.util.RoleType;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,9 +17,7 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoleRequest implements Serializable {
     @NotNull(message = "Role name must be not null")
-    @Size(max = 10)
-    String roleName;
+    RoleType roleType;
 
-    @NotNull(message = "Description must be not null")
     String description;
 }

@@ -8,8 +8,11 @@ import java.io.Serializable;
  * DTO for {@link com.arkdev.z9tkvtu.model.Part}
  */
 public record PartResponse(
+        Integer id,
         String partName,
         String description,
         QuestionType questionType,
-        String instructions) implements Serializable {
+        String instructions,
+        Integer questionCount,
+        Integer orderNumber) implements Serializable {
 }

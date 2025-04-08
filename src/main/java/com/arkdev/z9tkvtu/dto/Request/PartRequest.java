@@ -22,4 +22,10 @@ public class PartRequest implements Serializable {
     QuestionType questionType;
 
     String instructions;
+
+    @NotNull(message = "Question count must be not null")
+    Integer questionCount;
+
+    @NotNull(message = "Order number must be not null")
+    Integer orderNumber;
 }

@@ -1,6 +1,6 @@
 package com.arkdev.z9tkvtu.dto.Response;
 
-import jakarta.validation.constraints.Size;
+import com.arkdev.z9tkvtu.util.RoleType;
 
 import java.io.Serializable;
 
@@ -8,6 +8,7 @@ import java.io.Serializable;
  * DTO for {@link com.arkdev.z9tkvtu.model.Role}
  */
 public record RoleResponse(
-        String roleName,
+        Integer id,
+        RoleType roleType,
         String description) implements Serializable {
 }

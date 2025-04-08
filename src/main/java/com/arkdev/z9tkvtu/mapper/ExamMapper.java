@@ -26,6 +26,7 @@ public class ExamMapper {
     public ExamResponse toExamResponse(Exam exam) {
         if (exam == null) return null;
         return new ExamResponse(
+                exam.getId(),
                 exam.getExamName(),
                 exam.getDuration(),
                 exam.getTotalScore());

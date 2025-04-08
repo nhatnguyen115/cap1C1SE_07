@@ -1,10 +1,15 @@
 package com.arkdev.z9tkvtu.service;
 
+import com.arkdev.z9tkvtu.dto.Request.MediaRequest;
 import com.arkdev.z9tkvtu.dto.Request.PartRequest;
 import com.arkdev.z9tkvtu.dto.Response.PartResponse;
+import com.arkdev.z9tkvtu.mapper.MediaMapper;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
+import com.arkdev.z9tkvtu.model.Exam;
+import com.arkdev.z9tkvtu.model.Media;
 import com.arkdev.z9tkvtu.model.Part;
 import com.arkdev.z9tkvtu.model.Section;
+import com.arkdev.z9tkvtu.repository.ExamRepository;
 import com.arkdev.z9tkvtu.repository.PartRepository;
 import com.arkdev.z9tkvtu.repository.SectionRepository;
 import lombok.AccessLevel;
@@ -20,12 +25,22 @@ import java.util.List;
 public class PartService {
     SectionRepository sectionRepository;
     PartRepository partRepository;
+    ExamRepository examRepository;
+    MediaMapper mediaMapper;
     PartMapper partMapper;
 
-    public List<PartResponse> getParts(Integer sectionId) {
-        return sectionRepository.findById(sectionId)
-                .orElseThrow(() -> new RuntimeException("section not found"))
-                .getParts().stream().map(partMapper::toPartResponse).toList();
+    public List<PartResponse> getPartsToSection(Integer sectionId) {
+        return partRepository.findBySectionsIdOrderByOrderNumber(sectionId)
+                .stream()
+                .map(partMapper::toPartResponse)
+                .toList();
+    }
+
+    public List<PartResponse> getPartsToExam(Integer examId) {
+        return partRepository.findByExamsIdOrderByOrderNumber(examId)
+                .stream()
+                .map(partMapper::toPartResponse)
+                .toList();
     }
 
     public PartResponse getPart(Integer partId) {
@@ -35,15 +50,27 @@ public class PartService {
     }
 
     public void addPartToSection(Integer sectionId, PartRequest request) {
-        Part part = partRepository.findByPartName(request.getPartName())
-                .orElse(null);
-        Section section = sectionRepository.findById(sectionId)
-                .orElseThrow(() -> new RuntimeException("section not found"));
-        if(part != null)
-            throw new RuntimeException("part already exists");
-        part = partMapper.toPart(request);
+        partRepository.findByPartNameAndSectionsId(request.getPartName(), sectionId)
+            .ifPresent(part -> {
+                throw new RuntimeException("Part already exists");
+            });
+        Section section = sectionRepository.getReferenceById(sectionId);
+        Part part = partMapper.toPart(request);
+        part.getSections().add(section);
         section.getParts().add(part);
-        sectionRepository.save(section);
+        partRepository.save(part);
+    }
+
+    public void addPartToExam(Integer examId, PartRequest request) {
+        partRepository.findByPartNameAndExamsId(request.getPartName(), examId)
+                .ifPresent(part -> {
+                    throw new RuntimeException("Part already exists");
+                });
+        Exam exam = examRepository.getReferenceById(examId);
+        Part part = partMapper.toPart(request);
+        part.getExams().add(exam);
+        exam.getParts().add(part);
+        partRepository.save(part);
     }
 
     public void updatePart(Integer partId, PartRequest request) {
@@ -57,5 +84,13 @@ public class PartService {
         Part part= partRepository.findById(partId)
                 .orElseThrow(() -> new RuntimeException("part not found"));
         partRepository.delete(part);
+    }
+
+    public void addMediaToPart(Integer partId, MediaRequest request) {
+        Part part = partRepository.findById(partId)
+                .orElseThrow(() -> new RuntimeException("Lesson not found"));
+        Media media = mediaMapper.toMedia(request);
+        part.setMedia(media);
+        partRepository.save(part);
     }
 }

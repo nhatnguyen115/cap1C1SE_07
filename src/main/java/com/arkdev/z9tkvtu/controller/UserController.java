@@ -4,11 +4,15 @@ import com.arkdev.z9tkvtu.dto.Request.UserCreationRequest;
 import com.arkdev.z9tkvtu.dto.Request.UserUpdateRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
+import com.arkdev.z9tkvtu.model.UserLoginData;
 import com.arkdev.z9tkvtu.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -19,6 +23,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
     UserService userService;
+
+    @GetMapping("/authorities")
+    public ResponseData<?> getUserAuthorities() {
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            UserLoginData userLoginData = (UserLoginData) auth.getPrincipal();
+            return new ResponseData<>(HttpStatus.OK.value(), "Get User Authorities Successfully", userLoginData.getAuthorities());
+        } catch (Exception e) {
+            return new ResponseData<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get User Authorities Failed");
+        }
+    }
 
     @GetMapping("")
     public ResponseData<?> getUsers() {
@@ -41,7 +56,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseData<?> addUser(@RequestBody UserCreationRequest request) {
+    public ResponseData<?> addUser(@RequestBody @Valid UserCreationRequest request) {
         try {
             userService.addUser(request);
             return new ResponseData<>(HttpStatus.CREATED.value(), "User added successfully");
@@ -52,7 +67,7 @@ public class UserController {
 
     @PutMapping("/update/{userId}")
     public ResponseData<?> updateUser(@PathVariable("userId") UUID userId,
-                                      @RequestBody UserUpdateRequest request) {
+                                      @RequestBody @Valid UserUpdateRequest request) {
         try {
             userService.updateUser(userId, request);
             return new ResponseData<>(HttpStatus.OK.value(), "User updated successfully");

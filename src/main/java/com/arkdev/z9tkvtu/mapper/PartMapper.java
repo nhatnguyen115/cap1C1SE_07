@@ -14,6 +14,8 @@ public class PartMapper {
         part.setQuestionType(request.getQuestionType());
         part.setDescription(request.getDescription());
         part.setInstructions(request.getInstructions());
+        part.setQuestionCount(request.getQuestionCount());
+        part.setOrderNumber(request.getOrderNumber());
         return part;
     }
 
@@ -23,15 +25,20 @@ public class PartMapper {
         part.setQuestionType(request.getQuestionType());
         part.setDescription(request.getDescription());
         part.setInstructions(request.getInstructions());
+        part.setQuestionCount(request.getQuestionCount());
+        part.setOrderNumber(request.getOrderNumber());
     }
 
     public PartResponse toPartResponse(Part part) {
         if(part == null) return null;
         return new PartResponse(
+                part.getId(),
                 part.getPartName(),
                 part.getDescription(),
                 part.getQuestionType(),
-                part.getInstructions()
+                part.getInstructions(),
+                part.getQuestionCount(),
+                part.getOrderNumber()
         );
     }
 }

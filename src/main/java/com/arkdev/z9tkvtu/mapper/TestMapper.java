@@ -22,6 +22,7 @@ public class TestMapper {
     public TestResponse toTestResponse(Test test) {
         if (test == null) return null;
         return new TestResponse(
+                test.getId(),
                 test.getTestType()
         );
     }

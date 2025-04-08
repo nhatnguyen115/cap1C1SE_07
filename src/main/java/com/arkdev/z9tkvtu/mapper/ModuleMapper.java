@@ -21,6 +21,8 @@ public class ModuleMapper {
 
     public ModuleResponse toModuleResponse(Module module) {
         if (module == null) return null;
-        return new ModuleResponse(module.getModuleType());
+        return new ModuleResponse(
+                module.getId(),
+                module.getModuleType());
     }
 }

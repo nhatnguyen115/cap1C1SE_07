@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -22,9 +23,11 @@ public class ExamService {
     ExamRepository examRepository;
     ExamMapper examMapper;
 
-    public List<ExamResponse> getExams() {
-        return examRepository.findAll()
-                .stream()
+    public List<ExamResponse> getExams(Integer testId) {
+        return testRepository.findById(testId)
+                .orElseThrow(() -> new RuntimeException("Test not found"))
+                .getExams().stream()
+                .sorted(Comparator.comparing(Exam::getExamName))
                 .map(examMapper::toExamResponse)
                 .toList();
     }
@@ -32,7 +35,7 @@ public class ExamService {
     public ExamResponse getExam(Integer examId) {
         return examRepository.findById(examId)
                 .map(examMapper::toExamResponse)
-                .orElseThrow(() -> new RuntimeException("Test not found"));
+                .orElseThrow(() -> new RuntimeException("Exam not found"));
     }
 
     public void addExam(Integer testId, ExamRequest request) {

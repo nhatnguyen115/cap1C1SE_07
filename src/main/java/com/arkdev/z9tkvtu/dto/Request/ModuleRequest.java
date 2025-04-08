@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.io.Serializable;
  * DTO for {@link com.arkdev.z9tkvtu.model.Module}
  */
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ModuleRequest implements Serializable {

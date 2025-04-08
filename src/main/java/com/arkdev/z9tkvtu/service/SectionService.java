@@ -22,8 +22,8 @@ public class SectionService {
     ModuleRepository moduleRepository;
     SectionMapper sectionMapper;
 
-    public List<SectionResponse> getSections() {
-        return sectionRepository.findAll()
+    public List<SectionResponse> getSections(Integer moduleId) {
+        return sectionRepository.findByModuleIdOrderByOrderNumber(moduleId)
                 .stream()
                 .map(sectionMapper::toSectionResponse)
                 .toList();
@@ -36,15 +36,16 @@ public class SectionService {
     }
 
     public void addSection(Integer moduleId, SectionRequest request) {
-        Section section = sectionRepository.findBySectionName(request.getSectionName())
-                .orElse(null);
-        Module module = moduleRepository.findById(moduleId)
-                .orElseThrow(() -> new RuntimeException("Module not found"));
-        if (section != null)
-            throw new RuntimeException("Section already exists");
-        section = sectionMapper.toSection(request);
-        module.getSections().add(section);
-        moduleRepository.save(module);
+        sectionRepository.findBySectionName(request.getSectionName())
+                .ifPresent(section -> {
+                    throw new RuntimeException("Section already exists");
+                });
+        if (!moduleRepository.existsById(moduleId))
+            throw new RuntimeException("Module not found");
+        Module module = moduleRepository.getReferenceById(moduleId);
+        Section section = sectionMapper.toSection(request);
+        section.setModule(module);
+        sectionRepository.save(section);
     }
 
     public void updateSection(Integer sectionId, SectionRequest request) {

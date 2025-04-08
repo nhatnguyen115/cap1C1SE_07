@@ -6,7 +6,8 @@ import java.io.Serializable;
  * DTO for {@link com.arkdev.z9tkvtu.model.Exam}
  */
 public record ExamResponse(
+        Integer id,
         String examName,
-        Short totalScore,
-        Short duration) implements Serializable {
+        Integer totalScore,
+        Integer duration) implements Serializable {
 }

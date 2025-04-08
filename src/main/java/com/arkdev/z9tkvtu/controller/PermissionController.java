@@ -4,15 +4,18 @@ import com.arkdev.z9tkvtu.dto.Request.PermissionRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.service.PermissionService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/permission")
+@Validated
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequestMapping("/permission")
 @RequiredArgsConstructor
 public class PermissionController {
     PermissionService permissionService;
@@ -38,7 +41,7 @@ public class PermissionController {
     }
 
     @PostMapping("/add")
-    public ResponseData<?> addPermission(@RequestBody PermissionRequest request) {
+    public ResponseData<?> addPermission(@RequestBody @Valid PermissionRequest request) {
         try {
             permissionService.addPermission(request);
             return new ResponseData<>(HttpStatus.OK.value(), "Permission Added Successfully");
@@ -49,7 +52,7 @@ public class PermissionController {
 
     @PutMapping("/update/{permissionId}")
     public ResponseData<?> updatePermission(@PathVariable Integer permissionId,
-                                            @RequestBody PermissionRequest request) {
+                                            @RequestBody @Valid PermissionRequest request) {
         try {
             permissionService.updatePermission(permissionId, request);
             return new ResponseData<>(HttpStatus.OK.value(), "Permission Updated Successfully");

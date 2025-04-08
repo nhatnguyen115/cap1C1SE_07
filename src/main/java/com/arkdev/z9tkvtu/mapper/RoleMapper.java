@@ -10,21 +10,22 @@ public class RoleMapper {
     public Role toRole(RoleRequest request) {
         if (request == null) return null;
         Role role = new Role();
-        role.setRoleName(request.getRoleName());
+        role.setRoleType(request.getRoleType());
         role.setDescription(request.getDescription());
         return role;
     }
 
     public void updateRole(Role role, RoleRequest request) {
         if (role == null) return;
-        role.setRoleName(request.getRoleName());
+        role.setRoleType(request.getRoleType());
         role.setDescription(request.getDescription());
     }
 
     public RoleResponse toRoleResponse(Role role) {
         if (role == null) return null;
         return new RoleResponse(
-                role.getRoleName(),
+                role.getId(),
+                role.getRoleType(),
                 role.getDescription());
     }
 }

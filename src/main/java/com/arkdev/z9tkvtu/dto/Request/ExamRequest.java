@@ -19,7 +19,7 @@ public class ExamRequest implements Serializable {
     String examName;
     
     @NotNull(message = "Total score must be not null")
-    Short totalScore;
+    Integer totalScore;
     
-    Short duration;
+    Integer duration;
 }

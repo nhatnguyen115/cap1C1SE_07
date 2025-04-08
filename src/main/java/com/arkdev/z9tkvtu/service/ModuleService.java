@@ -5,6 +5,8 @@ import com.arkdev.z9tkvtu.dto.Response.ModuleResponse;
 import com.arkdev.z9tkvtu.mapper.ModuleMapper;
 import com.arkdev.z9tkvtu.model.Module;
 import com.arkdev.z9tkvtu.repository.ModuleRepository;
+import jakarta.persistence.EntityExistsException;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,7 +22,7 @@ public class ModuleService {
     ModuleMapper moduleMapper;
 
     public List<ModuleResponse> getModules() {
-        return moduleRepository.findAll()
+        return moduleRepository.findAllByOrderByModuleType()
                 .stream()
                 .map(moduleMapper::toModuleResponse)
                 .toList();
@@ -32,12 +34,13 @@ public class ModuleService {
                 .orElseThrow(() -> new RuntimeException("Module not found"));
     }
 
+    @Transactional
     public void addModule(ModuleRequest request) {
-        Module module = moduleRepository.findByModuleType(request.getModuleType())
-                .orElse(null);
-        if (module != null)
-            throw new RuntimeException("Module already exists");
-        module = moduleMapper.toModule(request);
+        moduleRepository.findByModuleType(request.getModuleType())
+                .ifPresent(module -> {
+                    throw new EntityExistsException("Module " + request.getModuleType() + " already exists");
+                });
+        Module module = moduleMapper.toModule(request);
         moduleRepository.save(module);
     }
 
@@ -49,8 +52,6 @@ public class ModuleService {
     }
 
     public void deleteModule(Integer moduleId) {
-        Module module = moduleRepository.findById(moduleId)
-                .orElseThrow(() -> new RuntimeException("Module not found"));
-        moduleRepository.delete(module);
+        moduleRepository.deleteById(moduleId);
     }
 }

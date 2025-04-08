@@ -8,6 +8,6 @@ import java.io.Serializable;
  * DTO for {@link com.arkdev.z9tkvtu.model.Test}
  */
 public record TestResponse(
-        TestType testType
-) implements Serializable {
+        Integer id,
+        TestType testType) implements Serializable {
 }

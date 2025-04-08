@@ -5,6 +5,7 @@ import com.arkdev.z9tkvtu.dto.Response.TestResponse;
 import com.arkdev.z9tkvtu.mapper.TestMapper;
 import com.arkdev.z9tkvtu.model.Test;
 import com.arkdev.z9tkvtu.repository.TestRepository;
+import jakarta.persistence.EntityExistsException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -33,11 +34,11 @@ public class TestService {
     }
 
     public void addTest(TestRequest request) {
-        Test test = testRepository.findByTestType(request.getTestType())
-                .orElse(null);
-        if (test != null)
-            throw new IllegalArgumentException("Test already exists");
-        test = testMapper.toTest(request);
+        testRepository.findByTestType(request.getTestType())
+                .ifPresent(test -> {
+                    throw new EntityExistsException("Test " + request.getTestType() + " already exists");
+                });
+        Test test = testMapper.toTest(request);
         testRepository.save(test);
     }
 
@@ -49,9 +50,7 @@ public class TestService {
     }
 
     public void deleteTest(Integer testId) {
-        Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new RuntimeException("Test not found"));
-        testRepository.delete(test);
+        testRepository.deleteById(testId);
     }
 }
 

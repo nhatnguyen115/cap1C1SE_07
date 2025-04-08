@@ -26,6 +26,7 @@ public class SectionMapper {
     public SectionResponse toSectionResponse(Section section) {
         if (section == null) return null;
         return new SectionResponse(
+                section.getId(),
                 section.getSectionName(),
                 section.getDescription(),
                 section.getOrderNumber());
