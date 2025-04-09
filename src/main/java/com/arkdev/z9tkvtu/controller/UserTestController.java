@@ -31,6 +31,16 @@ public class UserTestController {
         }
     }
 
+    @GetMapping("/get-result")
+    public ResponseData<?> getTestResult(@RequestParam Integer attemptId) {
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "Get Test Result Successfully",
+                    userTestService.getTestResult(attemptId));
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Test Result Failed");
+        }
+    }
+
     @PostMapping("/start-test")
     public ResponseData<?> startTest(@RequestParam Integer examId) {
         try {
@@ -49,6 +59,16 @@ public class UserTestController {
             return new ResponseData<>(HttpStatus.OK.value(), "Submit Test Successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Submit Test Failed");
+        }
+    }
+
+    @DeleteMapping("/delete-test")
+    public ResponseData<?> deleteTest(@RequestParam Integer attemptId) {
+        try {
+            userTestService.deleteTest(attemptId);
+            return new ResponseData<>(HttpStatus.OK.value(), "Delete Test Successfully");
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Delete Test Failed");
         }
     }
 }

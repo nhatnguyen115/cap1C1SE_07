@@ -33,13 +33,13 @@ public class UserTestAttempt implements Serializable {
     private Integer totalScore;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserAccount user;
 
     @ManyToOne
-    @JoinColumn(name = "exam_id")
+    @JoinColumn(name = "exam_id", nullable = false)
     private Exam exam;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<UserAnswer> userAnswers;
 }
