@@ -17,4 +17,7 @@ public interface PartRepository extends JpaRepository<Part, Integer> {
     Optional<Part> findByPartNameAndSectionsId(@NotNull(message = "Part name must be not null") String partName, Integer sectionId);
 
     Optional<Part> findByPartNameAndExamsId(@NotNull(message = "Part name must be not null") String partName, Integer examId);
+
+    @Query("select p from Part p join p.exams e join UserTestAttempt uta on uta.exam = e where uta.id = :attemptId")
+    List<Part> findPartsByAttemptId(@Param("attemptId") Integer attemptId);
 }
