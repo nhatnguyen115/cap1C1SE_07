@@ -51,7 +51,7 @@ public class QuestionService {
     }
 
     @Transactional
-    public void addQuestion(Integer partId,QuestionRequest request) {
+    public void addQuestion(Integer partId, QuestionRequest request) {
         if (!partRepository.existsById(partId))
             throw new RuntimeException("part not found");
         Part part = partRepository.getReferenceById(partId);
