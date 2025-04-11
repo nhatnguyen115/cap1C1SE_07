@@ -1,6 +1,5 @@
 package com.arkdev.z9tkvtu.dto.Request;
 
-import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,5 +18,5 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TestRequest implements Serializable {
     @NotNull(message = "Test type must be not null")
-    TestType testType;
+    String testType;
 }
