@@ -1,6 +1,5 @@
 package com.arkdev.z9tkvtu.dto.Request;
 
-import com.arkdev.z9tkvtu.util.ModuleType;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,5 +18,5 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ModuleRequest implements Serializable {
     @NotNull(message = "Module type must be not null")
-    ModuleType moduleType;
+    String moduleName;
 }
