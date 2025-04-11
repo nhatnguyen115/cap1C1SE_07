@@ -1,4 +1,14 @@
 package com.arkdev.z9tkvtu.dto.Response;
 
-public record MenuResponse() {
+import java.io.Serializable;
+import java.util.List;
+
+public record MenuResponse(
+        Integer id,
+        String menuCode,
+        String label,
+        String url,
+        String description,
+        String icon,
+        List<MenuResponse> list) implements Serializable {
 }

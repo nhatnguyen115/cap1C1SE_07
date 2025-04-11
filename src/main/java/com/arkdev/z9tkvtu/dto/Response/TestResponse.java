@@ -1,7 +1,5 @@
 package com.arkdev.z9tkvtu.dto.Response;
 
-import com.arkdev.z9tkvtu.util.TestType;
-
 import java.io.Serializable;
 
 /**
@@ -9,5 +7,5 @@ import java.io.Serializable;
  */
 public record TestResponse(
         Integer id,
-        TestType testType) implements Serializable {
+        String testType) implements Serializable {
 }
