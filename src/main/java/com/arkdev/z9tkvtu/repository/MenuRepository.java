@@ -1,4 +1,12 @@
 package com.arkdev.z9tkvtu.repository;
 
-public interface MenuRepository extends org.springframework.data.jpa.repository.JpaRepository<com.arkdev.z9tkvtu.model.Menu, java.lang.Integer> {
-  }
+import com.arkdev.z9tkvtu.model.Menu;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface MenuRepository extends JpaRepository<Menu, Integer> {
+    List<Menu> findAllByParent(Menu parent);
+}
