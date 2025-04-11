@@ -11,6 +11,7 @@ import { Link, useLocation } from "react-router-dom";
 import { MenuItem } from "../../types/home";
 import { MenuNav } from "../components/MenuNav";
 import { mockMenuData } from "../../data/MenuItemMock";
+import { getMenu } from "./../../service/HomeService";
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -18,22 +19,22 @@ const Header: React.FC = () => {
 
   const [menus, setMenus] = useState<MenuItem[]>([]);
 
-  // useEffect(() => {
-  //   const fetchMenu = async () => {
-  //     try {
-  //       const data = await getMenu();
-  //       setMenus(data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch menu", error);
-  //     }
-  //   };
-
-  //   fetchMenu();
-  // }, []);
-
   useEffect(() => {
-    setMenus(mockMenuData);
+    const fetchMenu = async () => {
+      try {
+        const data = await getMenu(); // data: MenuItem[]
+        setMenus(data);
+      } catch (error) {
+        console.error("Failed to fetch menu", error);
+      }
+    };
+
+    fetchMenu();
   }, []);
+
+  // useEffect(() => {
+  //   setMenus(mockMenuData);
+  // }, []);
 
   const isActive = (url: string) => location.pathname === url;
 

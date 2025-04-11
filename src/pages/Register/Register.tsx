@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Gender, RegisterType } from "../../types/auth";
+import { register } from "../../service/AuthService";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -9,16 +11,37 @@ const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for showing confirm password
 
-  const handleRegister = (e: React.FormEvent) => {
+  const [username, setUsername] = useState("");
+  const [gender, setGender] = useState<Gender>(Gender.MALE);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [dob, setDob] = useState<string | null>(null);
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Check if password and confirm password match
     if (password !== confirmPassword) {
       alert("Mật khẩu không khớp!");
       return;
     }
 
-    // Handle registration logic here
+    const payload: RegisterType = {
+      firstName: name.split(" ")[0],
+      lastName: name.split(" ").slice(1).join(" "),
+      gender,
+      dob,
+      email,
+      phoneNumber,
+      username,
+      password,
+    };
+
+    try {
+      const response = await register(payload);
+      alert(response.message); // hoặc toast, redirect...
+    } catch (error: any) {
+      alert("Đăng ký thất bại. Vui lòng thử lại.");
+      console.error("Registration error:", error);
+    }
   };
 
   return (
@@ -44,7 +67,10 @@ const Register: React.FC = () => {
           <form onSubmit={handleRegister} className="space-y-4">
             {/* Name Field */}
             <div>
-              <label htmlFor="name" className="text-gray-700 text-sm font-medium">
+              <label
+                htmlFor="name"
+                className="text-gray-700 text-sm font-medium"
+              >
                 Tên
               </label>
               <input
@@ -58,9 +84,31 @@ const Register: React.FC = () => {
               />
             </div>
 
+            {/* Name Field */}
+            <div>
+              <label
+                htmlFor="name"
+                className="text-gray-700 text-sm font-medium"
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Nhập username"
+                className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              />
+            </div>
+
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="text-gray-700 text-sm font-medium">
+              <label
+                htmlFor="email"
+                className="text-gray-700 text-sm font-medium"
+              >
                 Email
               </label>
               <input
@@ -76,7 +124,10 @@ const Register: React.FC = () => {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="text-gray-700 text-sm font-medium">
+              <label
+                htmlFor="password"
+                className="text-gray-700 text-sm font-medium"
+              >
                 Mật khẩu
               </label>
               <div className="relative">
@@ -101,7 +152,10 @@ const Register: React.FC = () => {
 
             {/* Confirm Password Field */}
             <div>
-              <label htmlFor="confirmPassword" className="text-gray-700 text-sm font-medium">
+              <label
+                htmlFor="confirmPassword"
+                className="text-gray-700 text-sm font-medium"
+              >
                 Xác nhận mật khẩu
               </label>
               <div className="relative">

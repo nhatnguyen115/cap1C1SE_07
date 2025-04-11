@@ -1,13 +1,28 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { login } from "../../service/AuthService";
+import { LoginType } from "../../types/auth";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
+
+    const payload: LoginType = {
+      username,
+      password,
+    };
+
+    try {
+      const response = await login(payload);
+      alert(response.message); // hoặc toast, redirect...
+    } catch (error: any) {
+      alert("Đăng ký thất bại. Vui lòng thử lại.");
+      console.error("Registration error:", error);
+    }
   };
 
   return (
@@ -33,17 +48,17 @@ const Login: React.FC = () => {
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="text-gray-700 text-sm font-medium"
               >
-                Email
+                Username
               </label>
               <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Nhập email của bạn"
+                type="username"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Nhập username của bạn"
                 className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required
               />

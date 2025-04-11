@@ -26,32 +26,33 @@ export const MenuNav = ({ menuItems }: Props) => {
 
         return (
           <div
-            key={item.menuId}
+            key={item.id}
             className="relative"
-            onMouseEnter={() => setOpenDropdown(item.menuId)}
+            onMouseEnter={() => setOpenDropdown(item.id)}
             onMouseLeave={() => setOpenDropdown(null)}
           >
             {/* Desktop parent */}
             <Link
               to={item.url}
-              className={`hidden sm:block px-2 py-1 rounded transition duration-200 transform ${
+              className={`hidden sm:flex items-center gap-1 px-2 py-1 rounded transition duration-200 transform ${
                 isActive(item)
                   ? "text-orange-600 text-xl"
                   : "text-gray-600 hover:text-orange-500 hover:-translate-y-0.5"
               }`}
             >
-              {item.label}
+              <span>{item.label}</span>
+              {hasChildren && <span className="text-xs">▼</span>}
             </Link>
 
             {/* Dropdown (desktop only) */}
-            {hasChildren && openDropdown === item.menuId && (
+            {hasChildren && openDropdown === item.id && (
               <div className="absolute left-0 top-full bg-white border rounded shadow-md z-50 min-w-[180px] sm:block">
                 {item.children?.map((child) => (
                   <Link
-                    key={child.menuId}
+                    key={child.id}
                     to={child.url}
                     className={`block px-4 py-2 transition duration-150 ${
-                      isActive(child.url)
+                      isActive(child)
                         ? "text-orange-600 bg-gray-100"
                         : "text-gray-700 hover:bg-gray-100"
                     }`}
@@ -66,7 +67,7 @@ export const MenuNav = ({ menuItems }: Props) => {
             <Link
               to={item.url}
               className={`sm:hidden block px-2 py-1 ${
-                isActive(item.url) ? "text-orange-600" : "text-gray-600"
+                isActive(item) ? "text-orange-600" : "text-gray-600"
               }`}
             >
               {item.label}

@@ -1,8 +1,9 @@
-export interface MenuItem {
-  menuId: number;
+export type MenuItem = {
+  id: number;
+  menuCode: string;
   label: string;
   url: string;
-  parentId: number | null;
-  sort: number;
-  children?: MenuItem[];
-}
+  description: string | null;
+  icon: string;
+  children: MenuItem[];
+};

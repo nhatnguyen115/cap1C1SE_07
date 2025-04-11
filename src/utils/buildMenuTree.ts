@@ -1,19 +1,21 @@
+import { API_URIS } from "../api/URIConstant";
+import http from "../service/Http";
 import { MenuItem } from "../types/home";
-export function buildMenuTree(menuItems: MenuItem[]): MenuItem[] {
-  const menuMap: { [key: number]: MenuItem } = {};
-  const tree: MenuItem[] = [];
 
-  menuItems.forEach((item) => {
-    menuMap[item.menuId] = { ...item, children: [] };
-  });
+// Hàm đệ quy để map raw item về MenuItem chuẩn
+const mapMenuItem = (item: MenuItem): MenuItem => ({
+  id: item.id,
+  menuCode: item.menuCode,
+  label: item.label,
+  url: item.url,
+  description: item.description,
+  icon: item.icon,
+  children: item.children.map(mapMenuItem),
+});
 
-  menuItems.forEach((item) => {
-    if (item.parentId) {
-      menuMap[item.parentId]?.children?.push(menuMap[item.menuId]);
-    } else {
-      tree.push(menuMap[item.menuId]);
-    }
-  });
+// Hàm build tree từ root
+export const buildMenuItems = (root: MenuItem): MenuItem[] => {
+  return root.children.map(mapMenuItem);
+};
 
-  return tree.sort((a, b) => a.sort - b.sort);
-}
+// Gọi API và build lại tree

@@ -1,14 +1,15 @@
 export const API_URIS = {
   AUTH: {
-    LOGIN: "/auth/login",
+    LOGIN: "/auth/introspect",
     REGISTER: "/auth/register",
     LOGOUT: "/auth/logout",
     REFRESH_TOKEN: "/auth/refresh-token",
   },
   USER: {
-    GET_PROFILE: "/users/profile",
-    UPDATE_PROFILE: "/users/update",
-    CHANGE_PASSWORD: "/users/change-password",
+    ADD: "/user/add",
+    GET_PROFILE: "/user/profile",
+    UPDATE_PROFILE: "/user/update",
+    CHANGE_PASSWORD: "/user/change-password",
   },
   PRODUCT: {
     GET_ALL: "/products",
