@@ -26,4 +26,4 @@ api:
         refresh: 42xzvYLllE839NhwAjE+1F6bhgMN3lCuLX7xkHBmNaM=
 
 server:
-  port: 8089
+  port: 8080
