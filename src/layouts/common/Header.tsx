@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import {
   FaHome,
@@ -8,16 +8,42 @@ import {
   FaCrown,
 } from "react-icons/fa"; // Import icons for each tab
 import { Link, useLocation } from "react-router-dom";
+import { MenuItem } from "../../types/home";
+import { MenuNav } from "../components/MenuNav";
+import { mockMenuData } from "../../data/MenuItemMock";
 
 const Header: React.FC = () => {
   const location = useLocation();
   console.log(location);
 
+  const [menus, setMenus] = useState<MenuItem[]>([]);
+
+  // useEffect(() => {
+  //   const fetchMenu = async () => {
+  //     try {
+  //       const data = await getMenu();
+  //       setMenus(data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch menu", error);
+  //     }
+  //   };
+
+  //   fetchMenu();
+  // }, []);
+
+  useEffect(() => {
+    setMenus(mockMenuData);
+  }, []);
+
+  const isActive = (url: string) => location.pathname === url;
+
   return (
     <header className="bg-white shadow-md px-4 flex items-center justify-between py-5">
       {/* Logo Section */}
       <Link to={"/"} className="flex items-center">
-        <span className="text-blue-600 font-bold text-lg">Nguyễn Gia Trường</span>
+        <span className="text-orange-600 font-bold text-lg">
+          Nguyễn Gia Trường
+        </span>
       </Link>
 
       {/* Navigation Links */}
@@ -25,88 +51,15 @@ const Header: React.FC = () => {
         {/* Desktop Links */}
         <Link
           to={"/"}
-          className={`hidden sm:block  ${
-            location.pathname === "/" ? "text-blue-600" : "text-gray-600"
+          className={`hidden sm:block px-2 py-1 rounded transition duration-200 transform ${
+            isActive("/")
+              ? "text-orange-600 text-xl"
+              : "text-gray-600 hover:text-orange-500 hover:-translate-y-0.5"
           }`}
         >
           Trang chủ
         </Link>
-        <Link
-          to={"/practice"}
-          className={`hidden sm:block  ${
-            location.pathname === "/practice"
-              ? "text-blue-600"
-              : "text-gray-600"
-          }`}
-        >
-          Luyện tập
-        </Link>
-        <Link
-          to={"/mock-test"}
-          className={`hidden sm:block  ${
-            location.pathname === "/mock-test"
-              ? "text-blue-600"
-              : "text-gray-600"
-          }`}
-        >
-          Thi thử
-        </Link>
-        <Link
-          to={"/resource"}
-          className={`hidden sm:block  ${
-            location.pathname === "/resource"
-              ? "text-blue-600"
-              : "text-gray-600"
-          }`}
-        >
-          Tài nguyên
-        </Link>
-        <Link to={"/payment"} className="hidden sm:block text-yellow-600">
-          Premium
-        </Link>
-
-        {/* Mobile Icons */}
-        <Link
-          to={"/"}
-          className={`sm:hidden  ${
-            location.pathname === "/" ? "text-blue-600" : "text-gray-600"
-          }`}
-        >
-          <FaHome className="text-xl" />
-        </Link>
-        <Link
-          to={"/practice"}
-          className={`sm:hidden  ${
-            location.pathname.includes("practice")
-              ? "text-blue-600"
-              : "text-gray-600"
-          }`}
-        >
-          <FaClipboardList className="text-xl" />
-        </Link>
-        <Link
-          to={"/mock-test"}
-          className={`sm:hidden  ${
-            location.pathname === "/mock-test"
-              ? "text-blue-600"
-              : "text-gray-600"
-          }`}
-        >
-          <FaFileAlt className="text-xl" />
-        </Link>
-        <Link
-          to={"/resource"}
-          className={`sm:hidden  ${
-            location.pathname === "/resource"
-              ? "text-blue-600"
-              : "text-gray-600"
-          }`}
-        >
-          <FaSearch className="text-xl" />
-        </Link>
-        <Link to={"/payment"} className="sm:hidden text-yellow-600">
-          <FaCrown className="text-xl" />
-        </Link>
+        <MenuNav menuItems={menus} />
       </nav>
 
       {/* Login Button */}
