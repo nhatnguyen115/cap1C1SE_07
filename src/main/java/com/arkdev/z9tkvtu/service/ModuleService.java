@@ -23,7 +23,7 @@ public class ModuleService {
     ModuleMapper moduleMapper;
 
     public List<ModuleResponse> getModules() {
-        return moduleRepository.findAllByOrderByModuleType()
+        return moduleRepository.findAllByOrderByModuleName()
                 .stream()
                 .map(moduleMapper::toModuleResponse)
                 .toList();
@@ -37,9 +37,9 @@ public class ModuleService {
 
     @Transactional
     public void addModule(ModuleRequest request) {
-        moduleRepository.findByModuleType(request.getModuleType())
+        moduleRepository.findByModuleName(request.getModuleName())
                 .ifPresent(module -> {
-                    throw new EntityExistsException("Module " + request.getModuleType() + " already exists");
+                    throw new EntityExistsException("Module " + request.getModuleName() + " already exists");
                 });
         Module module = moduleMapper.toModule(request);
         moduleRepository.save(module);

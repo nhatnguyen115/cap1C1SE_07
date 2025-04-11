@@ -5,7 +5,6 @@ import com.arkdev.z9tkvtu.dto.Response.TestResponse;
 import com.arkdev.z9tkvtu.mapper.TestMapper;
 import com.arkdev.z9tkvtu.model.Test;
 import com.arkdev.z9tkvtu.repository.TestRepository;
-import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -14,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
