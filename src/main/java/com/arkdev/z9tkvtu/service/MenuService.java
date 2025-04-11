@@ -35,7 +35,7 @@ public class MenuService {
         );
         List<Menu> menus = menuRepository.findAllByParent(menu);
         for (Menu m : menus) {
-            response.list().add(buildMenu(m));
+            response.children().add(buildMenu(m));
         }
         return response;
     }
