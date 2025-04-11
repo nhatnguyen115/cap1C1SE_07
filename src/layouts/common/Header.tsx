@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa"; // Import icons for each tab
 import { Link, useLocation } from "react-router-dom";
 import { MenuItem } from "../../types/home";
-import { MenuNav } from "../components/MenuNav";
+import { MenuNavComponent } from "../components/MenuNavComponent";
 import { mockMenuData } from "../../data/MenuItemMock";
 import { getMenu } from "./../../service/HomeService";
 
@@ -60,7 +60,7 @@ const Header: React.FC = () => {
         >
           Trang chủ
         </Link>
-        <MenuNav menuItems={menus} />
+        <MenuNavComponent menuItems={menus} />
       </nav>
 
       {/* Login Button */}

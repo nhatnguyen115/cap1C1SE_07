@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../service/AuthService";
 import { LoginType } from "../../types/auth";
 
@@ -8,6 +8,9 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -18,7 +21,7 @@ const Login: React.FC = () => {
 
     try {
       const response = await login(payload);
-      alert(response.message); // hoặc toast, redirect...
+      navigate("/"); // 👈 chuyển về trang chủ
     } catch (error: any) {
       alert("Đăng ký thất bại. Vui lòng thử lại.");
       console.error("Registration error:", error);

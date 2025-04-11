@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Gender, RegisterType } from "../../types/auth";
 import { register } from "../../service/AuthService";
+import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +16,9 @@ const Register: React.FC = () => {
   const [gender, setGender] = useState<Gender>(Gender.MALE);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [dob, setDob] = useState<string | null>(null);
+
+  // Trong component
+  const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +41,7 @@ const Register: React.FC = () => {
 
     try {
       const response = await register(payload);
-      alert(response.message); // hoặc toast, redirect...
+      navigate("/"); // 👈 chuyển về trang chủ
     } catch (error: any) {
       alert("Đăng ký thất bại. Vui lòng thử lại.");
       console.error("Registration error:", error);

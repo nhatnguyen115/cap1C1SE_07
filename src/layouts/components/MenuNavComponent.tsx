@@ -7,7 +7,7 @@ type Props = {
   menuItems: MenuItem[];
 };
 
-export const MenuNav = ({ menuItems }: Props) => {
+export const MenuNavComponent = ({ menuItems }: Props) => {
   const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
 
