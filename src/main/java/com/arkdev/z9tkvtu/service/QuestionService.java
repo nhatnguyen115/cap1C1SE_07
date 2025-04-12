@@ -55,7 +55,9 @@ public class QuestionService {
         if (!partRepository.existsById(partId))
             throw new RuntimeException("part not found");
         Part part = partRepository.getReferenceById(partId);
+        Integer max = questionRepository.findMaxOrderNumberByPartId(partId);
         Question question = questionMapper.toQuestion(request);
+        question.setOrderNumber(max != null ? max + 1 : 1);
         question.setPart(part);
         questionRepository.save(question);
     }

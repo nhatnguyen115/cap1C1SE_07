@@ -17,7 +17,6 @@ public class UserLoginDataMapper {
         userLoginData.setEmail(request.getEmail());
         userLoginData.setPhoneNumber(request.getPhoneNumber());
         userLoginData.setUsername(request.getUsername());
-        userLoginData.setPasswordHash(request.getPassword());
         return userLoginData;
     }
 

@@ -13,6 +13,5 @@ public record QuestionResponse(
         String content,
         Map<String, Object> options,
         String correctAnswer,
-        DifficultyLevel difficulty,
-        Integer orderNumber) implements Serializable {
+        DifficultyLevel difficulty) implements Serializable {
 }

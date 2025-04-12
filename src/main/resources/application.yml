@@ -24,3 +24,6 @@ api:
       key:
         access: Amx/EfkMnYwVMsFHooxnD2AeZPWvY5U2UD9HblsXV6E=
         refresh: 42xzvYLllE839NhwAjE+1F6bhgMN3lCuLX7xkHBmNaM=
+server:
+  servlet:
+    context-path: /api/v1

@@ -15,7 +15,6 @@ public class PartMapper {
         part.setDescription(request.getDescription());
         part.setInstructions(request.getInstructions());
         part.setQuestionCount(request.getQuestionCount());
-        part.setOrderNumber(request.getOrderNumber());
         return part;
     }
 
@@ -26,7 +25,6 @@ public class PartMapper {
         part.setDescription(request.getDescription());
         part.setInstructions(request.getInstructions());
         part.setQuestionCount(request.getQuestionCount());
-        part.setOrderNumber(request.getOrderNumber());
     }
 
     public PartResponse toPartResponse(Part part) {
@@ -37,8 +35,7 @@ public class PartMapper {
                 part.getDescription(),
                 part.getQuestionType(),
                 part.getInstructions(),
-                part.getQuestionCount(),
-                part.getOrderNumber()
+                part.getQuestionCount()
         );
     }
 }

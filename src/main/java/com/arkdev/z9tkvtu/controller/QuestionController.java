@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @RestController
 @Validated
-@RequestMapping("/question")
+@RequestMapping("/questions")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class QuestionController {
@@ -48,18 +48,7 @@ public class QuestionController {
         }
     }
 
-    @PostMapping("/add")
-    public ResponseData<?> addQuestion(@RequestParam Integer partId,
-                                       @Valid @RequestBody QuestionRequest request) {
-        try {
-            questionService.addQuestion(partId, request);
-            return new ResponseData<>(HttpStatus.OK.value(), "Add Question Successfully");
-        } catch (Exception e) {
-            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Question could not be added");
-        }
-    }
-
-    @PutMapping("/update/{questionId}")
+    @PutMapping("/{questionId}")
     public ResponseData<?> updateQuestion(@PathVariable Integer questionId,
                                           @RequestBody QuestionRequest request) {
         try {
@@ -70,7 +59,7 @@ public class QuestionController {
         }
     }
 
-    @DeleteMapping("/delete/{questionId}")
+    @DeleteMapping("/{questionId}")
     public ResponseData<?> deleteQuestion(@PathVariable Integer questionId) {
         try {
             questionService.deleteQuestion(questionId);
@@ -80,7 +69,7 @@ public class QuestionController {
         }
     }
 
-    @PostMapping("/add/media/{questionId}")
+    @PostMapping("/{questionId}/media")
     public ResponseData<?> addMediaToQuestion(@PathVariable Integer questionId,
                                               @RequestBody MediaRequest request) {
         try {
@@ -88,17 +77,6 @@ public class QuestionController {
             return new ResponseData<>(HttpStatus.OK.value(), "Add Media To Question Successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Media could not be added");
-        }
-    }
-
-    @PostMapping("/add/excel")
-    public ResponseData<?> addQuestionsFromExcel(@RequestParam Integer partId,
-                                                 @RequestParam MultipartFile file) {
-        try {
-            questionService.addQuestionsFromExcel(partId, file);
-            return new ResponseData<>(HttpStatus.OK.value(), "Add Questions From Excel Successfully");
-        } catch (IOException e) {
-            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Excel could not be added");
         }
     }
 }

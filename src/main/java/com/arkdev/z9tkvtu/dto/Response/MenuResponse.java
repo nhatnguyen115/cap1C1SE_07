@@ -10,5 +10,6 @@ public record MenuResponse(
         String url,
         String description,
         String icon,
+        Integer itemId,
         List<MenuResponse> children) implements Serializable {
 }

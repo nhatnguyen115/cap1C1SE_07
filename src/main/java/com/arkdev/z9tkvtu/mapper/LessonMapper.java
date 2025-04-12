@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.mapper;
 
 import com.arkdev.z9tkvtu.dto.Request.LessonRequest;
-import com.arkdev.z9tkvtu.dto.Response.LessonResponse;
+import com.arkdev.z9tkvtu.dto.Response.LessonDetailsResponse;
 import com.arkdev.z9tkvtu.model.Lesson;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,6 @@ public class LessonMapper {
         lesson.setContentType(request.getContentType());
         lesson.setArticleText(request.getArticleText());
         lesson.setDuration(request.getDuration());
-        lesson.setOrderNumber(request.getOrderNumber());
         return lesson;
     }
 
@@ -24,18 +23,15 @@ public class LessonMapper {
         lesson.setContentType(request.getContentType());
         lesson.setArticleText(request.getArticleText());
         lesson.setDuration(request.getDuration());
-        lesson.setOrderNumber(request.getOrderNumber());
     }
 
-    public LessonResponse toLessonResponse(Lesson lesson) {
+    public LessonDetailsResponse toLessonResponse(Lesson lesson) {
         if (lesson == null) return null;
-        return new LessonResponse(
-                lesson.getId(),
+        return new LessonDetailsResponse(
                 lesson.getLessonName(),
                 lesson.getContentType(),
                 lesson.getArticleText(),
-                lesson.getDuration(),
-                lesson.getOrderNumber()
+                lesson.getDuration()
         );
     }
 }

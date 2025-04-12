@@ -31,9 +31,10 @@ public class MenuService {
                 menu.getUrl(),
                 menu.getDescription(),
                 menu.getIcon(),
+                menu.getItemId(),
                 new ArrayList<>()
         );
-        List<Menu> menus = menuRepository.findAllByParent(menu);
+        List<Menu> menus = menuRepository.findAllByParentOrderByOrderNumber(menu);
         for (Menu m : menus) {
             response.children().add(buildMenu(m));
         }

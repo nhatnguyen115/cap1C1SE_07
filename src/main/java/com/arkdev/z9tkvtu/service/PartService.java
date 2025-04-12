@@ -53,8 +53,12 @@ public class PartService {
             .ifPresent(part -> {
                 throw new RuntimeException("Part already exists");
             });
+        if (!sectionRepository.existsById(sectionId))
+            throw new RuntimeException("Section not found");
         Section section = sectionRepository.getReferenceById(sectionId);
+        Integer max = partRepository.findMaxOrderNumberBySectionsId(sectionId);
         Part part = partMapper.toPart(request);
+        part.setOrderNumber(max != null ? max + 1 : 1);
         part.getSections().add(section);
         section.getParts().add(part);
         partRepository.save(part);
@@ -66,8 +70,12 @@ public class PartService {
                 .ifPresent(part -> {
                     throw new RuntimeException("Part already exists");
                 });
+        if (!examRepository.existsById(examId))
+            throw new RuntimeException("Exam not found");
         Exam exam = examRepository.getReferenceById(examId);
+        Integer max = partRepository.findMaxOrderNumberByExamsId(examId);
         Part part = partMapper.toPart(request);
+        part.setOrderNumber(max != null ? max + 1 : 1);
         part.getExams().add(exam);
         exam.getParts().add(part);
         partRepository.save(part);

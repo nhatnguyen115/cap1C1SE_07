@@ -1,10 +1,12 @@
 package com.arkdev.z9tkvtu.controller;
 
 import com.arkdev.z9tkvtu.dto.Request.ExamRequest;
+import com.arkdev.z9tkvtu.dto.Request.PartRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.model.Exam;
 import com.arkdev.z9tkvtu.service.ExamService;
+import com.arkdev.z9tkvtu.service.PartService;
 import com.arkdev.z9tkvtu.util.Pagination;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -17,11 +19,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Validated
-@RequestMapping("/exam")
+@RequestMapping("/exams")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ExamController {
     ExamService examService;
+    PartService partService;
 
     @GetMapping("")
     public ResponseData<?> getExams(@RequestParam Integer testId,
@@ -45,17 +48,18 @@ public class ExamController {
         }
     }
 
-    @PostMapping("/add")
-    public ResponseData<?> addExam(@RequestParam Integer testId,@Valid @RequestBody ExamRequest request) {
+    @PostMapping("/{examId}/parts")
+    public ResponseData<?> addPart(@PathVariable Integer examId,
+                                   @Valid @RequestBody PartRequest request) {
         try {
-            examService.addExam(testId, request);
-            return new ResponseData<>(HttpStatus.OK.value(), "Add Exam Successfully");
+            partService.addPartToExam(examId, request);
+            return new ResponseData<>(HttpStatus.CREATED.value(), "Add Part To Exam Successfully");
         } catch (Exception e) {
-            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Exam could not be added");
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Part could not be added");
         }
     }
 
-    @PutMapping("/update/{examId}")
+    @PutMapping("/{examId}")
     public ResponseData<?> updateExam(@PathVariable Integer examId,
                                       @Valid @RequestBody ExamRequest request) {
         try {
@@ -66,7 +70,7 @@ public class ExamController {
         }
     }
 
-    @DeleteMapping("/delete/{examId}")
+    @DeleteMapping("/{examId}")
     public ResponseData<?> deleteExam(@PathVariable Integer examId) {
         try {
             examService.deleteExam(examId);

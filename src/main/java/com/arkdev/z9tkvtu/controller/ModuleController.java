@@ -1,9 +1,13 @@
 package com.arkdev.z9tkvtu.controller;
 
 import com.arkdev.z9tkvtu.dto.Request.ModuleRequest;
+import com.arkdev.z9tkvtu.dto.Request.SectionRequest;
+import com.arkdev.z9tkvtu.dto.Request.TestRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.service.ModuleService;
+import com.arkdev.z9tkvtu.service.SectionService;
+import com.arkdev.z9tkvtu.service.TestService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +18,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Validated
-@RequestMapping("/module")
+@RequestMapping("/modules")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ModuleController {
     ModuleService moduleService;
+    SectionService sectionService;
+    TestService testService;
 
     @GetMapping("")
     public ResponseData<?> getModules() {
@@ -40,7 +46,7 @@ public class ModuleController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseData<?> addModule(@RequestBody @Valid ModuleRequest request) {
         try {
             moduleService.addModule(request);
@@ -50,7 +56,7 @@ public class ModuleController {
         }
     }
 
-    @PutMapping("/update/{moduleId}")
+    @PutMapping("/{moduleId}")
     public ResponseData<?> updateModule(@PathVariable Integer moduleId,
                                         @RequestBody @Valid ModuleRequest request) {
         try {
@@ -61,13 +67,35 @@ public class ModuleController {
         }
     }
 
-    @DeleteMapping("/delete/{moduleId}")
+    @DeleteMapping("/{moduleId}")
     public ResponseData<?> deleteModule(@PathVariable Integer moduleId) {
         try {
             moduleService.deleteModule(moduleId);
             return new ResponseData<>(HttpStatus.OK.value(), "Delete Module Successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Module could not be deleted");
+        }
+    }
+
+    @PostMapping("/{moduleId}/sections")
+    public ResponseData<?> addSection(@Valid @RequestBody SectionRequest sectionRequest,
+                                      @PathVariable Integer moduleId) {
+        try {
+            sectionService.addSection(moduleId, sectionRequest);
+            return new ResponseData<>(HttpStatus.OK.value(), "Add Section Successfully");
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Section could not be added");
+        }
+    }
+
+    @PostMapping("/{moduleId}/tests")
+    public ResponseData<?> addTest(@Validated @RequestBody TestRequest request,
+                                   @PathVariable Integer moduleId) {
+        try {
+            testService.addTest(moduleId, request);
+            return new ResponseData<>(HttpStatus.OK.value(), "Add Test Successfully");
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Test could not be added");
         }
     }
 }

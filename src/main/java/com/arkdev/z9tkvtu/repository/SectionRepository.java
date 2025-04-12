@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface SectionRepository extends JpaRepository<Section, Integer> {
     Optional<Section> findBySectionName(String sectionName);
     List<Section> findByModuleIdOrderByOrderNumber(Integer moduleId);
+
+    Integer findMaxOrderNumberByModuleId(Integer moduleId);
 }

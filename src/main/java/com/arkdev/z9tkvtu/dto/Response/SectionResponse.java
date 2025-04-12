@@ -9,5 +9,5 @@ public record SectionResponse(
         Integer id,
         String sectionName,
         String description,
-        Integer orderNumber) implements Serializable {
+        String sectionType) implements Serializable {
 }

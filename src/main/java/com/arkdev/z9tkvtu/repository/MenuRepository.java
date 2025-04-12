@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MenuRepository extends JpaRepository<Menu, Integer> {
-    List<Menu> findAllByParent(Menu parent);
+    List<Menu> findAllByParentOrderByOrderNumber(Menu parent);
 }

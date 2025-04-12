@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Validated
-@RequestMapping("/role")
+@RequestMapping("/roles")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class RoleController {
@@ -40,7 +40,7 @@ public class RoleController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseData<?> addRole(@RequestBody @Validated RoleRequest request) {
         try {
             roleService.addRole(request);
@@ -50,7 +50,7 @@ public class RoleController {
         }
     }
 
-    @PutMapping("/update/{roleId}")
+    @PutMapping("/{roleId}")
     public ResponseData<?> updateRole(@PathVariable("roleId") Integer roleId,
                                       @RequestBody @Valid RoleRequest request) {
         try {
@@ -61,7 +61,7 @@ public class RoleController {
         }
     }
 
-    @DeleteMapping("/delete/{roleId}")
+    @DeleteMapping("/{roleId}")
     public ResponseData<?> deleteRole(@PathVariable("roleId") Integer roleId) {
         try {
             roleService.deleteRole(roleId);

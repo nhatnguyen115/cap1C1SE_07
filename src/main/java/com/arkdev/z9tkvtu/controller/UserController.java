@@ -55,7 +55,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseData<?> addUser(@RequestBody @Valid UserCreationRequest request) {
         try {
             userService.addUser(request);
@@ -65,7 +65,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update/{userId}")
+    @PutMapping("/{userId}")
     public ResponseData<?> updateUser(@PathVariable("userId") UUID userId,
                                       @RequestBody @Valid UserUpdateRequest request) {
         try {
@@ -76,7 +76,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseData<?> deleteUser(@PathVariable("userId") UUID userId) {
         try {
             userService.deleteUser(userId);

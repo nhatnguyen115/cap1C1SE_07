@@ -15,7 +15,6 @@ public class QuestionMapper {
         question.setCorrectAnswer(request.getCorrectAnswer());
         question.setExplanation(request.getExplanation());
         question.setDifficulty(request.getDifficulty());
-        question.setOrderNumber(request.getOrderNumber());
         return question;
     }
 
@@ -26,7 +25,6 @@ public class QuestionMapper {
         question.setCorrectAnswer(request.getCorrectAnswer());
         question.setExplanation(request.getExplanation());
         question.setDifficulty(request.getDifficulty());
-        question.setOrderNumber(request.getOrderNumber());
     }
 
     public QuestionResponse toQuestionResponse(Question question) {
@@ -36,8 +34,7 @@ public class QuestionMapper {
                 question.getContent(),
                 question.getOptions(),
                 question.getCorrectAnswer(),
-                question.getDifficulty(),
-                question.getOrderNumber()
+                question.getDifficulty()
         );
     }
 }

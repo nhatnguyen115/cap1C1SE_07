@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Validated
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/permission")
+@RequestMapping("/permissions")
 @RequiredArgsConstructor
 public class PermissionController {
     PermissionService permissionService;
@@ -40,7 +40,7 @@ public class PermissionController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseData<?> addPermission(@RequestBody @Valid PermissionRequest request) {
         try {
             permissionService.addPermission(request);
@@ -50,7 +50,7 @@ public class PermissionController {
         }
     }
 
-    @PutMapping("/update/{permissionId}")
+    @PutMapping("/{permissionId}")
     public ResponseData<?> updatePermission(@PathVariable Integer permissionId,
                                             @RequestBody @Valid PermissionRequest request) {
         try {
@@ -61,7 +61,7 @@ public class PermissionController {
         }
     }
 
-    @DeleteMapping("/delete/{permissionId}")
+    @DeleteMapping("/{permissionId}")
     public ResponseData<?> deletePermission(@PathVariable Integer permissionId) {
         try {
             permissionService.deletePermission(permissionId);

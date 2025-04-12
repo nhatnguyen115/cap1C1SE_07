@@ -13,6 +13,5 @@ public record PartResponse(
         String description,
         QuestionType questionType,
         String instructions,
-        Integer questionCount,
-        Integer orderNumber) implements Serializable {
+        Integer questionCount) implements Serializable {
 }
