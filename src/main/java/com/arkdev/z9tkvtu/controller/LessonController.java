@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Validated
-@RequestMapping("/lesson")
+@RequestMapping("/lessons")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LessonController {
@@ -45,18 +45,7 @@ public class LessonController {
         }
     }
 
-    @PostMapping("/add")
-    public ResponseData<?> addLesson(@RequestParam Integer sectionId,
-                                     @RequestBody @Valid LessonRequest request) {
-        try {
-            lessonService.addLesson(sectionId, request);
-            return new ResponseData<>(HttpStatus.OK.value(), "Add Lesson Successfully");
-        } catch (Exception e) {
-            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Lesson could not be added");
-        }
-    }
-
-    @PutMapping("/update/{lessonId}")
+    @PutMapping("/{lessonId}")
     public ResponseData<?> updateLesson(@PathVariable Integer lessonId,
                                         @RequestBody @Valid LessonRequest request) {
         try {
@@ -67,7 +56,7 @@ public class LessonController {
         }
     }
 
-    @DeleteMapping("/delete/{lessonId}")
+    @DeleteMapping("/{lessonId}")
     public ResponseData<?> deleteLesson(@PathVariable Integer lessonId) {
         try {
             lessonService.deleteLesson(lessonId);
@@ -77,7 +66,7 @@ public class LessonController {
         }
     }
 
-    @PutMapping("/add/media/{lessonId}")
+    @PostMapping("/{lessonId}/media")
     public ResponseData<?> addMediaToLesson(@PathVariable Integer lessonId,
                                             @RequestBody @Valid MediaRequest request) {
         try {

@@ -1,8 +1,12 @@
 package com.arkdev.z9tkvtu.controller;
 
+import com.arkdev.z9tkvtu.dto.Request.LessonRequest;
+import com.arkdev.z9tkvtu.dto.Request.PartRequest;
 import com.arkdev.z9tkvtu.dto.Request.SectionRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
+import com.arkdev.z9tkvtu.service.LessonService;
+import com.arkdev.z9tkvtu.service.PartService;
 import com.arkdev.z9tkvtu.service.SectionService;
 import com.arkdev.z9tkvtu.util.Pagination;
 import jakarta.validation.Valid;
@@ -16,11 +20,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Validated
-@RequestMapping("/section")
+@RequestMapping("/sections")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SectionController {
     SectionService sectionService;
+    LessonService lessonService;
+    PartService partService;
 
     @GetMapping("")
     public ResponseData<?> getSections(@RequestParam Integer moduleId,
@@ -44,18 +50,29 @@ public class SectionController {
         }
     }
 
-    @PostMapping("/add")
-    public ResponseData<?> addSection(@RequestParam Integer moduleId,
-                                      @Valid @RequestBody SectionRequest sectionRequest) {
+    @PostMapping("/{sectionId}/lessons")
+    public ResponseData<?> addLesson(@PathVariable Integer sectionId,
+                                     @RequestBody @Valid LessonRequest request) {
         try {
-            sectionService.addSection(moduleId, sectionRequest);
-            return new ResponseData<>(HttpStatus.OK.value(), "Add Section Successfully");
+            lessonService.addLesson(sectionId, request);
+            return new ResponseData<>(HttpStatus.OK.value(), "Add Lesson Successfully");
         } catch (Exception e) {
-            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Section could not be added");
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Lesson could not be added");
         }
     }
 
-    @PutMapping("/update/{sectionId}")
+    @PostMapping("/{sectionId}/parts")
+    public ResponseData<?> addPart(@PathVariable Integer sectionId ,
+                                   @Valid @RequestBody PartRequest request) {
+        try {
+            partService.addPartToSection(sectionId, request);
+            return new ResponseData<>(HttpStatus.CREATED.value(), "Add Part To Section Successfully");
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Part could not be added");
+        }
+    }
+
+    @PutMapping("/{sectionId}")
     public ResponseData<?> updateSection(@PathVariable Integer sectionId,
                                          @Valid @RequestBody SectionRequest sectionRequest) {
         try {
@@ -66,7 +83,7 @@ public class SectionController {
         }
     }
 
-    @DeleteMapping("/delete/{sectionId}")
+    @DeleteMapping("/{sectionId}")
     public ResponseData<?> deleteSection(@PathVariable Integer sectionId) {
         try {
             sectionService.deleteSection(sectionId);
