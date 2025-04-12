@@ -12,7 +12,7 @@ public class SectionMapper {
         Section section = new Section();
         section.setSectionName(request.getSectionName());
         section.setDescription(request.getDescription());
-        section.setOrderNumber(request.getOrderNumber());
+        section.setSectionType(request.getSectionType());
         return section;
     }
 
@@ -20,7 +20,7 @@ public class SectionMapper {
         if (request == null) return;
         section.setSectionName(request.getSectionName());
         section.setDescription(request.getDescription());
-        section.setOrderNumber(request.getOrderNumber());
+        section.setSectionType(request.getSectionType());
     }
 
     public SectionResponse toSectionResponse(Section section) {
@@ -29,6 +29,6 @@ public class SectionMapper {
                 section.getId(),
                 section.getSectionName(),
                 section.getDescription(),
-                section.getOrderNumber());
+                section.getSectionType());
     }
 }
