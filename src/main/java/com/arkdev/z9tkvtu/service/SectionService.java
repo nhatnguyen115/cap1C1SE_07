@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -46,7 +45,9 @@ public class SectionService {
         if (!moduleRepository.existsById(moduleId))
             throw new RuntimeException("Module not found");
         Module module = moduleRepository.getReferenceById(moduleId);
+        Integer max = sectionRepository.findMaxOrderNumberByModuleId(moduleId);
         Section section = sectionMapper.toSection(request);
+        section.setOrderNumber(max != null ? max + 1 : 1);
         section.setModule(module);
         sectionRepository.save(section);
     }

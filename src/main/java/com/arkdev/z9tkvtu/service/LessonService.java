@@ -2,7 +2,7 @@ package com.arkdev.z9tkvtu.service;
 
 import com.arkdev.z9tkvtu.dto.Request.LessonRequest;
 import com.arkdev.z9tkvtu.dto.Request.MediaRequest;
-import com.arkdev.z9tkvtu.dto.Response.LessonResponse;
+import com.arkdev.z9tkvtu.dto.Response.LessonDetailsResponse;
 import com.arkdev.z9tkvtu.mapper.LessonMapper;
 import com.arkdev.z9tkvtu.mapper.MediaMapper;
 import com.arkdev.z9tkvtu.model.Lesson;
@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -28,14 +27,14 @@ public class LessonService {
     MediaMapper mediaMapper;
     LessonMapper lessonMapper;
 
-    public List<LessonResponse> getLessons(Integer sectionId) {
+    public List<LessonDetailsResponse> getLessons(Integer sectionId) {
         return lessonRepository.findBySectionIdOrderByOrderNumber(sectionId)
                 .stream()
                 .map(lessonMapper::toLessonResponse)
                 .toList();
     }
 
-    public LessonResponse getLesson(Integer lessonId) {
+    public LessonDetailsResponse getLesson(Integer lessonId) {
         return lessonRepository.findById(lessonId)
                 .map(lessonMapper::toLessonResponse)
                 .orElseThrow(() -> new RuntimeException("Lesson not found"));
@@ -49,8 +48,10 @@ public class LessonService {
                 });
         if (!sectionRepository.existsById(sectionId))
             throw new RuntimeException("Section not found");
+        Integer max = lessonRepository.findMaxOrderNumberBySectionId(sectionId);
         Section section = sectionRepository.getReferenceById(sectionId);
         Lesson lesson = lessonMapper.toLesson(request);
+        lesson.setOrderNumber(max != null ? max + 1 : 1);
         lesson.setSection(section);
         lessonRepository.save(lesson);
     }

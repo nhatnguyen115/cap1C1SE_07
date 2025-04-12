@@ -3,7 +3,9 @@ package com.arkdev.z9tkvtu.service;
 import com.arkdev.z9tkvtu.dto.Request.TestRequest;
 import com.arkdev.z9tkvtu.dto.Response.TestResponse;
 import com.arkdev.z9tkvtu.mapper.TestMapper;
+import com.arkdev.z9tkvtu.model.Module;
 import com.arkdev.z9tkvtu.model.Test;
+import com.arkdev.z9tkvtu.repository.ModuleRepository;
 import com.arkdev.z9tkvtu.repository.TestRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,11 +21,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TestService {
+    ModuleRepository moduleRepository;
     TestRepository testRepository;
     TestMapper testMapper;
 
-    public List<TestResponse> getTests() {
-        return testRepository.findAllByOrderByTestType()
+    public List<TestResponse> getTests(Integer moduleId) {
+        return testRepository.findByModuleIdOrderByTestType(moduleId)
                 .stream()
                 .map(testMapper::toTestResponse)
                 .toList();
@@ -36,12 +39,16 @@ public class TestService {
     }
 
     @Transactional
-    public void addTest(TestRequest request) {
+    public void addTest(Integer moduleId, TestRequest request) {
         testRepository.findByTestType(request.getTestType())
                 .ifPresent(test -> {
                     throw new EntityExistsException("Test " + request.getTestType() + " already exists");
                 });
+        if (!moduleRepository.existsById(moduleId))
+            throw new RuntimeException("Module not found");
+        Module module = moduleRepository.getReferenceById(moduleId);
         Test test = testMapper.toTest(request);
+        test.setModule(module);
         testRepository.save(test);
     }
 
