@@ -30,7 +30,4 @@ public class PartRequest implements Serializable {
 
     @NotNull(message = "Question count must be not null")
     Integer questionCount;
-
-    @NotNull(message = "Order number must be not null")
-    Integer orderNumber;
 }

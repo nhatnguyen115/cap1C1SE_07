@@ -7,11 +7,9 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.Lesson}
  */
-public record LessonResponse(
-        Integer id,
+public record LessonDetailsResponse(
         String lessonName,
         Content contentType,
         String articleText,
-        Integer duration,
-        Integer orderNumber) implements Serializable {
+        Integer duration) implements Serializable {
 }

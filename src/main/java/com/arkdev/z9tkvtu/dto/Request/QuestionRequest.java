@@ -32,7 +32,4 @@ public class QuestionRequest implements Serializable {
     String explanation;
 
     DifficultyLevel difficulty;
-
-    @NotNull(message = "Order Number must be not null")
-    Integer orderNumber;
 }

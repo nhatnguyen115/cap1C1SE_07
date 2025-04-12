@@ -21,7 +21,7 @@ public class SectionRequest implements Serializable {
     String sectionName;
     
     String description;
-    
-    @NotNull(message = "Order number must be not null")
-    Integer orderNumber;
+
+    @NotNull(message = "Section type must be not null")
+    String sectionType;
 }

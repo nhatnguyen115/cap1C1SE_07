@@ -27,7 +27,4 @@ public class LessonRequest implements Serializable {
     String articleText;
 
     Integer duration;
-
-    @NotNull(message = "Order number must be not null")
-    Integer orderNumber;
 }
