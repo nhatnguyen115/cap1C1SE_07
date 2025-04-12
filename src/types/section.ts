@@ -11,3 +11,17 @@ export interface SectionFormData {
   sectionType: string;
   moduleId: string;
 }
+
+export interface Lesson {
+  id: number;
+  lessonName: string;
+  contentType: string;
+  duration: number | null;
+}
+
+export interface Part {
+  partId: number;
+  partName: string;
+  questionType: string;
+  questionCount: number;
+}

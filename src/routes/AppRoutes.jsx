@@ -28,6 +28,7 @@ import UserManagementPage from "../pages/Admin/UserManagement/UserManagement";
 import TestManagementPage from "../pages/Admin/TestManagement/TestManagement";
 import { PracticePage } from "../pages/Practice/PracticePage";
 import SectionManagementPage from "./../pages/Admin/SectionManagement/SectionManagement";
+import { PracticeDetailsPage } from "./../pages/Practice/PracticeDetailsPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -243,6 +244,14 @@ const routes = [
     element: (
       <MainLayout>
         <PracticePage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/sections/:sectionId",
+    element: (
+      <MainLayout>
+        <PracticeDetailsPage />
       </MainLayout>
     ),
   },

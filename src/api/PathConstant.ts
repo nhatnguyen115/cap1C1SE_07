@@ -1,4 +1,4 @@
-export const API_URIS = {
+export const PATH_CONSTANTS = {
   AUTH: {
     LOGIN: "/auth/introspect",
     REGISTER: "/auth/register",
@@ -33,7 +33,7 @@ export const API_URIS = {
   SECTION: {
     GET_ALL_BY_MODULE: (moduleId: number | string) =>
       `/sections?moduleId=${moduleId}`,
-    GET_BY_ID: (id: number | string) => `/sections/${id}`,
+    GET_BY_ID: (sectionId: number) => `/sections/${sectionId}`,
   },
   PRACTICE: {
     GET_ALL_BY_SECTION: (sectionId: number | string) =>

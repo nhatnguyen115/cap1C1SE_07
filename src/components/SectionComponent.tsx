@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { SectionType } from "../types/section";
 import { sectionMockData } from "../data/sectionMockData";
 import { API_URIS } from "../api/URIConstant";
+import { PATH_CONSTANTS } from "../api/PathConstant";
 
 interface SectionComponentProps {
   moduleId: string;
@@ -40,7 +41,11 @@ const SectionComponent: React.FC<SectionComponentProps> = ({ moduleId }) => {
         <div
           key={s.id}
           className="bg-white rounded-xl shadow-md p-4 cursor-pointer hover:shadow-lg transition"
-          onClick={() => navigate(API_URIS.SECTION.GET_BY_ID(s.id))}
+          onClick={() =>
+            navigate(PATH_CONSTANTS.SECTION.GET_BY_ID(s.id), {
+              state: { sectionName: s.sectionName },
+            })
+          }
         >
           <p className="font-bold text-sm text-gray-500">Phần {index + 1}</p>
           <h3 className="font-bold text-lg">{s.sectionName}</h3>
