@@ -30,20 +30,20 @@ public class PartService {
     public List<PartDetailsResponse> getPartsToSection(Integer sectionId) {
         return partRepository.findBySectionsIdOrderByOrderNumber(sectionId)
                 .stream()
-                .map(partMapper::toPartResponse)
+                .map(partMapper::toPartDetailsResponse)
                 .toList();
     }
 
     public List<PartDetailsResponse> getPartsToExam(Integer examId) {
         return partRepository.findByExamsIdOrderByOrderNumber(examId)
                 .stream()
-                .map(partMapper::toPartResponse)
+                .map(partMapper::toPartDetailsResponse)
                 .toList();
     }
 
     public PartDetailsResponse getPart(Integer partId) {
         return partRepository.findById(partId)
-                .map(partMapper::toPartResponse)
+                .map(partMapper::toPartDetailsResponse)
                 .orElseThrow(() -> new RuntimeException("part not found"));
     }
 
