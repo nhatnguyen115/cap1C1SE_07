@@ -43,7 +43,10 @@ const SectionComponent: React.FC<SectionComponentProps> = ({ moduleId }) => {
           className="bg-white rounded-xl shadow-md p-4 cursor-pointer hover:shadow-lg transition"
           onClick={() =>
             navigate(PATH_CONSTANTS.SECTION.GET_BY_ID(s.id), {
-              state: { sectionName: s.sectionName },
+              state: {
+                sectionName: s.sectionName,
+                sections, // OK
+              },
             })
           }
         >
