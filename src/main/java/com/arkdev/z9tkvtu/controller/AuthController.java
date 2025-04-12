@@ -4,14 +4,12 @@ import com.arkdev.z9tkvtu.dto.Request.SignInRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.service.JwtService;
-import com.arkdev.z9tkvtu.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,7 +35,7 @@ public class AuthController {
             if (auth.isAuthenticated()) {
                 return new ResponseData<>(HttpStatus.OK.value(),
                         "Introspect Successful!",
-                        jwtService.generateToken(request.getUsername()));
+                        jwtService.getToken(auth));
             } else {
                 return new ResponseData<>(HttpStatus.UNAUTHORIZED.value(),
                         "Introspect Failed!");
