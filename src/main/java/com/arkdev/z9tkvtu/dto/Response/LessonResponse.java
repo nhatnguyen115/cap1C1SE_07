@@ -1,7 +1,10 @@
 package com.arkdev.z9tkvtu.dto.Response;
 
+import com.arkdev.z9tkvtu.util.Content;
+
 public record LessonResponse(
-        Integer lessonId,
-        String lessonName
-) {
+        Integer id,
+        String lessonName,
+        Content contentType,
+        Integer duration) {
 }

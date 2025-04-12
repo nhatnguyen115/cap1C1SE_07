@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface TestRepository extends JpaRepository<Test, Integer> {
     Optional<Test> findByTestType(@NotNull(message = "Test type must be not null") String testType);
-    List<Test> findByModuleIdOrderByTestType(Integer moduleId);
+    List<Test> findAllByOrderByTestType();
 }

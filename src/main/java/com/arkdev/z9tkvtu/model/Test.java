@@ -20,10 +20,6 @@ public class Test extends AbstractEntity {
     @Column(name = "test_type")
     private String testType;
 
-    @ManyToOne
-    @JoinColumn(name = "module_id")
-    private Module module;
-
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Exam> exams = new HashSet<>();
 }

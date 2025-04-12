@@ -25,10 +25,10 @@ public class TestController {
     ExamService examService;
 
     @GetMapping("")
-    public ResponseData<?> getTests(@RequestParam Integer moduleId) {
+    public ResponseData<?> getTests() {
         try {
             return new ResponseData<>(HttpStatus.OK.value(), "Get Tests Successfully",
-                    testService.getTests(moduleId));
+                    testService.getTests());
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Tests Failed");
         }
