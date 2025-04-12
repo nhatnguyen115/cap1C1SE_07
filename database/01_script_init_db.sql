@@ -82,6 +82,7 @@ create table role_permission (
 ----------------------------------------Practice----------------------------------------
 create type content_type as enum ('VIDEO', 'TEXT');
 CREATE TYPE difficulty_level as enum ('BEGINNER', 'INTERMEDIATE', 'ADVANCED');
+create type section_type as enum('LISTENING', 'READING', 'SPEAKING', 'WRITING');
 CREATE TYPE question_type as enum (
     'MULTIPLE_CHOICE',
     'IMAGE_BASED',
@@ -120,6 +121,7 @@ create table section (
     section_id int not null default nextval('section_seq'),
     module_id int not null,
     section_name varchar(255) not null,
+    section_type section_type not null,
     description text,
     order_number int not null,
     created_at timestamp default CURRENT_TIMESTAMP,
@@ -132,7 +134,6 @@ create table test (
     test_id int not null default nextval('test_seq'),
     test_type varchar(100) not null,
     description text,
-    module_id int,
     created_at timestamp default CURRENT_TIMESTAMP,
     created_by uuid,
     updated_at timestamp,

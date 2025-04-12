@@ -26,7 +26,4 @@ public class Module extends AbstractEntity {
 
     @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Section> sections = new HashSet<>();
-
-    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Test> tests = new HashSet<>();
 }

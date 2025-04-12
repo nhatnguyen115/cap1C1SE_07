@@ -25,8 +25,8 @@ public class TestService {
     TestRepository testRepository;
     TestMapper testMapper;
 
-    public List<TestResponse> getTests(Integer moduleId) {
-        return testRepository.findByModuleIdOrderByTestType(moduleId)
+    public List<TestResponse> getTests() {
+        return testRepository.findAllByOrderByTestType()
                 .stream()
                 .map(testMapper::toTestResponse)
                 .toList();
@@ -48,7 +48,6 @@ public class TestService {
             throw new RuntimeException("Module not found");
         Module module = moduleRepository.getReferenceById(moduleId);
         Test test = testMapper.toTest(request);
-        test.setModule(module);
         testRepository.save(test);
     }
 

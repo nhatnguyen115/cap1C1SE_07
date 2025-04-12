@@ -1,11 +1,14 @@
 package com.arkdev.z9tkvtu.service;
 
+import com.arkdev.z9tkvtu.dto.Response.TokenResponse;
+import com.arkdev.z9tkvtu.model.UserLoginData;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,13 @@ public class JwtService {
     @Value("${api.security.jwt.key.refresh}")
     private String refreshKey;
 
+    public TokenResponse getToken(Authentication auth) {
+        UserLoginData user = (UserLoginData) auth.getPrincipal();
+        return new TokenResponse(
+                generateToken(user.getUsername()),
+                user.getRole().getRoleType()
+        );
+    }
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, username);

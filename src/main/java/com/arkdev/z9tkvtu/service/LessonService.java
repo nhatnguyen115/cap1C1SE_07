@@ -30,13 +30,13 @@ public class LessonService {
     public List<LessonDetailsResponse> getLessons(Integer sectionId) {
         return lessonRepository.findBySectionIdOrderByOrderNumber(sectionId)
                 .stream()
-                .map(lessonMapper::toLessonResponse)
+                .map(lessonMapper::toLessonDetailsResponse)
                 .toList();
     }
 
     public LessonDetailsResponse getLesson(Integer lessonId) {
         return lessonRepository.findById(lessonId)
-                .map(lessonMapper::toLessonResponse)
+                .map(lessonMapper::toLessonDetailsResponse)
                 .orElseThrow(() -> new RuntimeException("Lesson not found"));
     }
 
