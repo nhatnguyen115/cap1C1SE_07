@@ -1,4 +1,7 @@
 package com.arkdev.z9tkvtu.dto.Response;
 
-public record PartResponse() {
+public record PartResponse(
+        Integer partId,
+        String partName
+) {
 }

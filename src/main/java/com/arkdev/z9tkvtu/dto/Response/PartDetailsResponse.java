@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.Part}
  */
-public record PartResponse(
+public record PartDetailsResponse(
         Integer id,
         String partName,
         String description,

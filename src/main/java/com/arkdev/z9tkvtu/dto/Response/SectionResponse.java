@@ -1,5 +1,7 @@
 package com.arkdev.z9tkvtu.dto.Response;
 
+import com.arkdev.z9tkvtu.util.SectionType;
+
 import java.io.Serializable;
 
 /**
@@ -9,5 +11,5 @@ public record SectionResponse(
         Integer id,
         String sectionName,
         String description,
-        String sectionType) implements Serializable {
+        SectionType sectionType) implements Serializable {
 }

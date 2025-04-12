@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.mapper;
 
 import com.arkdev.z9tkvtu.dto.Request.PartRequest;
-import com.arkdev.z9tkvtu.dto.Response.PartResponse;
+import com.arkdev.z9tkvtu.dto.Response.PartDetailsResponse;
 import com.arkdev.z9tkvtu.model.Part;
 import org.springframework.stereotype.Component;
 
@@ -27,9 +27,9 @@ public class PartMapper {
         part.setQuestionCount(request.getQuestionCount());
     }
 
-    public PartResponse toPartResponse(Part part) {
+    public PartDetailsResponse toPartResponse(Part part) {
         if(part == null) return null;
-        return new PartResponse(
+        return new PartDetailsResponse(
                 part.getId(),
                 part.getPartName(),
                 part.getDescription(),

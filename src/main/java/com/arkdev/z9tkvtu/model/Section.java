@@ -1,8 +1,12 @@
 package com.arkdev.z9tkvtu.model;
 
+import com.arkdev.z9tkvtu.util.SectionType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,8 +30,10 @@ public class Section extends AbstractEntity {
     @Column(name = "order_number")
     private Integer orderNumber;
 
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "section_type")
-    private String sectionType;
+    private SectionType sectionType;
 
     @ManyToOne
     @JoinColumn(name = "module_id", nullable = false)
