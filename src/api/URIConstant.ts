@@ -40,6 +40,9 @@ export const API_URIS = {
       `/practice?sectionId=${sectionId}`,
     GET_BY_ID: (id: number | string) => `/practice/${id}`,
   },
+  LESSON: {
+    GET_BY_ID: (lessonId: number | string) => `/lessons/${lessonId}`,
+  },
   MENU: {
     GET_ALL: "/menu",
     GET_BY_ID: (id: number | string) => `/menu/${id}`,

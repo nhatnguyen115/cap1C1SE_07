@@ -29,7 +29,12 @@ export const login = async (payload: LoginType): Promise<LoginResponse> => {
       API_URIS.AUTH.LOGIN,
       payload,
     );
-    localStorage.setItem(LOCAL_STORAGE_CONSTANT.TOKEN, response.data.data);
+    localStorage.setItem(
+      LOCAL_STORAGE_CONSTANT.TOKEN,
+      response.data.data.token,
+    );
+    localStorage.setItem(LOCAL_STORAGE_CONSTANT.ROLE, response.data.data.role);
+
     return response.data;
   } catch (error) {
     console.error("Error during login:", error);

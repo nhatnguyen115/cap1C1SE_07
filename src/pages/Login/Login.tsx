@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../service/AuthService";
 import { LoginType } from "../../types/auth";
+import { LOCAL_STORAGE_CONSTANT } from "../../constant/LocalStorageConstant";
+import { PATH_CONSTANTS } from "../../api/PathConstant";
 
 const Login: React.FC = () => {
   // const [email, setEmail] = useState("");
@@ -20,11 +22,18 @@ const Login: React.FC = () => {
     };
 
     try {
-      const response = await login(payload);
-      navigate("/"); // 👈 chuyển về trang chủ
+      const response = await login(payload); // Giả sử login() đã lưu token và role vào localStorage
+
+      const role = localStorage.getItem(LOCAL_STORAGE_CONSTANT.ROLE); // 👈 Lấy role từ localStorage
+
+      if (role === LOCAL_STORAGE_CONSTANT.ROLE_ADMIN) {
+        navigate(PATH_CONSTANTS.ADMIN.ADMIN_DASHBOARD, { replace: true });
+      } else {
+        navigate("/");
+      }
     } catch (error: any) {
-      alert("Đăng ký thất bại. Vui lòng thử lại.");
-      console.error("Registration error:", error);
+      alert("Đăng nhập thất bại. Vui lòng thử lại.");
+      console.error("Login error:", error);
     }
   };
 

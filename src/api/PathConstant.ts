@@ -40,11 +40,18 @@ export const PATH_CONSTANTS = {
       `/practice?sectionId=${sectionId}`,
     GET_BY_ID: (id: number | string) => `/practice/${id}`,
   },
+  LESSON: {
+    GET_BY_ID: (lessonId: number | string) => `/lesson/${lessonId}`,
+  },
   MENU: {
     GET_ALL: "/menu",
     GET_BY_ID: (id: number | string) => `/menu/${id}`,
     CREATE: "/menu",
     UPDATE: (id: number | string) => `/menu/${id}`,
     DELETE: (id: number | string) => `/menu/${id}`,
+  },
+  ADMIN: {
+    ADMIN_DASHBOARD: "/admin/dashboard",
+    ADMIN_USERMANAGEMENT: "/admin/usermanagement",
   },
 };

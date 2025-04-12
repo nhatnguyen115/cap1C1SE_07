@@ -28,5 +28,5 @@ export type RegisterResponse = {
 export type LoginResponse = {
   status: number;
   message: string;
-  data: string; // access token
+  data: any; // access token
 };

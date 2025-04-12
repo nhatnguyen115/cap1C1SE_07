@@ -29,6 +29,7 @@ import TestManagementPage from "../pages/Admin/TestManagement/TestManagement";
 import { PracticePage } from "../pages/Practice/PracticePage";
 import SectionManagementPage from "./../pages/Admin/SectionManagement/SectionManagement";
 import { PracticeDetailsPage } from "./../pages/Practice/PracticeDetailsPage";
+import LessonPage from "./../pages/Lesson/LessonPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -254,6 +255,10 @@ const routes = [
         <PracticeDetailsPage />
       </MainLayout>
     ),
+  },
+  {
+    path: "/lesson/:lessonId",
+    element: <LessonPage />,
   },
 ];
 
