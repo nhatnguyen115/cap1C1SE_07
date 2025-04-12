@@ -87,15 +87,4 @@ public class ModuleController {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Section could not be added");
         }
     }
-
-    @PostMapping("/{moduleId}/tests")
-    public ResponseData<?> addTest(@Validated @RequestBody TestRequest request,
-                                   @PathVariable Integer moduleId) {
-        try {
-            testService.addTest(moduleId, request);
-            return new ResponseData<>(HttpStatus.OK.value(), "Add Test Successfully");
-        } catch (Exception e) {
-            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Test could not be added");
-        }
-    }
 }

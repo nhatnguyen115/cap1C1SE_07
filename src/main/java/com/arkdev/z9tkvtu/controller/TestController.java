@@ -44,6 +44,16 @@ public class TestController {
         }
     }
 
+    @PostMapping("")
+    public ResponseData<?> addTest(@Validated @RequestBody TestRequest request) {
+        try {
+            testService.addTest(request);
+            return new ResponseData<>(HttpStatus.OK.value(), "Add Test Successfully");
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Test could not be added");
+        }
+    }
+
     @PostMapping("/{testId}/exams")
     public ResponseData<?> addExam(@PathVariable Integer testId,
                                    @Valid @RequestBody ExamRequest request) {

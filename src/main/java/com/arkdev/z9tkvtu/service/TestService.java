@@ -39,14 +39,11 @@ public class TestService {
     }
 
     @Transactional
-    public void addTest(Integer moduleId, TestRequest request) {
+    public void addTest(TestRequest request) {
         testRepository.findByTestType(request.getTestType())
                 .ifPresent(test -> {
                     throw new EntityExistsException("Test " + request.getTestType() + " already exists");
                 });
-        if (!moduleRepository.existsById(moduleId))
-            throw new RuntimeException("Module not found");
-        Module module = moduleRepository.getReferenceById(moduleId);
         Test test = testMapper.toTest(request);
         testRepository.save(test);
     }

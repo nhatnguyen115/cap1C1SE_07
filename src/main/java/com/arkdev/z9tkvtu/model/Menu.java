@@ -2,7 +2,9 @@ package com.arkdev.z9tkvtu.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
@@ -12,6 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "menu")
 public class Menu extends AbstractEntity{
     @Id
@@ -49,4 +52,16 @@ public class Menu extends AbstractEntity{
 
     @OneToMany(mappedBy = "parent")
     private Set<Menu> submenus = new HashSet<>();
+
+    public Menu(String url, String label, String description,
+                Boolean status, Integer itemId, Menu parent,
+                Integer orderNumber) {
+        this.url = url;
+        this.label = label;
+        this.description = description;
+        this.status = status;
+        this.itemId = itemId;
+        this.parent = parent;
+        this.orderNumber = orderNumber;
+    }
 }
