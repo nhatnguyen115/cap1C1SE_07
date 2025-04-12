@@ -1,5 +1,6 @@
 package com.arkdev.z9tkvtu.dto.Request;
 
+import com.arkdev.z9tkvtu.util.SectionType;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,5 +24,5 @@ public class SectionRequest implements Serializable {
     String description;
 
     @NotNull(message = "Section type must be not null")
-    String sectionType;
+    SectionType sectionType;
 }

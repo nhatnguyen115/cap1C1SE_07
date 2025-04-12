@@ -3,7 +3,6 @@ package com.arkdev.z9tkvtu.service;
 import com.arkdev.z9tkvtu.dto.Request.MediaRequest;
 import com.arkdev.z9tkvtu.dto.Request.PartRequest;
 import com.arkdev.z9tkvtu.dto.Response.PartDetailsResponse;
-import com.arkdev.z9tkvtu.dto.Response.PartResponse;
 import com.arkdev.z9tkvtu.mapper.MediaMapper;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.model.*;
