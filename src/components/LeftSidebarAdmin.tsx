@@ -7,6 +7,7 @@ import {
   FaFileAlt,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { adminMenuItems } from "./data/adminMenuItems";
 
 interface LeftSidebarAdminProps {
   customHeight?: string; // Cho phép truyền chiều cao tùy ý
@@ -15,6 +16,8 @@ interface LeftSidebarAdminProps {
 const LeftSidebarAdmin: React.FC<LeftSidebarAdminProps> = ({
   customHeight,
 }) => {
+  const isActive = (url: string) => location.pathname === url;
+
   return (
     <div
       className={`bg-white flex flex-col p-4 ${
@@ -37,42 +40,21 @@ const LeftSidebarAdmin: React.FC<LeftSidebarAdminProps> = ({
       {/* Phần menu */}
       <nav className="flex-1">
         <ul>
-          <li className="mb-2">
-            <Link
-              to="/admin/dashboard"
-              className="flex items-center p-2 text-gray-700 hover:bg-blue-100 rounded"
-            >
-              <FaTachometerAlt className="mr-3" />
-              Thống kê
-            </Link>
-          </li>
-          <li className="mb-2">
-            <Link
-              to="/admin/usermanagement"
-              className="flex items-center p-2 text-gray-700 hover:bg-blue-100 rounded"
-            >
-              <FaUsers className="mr-3" />
-              Người dùng
-            </Link>
-          </li>
-          <li className="mb-2">
-            <Link
-              to="/admin/testmanagement"
-              className="flex items-center p-2 text-gray-700 hover:bg-blue-100 rounded"
-            >
-              <FaFileAlt className="mr-3" />
-              Đề thi
-            </Link>
-          </li>
-          <li className="mb-2">
-            <Link
-              to="/logout"
-              className="flex items-center p-2 text-red-500 hover:bg-blue-100 rounded"
-            >
-              <FaSignOutAlt className="mr-3" />
-              Đăng xuất
-            </Link>
-          </li>
+          {adminMenuItems.map(({ label, path, icon: Icon }) => (
+            <li key={path} className="mb-2">
+              <Link
+                to={path}
+                className={`flex items-center px-2 py-1 rounded transition duration-200 transform ${
+                  isActive(path)
+                    ? "text-orange-600 text-2xl"
+                    : "text-gray-600 hover:text-orange-500 hover:-translate-y-0.5"
+                }`}
+              >
+                <Icon className="mr-3 text-base" />
+                <span className="text-sm">{label}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </div>
