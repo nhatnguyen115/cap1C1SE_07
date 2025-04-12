@@ -5,5 +5,6 @@ export type MenuItem = {
   url: string;
   description: string | null;
   icon: string;
+  itemId: number;
   children: MenuItem[];
 };

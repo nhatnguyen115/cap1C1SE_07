@@ -3,17 +3,24 @@ import { http } from "../service/Http";
 import { useNavigate } from "react-router-dom";
 import { SectionType } from "../types/section";
 import { sectionMockData } from "../data/sectionMockData";
+import { API_URIS } from "../api/URIConstant";
 
-const SectionComponent: React.FC = () => {
+interface SectionComponentProps {
+  moduleId: string;
+}
+const SectionComponent: React.FC<SectionComponentProps> = ({ moduleId }) => {
   const [sections, setSections] = useState<SectionType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSections = async () => {
       try {
-        const response = await http.get("/section");
+        const response = await http.get(
+          API_URIS.SECTION.GET_ALL_BY_MODULE(moduleId),
+        );
         if (response.status === 200) {
-          setSections(response.data.data);
+          setSections(response.data.data.items);
+          console.log("response.data.data.items", response.data.data.items);
         }
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu sections:", error);
@@ -33,7 +40,7 @@ const SectionComponent: React.FC = () => {
         <div
           key={s.id}
           className="bg-white rounded-xl shadow-md p-4 cursor-pointer hover:shadow-lg transition"
-          onClick={() => navigate(`/section/${s.id}`)}
+          onClick={() => navigate(API_URIS.SECTION.GET_BY_ID(s.id))}
         >
           <p className="font-bold text-sm text-gray-500">Phần {index + 1}</p>
           <h3 className="font-bold text-lg">{s.sectionName}</h3>
@@ -47,7 +54,7 @@ const SectionComponent: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 space-y-10">
-      {hasSection("SPEAKING") && (
+      {hasSection("LISTENING") && (
         <div className="flex justify-center">
           <h1 className="text-3xl font-bold mb-6 text-center">
             Luyện thi TOEIC® Listening và Reading

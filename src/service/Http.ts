@@ -1,4 +1,5 @@
 import axios from "axios";
+import { LOCAL_STORAGE_CONSTANT } from "../constant/LocalStorageConstant";
 
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/";
 
@@ -12,7 +13,7 @@ const http = axios.create({
 
 // Gắn token vào request nếu có
 http.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem(LOCAL_STORAGE_CONSTANT.TOKEN);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

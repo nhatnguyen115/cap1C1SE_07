@@ -27,6 +27,7 @@ import DashboardPage from "../pages/Admin/Dashboard/Dashboard";
 import UserManagementPage from "../pages/Admin/UserManagement/UserManagement";
 import TestManagementPage from "../pages/Admin/TestManagement/TestManagement";
 import { PracticePage } from "../pages/Practice/PracticePage";
+import SectionManagementPage from "./../pages/Admin/SectionManagement/SectionManagement";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -218,6 +219,14 @@ const routes = [
     element: (
       <MainLayout>
         <TestManagementPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/admin/sectionmanagement",
+    element: (
+      <MainLayout>
+        <SectionManagementPage />
       </MainLayout>
     ),
   },

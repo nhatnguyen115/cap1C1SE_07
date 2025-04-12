@@ -24,11 +24,16 @@ export const API_URIS = {
     GET_BY_ID: (id: number | string) => `/orders/${id}`,
   },
   MODULE: {
-    GET_ALL: "/module",
-    GET_BY_ID: (id: number | string) => `/module/${id}`,
-    CREATE: "/module",
-    UPDATE: (id: number | string) => `/module/${id}`,
-    DELETE: (id: number | string) => `/module/${id}`,
+    GET_ALL: "/modules",
+    GET_BY_ID: (id: number | string) => `/modules/${id}`,
+    CREATE: "/modules",
+    UPDATE: (id: number | string) => `/modules/${id}`,
+    DELETE: (id: number | string) => `/modules/${id}`,
+  },
+  SECTION: {
+    GET_ALL_BY_MODULE: (moduleId: number | string) =>
+      `/sections?moduleId=${moduleId}`,
+    GET_BY_ID: (id: number | string) => `/sections/${id}`,
   },
   MENU: {
     GET_ALL: "/menu",

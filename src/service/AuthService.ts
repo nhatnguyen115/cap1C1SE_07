@@ -1,4 +1,5 @@
 import { API_URIS } from "../api/URIConstant";
+import { LOCAL_STORAGE_CONSTANT } from "../constant/LocalStorageConstant";
 import {
   LoginResponse,
   LoginType,
@@ -28,6 +29,7 @@ export const login = async (payload: LoginType): Promise<LoginResponse> => {
       API_URIS.AUTH.LOGIN,
       payload,
     );
+    localStorage.setItem(LOCAL_STORAGE_CONSTANT.TOKEN, response.data.data);
     return response.data;
   } catch (error) {
     console.error("Error during login:", error);

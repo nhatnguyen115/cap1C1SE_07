@@ -23,6 +23,11 @@ export const adminMenuItems: AdminNavItemType[] = [
     icon: FaFileAlt,
   },
   {
+    label: "Sections",
+    path: "/admin/sectionmanagement",
+    icon: FaFileAlt,
+  },
+  {
     label: "Đăng xuất",
     path: "/logout",
     icon: FaSignOutAlt,

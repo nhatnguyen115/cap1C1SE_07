@@ -1,5 +1,3 @@
-import { API_URIS } from "../api/URIConstant";
-import http from "../service/Http";
 import { MenuItem } from "../types/home";
 
 // Hàm đệ quy để map raw item về MenuItem chuẩn
@@ -10,6 +8,7 @@ const mapMenuItem = (item: MenuItem): MenuItem => ({
   url: item.url,
   description: item.description,
   icon: item.icon,
+  itemId: item.itemId,
   children: item.children.map(mapMenuItem),
 });
 
