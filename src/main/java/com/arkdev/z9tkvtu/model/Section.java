@@ -26,6 +26,9 @@ public class Section extends AbstractEntity {
     @Column(name = "order_number")
     private Integer orderNumber;
 
+    @Column(name = "section_type")
+    private String sectionType;
+
     @ManyToOne
     @JoinColumn(name = "module_id", nullable = false)
     private Module module;
