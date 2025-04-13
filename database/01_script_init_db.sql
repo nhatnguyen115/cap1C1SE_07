@@ -93,7 +93,6 @@ CREATE TYPE media_type as enum ('AUDIO', 'VIDEO', 'IMAGE');
 
 create table menu (
     menu_id int not null default nextval('menu_seq'),
-    menu_code varchar(100),
     label varchar(255),
     url text,
     parent_id int,

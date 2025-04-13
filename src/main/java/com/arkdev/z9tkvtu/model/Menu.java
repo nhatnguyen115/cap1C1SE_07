@@ -22,9 +22,6 @@ public class Menu extends AbstractEntity{
     @Column(name = "menu_id", nullable = false)
     private Integer id;
 
-    @Column(name = "menu_code")
-    private String menuCode;
-
     @Column(name = "label")
     private String label;
 

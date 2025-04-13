@@ -2,12 +2,10 @@ package com.arkdev.z9tkvtu.controller;
 
 import com.arkdev.z9tkvtu.dto.Request.ModuleRequest;
 import com.arkdev.z9tkvtu.dto.Request.SectionRequest;
-import com.arkdev.z9tkvtu.dto.Request.TestRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.service.ModuleService;
 import com.arkdev.z9tkvtu.service.SectionService;
-import com.arkdev.z9tkvtu.service.TestService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 public class ModuleController {
     ModuleService moduleService;
     SectionService sectionService;
-    TestService testService;
 
     @GetMapping("")
     public ResponseData<?> getModules() {

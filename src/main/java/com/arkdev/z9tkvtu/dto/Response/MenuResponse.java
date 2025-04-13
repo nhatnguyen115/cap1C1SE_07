@@ -5,7 +5,6 @@ import java.util.List;
 
 public record MenuResponse(
         Integer id,
-        String menuCode,
         String label,
         String url,
         String description,

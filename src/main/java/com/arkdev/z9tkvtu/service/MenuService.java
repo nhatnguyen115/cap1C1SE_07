@@ -26,7 +26,6 @@ public class MenuService {
     private MenuResponse buildMenu(Menu menu) {
         MenuResponse response = new MenuResponse(
                 menu.getId(),
-                menu.getMenuCode(),
                 menu.getLabel(),
                 menu.getUrl(),
                 menu.getDescription(),
