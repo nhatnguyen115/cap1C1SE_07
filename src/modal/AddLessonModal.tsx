@@ -1,26 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // theme
+import { LessonType } from "../types/lesson";
 
 interface AddLessonModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddLesson: (
-    lessonName: string,
-    contentType: string,
-    articleText: string,
-    duration: number,
-  ) => void;
+  onSubmit: (lesson: LessonType) => void;
+  initialData?: LessonType; // null nếu là "add"
 }
 
 const AddLessonModal: React.FC<AddLessonModalProps> = ({
   isOpen,
   onClose,
-  onAddLesson,
+  onSubmit,
+  initialData,
 }) => {
-  const [lessonName, setLessonName] = useState("");
-  const [contentType, setContentType] = useState("VIDEO");
-  const [articleText, setArticleText] = useState("");
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
+  const [lessonName, setLessonName] = useState(initialData?.lessonName || "");
+  const [contentType, setContentType] = useState(
+    initialData?.contentType || "VIDEO",
+  );
+  const [articleText, setArticleText] = useState(
+    initialData?.articleText || "",
+  );
+  const [hours, setHours] = useState(
+    initialData?.duration ? Math.floor(initialData.duration / 60) : 0,
+  );
+  const [minutes, setMinutes] = useState(
+    initialData?.duration ? initialData.duration % 60 : 0,
+  );
+
+  useEffect(() => {
+    setLessonName(initialData?.lessonName || "");
+    setContentType(initialData?.contentType || "VIDEO");
+    setArticleText(initialData?.articleText || "");
+    setHours(initialData?.duration ? Math.floor(initialData.duration / 60) : 0);
+    setMinutes(initialData?.duration ? initialData.duration % 60 : 0);
+  }, [initialData]);
 
   if (!isOpen) return null;
 
@@ -31,13 +47,25 @@ const AddLessonModal: React.FC<AddLessonModalProps> = ({
     }
 
     const totalDuration = hours * 60 + minutes;
-    onAddLesson(lessonName.trim(), contentType, articleText, totalDuration);
+
+    onSubmit({
+      ...initialData, // giữ lại id nếu là edit
+      lessonName: lessonName.trim(),
+      contentType,
+      articleText,
+      duration: totalDuration,
+    });
+
     onClose();
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded shadow-lg w-96">
+      <div
+        className={`bg-white p-6 rounded shadow-lg ${
+          contentType === "TEXT" ? "w-9/12" : "w-96"
+        }`}
+      >
         <h2 className="text-lg font-semibold mb-4">Thêm bài học</h2>
 
         {/* Tên bài học */}
@@ -70,13 +98,12 @@ const AddLessonModal: React.FC<AddLessonModalProps> = ({
             <label className="block mb-1 text-sm">
               Nội dung bài học (TEXT)
             </label>
-            <textarea
+            <ReactQuill
               value={articleText}
-              onChange={(e) => setArticleText(e.target.value)}
-              className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
-              rows={4}
+              onChange={setArticleText}
+              theme="snow"
               placeholder="Nhập nội dung bài học"
-            ></textarea>
+            />
           </div>
         )}
 

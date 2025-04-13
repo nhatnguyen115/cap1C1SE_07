@@ -75,9 +75,9 @@ const LessonDetailsComponent: React.FC<LessonDetailsComponentProps> = ({
             >
               {showSidebar ? <ChevronLeft size={20} /> : <List size={20} />}
             </button>
-            <h1 className="text-lg font-semibold">
-              {lesson?.lessonName ?? "Lesson"}
-            </h1>
+            <div className="flex justify-center">
+              <h2 className="text-lg ">{lesson?.lessonName ?? "Lesson"}</h2>
+            </div>
           </div>
           <button className="bg-green-600 text-white px-3 py-1 rounded-full text-sm shadow">
             100%
@@ -96,26 +96,27 @@ const LessonDetailsComponent: React.FC<LessonDetailsComponentProps> = ({
             <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
               <h2 className="text-2xl font-bold mb-4">{lesson.lessonName}</h2>
 
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <strong>Content Type:</strong>{" "}
                 <span className="ml-2">{lesson.contentType}</span>
-              </div>
+              </div> */}
 
               {lesson.articleText ? (
                 <div className="mb-3">
                   <strong>Article:</strong>
-                  <p className="mt-1 text-gray-700 whitespace-pre-line">
-                    {lesson.articleText}
-                  </p>
+                  <div
+                    className="pl-5"
+                    dangerouslySetInnerHTML={{ __html: lesson.articleText }}
+                  />
                 </div>
               ) : (
                 <p className="text-gray-500 italic mb-3">No article content.</p>
               )}
 
-              <div>
+              {/* <div>
                 <strong>Duration:</strong>{" "}
                 <span className="ml-2">{lesson.duration ?? "N/A"}</span>
-              </div>
+              </div> */}
             </div>
           )}
         </div>

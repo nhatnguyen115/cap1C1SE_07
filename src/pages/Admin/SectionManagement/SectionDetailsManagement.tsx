@@ -3,13 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { http } from "../../../service/Http";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
 import AddLessonModal from "../../../modal/AddLessonModal";
-
-type LessonType = {
-  id: number;
-  lessonName: string;
-  contentType: string;
-  duration: number | null;
-};
+import { LessonType } from "../../../types/lesson";
 
 type PartType = {
   partId: number;
@@ -30,9 +24,10 @@ const SectionDetailsManagement: React.FC = () => {
   const [selectedPartId, setSelectedPartId] = useState<number | null>(null);
   const [selectedLessonId, setSelectedLessonId] = useState<number | null>(null);
 
-  const [isAddLessonModalOpen, setIsAddLessonModalOpen] = useState(false);
+  const [lessonToEdit, setLessonToEdit] = useState<LessonType | null>(null);
 
-  const [isUpdate, setIsUpdate] = useState<number>(0);
+  const [isAddModalOpen, setAddModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const fetchData = async () => {
     if (!sectionId) return;
@@ -52,36 +47,32 @@ const SectionDetailsManagement: React.FC = () => {
     fetchData();
   }, [sectionId]);
 
-  const handleAddLesson = async (
-    lessonName: string,
-    contentType: string,
-    articleText: string,
-    duration: number,
-  ) => {
+  const handleAddLesson = async (lesson: LessonType) => {
     if (!sectionId) return;
     try {
-      const response = await http.post(`/sections/${sectionId}/lessons`, {
-        lessonName,
-        contentType,
-        articleText,
-        duration,
+      const res = await http.post(`/sections/${sectionId}/lessons`, {
+        ...lesson,
       });
-      if (response.status === 200) {
-        alert(response.data.message);
-        await fetchData(); // GỌI LẠI ĐỂ REFRESH UI
+      if (res.status === 200) {
+        alert(res.data.message);
+        fetchData(); // gọi lại useEffect hoặc fetchData riêng
       }
-    } catch (error) {
-      console.error("Lỗi khi thêm bài học:", error);
+    } catch (err) {
+      console.error("Lỗi khi thêm bài học:", err);
     }
   };
 
   const handleUpdateLesson = async (lesson: LessonType) => {
     try {
-      await http.put(`/lessons/${lesson.id}`, {
+      const res = await http.put(`/lessons/${lesson.id}`, {
         ...lesson,
       });
-    } catch (error) {
-      console.error("Lỗi khi cập nhật bài học:", error);
+      if (res.status === 200) {
+        alert(res.data.message);
+        fetchData(); // cập nhật lại list
+      }
+    } catch (err) {
+      console.error("Lỗi khi cập nhật bài học:", err);
     }
   };
 
@@ -168,16 +159,16 @@ const SectionDetailsManagement: React.FC = () => {
                 Danh sách bài học
               </h2>
               <button
-                onClick={() => setIsAddLessonModalOpen(true)}
+                onClick={() => setAddModalOpen(true)}
                 className="px-3 py-1 bg-blue-600 text-white text-sm rounded"
               >
                 Thêm bài học
               </button>
 
               <AddLessonModal
-                isOpen={isAddLessonModalOpen}
-                onClose={() => setIsAddLessonModalOpen(false)}
-                onAddLesson={handleAddLesson}
+                isOpen={isAddModalOpen}
+                onClose={() => setAddModalOpen(false)}
+                onSubmit={handleAddLesson}
               />
             </div>
             {lessons.length === 0 ? (
@@ -199,60 +190,64 @@ const SectionDetailsManagement: React.FC = () => {
                     </div>
                     <div className="space-x-2">
                       <button
-                        onClick={() => handleUpdateLesson(lesson)}
+                        onClick={() => {
+                          setLessonToEdit(lesson);
+                          setEditModalOpen(true);
+                        }}
                         className="px-2 py-1 text-xs bg-yellow-400 text-white rounded"
                       >
                         Sửa
                       </button>
+
                       <button
                         onClick={() => {
-                          setSelectedPartId(null);
-                          setSelectedLessonId(lesson.id);
-                          console.log("clickkk");
-
+                          setSelectedLessonId(lesson.id!);
                           setShowConfirmModal(true);
                         }}
                         className="px-2 py-1 text-xs bg-red-500 text-white rounded"
                       >
                         Xoá
                       </button>
-                      {showConfirmModal && (
-                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                          <div className="bg-white p-4 rounded shadow-md w-80">
-                            <h2 className="text-lg font-semibold mb-2">
-                              Xác nhận xoá
-                            </h2>
-                            <p className="mb-4">
-                              Bạn có chắc chắn muốn xoá phần này không?
-                            </p>
-                            <div className="flex justify-end gap-2">
-                              <button
-                                className="px-3 py-1 bg-gray-300 rounded"
-                                onClick={() => setShowConfirmModal(false)}
-                              >
-                                Huỷ
-                              </button>
-                              <button
-                                className="px-3 py-1 bg-red-500 text-white rounded"
-                                onClick={() => {
-                                  if (selectedPartId !== null) {
-                                    handleDeletePart(selectedPartId);
-                                  }
-                                  if (selectedLessonId !== null) {
-                                    handleDeleteLesson(selectedLessonId);
-                                  }
-                                  setShowConfirmModal(false);
-                                }}
-                              >
-                                Xoá
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </li>
                 ))}
+                {/* Sửa lesson */}
+                <AddLessonModal
+                  isOpen={isEditModalOpen}
+                  onClose={() => setEditModalOpen(false)}
+                  initialData={lessonToEdit!}
+                  onSubmit={handleUpdateLesson}
+                />
+                {/* Modal xác nhận xoá - đặt ngoài .map() */}
+                {showConfirmModal && selectedLessonId !== null && (
+                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white p-4 rounded shadow-md w-80">
+                      <h2 className="text-lg font-semibold mb-2">
+                        Xác nhận xoá
+                      </h2>
+                      <p className="mb-4">
+                        Bạn có chắc chắn muốn xoá bài học này không?
+                      </p>
+                      <div className="flex justify-end gap-2">
+                        <button
+                          className="px-3 py-1 bg-gray-300 rounded"
+                          onClick={() => setShowConfirmModal(false)}
+                        >
+                          Huỷ
+                        </button>
+                        <button
+                          className="px-3 py-1 bg-red-500 text-white rounded"
+                          onClick={() => {
+                            handleDeleteLesson(selectedLessonId);
+                            setShowConfirmModal(false);
+                          }}
+                        >
+                          Xoá
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </ul>
             )}
           </div>
