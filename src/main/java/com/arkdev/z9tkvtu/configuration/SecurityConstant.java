@@ -8,11 +8,12 @@ public class SecurityConstant {
             "/"
             ,"/home"
             ,"/public/**"
-            ,"/user/add"
+            ,"/user"
             ,"/api/v1/product/search"
             ,"/user/add"
             ,"/auth/**"
             ,"/menu"
+            ,"/sections"
     };
 
     public static final List<String> ORIGINS_ALLOWED = Arrays.asList(

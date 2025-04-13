@@ -6,5 +6,6 @@ public record LessonResponse(
         Integer id,
         String lessonName,
         Content contentType,
+        String articleText,
         Integer duration) {
 }
