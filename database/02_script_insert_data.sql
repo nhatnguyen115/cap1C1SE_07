@@ -30,28 +30,35 @@ VALUES (100201, 'Simulation Test', 'Computer-based simulation test with the form
     (100202, 'MINI TEST', 'Take mini test with the number of questions and time limit reduced by half'),
     (100203, 'FULL TEST', 'Take full test with the same number of questions and time limit as the actual test');
 
-INSERT INTO menu(menu_id, label, url, parent_id, order_number, status, item_id)
-VALUES (0, null, '/', -1, 0, true, null),
-    (200100, 'Practice L&R', '/sections?moduleId=', 0, 1, true, 100100),
-    (200101, 'Practice S&W', '/sections?moduleId=', 0, 2, true, 100101),
-    (200102, 'Test', '/tests', 0, 3, true, 100102),
-    (200103, 'Vocabulary', '/sections?moduleId=', 0, 4, true, 100103),
-    (200104, 'Grammar', '/sections?moduleId=', 0, 5, true, 100104),
-    (300100, 'Section 1: Photographs', '/practice?sectionId=', 200100, 1, true, 100200),
-    (300101, 'Section 2: Question-Response', '/practice?sectionId=', 200100, 2, true, 100201),
-    (300102, 'Section 3: Short Conversations', '/practice?sectionId=', 200100, 3, true, 100202),
-    (300103, 'Section 4: Short Talks', '/practice?sectionId=', 200100, 4, true, 100203),
-    (300150, 'Section 5: Incomplete Sentences', '/practice?sectionId=', 200100, 5, true, 100250),
-    (300151, 'Section 6: Text Completion', '/practice?sectionId=', 200100, 6, true, 100251),
-    (300152, 'Section 7: Reading Comprehension', '/practice?sectionId=', 200100, 7, true, 100252),
-    (300200, 'Section 1: Read Aloud', '/practice?sectionId=', 200101, 1, true, 100300),
-    (300201, 'Section 2: Describe a Picture', '/practice?sectionId=', 200101, 2, true, 100301),
-    (300202, 'Section 3: Respond to Questions', '/practice?sectionId=', 200101, 3, true, 100302),
-    (300203, 'Section 4: Respond to questions using information provided', '/practice?sectionId=', 200101, 4, true, 100303),
-    (300204, 'Section 5: Express an opinion', '/practice?sectionId=', 200101, 5, true, 100304),
-    (300250, 'Section 6: Write a sentence based on a picture', '/practice?sectionId=', 200101, 6, true, 100350),
-    (300251, 'Section 7: Respond to a written request', '/practice?sectionId=', 200101, 7, true, 100351),
-    (300252, 'Section 8: Write an opinion essay', '/practice?sectionId=', 200101, 8, true, 100352),
-    (300300, 'Simulation Test', '/exams?testId=', 200102, 1, true, 100201),
-    (300301, 'MINI TEST', '/exams?testId=', 200102, 2, true, 100202),
-    (300302,  'FULL TEST', '/exams?testId=', 200102, 3, true, 100203);
+DELETE FROM menu WHERE 1=1;
+INSERT INTO menu(menu_id, menu_code, label, url, parent_id, order_number, status, item_id, icon)
+VALUES
+    (0, 'ROOT', null, '/', -1, 0, true, null, ''),
+
+    (200100, 'PRACTICE_LISTENING_READING', 'Practice L&R', '/sections?moduleId={id}', 0, 1, true, 100100, ''),
+    (200101, 'PRACTICE_SPEAKING_WRITING', 'Practice S&W', '/sections?moduleId={id}', 0, 2, true, 100101, ''),
+    (200102, 'TEST', 'Test', '/tests', 0, 3, true, 100102, ''),
+    (200103, 'VOCABULARY', 'Vocabulary', '/sections?moduleId={id}', 0, 4, true, 100103, ''),
+    (200104, 'GRAMMAR', 'Grammar', '/sections?moduleId={id}', 0, 5, true, 100104, ''),
+
+    (300100, 'PHOTOGRAPHS', 'Section 1: Photographs', '/sections/{id}', 200100, 1, true, 100200, ''),
+    (300101, 'QUESTION_RESPONSE', 'Section 2: Question-Response', '/sections/{id}', 200100, 2, true, 100201, ''),
+    (300102, 'SHORT_CONVERSATIONS', 'Section 3: Short Conversations', '/sections/{id}', 200100, 3, true, 100202, ''),
+    (300103, 'SHORT_TALKS', 'Section 4: Short Talks', '/sections/{id}', 200100, 4, true, 100203, ''),
+    (300150, 'INCOMPLETE_SENTENCES', 'Section 5: Incomplete Sentences', '/sections/{id}', 200100, 5, true, 100250, ''),
+    (300151, 'TEXT_COMPLETION', 'Section 6: Text Completion', '/sections/{id}', 200100, 6, true, 100251, ''),
+    (300152, 'READING_COMPREHENSION', 'Section 7: Reading Comprehension', '/sections/{id}', 200100, 7, true, 100252, ''),
+
+    (300200, 'READ_ALOUD', 'Section 1: Read Aloud', '/sections/{id}', 200101, 1, true, 100300, ''),
+    (300201, 'DESCRIBE_PICTURE', 'Section 2: Describe a Picture', '/sections/{id}', 200101, 2, true, 100301, ''),
+    (300202, 'RESPOND_QUESTIONS', 'Section 3: Respond to Questions', '/sections/{id}', 200101, 3, true, 100302, ''),
+    (300203, 'RESPOND_QUESTIONS_USING_INFORMATION_PROVIDED', 'Section 4: Respond to questions using information provided', '/sections/{id}', 200101, 4, true, 100303, ''),
+    (300204, 'EXPRESS_OPINION', 'Section 5: Express an opinion', '/sections/{id}', 200101, 5, true, 100304, ''),
+    (300250, 'WRITE_SENTENCE_BASED_PICTURE', 'Section 6: Write a sentence based on a picture', '/sections/{id}', 200101, 6, true, 100350, ''),
+    (300251, 'RESPOND_WRITTEN_REQUEST', 'Section 7: Respond to a written request', '/sections/{id}', 200101, 7, true, 100351, ''),
+    (300252, 'WRITE_OPINION_ESSAY', 'Section 8: Write an opinion essay', '/sections/{id}', 200101, 8, true, 100352, ''),
+
+    (300300, 'SIMULATION_TEST', 'Simulation Test', '/exams?testId={id}', 200102, 1, true, 100201, ''),
+    (300301, 'MINI_TEST', 'MINI TEST', '/exams?testId={id}', 200102, 2, true, 100202, ''),
+    (300302, 'FULL_TEST', 'FULL TEST', '/exams?testId={id}', 200102, 3, true, 100203, '');
+

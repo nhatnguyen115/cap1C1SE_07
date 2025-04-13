@@ -46,7 +46,9 @@ public class PartMapper {
                 part.getId(),
                 part.getPartName(),
                 part.getQuestionType(),
-                part.getQuestionCount()
+                part.getQuestionCount(),
+                part.getDescription(),
+                part.getInstructions()
         );
     }
 }

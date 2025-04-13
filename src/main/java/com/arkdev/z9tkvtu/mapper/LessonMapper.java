@@ -42,6 +42,7 @@ public class LessonMapper {
                 lesson.getId(),
                 lesson.getLessonName(),
                 lesson.getContentType(),
+                lesson.getArticleText(),
                 lesson.getDuration()
         );
     }
