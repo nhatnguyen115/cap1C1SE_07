@@ -16,10 +16,19 @@ export const MenuNavComponent = ({ menuItems }: Props) => {
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [section, setSection] = useState<SectionType[]>([]);
 
+  const [idMenuActive, setIdMenuActive] = useState<number | null>(null);
+  const [idMenuParentActive, setIdMenuParentActive] = useState<number | null>(
+    null,
+  );
+
+  const handleMenuActive = (item: MenuItem) => {
+    setIdMenuActive(item.itemId);
+    setIdMenuParentActive(item.itemId);
+  };
   const isActive = (item: MenuItem): boolean => {
-    if (location.pathname === item.url) return true;
+    if (idMenuActive === item.itemId) return true;
     if (item.children) {
-      return item.children.some((child) => location.pathname === child.url);
+      return item.children.some((child) => idMenuParentActive === child.itemId);
     }
     return false;
   };
@@ -54,6 +63,7 @@ export const MenuNavComponent = ({ menuItems }: Props) => {
           >
             {/* Desktop parent */}
             <Link
+              onClick={() => handleMenuActive(item)}
               to={item.url.replace("{id}", String(item.itemId))}
               state={{ moduleId: item.itemId }}
               className={`hidden sm:flex items-center gap-1 px-2 py-1 rounded transition duration-200 transform ${
