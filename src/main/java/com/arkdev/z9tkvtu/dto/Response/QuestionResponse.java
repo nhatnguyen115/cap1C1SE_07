@@ -11,6 +11,7 @@ import java.util.Map;
 public record QuestionResponse(
         Integer id,
         String content,
+        String url,
         Map<String, Object> options,
         String correctAnswer,
         String explanation,
