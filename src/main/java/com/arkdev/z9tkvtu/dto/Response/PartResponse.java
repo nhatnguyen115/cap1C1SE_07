@@ -6,5 +6,8 @@ public record PartResponse(
         Integer partId,
         String partName,
         QuestionType questionType,
-        Integer questionCount) {
+        Integer questionCount,
+        String description,
+        String instructions
+        ) {
 }
