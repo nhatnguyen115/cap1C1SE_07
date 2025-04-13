@@ -6,7 +6,7 @@ export const API_URIS = {
     REFRESH_TOKEN: "/auth/refresh-token",
   },
   USER: {
-    ADD: "/user/add",
+    ADD: "/user",
     GET_PROFILE: "/user/profile",
     UPDATE_PROFILE: "/user/update",
     CHANGE_PASSWORD: "/user/change-password",

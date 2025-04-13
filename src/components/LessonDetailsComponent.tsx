@@ -3,6 +3,7 @@ import { ChevronLeft, List } from "lucide-react";
 import { LessonDetails } from "../types/lesson";
 import { http } from "../service/Http";
 import { API_URIS } from "../api/URIConstant";
+import { useNavigate } from "react-router-dom";
 
 interface LessonDetailsComponentProps {
   lessonId: string;
@@ -15,6 +16,8 @@ const LessonDetailsComponent: React.FC<LessonDetailsComponentProps> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLesson = async () => {
@@ -40,6 +43,12 @@ const LessonDetailsComponent: React.FC<LessonDetailsComponentProps> = ({
       {/* Sidebar */}
       {showSidebar && (
         <aside className="w-64 bg-gray-100 p-4 border-r hidden md:block">
+          <button
+            onClick={() => navigate("/")}
+            className="text-blue-600 hover:underline mb-4 block text-left font-medium"
+          >
+            ← Home
+          </button>
           <h2 className="text-xl font-semibold mb-4">Danh sách bài học</h2>
           <ul className="space-y-2">
             <li className="hover:text-blue-500 cursor-pointer font-medium">

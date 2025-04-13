@@ -233,7 +233,7 @@ const routes = [
     ),
   },
   {
-    path: "/modules/sections-listening-reading",
+    path: "/sections",
     element: (
       <MainLayout>
         <PracticePage />
@@ -241,7 +241,7 @@ const routes = [
     ),
   },
   {
-    path: "/modules/sections-speaking-writing",
+    path: "/sections",
     element: (
       <MainLayout>
         <PracticePage />

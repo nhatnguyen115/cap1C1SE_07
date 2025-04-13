@@ -1,4 +1,7 @@
 export const PATH_CONSTANTS = {
+  ROOT: {
+    ROOT: "/",
+  },
   AUTH: {
     LOGIN: "/auth/introspect",
     REGISTER: "/auth/register",
