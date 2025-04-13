@@ -25,6 +25,10 @@ const SectionDetailsManagement: React.FC = () => {
 
   const sectionId = searchParams.get("sectionId");
 
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectedPartId, setSelectedPartId] = useState<number | null>(null);
+  const [selectedLessonId, setSelectedLessonId] = useState<number | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       if (!sectionId) return;
@@ -184,11 +188,51 @@ const SectionDetailsManagement: React.FC = () => {
                         Sửa
                       </button>
                       <button
-                        onClick={() => handleDeleteLesson(lesson.id)}
+                        onClick={() => {
+                          setSelectedPartId(null);
+                          setSelectedLessonId(lesson.id);
+                          console.log("clickkk");
+
+                          setShowConfirmModal(true);
+                        }}
                         className="px-2 py-1 text-xs bg-red-500 text-white rounded"
                       >
                         Xoá
                       </button>
+                      {showConfirmModal && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                          <div className="bg-white p-4 rounded shadow-md w-80">
+                            <h2 className="text-lg font-semibold mb-2">
+                              Xác nhận xoá
+                            </h2>
+                            <p className="mb-4">
+                              Bạn có chắc chắn muốn xoá phần này không?
+                            </p>
+                            <div className="flex justify-end gap-2">
+                              <button
+                                className="px-3 py-1 bg-gray-300 rounded"
+                                onClick={() => setShowConfirmModal(false)}
+                              >
+                                Huỷ
+                              </button>
+                              <button
+                                className="px-3 py-1 bg-red-500 text-white rounded"
+                                onClick={() => {
+                                  if (selectedPartId !== null) {
+                                    handleDeletePart(selectedPartId);
+                                  }
+                                  if (selectedLessonId !== null) {
+                                    handleDeleteLesson(selectedLessonId);
+                                  }
+                                  setShowConfirmModal(false);
+                                }}
+                              >
+                                Xoá
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </li>
                 ))}
@@ -236,11 +280,49 @@ const SectionDetailsManagement: React.FC = () => {
                         Sửa
                       </button>
                       <button
-                        onClick={() => handleDeletePart(part.partId)}
+                        onClick={() => {
+                          setSelectedPartId(part.partId);
+                          setSelectedLessonId(null);
+                          setShowConfirmModal(true);
+                        }}
                         className="px-2 py-1 text-xs bg-red-500 text-white rounded"
                       >
                         Xoá
                       </button>
+                      {showConfirmModal && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                          <div className="bg-white p-4 rounded shadow-md w-80">
+                            <h2 className="text-lg font-semibold mb-2">
+                              Xác nhận xoá
+                            </h2>
+                            <p className="mb-4">
+                              Bạn có chắc chắn muốn xoá phần này không?
+                            </p>
+                            <div className="flex justify-end gap-2">
+                              <button
+                                className="px-3 py-1 bg-gray-300 rounded"
+                                onClick={() => setShowConfirmModal(false)}
+                              >
+                                Huỷ
+                              </button>
+                              <button
+                                className="px-3 py-1 bg-red-500 text-white rounded"
+                                onClick={() => {
+                                  if (selectedPartId !== null) {
+                                    handleDeletePart(selectedPartId);
+                                  }
+                                  if (selectedLessonId !== null) {
+                                    handleDeleteLesson(selectedLessonId);
+                                  }
+                                  setShowConfirmModal(false);
+                                }}
+                              >
+                                Xoá
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </li>
                 ))}
