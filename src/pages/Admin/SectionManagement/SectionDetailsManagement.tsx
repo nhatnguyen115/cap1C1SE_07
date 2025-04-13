@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { http } from "../../../service/Http";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
+import AddLessonModal from "../../../modal/AddLessonModal";
 
 type LessonType = {
   id: number;
@@ -29,35 +30,45 @@ const SectionDetailsManagement: React.FC = () => {
   const [selectedPartId, setSelectedPartId] = useState<number | null>(null);
   const [selectedLessonId, setSelectedLessonId] = useState<number | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!sectionId) return;
+  const [isAddLessonModalOpen, setIsAddLessonModalOpen] = useState(false);
 
-      try {
-        const response = await http.get(`/practice?sectionId=${sectionId}`);
-        if (response.status === 200) {
-          setLessons(response.data.data.lessons);
-          setParts(response.data.data.parts);
-        }
-      } catch (error) {
-        console.error("Lỗi khi tải dữ liệu:", error);
+  const [isUpdate, setIsUpdate] = useState<number>(0);
+
+  const fetchData = async () => {
+    if (!sectionId) return;
+
+    try {
+      const response = await http.get(`/practice?sectionId=${sectionId}`);
+      if (response.status === 200) {
+        setLessons(response.data.data.lessons);
+        setParts(response.data.data.parts);
       }
-    };
+    } catch (error) {
+      console.error("Lỗi khi tải dữ liệu:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [sectionId]);
 
-  const handleAddLesson = async () => {
+  const handleAddLesson = async (
+    lessonName: string,
+    contentType: string,
+    articleText: string,
+    duration: number,
+  ) => {
     if (!sectionId) return;
     try {
       const response = await http.post(`/sections/${sectionId}/lessons`, {
-        lessonName: "New Lesson",
-        contentType: "VIDEO",
-        articleText: "",
-        duration: 0,
+        lessonName,
+        contentType,
+        articleText,
+        duration,
       });
       if (response.status === 200) {
-        setLessons((prev) => [...prev, response.data.data]);
+        alert(response.data.message);
+        await fetchData(); // GỌI LẠI ĐỂ REFRESH UI
       }
     } catch (error) {
       console.error("Lỗi khi thêm bài học:", error);
@@ -157,11 +168,17 @@ const SectionDetailsManagement: React.FC = () => {
                 Danh sách bài học
               </h2>
               <button
-                onClick={handleAddLesson}
+                onClick={() => setIsAddLessonModalOpen(true)}
                 className="px-3 py-1 bg-blue-600 text-white text-sm rounded"
               >
                 Thêm bài học
               </button>
+
+              <AddLessonModal
+                isOpen={isAddLessonModalOpen}
+                onClose={() => setIsAddLessonModalOpen(false)}
+                onAddLesson={handleAddLesson}
+              />
             </div>
             {lessons.length === 0 ? (
               <p className="text-gray-500">Không có dữ liệu bài học.</p>
