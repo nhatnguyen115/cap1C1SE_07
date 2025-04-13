@@ -33,7 +33,7 @@ public class PartController {
     public ResponseData<?> getParts(@RequestParam Integer selectedId,
                                     @RequestParam boolean checked,
                                     @RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "10") int size) {
+                                    @RequestParam(defaultValue = "100") int size) {
         try {
             if (checked) {
                 return new ResponseData<>(HttpStatus.OK.value(), "Get Parts To Section Successfully",

@@ -34,6 +34,7 @@ public class QuestionMapper {
                 question.getContent(),
                 question.getOptions(),
                 question.getCorrectAnswer(),
+                question.getExplanation(),
                 question.getDifficulty()
         );
     }

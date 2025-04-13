@@ -13,5 +13,6 @@ public record QuestionResponse(
         String content,
         Map<String, Object> options,
         String correctAnswer,
+        String explanation,
         DifficultyLevel difficulty) implements Serializable {
 }
