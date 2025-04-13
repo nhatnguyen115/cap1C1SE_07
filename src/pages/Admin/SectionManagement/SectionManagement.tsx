@@ -1,15 +1,49 @@
 import React, { useEffect, useState } from "react";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
-import { FaEllipsisH, FaTimes, FaUpload } from "react-icons/fa";
+import { FaEllipsisH, FaTimes } from "react-icons/fa";
 import { http } from "../../../service/Http";
 import { SectionFormData } from "../../../types/section";
 import { ModuleType } from "../../../types/module";
 import { SectionTypeData } from "../../../data/sectionTypeData";
 import { ResponseDataType } from "../../../types/response";
+import { useNavigate } from "react-router-dom";
+
+// PaginationComponent tạm thời, bạn có thể tùy chỉnh lại nếu đã có component riêng
+const PaginationComponent = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}) => {
+  return (
+    <div className="flex justify-center items-center py-4">
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage <= 0}
+        className="px-4 py-2 bg-gray-200 mx-1 rounded disabled:opacity-50"
+      >
+        Trước
+      </button>
+      <span className="px-2">
+        Trang {currentPage + 1} / {totalPages}
+      </span>
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage + 1 >= totalPages}
+        className="px-4 py-2 bg-gray-200 mx-1 rounded disabled:opacity-50"
+      >
+        Sau
+      </button>
+    </div>
+  );
+};
 
 const SectionManagementPage: React.FC = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [modules, setModules] = useState<ModuleType[]>([]);
   const [formData, setFormData] = useState<SectionFormData>({
     sectionName: "",
@@ -17,15 +51,24 @@ const SectionManagementPage: React.FC = () => {
     sectionType: "",
     moduleId: "",
   });
-
   const [errors, setErrors] = useState({
     sectionName: false,
     sectionType: false,
     moduleId: false,
   });
-
   const [message, setMessage] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
+
+  const [sections, setSections] = useState<any[]>([]);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    http.get(`/sections?page=${page}`).then((res) => {
+      setSections(res.data.data.items);
+      setTotalPages(res.data.data.totalPages);
+    });
+  }, [page]);
 
   useEffect(() => {
     const fetchModules = async () => {
@@ -36,7 +79,6 @@ const SectionManagementPage: React.FC = () => {
         console.error("Lỗi khi lấy module:", err);
       }
     };
-
     fetchModules();
   }, []);
 
@@ -58,7 +100,6 @@ const SectionManagementPage: React.FC = () => {
     };
 
     setErrors(newErrors);
-
     const hasError = Object.values(newErrors).some((v) => v);
     if (hasError) return;
 
@@ -75,7 +116,6 @@ const SectionManagementPage: React.FC = () => {
       if (response.status === 500) {
         setMessage(response.message || "Section could not be added");
         setIsError(true);
-
         setTimeout(() => {
           setMessage("");
           setIsError(false);
@@ -83,7 +123,6 @@ const SectionManagementPage: React.FC = () => {
         return;
       }
 
-      // Nếu thành công
       setIsModalOpen(false);
       setFormData({
         sectionName: "",
@@ -100,7 +139,6 @@ const SectionManagementPage: React.FC = () => {
       console.error("Lỗi khi thêm section:", err);
       setMessage("Thêm section thất bại.");
       setIsError(true);
-
       setTimeout(() => {
         setMessage("");
         setIsError(false);
@@ -108,88 +146,11 @@ const SectionManagementPage: React.FC = () => {
     }
   };
 
-  const Sectionsdata = [
-    {
-      id: "BT1",
-      name: "TOEIC Full Section 1",
-      type: "FULL Section",
-      questions: 100,
-      time: "2h",
-      date: "20/03/2025",
-    },
-    {
-      id: "BT2",
-      name: "TOEIC Full Section 2",
-      type: "LISTENING",
-      questions: 100,
-      time: "2h",
-      date: "21/03/2025",
-    },
-    {
-      id: "BT3",
-      name: "TOEIC Full Section 3",
-      type: "READING",
-      questions: 100,
-      time: "2h",
-      date: "22/03/2025",
-    },
-    {
-      id: "BT4",
-      name: "TOEIC Full Section 4",
-      type: "FULL Section",
-      questions: 100,
-      time: "2h",
-      date: "23/03/2025",
-    },
-    {
-      id: "BT5",
-      name: "TOEIC Listening Practice 1",
-      type: "LISTENING",
-      questions: 50,
-      time: "1h",
-      date: "24/03/2025",
-    },
-    {
-      id: "BT6",
-      name: "TOEIC Reading Practice 1",
-      type: "READING",
-      questions: 50,
-      time: "1h",
-      date: "25/03/2025",
-    },
-    {
-      id: "BT7",
-      name: "TOEIC Full Section 5",
-      type: "FULL Section",
-      questions: 100,
-      time: "2h",
-      date: "26/03/2025",
-    },
-    {
-      id: "BT8",
-      name: "TOEIC Listening Practice 2",
-      type: "LISTENING",
-      questions: 50,
-      time: "1h",
-      date: "27/03/2025",
-    },
-    {
-      id: "BT9",
-      name: "TOEIC Reading Practice 2",
-      type: "READING",
-      questions: 50,
-      time: "1h",
-      date: "28/03/2025",
-    },
-    {
-      id: "BT10",
-      name: "TOEIC Full Section 6",
-      type: "FULL Section",
-      questions: 100,
-      time: "2h",
-      date: "29/03/2025",
-    },
-  ];
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 0 && newPage < totalPages) {
+      setPage(newPage);
+    }
+  };
 
   return (
     <div className="min-h-screen flex bg-gray-100">
@@ -205,7 +166,6 @@ const SectionManagementPage: React.FC = () => {
           </button>
         </div>
 
-        {/* Bảng danh sách section */}
         <div className="bg-white shadow-lg rounded-xl overflow-hidden">
           <table className="w-full table-auto">
             <thead>
@@ -213,40 +173,43 @@ const SectionManagementPage: React.FC = () => {
                 <th className="py-3 px-4 text-left">ID</th>
                 <th className="py-3 px-4 text-left">Tên bài thi</th>
                 <th className="py-3 px-4 text-left">Loại bài thi</th>
-                <th className="py-3 px-4 text-center">Số câu hỏi</th>
-                <th className="py-3 px-4 text-center">Thời gian</th>
-                <th className="py-3 px-4 text-center">Ngày tạo</th>
                 <th className="py-3 px-4 text-center">Hành động</th>
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm">
-              {Sectionsdata.map((exam, index) => (
+              {sections.map((section, index) => (
                 <tr
-                  key={exam.id}
+                  onClick={() =>
+                    navigate(`/section-detail?sectionId=${section.id}`)
+                  }
+                  key={section.id}
                   className={`border-b hover:bg-gray-100 transition ${
                     index % 2 === 0 ? "bg-gray-50" : ""
                   }`}
                 >
-                  <td className="py-4 px-4">{exam.id}</td>
-                  <td className="py-4 px-4">{exam.name}</td>
+                  <td className="py-4 px-4">{section.id}</td>
+                  <td className="py-4 px-4">{section.sectionName}</td>
                   <td className="py-4 px-4">
                     <span
                       className={`px-2 py-1 text-xs rounded-full font-semibold ${
-                        exam.type === "FULL Section"
-                          ? "bg-blue-200 text-blue-800"
-                          : exam.type === "LISTENING"
+                        section.sectionType === "LISTENING"
                           ? "bg-orange-200 text-orange-800"
+                          : section.sectionType === "SPEAKING"
+                          ? "bg-blue-200 text-blue-800"
                           : "bg-yellow-200 text-yellow-800"
                       }`}
                     >
-                      {exam.type}
+                      {section.sectionType}
                     </span>
                   </td>
-                  <td className="py-4 px-4 text-center">{exam.questions}</td>
-                  <td className="py-4 px-4 text-center">{exam.time}</td>
-                  <td className="py-4 px-4 text-center">{exam.date}</td>
                   <td className="py-4 px-4 text-center">
-                    <button className="text-gray-500 hover:text-gray-700 transition">
+                    <button
+                      onClick={() =>
+                        navigate(`/section-detail?sectionId=${section.id}`)
+                      }
+                      className="text-gray-500 hover:text-gray-700 transition"
+                      title="Chi tiết"
+                    >
                       <FaEllipsisH size={18} />
                     </button>
                   </td>
@@ -254,10 +217,15 @@ const SectionManagementPage: React.FC = () => {
               ))}
             </tbody>
           </table>
+
+          <PaginationComponent
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
 
-      {/* Modal Thêm Câu Hỏi */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
@@ -271,9 +239,11 @@ const SectionManagementPage: React.FC = () => {
             <h2 className="text-lg font-semibold mb-4">Thêm section</h2>
             {message && (
               <div
-                className={`fixed top-5 z-50 bg-${
-                  isError ? "red" : "green"
-                }-500 text-red-700 px-6 py-3 rounded shadow-lg animate-slideDown z-50`}
+                className={`mb-4 px-4 py-2 rounded text-sm ${
+                  isError
+                    ? "bg-red-100 text-red-700"
+                    : "bg-green-100 text-green-700"
+                }`}
               >
                 {message}
               </div>
@@ -352,9 +322,9 @@ const SectionManagementPage: React.FC = () => {
 
             <button
               onClick={handleSubmit}
-              className="mt-4 w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+              className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition"
             >
-              Thêm Section
+              Thêm mới
             </button>
           </div>
         </div>

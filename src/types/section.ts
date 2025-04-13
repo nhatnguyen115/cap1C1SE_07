@@ -25,3 +25,15 @@ export interface Part {
   questionType: string;
   questionCount: number;
 }
+
+export interface SectionResponseType {
+  status: number;
+  message: string;
+  data: {
+    items: SectionType[];
+    totalPages: number;
+    totalElements: number;
+    pageNumber: number;
+    pageSize: number;
+  };
+}

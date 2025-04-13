@@ -30,6 +30,7 @@ import { PracticePage } from "../pages/Practice/PracticePage";
 import SectionManagementPage from "./../pages/Admin/SectionManagement/SectionManagement";
 import { PracticeDetailsPage } from "./../pages/Practice/PracticeDetailsPage";
 import LessonPage from "./../pages/Lesson/LessonPage";
+import SectionDetailsManagement from "./../pages/Admin/SectionManagement/SectionDetailsManagement";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -229,6 +230,14 @@ const routes = [
     element: (
       <MainLayout>
         <SectionManagementPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "section-detail",
+    element: (
+      <MainLayout>
+        <SectionDetailsManagement />
       </MainLayout>
     ),
   },
