@@ -29,12 +29,17 @@ public class SectionController {
     PartService partService;
 
     @GetMapping("")
-    public ResponseData<?> getSections(@RequestParam Integer moduleId,
+    public ResponseData<?> getSections(@RequestParam(required = false) Integer moduleId,
                                        @RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "10") int size) {
         try {
-            return new ResponseData<>(HttpStatus.OK.value(), "Get Sections Successfully",
-                    Pagination.paginate(sectionService.getSections(moduleId), PageRequest.of(page, size)));
+            if (moduleId != null) {
+                return new ResponseData<>(HttpStatus.OK.value(), "Get Sections Successfully",
+                        Pagination.paginate(sectionService.getSections(moduleId), PageRequest.of(page, size)));
+            } else {
+                return new ResponseData<>(HttpStatus.OK.value(), "Get All Sections Successfully",
+                        Pagination.paginate(sectionService.getSections(), PageRequest.of(page, size)));
+            }
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Sections Failed");
         }

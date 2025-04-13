@@ -16,4 +16,6 @@ public interface SectionRepository extends JpaRepository<Section, Integer> {
     """, nativeQuery = true)
     Integer findMaxOrderNumberByModuleId(Integer moduleId);
     SectionDetailsResponse findSectionDetailsById(Integer id);
+
+    List<Section> findAllByOrderByOrderNumber();
 }

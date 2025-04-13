@@ -26,6 +26,13 @@ public class SectionService {
     MenuRepository menuRepository;
     SectionMapper sectionMapper;
 
+    public List<SectionResponse> getSections() {
+        return sectionRepository.findAllByOrderByOrderNumber()
+                .stream()
+                .map(sectionMapper::toSectionResponse)
+                .toList();
+    }
+
     public List<SectionResponse> getSections(Integer moduleId) {
         return sectionRepository.findByModuleIdOrderByOrderNumber(moduleId)
                 .stream()
