@@ -32,8 +32,10 @@ public class QuestionMapper {
         return new QuestionResponse(
                 question.getId(),
                 question.getContent(),
+                question.getMedia().getUrl(),
                 question.getOptions(),
                 question.getCorrectAnswer(),
+                question.getExplanation(),
                 question.getDifficulty()
         );
     }

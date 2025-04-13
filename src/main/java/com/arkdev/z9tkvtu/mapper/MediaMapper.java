@@ -11,9 +11,6 @@ public class MediaMapper {
         Media media = new Media();
         media.setMediaType(request.getMediaType());
         media.setUrl(request.getUrl());
-        media.setDuration(request.getDuration());
-        media.setDescription(request.getDescription());
-        media.setTranscript(request.getTranscript());
         return media;
     }
 
@@ -21,8 +18,5 @@ public class MediaMapper {
         if (request == null) return;
         media.setMediaType(request.getMediaType());
         media.setUrl(request.getUrl());
-        media.setDuration(request.getDuration());
-        media.setDescription(request.getDescription());
-        media.setTranscript(request.getTranscript());
     }
 }

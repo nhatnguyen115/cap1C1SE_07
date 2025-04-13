@@ -23,10 +23,4 @@ public class MediaRequest implements Serializable {
     
     @NotNull(message = "Url must be not null")
     String url;
-    
-    Integer duration;
-    
-    String description;
-    
-    String transcript;
 }
