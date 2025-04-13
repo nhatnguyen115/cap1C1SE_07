@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -41,8 +42,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(Customizer.withDefaults()) // Dù deprecated, vẫn là cách duy nhất chính thức ở bản 6.1
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((authorize)  -> authorize
+                .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(SecurityConstant.PUBLIC_URLS).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
@@ -50,7 +52,6 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(preFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout -> logout.logoutUrl("/auth/logout"));
-
 
         return http.build();
     }
