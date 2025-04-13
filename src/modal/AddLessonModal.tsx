@@ -160,7 +160,7 @@ const AddLessonModal: React.FC<AddLessonModalProps> = ({
             onClick={handleSubmit}
             className="px-3 py-1 bg-blue-600 text-white rounded text-sm"
           >
-            Thêm
+            {initialData ? "Sửa" : "Thêm"}
           </button>
         </div>
       </div>

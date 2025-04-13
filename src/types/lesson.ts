@@ -12,3 +12,12 @@ export type LessonType = {
   articleText: string;
   duration: number | null;
 };
+
+export type PartType = {
+  partId?: number;
+  partName: string;
+  description: string;
+  questionType: string;
+  instructions: string;
+  questionCount: number;
+};

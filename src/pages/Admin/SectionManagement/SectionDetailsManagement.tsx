@@ -3,14 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import { http } from "../../../service/Http";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
 import AddLessonModal from "../../../modal/AddLessonModal";
-import { LessonType } from "../../../types/lesson";
-
-type PartType = {
-  partId: number;
-  partName: string;
-  questionType: string;
-  questionCount: number;
-};
+import { LessonType, PartType } from "../../../types/lesson";
+import AddPartModal from "../../../modal/AddPartModal";
 
 const SectionDetailsManagement: React.FC = () => {
   const [lessons, setLessons] = useState<LessonType[]>([]);
@@ -26,8 +20,13 @@ const SectionDetailsManagement: React.FC = () => {
 
   const [lessonToEdit, setLessonToEdit] = useState<LessonType | null>(null);
 
-  const [isAddModalOpen, setAddModalOpen] = useState(false);
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isAddLessonModalOpen, setAddLessonModalOpen] = useState(false);
+  const [isEditLessonModalOpen, setEditLessonModalOpen] = useState(false);
+
+  const [partToEdit, setPartToEdit] = useState<PartType | null>(null);
+
+  const [isAddPartModalOpen, setAddPartModalOpen] = useState(false);
+  const [isEditPartModalOpen, setEditPartModalOpen] = useState(false);
 
   const fetchData = async () => {
     if (!sectionId) return;
@@ -85,31 +84,32 @@ const SectionDetailsManagement: React.FC = () => {
     }
   };
 
-  const handleAddPart = async () => {
+  const handleAddpart = async (part: PartType) => {
     if (!sectionId) return;
     try {
-      const response = await http.post(`/sections/${sectionId}/parts`, {
-        partName: "New Part",
-        description: "",
-        questionType: "MULTIPLE_CHOICE",
-        instructions: "",
-        questionCount: 0,
+      const res = await http.post(`/sections/${sectionId}/parts`, {
+        ...part,
       });
-      if (response.status === 200) {
-        setParts((prev) => [...prev, response.data.data]);
+      if (res.status === 200) {
+        alert(res.data.message);
+        fetchData(); // gọi lại useEffect hoặc fetchData riêng
       }
-    } catch (error) {
-      console.error("Lỗi khi thêm phần:", error);
+    } catch (err) {
+      console.error("Lỗi khi thêm bài học:", err);
     }
   };
 
   const handleUpdatePart = async (part: PartType) => {
     try {
-      await http.put(`/parts/${part.partId}`, {
+      const res = await http.put(`/parts/${part.partId}`, {
         ...part,
       });
-    } catch (error) {
-      console.error("Lỗi khi cập nhật phần:", error);
+      if (res.status === 200) {
+        alert(res.data.message);
+        fetchData(); // cập nhật lại list
+      }
+    } catch (err) {
+      console.error("Lỗi khi cập nhật bài học:", err);
     }
   };
 
@@ -159,15 +159,15 @@ const SectionDetailsManagement: React.FC = () => {
                 Danh sách bài học
               </h2>
               <button
-                onClick={() => setAddModalOpen(true)}
+                onClick={() => setAddLessonModalOpen(true)}
                 className="px-3 py-1 bg-blue-600 text-white text-sm rounded"
               >
                 Thêm bài học
               </button>
 
               <AddLessonModal
-                isOpen={isAddModalOpen}
-                onClose={() => setAddModalOpen(false)}
+                isOpen={isAddLessonModalOpen}
+                onClose={() => setAddLessonModalOpen(false)}
                 onSubmit={handleAddLesson}
               />
             </div>
@@ -192,7 +192,7 @@ const SectionDetailsManagement: React.FC = () => {
                       <button
                         onClick={() => {
                           setLessonToEdit(lesson);
-                          setEditModalOpen(true);
+                          setEditLessonModalOpen(true);
                         }}
                         className="px-2 py-1 text-xs bg-yellow-400 text-white rounded"
                       >
@@ -213,8 +213,8 @@ const SectionDetailsManagement: React.FC = () => {
                 ))}
                 {/* Sửa lesson */}
                 <AddLessonModal
-                  isOpen={isEditModalOpen}
-                  onClose={() => setEditModalOpen(false)}
+                  isOpen={isEditLessonModalOpen}
+                  onClose={() => setEditLessonModalOpen(false)}
                   initialData={lessonToEdit!}
                   onSubmit={handleUpdateLesson}
                 />
@@ -260,11 +260,16 @@ const SectionDetailsManagement: React.FC = () => {
                 Danh sách phần
               </h2>
               <button
-                onClick={handleAddPart}
+                onClick={() => setAddPartModalOpen(true)}
                 className="px-3 py-1 bg-blue-600 text-white text-sm rounded"
               >
                 Thêm phần
               </button>
+              <AddPartModal
+                isOpen={isAddPartModalOpen}
+                onClose={() => setAddPartModalOpen(false)}
+                onSubmit={handleAddpart}
+              />
             </div>
             {parts.length === 0 ? (
               <p className="text-gray-500">Không có dữ liệu phần.</p>
@@ -286,14 +291,17 @@ const SectionDetailsManagement: React.FC = () => {
                     </div>
                     <div className="space-x-2">
                       <button
-                        onClick={() => handleUpdatePart(part)}
+                        onClick={() => {
+                          setPartToEdit(part);
+                          setEditPartModalOpen(true);
+                        }}
                         className="px-2 py-1 text-xs bg-yellow-400 text-white rounded"
                       >
                         Sửa
                       </button>
                       <button
                         onClick={() => {
-                          setSelectedPartId(part.partId);
+                          setSelectedPartId(part.partId!);
                           setSelectedLessonId(null);
                           setShowConfirmModal(true);
                         }}
@@ -301,43 +309,50 @@ const SectionDetailsManagement: React.FC = () => {
                       >
                         Xoá
                       </button>
-                      {showConfirmModal && (
-                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                          <div className="bg-white p-4 rounded shadow-md w-80">
-                            <h2 className="text-lg font-semibold mb-2">
-                              Xác nhận xoá
-                            </h2>
-                            <p className="mb-4">
-                              Bạn có chắc chắn muốn xoá phần này không?
-                            </p>
-                            <div className="flex justify-end gap-2">
-                              <button
-                                className="px-3 py-1 bg-gray-300 rounded"
-                                onClick={() => setShowConfirmModal(false)}
-                              >
-                                Huỷ
-                              </button>
-                              <button
-                                className="px-3 py-1 bg-red-500 text-white rounded"
-                                onClick={() => {
-                                  if (selectedPartId !== null) {
-                                    handleDeletePart(selectedPartId);
-                                  }
-                                  if (selectedLessonId !== null) {
-                                    handleDeleteLesson(selectedLessonId);
-                                  }
-                                  setShowConfirmModal(false);
-                                }}
-                              >
-                                Xoá
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </li>
                 ))}
+                {/* Sửa part */}
+                <AddPartModal
+                  isOpen={isEditPartModalOpen}
+                  onClose={() => setEditPartModalOpen(false)}
+                  initialData={partToEdit!}
+                  onSubmit={handleUpdatePart}
+                />
+                {showConfirmModal && (
+                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white p-4 rounded shadow-md w-80">
+                      <h2 className="text-lg font-semibold mb-2">
+                        Xác nhận xoá
+                      </h2>
+                      <p className="mb-4">
+                        Bạn có chắc chắn muốn xoá phần này không?
+                      </p>
+                      <div className="flex justify-end gap-2">
+                        <button
+                          className="px-3 py-1 bg-gray-300 rounded"
+                          onClick={() => setShowConfirmModal(false)}
+                        >
+                          Huỷ
+                        </button>
+                        <button
+                          className="px-3 py-1 bg-red-500 text-white rounded"
+                          onClick={() => {
+                            if (selectedPartId !== null) {
+                              handleDeletePart(selectedPartId);
+                            }
+                            if (selectedLessonId !== null) {
+                              handleDeleteLesson(selectedLessonId);
+                            }
+                            setShowConfirmModal(false);
+                          }}
+                        >
+                          Xoá
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </ul>
             )}
           </div>
