@@ -273,14 +273,6 @@ const routes = [
     ),
   },
   {
-    path: "/sections",
-    element: (
-      <MainLayout>
-        <PracticePage />
-      </MainLayout>
-    ),
-  },
-  {
     path: "/sections/:sectionId",
     element: (
       <MainLayout>
