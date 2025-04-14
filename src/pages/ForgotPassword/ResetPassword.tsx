@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { PATH_CONSTANTS } from "../../api/PathConstant";
+import { API_URIS } from "../../api/URIConstant";
 
 const ResetPassword: React.FC = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -20,7 +22,7 @@ const ResetPassword: React.FC = () => {
     }
 
     try {
-      const response = await fetch("/api/reset-password", {
+      const response = await fetch(API_URIS.AUTH.RESET_PASSWORD, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +35,7 @@ const ResetPassword: React.FC = () => {
 
       if (response.ok) {
         setMessage("Mật khẩu của bạn đã được thay đổi thành công!");
-        setTimeout(() => navigate("/login"), 2000); // Redirect đến trang đăng nhập sau 2s
+        setTimeout(() => navigate(PATH_CONSTANTS.AUTH.LOGIN), 2000); // Redirect đến trang đăng nhập sau 2s
       } else {
         setError("Đã xảy ra lỗi, vui lòng thử lại sau.");
       }
@@ -47,7 +49,9 @@ const ResetPassword: React.FC = () => {
       <div className="flex max-w-4xl bg-white rounded-lg w-full overflow-hidden items-center">
         {/* Left Side - Welcome message and image */}
         <div className="flex-1 p-8 max-sm:hidden">
-          <h2 className="text-xl font-bold text-gray-800">Đặt lại mật khẩu của bạn</h2>
+          <h2 className="text-xl font-bold text-gray-800">
+            Đặt lại mật khẩu của bạn
+          </h2>
           <div className="mt-4">
             <img
               src="src/assets/images/login-image.png"
@@ -75,7 +79,10 @@ const ResetPassword: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="newPassword" className="text-gray-700 text-sm font-medium">
+              <label
+                htmlFor="newPassword"
+                className="text-gray-700 text-sm font-medium"
+              >
                 Mật khẩu mới
               </label>
               <input
@@ -89,7 +96,10 @@ const ResetPassword: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="confirmPassword" className="text-gray-700 text-sm font-medium">
+              <label
+                htmlFor="confirmPassword"
+                className="text-gray-700 text-sm font-medium"
+              >
                 Xác nhận mật khẩu
               </label>
               <input
@@ -112,7 +122,10 @@ const ResetPassword: React.FC = () => {
           <div className="mt-4 text-center">
             <p className="text-sm">
               Quay lại{" "}
-              <Link className="text-blue-600 hover:underline" to={"/login"}>
+              <Link
+                className="text-blue-600 hover:underline"
+                to={PATH_CONSTANTS.AUTH.LOGIN}
+              >
                 Đăng nhập
               </Link>
             </p>

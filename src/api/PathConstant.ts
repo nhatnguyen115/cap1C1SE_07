@@ -3,10 +3,11 @@ export const PATH_CONSTANTS = {
     ROOT: "/",
   },
   AUTH: {
-    LOGIN: "/auth/introspect",
-    REGISTER: "/auth/register",
+    LOGIN: "/login",
+    REGISTER: "/register",
     LOGOUT: "/auth/logout",
     REFRESH_TOKEN: "/auth/refresh-token",
+    RESET_PASSWORD: "/forgot-password",
   },
   USER: {
     ADD: "/user/add",
@@ -56,5 +57,17 @@ export const PATH_CONSTANTS = {
   ADMIN: {
     ADMIN_DASHBOARD: "/admin/dashboard",
     ADMIN_USERMANAGEMENT: "/admin/usermanagement",
+  },
+  MOCK_TEST: {
+    MOCK_TEST: "/mock-test",
+  },
+
+  PAYMENT: {
+    FORM: "/payment/paymentform",
+  },
+
+  SETTING: {
+    SETTING: "/settings",
+    ADD: "/settings/editsettings",
   },
 };

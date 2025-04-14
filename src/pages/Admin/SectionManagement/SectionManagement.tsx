@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
 import { FaEllipsisH, FaTimes } from "react-icons/fa";
-import { http } from "../../../service/Http";
-import { SectionFormData } from "../../../types/section";
-import { ModuleType } from "../../../types/module";
-import { SectionTypeData } from "../../../data/sectionTypeData";
-import { ResponseDataType } from "../../../types/response";
 import { useNavigate } from "react-router-dom";
+import { API_URIS } from "../../../api/URIConstant";
+import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
+import { SectionTypeData } from "../../../data/sectionTypeData";
+import { http } from "../../../service/Http";
+import { ModuleType } from "../../../types/module";
+import { ResponseDataType } from "../../../types/response";
+import { SectionFormData } from "../../../types/section";
 
 // PaginationComponent tạm thời, bạn có thể tùy chỉnh lại nếu đã có component riêng
 const PaginationComponent = ({
@@ -73,7 +74,7 @@ const SectionManagementPage: React.FC = () => {
   useEffect(() => {
     const fetchModules = async () => {
       try {
-        const res = await http.get("/modules");
+        const res = await http.get(API_URIS.MODULE.GET_ALL);
         setModules(res.data.data);
       } catch (err) {
         console.error("Lỗi khi lấy module:", err);

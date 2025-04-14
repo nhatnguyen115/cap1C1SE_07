@@ -4,6 +4,7 @@ export const API_URIS = {
     REGISTER: "/auth/register",
     LOGOUT: "/auth/logout",
     REFRESH_TOKEN: "/auth/refresh-token",
+    RESET_PASSWORD: "/auth/reset-password",
   },
   USER: {
     ADD: "/user",
