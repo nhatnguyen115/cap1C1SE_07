@@ -113,7 +113,30 @@ const routes = [
       </MainLayout>
     ),
   },
-
+  {
+    path: "/tests",
+    element: (
+      <MainLayout>
+        <MockTest />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/exams",
+    element: (
+      <MainLayout>
+        <Test isView={false} />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "/exams/view/:id",
+    element: (
+      <MainLayout>
+        <Test isView={true} />
+      </MainLayout>
+    ),
+  },
   {
     path: "/leaderboard",
     element: (
