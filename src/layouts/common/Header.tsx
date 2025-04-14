@@ -32,12 +32,6 @@ const Header: React.FC = () => {
     fetchMenu();
   }, []);
 
-  // useEffect(() => {
-  //   setMenus(mockMenuData);
-  // }, []);
-
-  const isActive = (url: string) => location.pathname === url;
-
   return (
     <header className="bg-white shadow-md px-4 flex items-center justify-between py-5">
       {/* Logo Section */}
@@ -47,17 +41,6 @@ const Header: React.FC = () => {
 
       {/* Navigation Links */}
       <nav className="flex space-x-6">
-        {/* Desktop Links */}
-        <Link
-          to={"/"}
-          className={`hidden sm:block px-2 py-1 rounded transition duration-200 transform ${
-            isActive("/")
-              ? "text-orange-600 text-xl"
-              : "text-gray-600 hover:text-orange-500 hover:-translate-y-0.5"
-          }`}
-        >
-          Trang chủ
-        </Link>
         <MenuNavComponent menuItems={menus} />
       </nav>
 
