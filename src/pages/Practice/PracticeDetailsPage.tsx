@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import SectionDetailsComponent from "../../components/SectionDetailsComponent";
 import { API_URIS } from "../../api/URIConstant";
+import SectionDetailsComponent from "../../components/SectionDetailsComponent";
+import { sectionMockData } from "../../data/sectionMockData";
 import { http } from "../../service/Http";
 import { SectionType } from "../../types/section";
-import { sectionMockData } from "../../data/sectionMockData";
 
 export const PracticeDetailsPage = () => {
   const { sectionId } = useParams<{ sectionId: string }>();
@@ -43,6 +43,7 @@ export const PracticeDetailsPage = () => {
           sectionId={sectionId}
           sectionName={sectionName}
           sections={sections}
+          moduleId={moduleId}
         />
       ) : (
         <div className="text-red-500">Invalid section</div>
