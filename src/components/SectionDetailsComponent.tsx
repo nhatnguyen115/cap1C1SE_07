@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { http } from "../service/Http";
 import { useNavigate } from "react-router-dom";
-import { Lesson, Part, SectionType } from "../types/section";
-import { API_URIS } from "../api/URIConstant";
 import { PATH_CONSTANTS } from "../api/PathConstant";
+import { API_URIS } from "../api/URIConstant";
+import { http } from "../service/Http";
+import { Lesson, Part, SectionType } from "../types/section";
 
 interface SectionDetailsComponentProps {
   sectionId: string;
   sectionName: string;
   sections: SectionType[];
+  moduleId: number | string;
 }
 const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
   sectionId,
   sectionName,
   sections,
+  moduleId,
 }) => {
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [parts, setParts] = useState<Part[]>([]);
   const navigate = useNavigate();
+  const [currentSections, setCurrentSections] =
+    useState<SectionType[]>(sections);
 
   useEffect(() => {
     const fetchSections = async () => {
@@ -28,6 +32,15 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
         const data = response.data?.data;
         setLessons(data.lessons || []);
         setParts(data.parts || []);
+
+        if (moduleId !== undefined) {
+          const responseSections = await http.get(
+            API_URIS.SECTION.GET_ALL_BY_MODULE(moduleId),
+          );
+          if (response.status === 200) {
+            setCurrentSections(responseSections.data.data.items);
+          }
+        }
       } catch (error) {
         console.error("Failed to fetch section details:", error);
       }
@@ -129,7 +142,7 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
             All Sections
           </h2>
           <div className="flex flex-col gap-3">
-            {sections.map((s) => {
+            {currentSections.map((s) => {
               const isActive = s.id.toString() === sectionId.toString();
               return (
                 <div
@@ -142,7 +155,7 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
                   }`}
                   onClick={() =>
                     navigate(PATH_CONSTANTS.SECTION.GET_BY_ID(s.id), {
-                      state: { sectionName: s.sectionName, sections },
+                      state: { sectionName: s.sectionName, currentSections },
                     })
                   }
                 >
