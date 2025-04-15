@@ -107,7 +107,7 @@ const Login: React.FC = () => {
                 Nhớ mật khẩu
               </label>
               <Link
-                to={PATH_CONSTANTS.AUTH.RESET_PASSWORD}
+                to={PATH_CONSTANTS.AUTH.FORGOT_PASSWORD}
                 className="text-sm text-blue-600 hover:underline"
               >
                 Quên mật khẩu?
