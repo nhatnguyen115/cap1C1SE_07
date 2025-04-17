@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../api/PathConstant";
 import { API_URIS } from "../api/URIConstant";
 import { http } from "../service/Http";
+import { LessonPartType } from "../types/lesson";
 import { Lesson, Part, SectionType } from "../types/section";
 
 interface SectionDetailsComponentProps {
@@ -19,6 +20,8 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
 }) => {
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [parts, setParts] = useState<Part[]>([]);
+  const [lessonPart, setLessonPart] = useState<LessonPartType>();
+
   const navigate = useNavigate();
   const [currentSections, setCurrentSections] =
     useState<SectionType[]>(sections);
@@ -32,6 +35,11 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
         const data = response.data?.data;
         setLessons(data.lessons || []);
         setParts(data.parts || []);
+
+        setLessonPart({
+          lesson: data.lessons,
+          part: data.parts,
+        });
 
         if (moduleId !== undefined) {
           const responseSections = await http.get(
@@ -110,27 +118,36 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
             </p>
             <div className="border-l-4 border-orange-400 pl-4 space-y-4 ml-3">
               {parts.map((part, idx) => (
-                <div key={part.partId} className="relative">
-                  <div className="absolute -left-8 top-3">
-                    <div className="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center font-semibold">
-                      {String(idx + 1).padStart(2, "0")}
+                <Link
+                  key={part.partId}
+                  to={{
+                    pathname: PATH_CONSTANTS.PART.DETAIL(part.partId),
+                  }}
+                  state={{ lessonPart: lessonPart }}
+                  className="block"
+                >
+                  <div className="relative">
+                    <div className="absolute -left-8 top-3">
+                      <div className="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center font-semibold">
+                        {String(idx + 1).padStart(2, "0")}
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border hover:shadow transition">
-                    <div>
-                      <p className="font-medium text-sm text-gray-800">
-                        📝 {part.partName}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Type: {part.questionType}
-                      </p>
+                    <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border hover:shadow transition">
+                      <div>
+                        <p className="font-medium text-sm text-gray-800">
+                          📝 {part.partName}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Type: {part.questionType}
+                        </p>
+                      </div>
+                      <span className="text-gray-400 text-xs">
+                        {part.questionCount} questions
+                      </span>
                     </div>
-                    <span className="text-gray-400 text-xs">
-                      {part.questionCount} questions
-                    </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

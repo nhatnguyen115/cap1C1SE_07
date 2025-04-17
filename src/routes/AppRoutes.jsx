@@ -32,6 +32,7 @@ import Resource from "../pages/Resource/Resource";
 import ResourceDetail from "../pages/Resource/ResourceDetail";
 import EditSettings from "../pages/Settings/EditSettings/EditSettings";
 import Settings from "../pages/Settings/Settings";
+import PartDetailsPage from "./../pages/Part/PartDetailsPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -285,6 +286,10 @@ const routes = [
   {
     path: PATH_CONSTANTS.LESSON.GET_BY_ID(":lessonId"),
     element: <LessonPage />,
+  },
+  {
+    path: PATH_CONSTANTS.PART.DETAIL_PATH,
+    element: <PartDetailsPage />,
   },
 ];
 

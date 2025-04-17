@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { http } from "../../../service/Http";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
 import AddLessonModal from "../../../modal/AddLessonModal";
-import { LessonType, PartType } from "../../../types/lesson";
 import AddPartModal from "../../../modal/AddPartModal";
+import { http } from "../../../service/Http";
+import { LessonType, PartType } from "../../../types/lesson";
 
 const SectionDetailsManagement: React.FC = () => {
   const [lessons, setLessons] = useState<LessonType[]>([]);

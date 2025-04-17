@@ -113,4 +113,9 @@ export const PATH_CONSTANTS = {
     EXAMS_VIEW_BY_ID: "/exams/view/:id",
     EXAMS: "/exams",
   },
+  PART: {
+    PARTS: "/parts",
+    DETAIL: (partId: number | string) => `/parts/${partId}`,
+    DETAIL_PATH: "/parts/:partId", // dùng cho Route
+  },
 };
