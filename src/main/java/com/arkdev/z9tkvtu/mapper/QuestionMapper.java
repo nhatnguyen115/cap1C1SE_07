@@ -32,7 +32,7 @@ public class QuestionMapper {
         return new QuestionResponse(
                 question.getId(),
                 question.getContent(),
-                question.getMedia().getUrl(),
+                question.getMedia() != null ? question.getMedia().getUrl() : null,
                 question.getOptions(),
                 question.getCorrectAnswer(),
                 question.getExplanation(),
