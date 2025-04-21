@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
+import PartDetailsManagementComponent from "../../../components/PartDetailsManagementComponent";
 import AddLessonModal from "../../../modal/AddLessonModal";
 import AddPartModal from "../../../modal/AddPartModal";
+import AddQuestionModal from "../../../modal/AddQuestionModal";
 import { http } from "../../../service/Http";
 import { LessonType, PartType } from "../../../types/lesson";
 
@@ -27,6 +29,15 @@ const SectionDetailsManagement: React.FC = () => {
 
   const [isAddPartModalOpen, setAddPartModalOpen] = useState(false);
   const [isEditPartModalOpen, setEditPartModalOpen] = useState(false);
+
+  const [isAddQuestionModalOpen, setIsAddQuestionModalOpen] = useState(false);
+  const [selectedPartIdForAdd, setSelectedPartIdForAdd] = useState<number>();
+
+  const [expandedPartId, setExpandedPartId] = useState<number | null>(null);
+
+  const handleToggle = (partId: number) => {
+    setExpandedPartId((prev) => (prev === partId ? null : partId));
+  };
 
   const fetchData = async () => {
     if (!sectionId) return;
@@ -278,40 +289,79 @@ const SectionDetailsManagement: React.FC = () => {
                 {parts.map((part) => (
                   <li
                     key={part.partId}
-                    className="p-4 bg-white rounded-md shadow-sm border border-gray-200 flex justify-between items-center"
+                    className="p-4 bg-white rounded-md shadow-sm border border-gray-200"
                   >
-                    <div>
-                      <div className="font-medium text-gray-800">
-                        {part.partName}
+                    <div
+                      className="flex justify-between items-center cursor-pointer"
+                      onClick={() =>
+                        part.partId !== undefined && handleToggle(part.partId)
+                      }
+                    >
+                      <div>
+                        <div className="font-medium text-gray-800">
+                          {part.partName}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          Loại câu hỏi: {part.questionType} — Số câu:{" "}
+                          {part.questionCount}
+                        </div>
                       </div>
-                      <div className="text-sm text-gray-500">
-                        Loại câu hỏi: {part.questionType} — Số câu:{" "}
-                        {part.questionCount}
+                      <div className="space-x-2">
+                        <button
+                          className="px-3 py-1 bg-blue-600 text-white text-sm rounded"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedPartIdForAdd(part.partId);
+                            setIsAddQuestionModalOpen(true);
+                          }}
+                        >
+                          Thêm câu hỏi
+                        </button>
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setPartToEdit(part);
+                            setEditPartModalOpen(true);
+                          }}
+                          className="px-2 py-1 text-xs bg-yellow-400 text-white rounded"
+                        >
+                          Sửa
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedPartId(part.partId!);
+                            setSelectedLessonId(null);
+                            setShowConfirmModal(true);
+                          }}
+                          className="px-2 py-1 text-xs bg-red-500 text-white rounded"
+                        >
+                          Xoá
+                        </button>
                       </div>
                     </div>
-                    <div className="space-x-2">
-                      <button
-                        onClick={() => {
-                          setPartToEdit(part);
-                          setEditPartModalOpen(true);
-                        }}
-                        className="px-2 py-1 text-xs bg-yellow-400 text-white rounded"
-                      >
-                        Sửa
-                      </button>
-                      <button
-                        onClick={() => {
-                          setSelectedPartId(part.partId!);
-                          setSelectedLessonId(null);
-                          setShowConfirmModal(true);
-                        }}
-                        className="px-2 py-1 text-xs bg-red-500 text-white rounded"
-                      >
-                        Xoá
-                      </button>
-                    </div>
+
+                    {expandedPartId === part.partId && (
+                      <PartDetailsManagementComponent partId={part.partId} />
+                    )}
                   </li>
                 ))}
+                {isAddQuestionModalOpen && selectedPartIdForAdd && (
+                  <AddQuestionModal
+                    partId={selectedPartIdForAdd}
+                    onClose={() => {
+                      setIsAddQuestionModalOpen(false);
+                      setSelectedPartIdForAdd(0);
+                    }}
+                    onSubmitSuccess={() => {
+                      // Optional: cập nhật danh sách câu hỏi nếu cần
+                      setIsAddQuestionModalOpen(false);
+                      setSelectedPartIdForAdd(0);
+                    }}
+                  />
+                )}
+
                 {/* Sửa part */}
                 <AddPartModal
                   isOpen={isEditPartModalOpen}

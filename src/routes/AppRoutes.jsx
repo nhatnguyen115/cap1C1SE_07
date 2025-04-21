@@ -32,6 +32,7 @@ import Resource from "../pages/Resource/Resource";
 import ResourceDetail from "../pages/Resource/ResourceDetail";
 import EditSettings from "../pages/Settings/EditSettings/EditSettings";
 import Settings from "../pages/Settings/Settings";
+import ExamPageDetails from "./../pages/Exam/ExamPageDetails";
 import PartDetailsPage from "./../pages/Part/PartDetailsPage";
 import TestPage from "./../pages/Test/TestPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
@@ -122,7 +123,7 @@ const routes = [
     path: PATH_CONSTANTS.EXAM.EXAMS,
     element: (
       <MainLayout>
-        <Test isView={false} />
+        <ExamPageDetails />
       </MainLayout>
     ),
   },
@@ -253,7 +254,7 @@ const routes = [
     ),
   },
   {
-    path: PATH_CONSTANTS.SECTION.MANAGEMENT,
+    path: PATH_CONSTANTS.ADMIN.SECTION_MANAGEMENT,
     element: (
       <MainLayout>
         <SectionManagementPage />

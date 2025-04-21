@@ -52,7 +52,7 @@ const TestPage: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="text-justify space-y-4">
+      <div className="text-justify space-y-4 p-4 rounded-2xl shadow-xl">
         <p>
           Làm đề thi thử TOEIC® trực tuyến là một trong những cách tốt nhất để
           làm quen với dạng đề thi cũng như biết được trình độ hiện tại của bạn,

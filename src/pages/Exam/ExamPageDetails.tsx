@@ -1,47 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { API_URIS } from "../../api/URIConstant";
+import ExamCardComponent from "../../components/ExamCardComponent";
 import { http } from "../../service/Http";
-import { ExamType } from "../../types/exam";
+interface Exam {
+  id: number;
+  examName: string;
+  duration: number;
+  totalScore: number;
+}
 
 const ExamPageDetails: React.FC = () => {
   const [searchParams] = useSearchParams();
   const testId = searchParams.get("testId");
-  const [exams, setExams] = useState<ExamType[]>([]);
+  const [exams, setExams] = useState<Exam[]>([]);
 
   useEffect(() => {
     const fetchExams = async () => {
       if (!testId) return;
-
-      try {
-        const res = await http.get(API_URIS.EXAMS.GET_BY_TEST_ID(testId));
-        setExams(res.data.data.items);
-      } catch (error) {
-        console.error("Error fetching exams:", error);
-      }
+      const res = await http.get(API_URIS.EXAMS.GET_BY_TEST_ID(testId));
+      setExams(res.data.data.items);
     };
-
     fetchExams();
   }, [testId]);
 
   return (
-    <div className="min-h-screen p-4 max-w-3xl mx-auto">
-      <h1 className="text-xl font-bold mb-4">Danh sách bài thi</h1>
-
-      {exams.length > 0 ? (
-        exams.map((exam) => (
-          <div
+    <div className="min-h-screen flex flex-col items-center p-4">
+      <h1 className="text-2xl font-bold mb-6">Danh sách bài thi</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {exams.map((exam) => (
+          <ExamCardComponent
             key={exam.id}
-            className="p-4 mb-3 border rounded-lg shadow bg-white"
-          >
-            <h2 className="text-lg font-semibold">{exam.examName}</h2>
-            <p>Thời lượng: {exam.duration} phút</p>
-            <p>Tổng điểm: {exam.totalScore}</p>
-          </div>
-        ))
-      ) : (
-        <p>Không có bài thi nào.</p>
-      )}
+            examName={exam.examName}
+            duration={exam.duration}
+            totalScore={exam.totalScore}
+            id={exam.id}
+          />
+        ))}
+      </div>
     </div>
   );
 };

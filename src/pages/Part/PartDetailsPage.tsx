@@ -85,7 +85,7 @@ const PartDetailsPage: React.FC = () => {
         <div
           role="button"
           onClick={() => {
-            navigate;
+            navigate(PATH_CONSTANTS.ROOT.ROOT);
           }}
           className="text-gray-500 hover:text-blue-600 border-b border-blue-600 mb-2"
         >

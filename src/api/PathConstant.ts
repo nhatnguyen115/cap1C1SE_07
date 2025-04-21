@@ -47,7 +47,6 @@ export const PATH_CONSTANTS = {
     GET_BY_ID: (sectionId: number | string) => `/sections/${sectionId}`,
     LIST: "/sections",
     DETAIL: (sectionId: string | number) => `/sections/${sectionId}`,
-    MANAGEMENT: "/admin/sectionmanagement",
     DETAIL_MANAGEMENT: "/section-detail",
   },
 

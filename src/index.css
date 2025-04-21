@@ -6,13 +6,13 @@
 @font-face {
   font-family: "SVN-Poppins";
   src: url("/fonts/SVN-Poppins-SemiBold.ttf") format("truetype");
-  font-weight: 600;
+  /* font-weight: 600; */
   font-style: normal;
 }
 
 body {
   font-family: "SVN-Poppins", sans-serif;
-  font-weight: 600;
+  /* font-weight: 600; */
 }
 
 .chatbot-page {
