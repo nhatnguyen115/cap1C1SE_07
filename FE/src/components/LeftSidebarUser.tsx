@@ -1,7 +1,8 @@
 // LeftSidebar.tsx
 import React from "react";
+import { FaCog, FaHistory, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { FaUser, FaHistory, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { PATH_CONSTANTS } from "../api/PathConstant";
 
 interface LeftSidebarUserProps {
   customHeight?: string; // Cho phép truyền chiều cao tùy ý
@@ -34,7 +35,7 @@ const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
         <ul>
           <li className="mb-2">
             <Link
-              to="/history"
+              to={PATH_CONSTANTS.HISTORY.HISTORY}
               className="flex items-center p-2 text-gray-700 hover:bg-blue-100 rounded"
             >
               <FaHistory className="mr-3" />
@@ -43,7 +44,7 @@ const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
           </li>
           <li className="mb-2">
             <Link
-              to="/settings"
+              to={PATH_CONSTANTS.SETTING.SETTING}
               className="flex items-center p-2 text-gray-700 hover:bg-blue-100 rounded"
             >
               <FaCog className="mr-3" />
@@ -52,7 +53,7 @@ const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
           </li>
           <li className="mb-2">
             <Link
-              to="/logout"
+              to={PATH_CONSTANTS.AUTH.LOGOUT}
               className="flex items-center p-2 text-red-500 hover:bg-blue-100 rounded"
             >
               <FaSignOutAlt className="mr-3" />

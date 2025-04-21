@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { PATH_CONSTANTS } from "../../api/PathConstant";
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -38,7 +39,10 @@ const ForgotPassword: React.FC = () => {
           )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="email" className="text-gray-700 text-sm font-medium">
+              <label
+                htmlFor="email"
+                className="text-gray-700 text-sm font-medium"
+              >
                 Email
               </label>
               <input
@@ -61,13 +65,19 @@ const ForgotPassword: React.FC = () => {
           <div className="mt-4 text-center">
             <p className="text-sm">
               Bạn chưa có tài khoản?{" "}
-              <Link className="text-blue-600 hover:underline" to={"/register"}>
+              <Link
+                className="text-blue-600 hover:underline"
+                to={PATH_CONSTANTS.AUTH.REGISTER}
+              >
                 Đăng ký
               </Link>
             </p>
             <p className="text-sm mt-2">
               Quay lại{" "}
-              <Link className="text-blue-600 hover:underline" to={"/login"}>
+              <Link
+                className="text-blue-600 hover:underline"
+                to={PATH_CONSTANTS.AUTH.LOGIN}
+              >
                 Đăng nhập
               </Link>
             </p>

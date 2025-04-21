@@ -21,3 +21,8 @@ export type PartType = {
   instructions: string;
   questionCount: number;
 };
+
+export type LessonPartType = {
+  lesson: LessonType[];
+  part: PartType[];
+};

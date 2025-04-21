@@ -30,7 +30,7 @@ const SectionComponent: React.FC<SectionComponentProps> = ({ moduleId }) => {
     };
 
     fetchSections();
-  }, []);
+  }, [moduleId]);
 
   const renderCards = (
     type: "LISTENING" | "READING" | "SPEAKING" | "WRITING",

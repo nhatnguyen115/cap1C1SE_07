@@ -1,45 +1,14 @@
 import React, { useEffect, useState } from "react";
-import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
 import { FaEllipsisH, FaTimes } from "react-icons/fa";
-import { http } from "../../../service/Http";
-import { SectionFormData } from "../../../types/section";
-import { ModuleType } from "../../../types/module";
-import { SectionTypeData } from "../../../data/sectionTypeData";
-import { ResponseDataType } from "../../../types/response";
 import { useNavigate } from "react-router-dom";
-
-// PaginationComponent tạm thời, bạn có thể tùy chỉnh lại nếu đã có component riêng
-const PaginationComponent = ({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}) => {
-  return (
-    <div className="flex justify-center items-center py-4">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage <= 0}
-        className="px-4 py-2 bg-gray-200 mx-1 rounded disabled:opacity-50"
-      >
-        Trước
-      </button>
-      <span className="px-2">
-        Trang {currentPage + 1} / {totalPages}
-      </span>
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage + 1 >= totalPages}
-        className="px-4 py-2 bg-gray-200 mx-1 rounded disabled:opacity-50"
-      >
-        Sau
-      </button>
-    </div>
-  );
-};
+import { API_URIS } from "../../../api/URIConstant";
+import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
+import PaginationComponent from "../../../components/PaginationComponent";
+import { SectionTypeData } from "../../../data/sectionTypeData";
+import { http } from "../../../service/Http";
+import { ModuleType } from "../../../types/module";
+import { ResponseDataType } from "../../../types/response";
+import { SectionFormData } from "../../../types/section";
 
 const SectionManagementPage: React.FC = () => {
   const navigate = useNavigate();
@@ -73,7 +42,7 @@ const SectionManagementPage: React.FC = () => {
   useEffect(() => {
     const fetchModules = async () => {
       try {
-        const res = await http.get("/modules");
+        const res = await http.get(API_URIS.MODULE.GET_ALL);
         setModules(res.data.data);
       } catch (err) {
         console.error("Lỗi khi lấy module:", err);

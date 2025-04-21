@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { PATH_CONSTANTS } from "../../api/PathConstant";
+import { LOCAL_STORAGE_CONSTANT } from "../../constant/LocalStorageConstant";
 import { login } from "../../service/AuthService";
 import { LoginType } from "../../types/auth";
-import { LOCAL_STORAGE_CONSTANT } from "../../constant/LocalStorageConstant";
-import { PATH_CONSTANTS } from "../../api/PathConstant";
 
 const Login: React.FC = () => {
   // const [email, setEmail] = useState("");
@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       if (role === LOCAL_STORAGE_CONSTANT.ROLE_ADMIN) {
         navigate(PATH_CONSTANTS.ADMIN.ADMIN_DASHBOARD, { replace: true });
       } else {
-        navigate("/");
+        navigate(PATH_CONSTANTS.ROOT.ROOT);
       }
     } catch (error: any) {
       alert("Đăng nhập thất bại. Vui lòng thử lại.");
@@ -107,7 +107,7 @@ const Login: React.FC = () => {
                 Nhớ mật khẩu
               </label>
               <Link
-                to={"/forgot-password"}
+                to={PATH_CONSTANTS.AUTH.FORGOT_PASSWORD}
                 className="text-sm text-blue-600 hover:underline"
               >
                 Quên mật khẩu?
@@ -123,7 +123,10 @@ const Login: React.FC = () => {
           <div className="mt-4 text-center">
             <p className="text-sm">
               Bạn chưa có tài khoản?{" "}
-              <Link className="text-blue-600 hover:underline" to={"/register"}>
+              <Link
+                className="text-blue-600 hover:underline"
+                to={PATH_CONSTANTS.AUTH.REGISTER}
+              >
                 Đăng ký
               </Link>
             </p>

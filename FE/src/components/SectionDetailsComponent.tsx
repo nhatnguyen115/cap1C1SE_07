@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { http } from "../service/Http";
-import { useNavigate } from "react-router-dom";
-import { Lesson, Part, SectionType } from "../types/section";
-import { API_URIS } from "../api/URIConstant";
+import { Link, useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../api/PathConstant";
+import { API_URIS } from "../api/URIConstant";
+import { http } from "../service/Http";
+import { LessonPartType } from "../types/lesson";
+import { Lesson, Part, SectionType } from "../types/section";
 
 interface SectionDetailsComponentProps {
   sectionId: string;
   sectionName: string;
   sections: SectionType[];
+  moduleId: number | string;
 }
 const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
   sectionId,
   sectionName,
   sections,
+  moduleId,
 }) => {
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [parts, setParts] = useState<Part[]>([]);
+  const [lessonPart, setLessonPart] = useState<LessonPartType>();
+
   const navigate = useNavigate();
+  const [currentSections, setCurrentSections] =
+    useState<SectionType[]>(sections);
 
   useEffect(() => {
     const fetchSections = async () => {
@@ -28,6 +35,20 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
         const data = response.data?.data;
         setLessons(data.lessons || []);
         setParts(data.parts || []);
+
+        setLessonPart({
+          lesson: data.lessons,
+          part: data.parts,
+        });
+
+        if (moduleId !== undefined) {
+          const responseSections = await http.get(
+            API_URIS.SECTION.GET_ALL_BY_MODULE(moduleId),
+          );
+          if (response.status === 200) {
+            setCurrentSections(responseSections.data.data.items);
+          }
+        }
       } catch (error) {
         console.error("Failed to fetch section details:", error);
       }
@@ -97,27 +118,40 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
             </p>
             <div className="border-l-4 border-orange-400 pl-4 space-y-4 ml-3">
               {parts.map((part, idx) => (
-                <div key={part.partId} className="relative">
-                  <div className="absolute -left-8 top-3">
-                    <div className="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center font-semibold">
-                      {String(idx + 1).padStart(2, "0")}
+                <Link
+                  key={part.partId}
+                  to={{
+                    pathname: PATH_CONSTANTS.PART.DETAIL(part.partId),
+                  }}
+                  state={{
+                    sections: currentSections,
+                    lessonPart: lessonPart,
+                    partId: part.partId,
+                  }}
+                  className="block"
+                >
+                  <div className="relative">
+                    <div className="absolute -left-8 top-3">
+                      <div className="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center font-semibold">
+                        {String(idx + 1).padStart(2, "0")}
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border hover:shadow transition">
-                    <div>
-                      <p className="font-medium text-sm text-gray-800">
-                        📝 {part.partName}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Type: {part.questionType}
-                      </p>
+                    <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border hover:shadow transition">
+                      <div>
+                        <p className="font-medium text-sm text-gray-800">
+                          📝 {part.partName}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Type: {part.questionType}
+                        </p>
+                      </div>
+                      <span className="text-gray-400 text-xs">
+                        {part.questionCount} questions
+                      </span>
                     </div>
-                    <span className="text-gray-400 text-xs">
-                      {part.questionCount} questions
-                    </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -129,7 +163,7 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
             All Sections
           </h2>
           <div className="flex flex-col gap-3">
-            {sections.map((s) => {
+            {currentSections.map((s) => {
               const isActive = s.id.toString() === sectionId.toString();
               return (
                 <div
@@ -142,7 +176,7 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
                   }`}
                   onClick={() =>
                     navigate(PATH_CONSTANTS.SECTION.GET_BY_ID(s.id), {
-                      state: { sectionName: s.sectionName, sections },
+                      state: { sectionName: s.sectionName, currentSections },
                     })
                   }
                 >

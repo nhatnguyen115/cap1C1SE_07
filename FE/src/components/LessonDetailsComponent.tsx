@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
 import { ChevronLeft, List } from "lucide-react";
-import { LessonDetails } from "../types/lesson";
-import { http } from "../service/Http";
-import { API_URIS } from "../api/URIConstant";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { PATH_CONSTANTS } from "../api/PathConstant";
+import { API_URIS } from "../api/URIConstant";
+import { http } from "../service/Http";
+import { LessonDetails } from "../types/lesson";
 
 interface LessonDetailsComponentProps {
   lessonId: string;
@@ -44,7 +45,7 @@ const LessonDetailsComponent: React.FC<LessonDetailsComponentProps> = ({
       {showSidebar && (
         <aside className="w-64 bg-gray-100 p-4 border-r hidden md:block">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate(PATH_CONSTANTS.ROOT.ROOT)}
             className="text-blue-600 hover:underline mb-4 block text-left font-medium"
           >
             ← Home

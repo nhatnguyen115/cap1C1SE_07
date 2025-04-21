@@ -1,11 +1,10 @@
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { MenuItem } from "../../types/home";
-import { useState } from "react";
-import React from "react";
-import { http } from "../../service/Http";
 import { API_URIS } from "../../api/URIConstant";
-import { SectionType } from "../../types/section";
 import { sectionMockData } from "../../data/sectionMockData";
+import { http } from "../../service/Http";
+import { MenuItem } from "../../types/home";
+import { SectionType } from "../../types/section";
 
 type Props = {
   menuItems: MenuItem[];
@@ -16,21 +15,20 @@ export const MenuNavComponent = ({ menuItems }: Props) => {
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [section, setSection] = useState<SectionType[]>([]);
 
-  const [idMenuActive, setIdMenuActive] = useState<number | null>(null);
-  const [idMenuParentActive, setIdMenuParentActive] = useState<number | null>(
-    null,
-  );
+  const [activeItemId, setActiveItemId] = useState<number | null>(null);
+  const [activeParentId, setActiveParentId] = useState<number | null>(null);
 
-  const handleMenuActive = (item: MenuItem) => {
-    setIdMenuActive(item.itemId);
-    setIdMenuParentActive(item.itemId);
-  };
-  const isActive = (item: MenuItem): boolean => {
-    if (idMenuActive === item.itemId) return true;
-    if (item.children) {
-      return item.children.some((child) => idMenuParentActive === child.itemId);
+  const handleMenuActive = (itemId: number, parentId?: number) => {
+    setActiveItemId(itemId);
+    if (parentId !== undefined) {
+      setActiveParentId(parentId);
+    } else {
+      setActiveParentId(itemId); // Nếu là parent thì chính nó là parent
     }
-    return false;
+  };
+
+  const isActive = (item: MenuItem): boolean => {
+    return item.itemId === activeParentId;
   };
 
   const fetchSections = async (moduleId: number | string) => {
@@ -66,7 +64,7 @@ export const MenuNavComponent = ({ menuItems }: Props) => {
           >
             {/* Desktop parent */}
             <Link
-              onClick={() => handleMenuActive(item)}
+              onClick={() => handleMenuActive(item.itemId)}
               to={{
                 pathname: path,
                 search: query ? `?${query}` : "",
@@ -94,7 +92,10 @@ export const MenuNavComponent = ({ menuItems }: Props) => {
 
                   return (
                     <Link
-                      onClick={() => fetchSections(item.itemId)}
+                      onClick={() => {
+                        handleMenuActive(child.itemId, item.itemId); // Ghi nhận parent thực sự
+                        fetchSections(item.itemId);
+                      }}
                       key={child.id}
                       to={{
                         pathname: childPath,
@@ -103,6 +104,7 @@ export const MenuNavComponent = ({ menuItems }: Props) => {
                       state={{
                         sectionName: child.label,
                         sections: section,
+                        moduleId: item.itemId,
                       }}
                       className={`block px-4 py-2 transition duration-150 ${
                         isActive(child)

@@ -1,8 +1,9 @@
 import React from "react";
-import ExamCard from "./component/ExamCard";
-import IcArrow from "../../assets/icons/IcArrow";
 import { Link } from "react-router-dom";
+import { PATH_CONSTANTS } from "../../api/PathConstant";
+import IcArrow from "../../assets/icons/IcArrow";
 import { toeicTest } from "../../data/toeicMockData";
+import ExamCard from "./component/ExamCard";
 export interface Exam {
   id: number;
   title: string;
@@ -28,7 +29,7 @@ const Home = ({ setIsOpen }) => {
               Học và luyện thi TOEIC với hệ thống bài tập thông minh, bài thi mô
               phỏng thực tế và chatbot AI hỗ trợ 24/7.
             </p>
-            <Link to={"/register"}>
+            <Link to={PATH_CONSTANTS.AUTH.REGISTER}>
               <button className="bg-yellow-400 text-gray-900 font-semibold px-6 py-3 rounded-lg hover:bg-yellow-500 transition">
                 Bắt đầu ngay
               </button>
@@ -132,7 +133,7 @@ const Home = ({ setIsOpen }) => {
           </div>
         </div>
 
-        <Link to={"/mock-test"}>
+        <Link to={PATH_CONSTANTS.MOCK_TEST.MOCK_TEST}>
           <button className="mt-6 px-8 py-2 bg-white text-blue-600 rounded-lg hover:bg-blue-700 hover:text-white border border-blue-600 focus:outline-none w-full max-w-[300px] flex mb-12">
             <div className=" justify-center w-full flex flex-row items-center">
               Xem thêm
@@ -153,7 +154,7 @@ const Home = ({ setIsOpen }) => {
             thật, giúp bạn làm quen với cấu trúc đề và đánh giá chính xác trình
             độ của mình.
           </p>
-          <Link to={"/mock-test"}>
+          <Link to={PATH_CONSTANTS.MOCK_TEST.MOCK_TEST}>
             <button className="mt-6 px-8 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 focus:outline-none">
               Thi Thử Ngay
             </button>

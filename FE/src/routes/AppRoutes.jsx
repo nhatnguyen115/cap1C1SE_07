@@ -7,36 +7,40 @@ import NotFound from "../pages/NotFound/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
 
 // Layout
+import { PATH_CONSTANTS } from "../api/PathConstant";
 import MainLayout from "../layouts/MainLayout";
-import Register from "../pages/Register/Register";
-import { MockTest } from "../pages/MockTest/MockTest";
-import { Test } from "../pages/MockTest/Test";
+import DashboardPage from "../pages/Admin/Dashboard/Dashboard";
+import SectionDetailsManagement from "../pages/Admin/SectionManagement/SectionDetailsManagement";
+import SectionManagementPage from "../pages/Admin/SectionManagement/SectionManagement";
+import TestManagementPage from "../pages/Admin/TestManagement/TestManagement";
+import UserManagementPage from "../pages/Admin/UserManagement/UserManagement";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
+import History from "../pages/History/History";
 import Leaderboard from "../pages/Leaderboard/Leaderboard";
+import LessonPage from "../pages/Lesson/LessonPage";
+import { MockTest } from "../pages/MockTest/MockTest";
 import Result from "../pages/MockTest/Result";
-import Settings from "../pages/Settings/Settings";
-import EditSettings from "../pages/Settings/EditSettings/EditSettings";
+import { Test } from "../pages/MockTest/Test";
 import Payment from "../pages/Payment/Payment";
 import PaymentForm from "../pages/Payment/PaymentForm/PaymentForm"; // Giả lập trạng thái Auth
-import Resource from "../pages/Resource/Resource";
-import History from "../pages/History/History";
 import { Practice } from "../pages/Practice/Practice";
-import ResourceDetail from "../pages/Resource/ResourceDetail";
-import DashboardPage from "../pages/Admin/Dashboard/Dashboard";
-import UserManagementPage from "../pages/Admin/UserManagement/UserManagement";
-import TestManagementPage from "../pages/Admin/TestManagement/TestManagement";
+import { PracticeDetailsPage } from "../pages/Practice/PracticeDetailsPage";
 import { PracticePage } from "../pages/Practice/PracticePage";
-import SectionManagementPage from "./../pages/Admin/SectionManagement/SectionManagement";
-import { PracticeDetailsPage } from "./../pages/Practice/PracticeDetailsPage";
-import LessonPage from "./../pages/Lesson/LessonPage";
-import SectionDetailsManagement from "./../pages/Admin/SectionManagement/SectionDetailsManagement";
+import Register from "../pages/Register/Register";
+import Resource from "../pages/Resource/Resource";
+import ResourceDetail from "../pages/Resource/ResourceDetail";
+import EditSettings from "../pages/Settings/EditSettings/EditSettings";
+import Settings from "../pages/Settings/Settings";
+import ExamPageDetails from "./../pages/Exam/ExamPageDetails";
+import PartDetailsPage from "./../pages/Part/PartDetailsPage";
+import TestPage from "./../pages/Test/TestPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
 const routes = [
   {
-    path: "/", // Trang Home, cho mọi user
+    path: PATH_CONSTANTS.ROOT.ROOT,
     element: (
       <MainLayout>
         <HomePage />
@@ -44,9 +48,9 @@ const routes = [
     ),
   },
   {
-    path: "/login", // Trang dành cho Guest (Guest-only)
+    path: PATH_CONSTANTS.AUTH.LOGIN,
     element: (
-      <ProtectedRoute isAuthenticated={isAuthenticated} guestOnly={true}>
+      <ProtectedRoute isAuthenticated={isAuthenticated} guestOnly>
         <MainLayout>
           <Login />
         </MainLayout>
@@ -54,9 +58,9 @@ const routes = [
     ),
   },
   {
-    path: "/forgot-password", // Trang dành cho Guest (Guest-only)
+    path: PATH_CONSTANTS.AUTH.FORGOT_PASSWORD,
     element: (
-      <ProtectedRoute isAuthenticated={isAuthenticated} guestOnly={true}>
+      <ProtectedRoute isAuthenticated={isAuthenticated} guestOnly>
         <MainLayout>
           <ForgotPassword />
         </MainLayout>
@@ -64,7 +68,75 @@ const routes = [
     ),
   },
   {
-    path: "*", // Trang 404
+    path: PATH_CONSTANTS.AUTH.RESET_PASSWORD,
+    element: (
+      <ProtectedRoute isAuthenticated={isAuthenticated} guestOnly>
+        <MainLayout>
+          <ResetPassword />
+        </MainLayout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.AUTH.REGISTER,
+    element: (
+      <ProtectedRoute isAuthenticated={isAuthenticated} guestOnly>
+        <MainLayout>
+          <Register />
+        </MainLayout>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.MOCK_TEST.MOCK_TEST,
+    element: (
+      <MainLayout>
+        <MockTest />
+      </MainLayout>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.MOCK_TEST.MOCK_TEST_BY_ID(":id"),
+    element: (
+      <MainLayout>
+        <Test isView={false} />
+      </MainLayout>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.MOCK_TEST.MOCK_TEST_VIEW_BY_ID(":id"),
+    element: (
+      <MainLayout>
+        <Test isView={true} />
+      </MainLayout>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.EXAM.TEST,
+    element: (
+      <MainLayout>
+        <MockTest />
+      </MainLayout>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.EXAM.EXAMS,
+    element: (
+      <MainLayout>
+        <ExamPageDetails />
+      </MainLayout>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.EXAM.EXAMS_VIEW_BY_ID,
+    element: (
+      <MainLayout>
+        <Test isView={true} />
+      </MainLayout>
+    ),
+  },
+  {
+    path: "*",
     element: (
       <MainLayout>
         <NotFound />
@@ -72,73 +144,7 @@ const routes = [
     ),
   },
   {
-    path: "/reset-password", // Trang 404
-    element: (
-      <MainLayout>
-        <ResetPassword />
-      </MainLayout>
-    ),
-  },
-
-  {
-    path: "/register",
-    element: (
-      <MainLayout>
-        <Register />
-      </MainLayout>
-    ),
-  },
-
-  {
-    path: "/mock-test",
-    element: (
-      <MainLayout>
-        <MockTest />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/mock-test/:id",
-    element: (
-      <MainLayout>
-        <Test isView={false} />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/mock-test/view/:id",
-    element: (
-      <MainLayout>
-        <Test isView={true} />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/tests",
-    element: (
-      <MainLayout>
-        <MockTest />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/exams",
-    element: (
-      <MainLayout>
-        <Test isView={false} />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/exams/view/:id",
-    element: (
-      <MainLayout>
-        <Test isView={true} />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/leaderboard",
+    path: PATH_CONSTANTS.LEADERBOARD,
     element: (
       <MainLayout>
         <Leaderboard />
@@ -146,7 +152,7 @@ const routes = [
     ),
   },
   {
-    path: "/result/:id",
+    path: PATH_CONSTANTS.RESULT.BY_ID(":id"),
     element: (
       <MainLayout>
         <Result
@@ -159,9 +165,8 @@ const routes = [
       </MainLayout>
     ),
   },
-
   {
-    path: "/settings",
+    path: PATH_CONSTANTS.SETTING.SETTING,
     element: (
       <MainLayout>
         <Settings />
@@ -169,7 +174,7 @@ const routes = [
     ),
   },
   {
-    path: "/settings/editsettings",
+    path: PATH_CONSTANTS.SETTING.ADD,
     element: (
       <MainLayout>
         <EditSettings />
@@ -177,7 +182,7 @@ const routes = [
     ),
   },
   {
-    path: "/payment",
+    path: PATH_CONSTANTS.PAYMENT.ROOT,
     element: (
       <MainLayout>
         <Payment />
@@ -185,7 +190,7 @@ const routes = [
     ),
   },
   {
-    path: "/payment/paymentform",
+    path: PATH_CONSTANTS.PAYMENT.FORM,
     element: (
       <MainLayout>
         <PaymentForm />
@@ -193,7 +198,7 @@ const routes = [
     ),
   },
   {
-    path: "/resource",
+    path: PATH_CONSTANTS.RESOURCE.ROOT,
     element: (
       <MainLayout>
         <Resource />
@@ -201,7 +206,7 @@ const routes = [
     ),
   },
   {
-    path: "/resource/:id",
+    path: PATH_CONSTANTS.RESOURCE.DETAIL(":id"),
     element: (
       <MainLayout>
         <ResourceDetail />
@@ -209,7 +214,7 @@ const routes = [
     ),
   },
   {
-    path: "/history",
+    path: PATH_CONSTANTS.HISTORY.HISTORY,
     element: (
       <MainLayout>
         <History />
@@ -217,7 +222,7 @@ const routes = [
     ),
   },
   {
-    path: "/practice",
+    path: PATH_CONSTANTS.PRACTICE.ROOT,
     element: (
       <MainLayout>
         <Practice />
@@ -225,7 +230,7 @@ const routes = [
     ),
   },
   {
-    path: "/admin/dashboard",
+    path: PATH_CONSTANTS.ADMIN.ADMIN_DASHBOARD,
     element: (
       <MainLayout>
         <DashboardPage />
@@ -233,7 +238,7 @@ const routes = [
     ),
   },
   {
-    path: "/admin/usermanagement",
+    path: PATH_CONSTANTS.ADMIN.ADMIN_USERMANAGEMENT,
     element: (
       <MainLayout>
         <UserManagementPage />
@@ -241,7 +246,7 @@ const routes = [
     ),
   },
   {
-    path: "/admin/testmanagement",
+    path: PATH_CONSTANTS.ADMIN.TEST_MANAGEMENT,
     element: (
       <MainLayout>
         <TestManagementPage />
@@ -249,7 +254,7 @@ const routes = [
     ),
   },
   {
-    path: "/admin/sectionmanagement",
+    path: PATH_CONSTANTS.ADMIN.SECTION_MANAGEMENT,
     element: (
       <MainLayout>
         <SectionManagementPage />
@@ -257,7 +262,7 @@ const routes = [
     ),
   },
   {
-    path: "section-detail",
+    path: PATH_CONSTANTS.SECTION.DETAIL_MANAGEMENT,
     element: (
       <MainLayout>
         <SectionDetailsManagement />
@@ -265,7 +270,7 @@ const routes = [
     ),
   },
   {
-    path: "/sections",
+    path: PATH_CONSTANTS.SECTION.LIST,
     element: (
       <MainLayout>
         <PracticePage />
@@ -273,15 +278,7 @@ const routes = [
     ),
   },
   {
-    path: "/sections",
-    element: (
-      <MainLayout>
-        <PracticePage />
-      </MainLayout>
-    ),
-  },
-  {
-    path: "/sections/:sectionId",
+    path: PATH_CONSTANTS.SECTION.DETAIL(":sectionId"),
     element: (
       <MainLayout>
         <PracticeDetailsPage />
@@ -289,8 +286,21 @@ const routes = [
     ),
   },
   {
-    path: "/lesson/:lessonId",
+    path: PATH_CONSTANTS.LESSON.GET_BY_ID(":lessonId"),
     element: <LessonPage />,
+  },
+  {
+    path: PATH_CONSTANTS.PART.DETAIL_PATH,
+    element: <PartDetailsPage />,
+  },
+
+  {
+    path: PATH_CONSTANTS.TEST.TESTS,
+    element: (
+      <MainLayout>
+        <TestPage />
+      </MainLayout>
+    ),
   },
 ];
 

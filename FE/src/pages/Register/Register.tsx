@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Gender, RegisterType } from "../../types/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { PATH_CONSTANTS } from "../../api/PathConstant";
 import { register } from "../../service/AuthService";
-import { useNavigate } from "react-router-dom";
+import { Gender, RegisterType } from "../../types/auth";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -41,7 +41,7 @@ const Register: React.FC = () => {
 
     try {
       const response = await register(payload);
-      navigate("/"); // 👈 chuyển về trang chủ
+      navigate(PATH_CONSTANTS.ROOT.ROOT); // 👈 chuyển về trang chủ
     } catch (error: any) {
       alert("Đăng ký thất bại. Vui lòng thử lại.");
       console.error("Registration error:", error);
@@ -203,7 +203,10 @@ const Register: React.FC = () => {
           <div className="mt-4 text-center">
             <p className="text-sm">
               Bạn đã có tài khoản?{" "}
-              <Link className="text-blue-600 hover:underline" to={"/login"}>
+              <Link
+                className="text-blue-600 hover:underline"
+                to={PATH_CONSTANTS.AUTH.REGISTER}
+              >
                 Đăng nhập
               </Link>
             </p>
