@@ -123,7 +123,11 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
                   to={{
                     pathname: PATH_CONSTANTS.PART.DETAIL(part.partId),
                   }}
-                  state={{ lessonPart: lessonPart }}
+                  state={{
+                    sections: currentSections,
+                    lessonPart: lessonPart,
+                    partId: part.partId,
+                  }}
                   className="block"
                 >
                   <div className="relative">

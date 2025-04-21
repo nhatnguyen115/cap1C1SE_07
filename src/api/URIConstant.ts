@@ -44,6 +44,14 @@ export const API_URIS = {
   LESSON: {
     GET_BY_ID: (lessonId: number | string) => `/lessons/${lessonId}`,
   },
+
+  TEST: {
+    TESTS: "/tests",
+  },
+
+  EXAMS: {
+    GET_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
+  },
   MENU: {
     GET_ALL: "/menu",
     GET_BY_ID: (id: number | string) => `/menu/${id}`,

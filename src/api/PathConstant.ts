@@ -111,8 +111,14 @@ export const PATH_CONSTANTS = {
   EXAM: {
     TEST: "/test",
     EXAMS_VIEW_BY_ID: "/exams/view/:id",
+    EXAMS_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
     EXAMS: "/exams",
   },
+
+  TEST: {
+    TESTS: "/tests",
+  },
+
   PART: {
     PARTS: "/parts",
     DETAIL: (partId: number | string) => `/parts/${partId}`,

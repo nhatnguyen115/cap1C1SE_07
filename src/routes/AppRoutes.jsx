@@ -33,6 +33,7 @@ import ResourceDetail from "../pages/Resource/ResourceDetail";
 import EditSettings from "../pages/Settings/EditSettings/EditSettings";
 import Settings from "../pages/Settings/Settings";
 import PartDetailsPage from "./../pages/Part/PartDetailsPage";
+import TestPage from "./../pages/Test/TestPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -290,6 +291,15 @@ const routes = [
   {
     path: PATH_CONSTANTS.PART.DETAIL_PATH,
     element: <PartDetailsPage />,
+  },
+
+  {
+    path: PATH_CONSTANTS.TEST.TESTS,
+    element: (
+      <MainLayout>
+        <TestPage />
+      </MainLayout>
+    ),
   },
 ];
 

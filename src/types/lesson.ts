@@ -23,6 +23,6 @@ export type PartType = {
 };
 
 export type LessonPartType = {
-  lesson: LessonType;
-  part: PartType;
+  lesson: LessonType[];
+  part: PartType[];
 };

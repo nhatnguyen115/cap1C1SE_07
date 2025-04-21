@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import QuestionCardComponent from "../../components/QuestionCardComponent";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { PATH_CONSTANTS } from "../../api/PathConstant";
+import PartDetailsComponent from "../../components/PartDetailsComponent";
 import { getQuestions } from "../../service/PartService";
+import { LessonPartType } from "../../types/lesson";
 import { QuestionType } from "../../types/part";
 import { SectionType } from "../../types/section";
+import LessonPage from "../Lesson/LessonPage";
+
 const PartDetailsPage: React.FC = () => {
   const location = useLocation();
   const [questions, setQuestions] = useState<QuestionType[]>([]);
@@ -13,18 +17,31 @@ const PartDetailsPage: React.FC = () => {
 
   const lessonPartState = location.state?.lessonPart;
 
-  const [lessonPart, setLessonPart] = useState<SectionType[]>(lessonPartState);
+  const { partId } = useParams();
 
-  const partId = 101; // hoặc lấy từ router params nếu có
+  const [activeTab, setActiveTab] = useState<"lesson" | "part">("part");
+
+  const [activeLesson, setActiveLesson] = useState<string | number>(
+    lessonPartState.lesson[0]?.id,
+  );
+  const [activePart, setActivePart] = useState<string | number>("");
+  const [lessonPart, setLessonPart] = useState<LessonPartType>(lessonPartState);
+  const [currentSections, setCurrentSections] = useState<SectionType[]>(
+    location.state?.sections,
+  );
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchQuestions = async () => {
-      try {
-        console.log("lessonPartState:", lessonPartState);
+      if (!partId) return;
+      setLoading(true); // reset loading để hiển thị "Đang tải..." khi chuyển tab
+      console.log("currentSections:", currentSections);
 
+      try {
         const response = await getQuestions(partId, 0, 10);
         if (response) {
           setQuestions(response.items || []);
-          setElapsedSeconds(response.elapsedSeconds || 0); // ✅ dùng nếu tồn tại
+          setElapsedSeconds(response.elapsedSeconds || 0);
         }
       } catch (err) {
         setError("Failed to load questions.");
@@ -32,7 +49,16 @@ const PartDetailsPage: React.FC = () => {
         setLoading(false);
       }
     };
+
     fetchQuestions();
+  }, [partId]);
+
+  useEffect(() => {
+    if (partId !== undefined) {
+      console.log("partId: ", partId);
+
+      setActivePart(String(partId));
+    }
   }, [partId]);
 
   // Timer tăng dần
@@ -56,49 +82,108 @@ const PartDetailsPage: React.FC = () => {
     <div className="flex min-h-screen">
       {/* Sidebar */}
       <aside className="w-64 bg-gray-100 p-4 border-r">
-        <h2 className="text-lg font-semibold mb-4">Danh sách bài test</h2>
-        {/* ...render danh sách bài test ở đây nếu có */}
+        <div
+          role="button"
+          onClick={() => {
+            navigate;
+          }}
+          className="text-gray-500 hover:text-blue-600 border-b border-blue-600 mb-2"
+        >
+          <h2 className="text-lg font-semibold mb-4 text-center">Home</h2>
+        </div>
+        <div className="flex space-x-4 border-b border-gray-200 mb-4">
+          <button
+            onClick={() => setActiveTab("lesson")}
+            className={`pb-2 px-4 text-sm font-medium border-b-2 transition ${
+              activeTab === "lesson"
+                ? "border-blue-600 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-blue-600"
+            }`}
+          >
+            Lesson
+          </button>
+          <button
+            onClick={() => setActiveTab("part")}
+            className={`pb-2 px-4 text-sm font-medium border-b-2 transition ${
+              activeTab === "part"
+                ? "border-blue-600 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-blue-600"
+            }`}
+          >
+            Part
+          </button>
+        </div>
+
+        {activeTab === "lesson" && (
+          <div>
+            {lessonPart.lesson.map((lesson) => (
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  if (lesson.id !== undefined) {
+                    setActiveLesson(lesson.id);
+                  }
+                }}
+                className={`text-xs transition rounded-xl px-3 py-1 flex flex-row justify-between${
+                  activeLesson === lesson.id ? " bg-slate-300" : ""
+                }`}
+              >
+                <div>
+                  <span>{lesson.lessonName}</span>
+                </div>
+                <div>
+                  <span>{lesson.lessonName}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === "part" && (
+          <div>
+            {lessonPart.part.map((part) => (
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  if (part.partId !== undefined) {
+                    setActivePart(part.partId);
+                    navigate(PATH_CONSTANTS.PART.DETAIL(part.partId), {
+                      state: { lessonPart: lessonPart, partId: part.partId },
+                    });
+                  }
+                }}
+                className={`text-xs transition rounded-xl px-3 py-1 flex flex-row justify-between${
+                  activePart == part.partId ? " bg-slate-300" : ""
+                }`}
+              >
+                <div>
+                  <span>{part.partName}</span>
+                </div>
+                <div>
+                  <span>{part.partName}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </aside>
 
       {/* Main Content */}
       <main className="flex-1 p-6">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Part 1: Photos</h1>
-          <div className="text-xl font-mono bg-gray-200 px-4 py-2 rounded">
-            ⏳ {formatTime(elapsedSeconds)}
-          </div>
-        </div>
-
-        {questions.map((question, index) => (
-          <QuestionCardComponent
-            key={question.id}
-            question={question}
-            index={index}
+        {activeTab === "lesson" && (
+          <LessonPage lessonIdProps={String(activeLesson)} />
+        )}
+        {activeTab === "part" && (
+          <PartDetailsComponent
+            key={partId}
+            partName="Part 1: Photos"
+            questions={questions}
+            elapsedSeconds={elapsedSeconds}
+            formatTime={formatTime}
           />
-        ))}
-
-        {/* Thanh điều hướng */}
-        <div className="flex justify-between mt-10">
-          <div>
-            {questions.map((_, idx) => (
-              <button
-                key={idx}
-                className="mx-1 w-8 h-8 rounded-full bg-gray-300 hover:bg-gray-400"
-              >
-                {idx + 1}
-              </button>
-            ))}
-          </div>
-
-          {/* Restart */}
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            onClick={() => window.location.reload()}
-          >
-            Restart
-          </button>
-        </div>
+        )}
       </main>
     </div>
   );
