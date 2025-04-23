@@ -61,3 +61,5 @@ VALUES (0, null, '/', -1, 0, true, null, ''),
        (300301, 'MINI TEST', '/exams?testId={id}', 200102, 2, true, 100202, ''),
        (300302, 'FULL TEST', '/exams?testId={id}', 200102, 3, true, 100203, '');
 
+INSERT INTO public.menu (menu_id,"label",url,parent_id,order_number,description,status) VALUES
+	 (300303,'Trang Chủ','/',0,0,NULL,true);
