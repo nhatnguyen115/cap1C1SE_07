@@ -50,9 +50,6 @@ const PartDetailsPage: React.FC = () => {
     }
   };
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log("activeTabState:", activeTabState);
-  }, []);
 
   useEffect(() => {
     const fetchQuestions = async () => {

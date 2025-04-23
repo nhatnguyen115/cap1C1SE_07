@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { QuestionType } from "../types/part";
 import PaginationStaticComponent from "./PaginationStaticComponent";
 import QuestionCardComponent from "./QuestionCardComponent";
@@ -16,6 +16,8 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
   elapsedSeconds,
   formatTime,
 }) => {
+  const [answers, setAnswers] = useState<{ [questionId: number]: string }>({});
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -33,6 +35,10 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
             key={question.id}
             question={question}
             index={index}
+            selectedOption={answers[question.id]}
+            onSelectOption={(optionKey) =>
+              setAnswers((prev) => ({ ...prev, [question.id]: optionKey }))
+            }
           />
         )}
       />
