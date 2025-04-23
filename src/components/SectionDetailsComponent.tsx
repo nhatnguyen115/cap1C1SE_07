@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../api/PathConstant";
 import { API_URIS } from "../api/URIConstant";
+import { PART_DETAILS_CONSTANT } from "../pages/Part/PartDetailsPage";
 import { http } from "../service/Http";
 import { LessonPartType } from "../types/lesson";
 import { Lesson, Part, SectionType } from "../types/section";
@@ -75,7 +76,12 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
                   key={lesson.id}
                   className="relative"
                   onClick={() =>
-                    navigate(PATH_CONSTANTS.LESSON.GET_BY_ID(lesson.id))
+                    navigate(PATH_CONSTANTS.LESSON.GET_BY_ID(lesson.id), {
+                      state: {
+                        lessonPart: lessonPart,
+                        activeTabState: PART_DETAILS_CONSTANT.TAB_LESSON,
+                      },
+                    })
                   }
                 >
                   {/* Circle number */}
@@ -127,6 +133,7 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
                     sections: currentSections,
                     lessonPart: lessonPart,
                     partId: part.partId,
+                    activeTabState: PART_DETAILS_CONSTANT.TAB_PART,
                   }}
                   className="block"
                 >

@@ -9,6 +9,14 @@ import { QuestionType } from "../../types/part";
 import { SectionType } from "../../types/section";
 import LessonPage from "../Lesson/LessonPage";
 
+export const PART_DETAILS_CONSTANT = {
+  TAB_LESSON: "lesson",
+  TAB_PART: "part",
+};
+
+type TabType =
+  (typeof PART_DETAILS_CONSTANT)[keyof typeof PART_DETAILS_CONSTANT];
+
 const PartDetailsPage: React.FC = () => {
   const location = useLocation();
   const [questions, setQuestions] = useState<QuestionType[]>([]);
@@ -17,10 +25,13 @@ const PartDetailsPage: React.FC = () => {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   const lessonPartState = location.state?.lessonPart;
+  const activeTabState = location.state?.activeTabState;
 
   const { partId } = useParams();
 
-  const [activeTab, setActiveTab] = useState<"lesson" | "part">("part");
+  const [activeTab, setActiveTab] = useState<TabType>(
+    activeTabState ?? PART_DETAILS_CONSTANT.TAB_LESSON,
+  );
 
   const [activeLesson, setActiveLesson] = useState<string | number>(
     lessonPartState.lesson[0]?.id,
@@ -39,6 +50,9 @@ const PartDetailsPage: React.FC = () => {
     }
   };
   const navigate = useNavigate();
+  useEffect(() => {
+    console.log("activeTabState:", activeTabState);
+  }, []);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -76,20 +90,19 @@ const PartDetailsPage: React.FC = () => {
 
   // Timer tăng dần
   useEffect(() => {
-    const timer = setInterval(() => {
-      setElapsedSeconds((prev) => prev + 1);
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+    if (activeTab == PART_DETAILS_CONSTANT.TAB_PART) {
+      const timer = setInterval(() => {
+        setElapsedSeconds((prev) => prev + 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [activeTab]);
 
   const formatTime = (totalSeconds: number) => {
     const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
     const seconds = String(totalSeconds % 60).padStart(2, "0");
     return `${minutes}:${seconds}`;
   };
-
-  if (loading) return <p className="text-center mt-10">Đang tải...</p>;
-  if (error) return <p className="text-center text-red-500 mt-10">{error}</p>;
 
   return (
     <div className="flex min-h-screen">
@@ -106,9 +119,9 @@ const PartDetailsPage: React.FC = () => {
         </div>
         <div className="flex space-x-4 border-b border-gray-200 mb-4">
           <button
-            onClick={() => setActiveTab("lesson")}
+            onClick={() => setActiveTab(PART_DETAILS_CONSTANT.TAB_LESSON)}
             className={`pb-2 px-4 text-sm font-medium border-b-2 transition ${
-              activeTab === "lesson"
+              activeTab === PART_DETAILS_CONSTANT.TAB_LESSON
                 ? "border-blue-600 text-blue-600"
                 : "border-transparent text-gray-500 hover:text-blue-600"
             }`}
@@ -116,9 +129,9 @@ const PartDetailsPage: React.FC = () => {
             Lesson
           </button>
           <button
-            onClick={() => setActiveTab("part")}
+            onClick={() => setActiveTab(PART_DETAILS_CONSTANT.TAB_PART)}
             className={`pb-2 px-4 text-sm font-medium border-b-2 transition ${
-              activeTab === "part"
+              activeTab === PART_DETAILS_CONSTANT.TAB_PART
                 ? "border-blue-600 text-blue-600"
                 : "border-transparent text-gray-500 hover:text-blue-600"
             }`}
@@ -127,7 +140,7 @@ const PartDetailsPage: React.FC = () => {
           </button>
         </div>
 
-        {activeTab === "lesson" && (
+        {activeTab === PART_DETAILS_CONSTANT.TAB_LESSON && (
           <div>
             {lessonPart.lesson.map((lesson) => (
               <div
@@ -136,6 +149,9 @@ const PartDetailsPage: React.FC = () => {
                 onClick={() => {
                   if (lesson.id !== undefined) {
                     setActiveLesson(lesson.id);
+                    navigate(PATH_CONSTANTS.LESSON.GET_BY_ID(lesson.id), {
+                      state: { lessonPart: lessonPart },
+                    });
                   }
                 }}
                 className={`text-xs transition rounded-xl px-3 py-1 flex flex-row justify-between${
@@ -153,7 +169,7 @@ const PartDetailsPage: React.FC = () => {
           </div>
         )}
 
-        {activeTab === "part" && (
+        {activeTab === PART_DETAILS_CONSTANT.TAB_PART && (
           <div>
             {lessonPart.part.map((part) => (
               <div
@@ -185,10 +201,10 @@ const PartDetailsPage: React.FC = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-6">
-        {activeTab === "lesson" && (
+        {activeTab === PART_DETAILS_CONSTANT.TAB_LESSON && (
           <LessonPage lessonIdProps={String(activeLesson)} />
         )}
-        {activeTab === "part" && (
+        {activeTab === PART_DETAILS_CONSTANT.TAB_PART && (
           <div>
             <PartDetailsComponent
               key={partId}
