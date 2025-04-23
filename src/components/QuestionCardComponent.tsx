@@ -12,8 +12,8 @@ const QuestionCardComponent: React.FC<Props> = ({ question, index }) => {
       <div className="mb-4">
         <img
           src={question.url}
-          alt={`Question ${index + 1}`}
-          className="w-60 h-auto rounded"
+          alt={`Question ${index + 1}: ${question.content}`}
+          className="text-lg font-bold h-auto rounded"
         />
       </div>
       <div className="space-y-2">

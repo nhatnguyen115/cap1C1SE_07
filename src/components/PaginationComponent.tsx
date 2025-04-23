@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { animateScroll as scroll } from "react-scroll";
 
 type PaginationProps = {
   currentPage: number;
@@ -11,6 +12,13 @@ const PaginationComponent = ({
   totalPages,
   onPageChange,
 }: PaginationProps) => {
+  useEffect(() => {
+    scroll.scrollToTop({
+      smooth: true,
+      duration: 500, // thời gian cuộn (ms)
+    });
+  }, [currentPage]);
+
   const renderPageNumbers = () => {
     const pageNumbers = [];
 

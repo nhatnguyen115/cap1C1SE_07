@@ -1,5 +1,6 @@
 import React from "react";
 import { QuestionType } from "../types/part";
+import PaginationStaticComponent from "./PaginationStaticComponent";
 import QuestionCardComponent from "./QuestionCardComponent";
 
 type PartDetailsComponentProps = {
@@ -24,17 +25,21 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
         </div>
       </div>
 
-      {questions.map((question, index) => (
-        <QuestionCardComponent
-          key={question.id}
-          question={question}
-          index={index}
-        />
-      ))}
+      <PaginationStaticComponent
+        items={questions}
+        itemsPerPage={5}
+        renderItem={(question, index) => (
+          <QuestionCardComponent
+            key={question.id}
+            question={question}
+            index={index}
+          />
+        )}
+      />
 
       {/* Thanh điều hướng */}
       <div className="flex justify-between mt-10">
-        <div>
+        {/* <div>
           {questions.map((_, idx) => (
             <button
               key={idx}
@@ -43,7 +48,7 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
               {idx + 1}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* Restart */}
         <button

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
 import PartDetailsComponent from "../../components/PartDetailsComponent";
+import { TOTAL_PAGE } from "../../constant/PaginationConstant";
 import { getQuestions } from "../../service/PartService";
 import { LessonPartType } from "../../types/lesson";
 import { QuestionType } from "../../types/part";
@@ -29,6 +30,14 @@ const PartDetailsPage: React.FC = () => {
   const [currentSections, setCurrentSections] = useState<SectionType[]>(
     location.state?.sections,
   );
+
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 0 && newPage < totalPages) {
+      setPage(newPage);
+    }
+  };
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,8 +47,12 @@ const PartDetailsPage: React.FC = () => {
       console.log("currentSections:", currentSections);
 
       try {
-        const response = await getQuestions(partId, 0, 10);
+        const response = await getQuestions(partId, page, TOTAL_PAGE[1000]);
+        setTotalPages(response.totalPages);
+
         if (response) {
+          console.log(response);
+
           setQuestions(response.items || []);
           setElapsedSeconds(response.elapsedSeconds || 0);
         }
@@ -51,7 +64,7 @@ const PartDetailsPage: React.FC = () => {
     };
 
     fetchQuestions();
-  }, [partId]);
+  }, [partId, page]);
 
   useEffect(() => {
     if (partId !== undefined) {
@@ -176,13 +189,15 @@ const PartDetailsPage: React.FC = () => {
           <LessonPage lessonIdProps={String(activeLesson)} />
         )}
         {activeTab === "part" && (
-          <PartDetailsComponent
-            key={partId}
-            partName="Part 1: Photos"
-            questions={questions}
-            elapsedSeconds={elapsedSeconds}
-            formatTime={formatTime}
-          />
+          <div>
+            <PartDetailsComponent
+              key={partId}
+              partName="Part 1: Photos"
+              questions={questions}
+              elapsedSeconds={elapsedSeconds}
+              formatTime={formatTime}
+            />
+          </div>
         )}
       </main>
     </div>

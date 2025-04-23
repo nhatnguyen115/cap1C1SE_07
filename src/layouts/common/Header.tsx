@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { Link, useLocation } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
+import { LOCAL_STORAGE_CONSTANT } from "../../constant/LocalStorageConstant";
 import { MenuItem } from "../../types/home";
 import { MenuNavComponent } from "../components/MenuNavComponent";
 import { getMenu } from "./../../service/HomeService";
@@ -11,6 +12,8 @@ const Header: React.FC = () => {
   console.log(location);
 
   const [menus, setMenus] = useState<MenuItem[]>([]);
+
+  const tokenValid = localStorage.getItem(LOCAL_STORAGE_CONSTANT.TOKEN);
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -39,16 +42,19 @@ const Header: React.FC = () => {
 
       {/* Login Button */}
       <div className="flex items-center space-x-4">
-        <Link to={PATH_CONSTANTS.SETTING.SETTING}>
-          <CiUser size={20} />
-        </Link>
-
-        <Link
-          to={PATH_CONSTANTS.AUTH.LOGIN}
-          className="bg-blue-600 text-white px-4 py-2 rounded-full"
-        >
-          Login
-        </Link>
+        {tokenValid && (
+          <Link to={PATH_CONSTANTS.SETTING.SETTING}>
+            <CiUser size={20} />
+          </Link>
+        )}
+        {!tokenValid && (
+          <Link
+            to={PATH_CONSTANTS.AUTH.LOGIN}
+            className="bg-blue-600 text-white px-4 py-2 rounded-full"
+          >
+            Login
+          </Link>
+        )}
       </div>
     </header>
   );
