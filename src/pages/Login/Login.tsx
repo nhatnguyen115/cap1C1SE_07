@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
 import { LOCAL_STORAGE_CONSTANT } from "../../constant/LocalStorageConstant";
+import { useUser } from "../../context/UserContext";
 import { login } from "../../service/AuthService";
 import { LoginType } from "../../types/auth";
 
@@ -10,6 +11,7 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { setUserRole } = useUser(); // 👈 lấy từ context
 
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ const Login: React.FC = () => {
 
     try {
       const response = await login(payload); // Giả sử login() đã lưu token và role vào localStorage
-
+      setUserRole(response.data.role);
       const role = localStorage.getItem(LOCAL_STORAGE_CONSTANT.ROLE); // 👈 Lấy role từ localStorage
 
       if (role === LOCAL_STORAGE_CONSTANT.ROLE_ADMIN) {

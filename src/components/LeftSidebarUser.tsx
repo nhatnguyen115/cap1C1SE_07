@@ -3,12 +3,19 @@ import React from "react";
 import { FaCog, FaHistory, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { PATH_CONSTANTS } from "../api/PathConstant";
+import { useUser } from "../context/UserContext";
 
 interface LeftSidebarUserProps {
   customHeight?: string; // Cho phép truyền chiều cao tùy ý
 }
 
 const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
+  const { setUserRole } = useUser();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setUserRole(null);
+  };
   return (
     <div
       className={`bg-gray-100 flex flex-col p-4 ${
@@ -53,7 +60,8 @@ const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
           </li>
           <li className="mb-2">
             <Link
-              to={PATH_CONSTANTS.AUTH.LOGOUT}
+              to={PATH_CONSTANTS.ROOT.ROOT}
+              onClick={handleLogout}
               className="flex items-center p-2 text-red-500 hover:bg-blue-100 rounded"
             >
               <FaSignOutAlt className="mr-3" />

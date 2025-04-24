@@ -3,11 +3,14 @@ import { CiUser } from "react-icons/ci";
 import { Link, useLocation } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
 import { LOCAL_STORAGE_CONSTANT } from "../../constant/LocalStorageConstant";
+import { useUser } from "../../context/UserContext";
 import { MenuItem } from "../../types/home";
 import { MenuNavComponent } from "../components/MenuNavComponent";
 import { getMenu } from "./../../service/HomeService";
 
 const Header: React.FC = () => {
+  const { userRole } = useUser();
+
   const location = useLocation();
   console.log(location);
 
@@ -24,9 +27,12 @@ const Header: React.FC = () => {
         console.error("Failed to fetch menu", error);
       }
     };
+    console.log("userRole: ", userRole);
 
     fetchMenu();
-  }, []);
+  }, [userRole]);
+  const filteredMenus =
+    userRole == LOCAL_STORAGE_CONSTANT.ROLE_ADMIN ? [] : menus;
 
   return (
     <header className="bg-white shadow-md px-4 flex items-center justify-between py-5">
@@ -37,7 +43,7 @@ const Header: React.FC = () => {
 
       {/* Navigation Links */}
       <nav className="flex space-x-6">
-        <MenuNavComponent menuItems={menus} />
+        <MenuNavComponent menuItems={filteredMenus} />
       </nav>
 
       {/* Login Button */}
