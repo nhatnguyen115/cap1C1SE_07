@@ -4,10 +4,12 @@ import com.arkdev.z9tkvtu.dto.Response.SectionDetailsResponse;
 import com.arkdev.z9tkvtu.model.Section;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface SectionRepository extends JpaRepository<Section, Integer> {
     Optional<Section> findBySectionName(String sectionName);
     List<Section> findByModuleIdOrderByOrderNumber(Integer moduleId);

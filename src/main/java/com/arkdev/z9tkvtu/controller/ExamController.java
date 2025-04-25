@@ -27,7 +27,7 @@ public class ExamController {
     PartService partService;
 
     @GetMapping("")
-    public ResponseData<?> getExams(@RequestParam Integer testId,
+    public ResponseData<?> getExams(@RequestParam(required = false) Integer testId,
                                     @RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size) {
         try {
