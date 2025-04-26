@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { API_URIS } from "../../../api/URIConstant";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
 import PartDetailsManagementComponent from "../../../components/PartDetailsManagementComponent";
 import AddLessonModal from "../../../modal/AddLessonModal";
@@ -43,7 +44,10 @@ const SectionDetailsManagement: React.FC = () => {
     if (!sectionId) return;
 
     try {
-      const response = await http.get(`/practice?sectionId=${sectionId}`);
+      console.log("lấy sections");
+      const response = await http.get(
+        API_URIS.PRACTICE.GET_ALL_BY_SECTION(sectionId),
+      );
       if (response.status === 200) {
         setLessons(response.data.data.lessons);
         setParts(response.data.data.parts);
@@ -60,7 +64,7 @@ const SectionDetailsManagement: React.FC = () => {
   const handleAddLesson = async (lesson: LessonType) => {
     if (!sectionId) return;
     try {
-      const res = await http.post(`/sections/${sectionId}/lessons`, {
+      const res = await http.post(API_URIS.LESSON.ADD(sectionId), {
         ...lesson,
       });
       if (res.status === 200) {
@@ -74,7 +78,7 @@ const SectionDetailsManagement: React.FC = () => {
 
   const handleUpdateLesson = async (lesson: LessonType) => {
     try {
-      const res = await http.put(`/lessons/${lesson.id}`, {
+      const res = await http.put(API_URIS.LESSON.UPDATE(lesson.id!), {
         ...lesson,
       });
       if (res.status === 200) {
@@ -88,7 +92,7 @@ const SectionDetailsManagement: React.FC = () => {
 
   const handleDeleteLesson = async (lessonId: number) => {
     try {
-      await http.delete(`/lessons/${lessonId}`);
+      await http.delete(API_URIS.LESSON.DELETE(lessonId));
       setLessons((prev) => prev.filter((l) => l.id !== lessonId));
     } catch (error) {
       console.error("Lỗi khi xóa bài học:", error);
@@ -98,7 +102,7 @@ const SectionDetailsManagement: React.FC = () => {
   const handleAddpart = async (part: PartType) => {
     if (!sectionId) return;
     try {
-      const res = await http.post(`/sections/${sectionId}/parts`, {
+      const res = await http.post(API_URIS.PART.ADD(sectionId), {
         ...part,
       });
       if (res.status === 200) {
@@ -112,7 +116,7 @@ const SectionDetailsManagement: React.FC = () => {
 
   const handleUpdatePart = async (part: PartType) => {
     try {
-      const res = await http.put(`/parts/${part.partId}`, {
+      const res = await http.put(API_URIS.PART.UPDATE(part.partId!), {
         ...part,
       });
       if (res.status === 200) {
@@ -126,7 +130,7 @@ const SectionDetailsManagement: React.FC = () => {
 
   const handleDeletePart = async (partId: number) => {
     try {
-      await http.delete(`/parts/${partId}`);
+      await http.delete(API_URIS.PART.UPDATE(partId!));
       setParts((prev) => prev.filter((p) => p.partId !== partId));
     } catch (error) {
       console.error("Lỗi khi xóa phần:", error);

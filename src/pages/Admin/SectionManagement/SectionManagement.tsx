@@ -33,7 +33,7 @@ const SectionManagementPage: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    http.get(`/sections?page=${page}`).then((res) => {
+    http.get(API_URIS.SECTION.GET_PAGING(page)).then((res) => {
       setSections(res.data.data.items);
       setTotalPages(res.data.data.totalPages);
     });
@@ -76,7 +76,7 @@ const SectionManagementPage: React.FC = () => {
 
     try {
       const res = await http.post<ResponseDataType<any>>(
-        `/modules/${moduleId}/sections`,
+        API_URIS.SECTION.ADD(moduleId),
         sectionPayload,
       );
 

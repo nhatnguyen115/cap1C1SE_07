@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API_URIS } from "../api/URIConstant";
 import { http } from "../service/Http";
 import PaginationComponent from "./PaginationComponent";
 
@@ -27,7 +28,7 @@ const ExamDetailsManagementComponent: React.FC<{ selectedId: number }> = ({
   useEffect(() => {
     const fetchParts = async () => {
       try {
-        const res = await http.get(`/parts`, {
+        const res = await http.get(API_URIS.PART.PARTS, {
           params: {
             selectedId: selectedId,
             checked: false,

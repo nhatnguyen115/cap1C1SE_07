@@ -3,6 +3,6 @@ export interface ExamType {
   testId?: number;
   examName: string;
   totalScore: number;
-  testType: string;
+  testType?: string;
   duration: number;
 }
