@@ -28,7 +28,8 @@ const TestManagementPage: React.FC = () => {
     try {
       const response = await http.get(`/exams?page=${page}`);
       if (response.status === 200) {
-        setTests(response.data.data.items); // chỉ lấy danh sách exams
+        setTests(response.data.data.items);
+        setTotalPages(response.data.data.totalPages);
       }
     } catch (error) {
       console.error("Lỗi khi tải dữ liệu:", error);
@@ -81,7 +82,7 @@ const TestManagementPage: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [page]);
   return (
     <div className="min-h-screen flex bg-gray-100">
       <LeftSidebarAdmin customHeight="h-auto w-64" />
