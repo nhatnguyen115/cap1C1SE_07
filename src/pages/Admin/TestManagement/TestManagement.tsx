@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaEllipsisH, FaTimes, FaUpload } from "react-icons/fa";
+import { FaTimes, FaUpload } from "react-icons/fa";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
 import PaginationComponent from "../../../components/PaginationComponent";
 import AddExamModal from "../../../modal/AddExamModal";
@@ -13,6 +13,11 @@ const TestManagementPage: React.FC = () => {
   const [tests, setTests] = useState<ExamType[]>([]);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
+
+  const [isEditTestModalOpen, setEditTestModalOpen] = useState(false);
+  const [testToEdit, setTestToEdit] = useState<ExamType | null>(null);
+  const [selectedTestId, setSelectedTestId] = useState<number>(-1);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 0 && newPage < totalPages) {
@@ -42,6 +47,35 @@ const TestManagementPage: React.FC = () => {
       }
     } catch (err) {
       console.error("Lỗi khi thêm bài học:", err);
+    }
+  };
+
+  const handleUpdateExam = async (updatedExam: ExamType) => {
+    try {
+      const response = await http.put(`/exams/${updatedExam.id}`, updatedExam);
+      if (response.status === 200) {
+        // Cập nhật lại danh sách tests
+        setTests((prev) =>
+          prev?.map((test) =>
+            test.id === updatedExam.id ? updatedExam : test,
+          ),
+        );
+        fetchData();
+        setEditTestModalOpen(false);
+      }
+    } catch (error) {
+      console.error("Lỗi khi cập nhật bài thi:", error);
+    }
+  };
+  const handleDeleteExam = async (testId: number | "") => {
+    try {
+      const response = await http.delete(`/exams/${testId}`);
+      if (response.status === 200) {
+        // Xoá test khỏi danh sách
+        setTests((prev) => prev?.filter((test) => test.id !== testId));
+      }
+    } catch (error) {
+      console.error("Lỗi khi xoá bài thi:", error);
     }
   };
 
@@ -81,41 +115,96 @@ const TestManagementPage: React.FC = () => {
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm">
-              {tests.map((exam, index) => (
+              {tests.map((test) => (
                 <tr
-                  key={exam.id}
-                  className={`border-b hover:bg-gray-100 transition ${
-                    index % 2 === 0 ? "bg-gray-50" : ""
-                  }`}
+                  key={test.id}
+                  className="border-b border-gray-200 hover:bg-gray-100"
                 >
-                  <td className="py-4 px-4">{exam.id}</td>
-                  <td className="py-4 px-4">{exam.examName}</td>
-                  <td className="py-4 px-4">
+                  <td className="py-3 px-4 text-left">{test.id}</td>
+                  <td className="py-3 px-4 text-left font-semibold">
+                    {test.examName}
+                  </td>
+                  <td className="py-3 px-4 text-left">
                     <span
                       className={`px-2 py-1 text-xs rounded-full font-semibold ${
-                        exam.testType === "Simulation Test"
+                        test.testType === "Simulation Test"
                           ? "bg-orange-200 text-orange-800"
-                          : exam.testType === "MINI TEST"
+                          : test.testType === "MINI TEST"
                           ? "bg-blue-200 text-blue-800"
                           : "bg-yellow-200 text-yellow-800"
                       }`}
                     >
-                      {exam.testType}
+                      {test.testType}
                     </span>
                   </td>
-                  <td className="py-4 px-4 text-center">{exam.totalScore}</td>
-                  <td className="py-4 px-4 text-center">
-                    {exam.duration} phút
+                  <td className="py-3 px-4 text-center">{test.totalScore}</td>
+                  <td className="py-3 px-4 text-center">
+                    {test.duration} phút
                   </td>
-                  <td className="py-4 px-4 text-center">
-                    <button className="text-gray-500 hover:text-gray-700 transition">
-                      <FaEllipsisH size={18} />
+                  <td className="py-3 px-4 text-center space-x-2">
+                    <button
+                      className="px-2 py-1 text-xs bg-yellow-400 text-white rounded"
+                      onClick={() => {
+                        setTestToEdit(test);
+                        setEditTestModalOpen(true);
+                      }}
+                    >
+                      Sửa
+                    </button>
+                    <button
+                      className="px-2 py-1 text-xs bg-red-500 text-white rounded"
+                      onClick={() => {
+                        setSelectedTestId(test.id!);
+                        setShowConfirmModal(true);
+                      }}
+                    >
+                      Xoá
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
+          {/* Modal sửa */}
+          <AddExamModal
+            isOpen={isEditTestModalOpen}
+            initialData={testToEdit!}
+            onClose={() => setEditTestModalOpen(false)}
+            onSubmit={handleUpdateExam}
+          />
+
+          {/* Modal xác nhận xoá */}
+          {showConfirmModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-4 rounded shadow-md w-80">
+                <h2 className="text-lg font-semibold mb-2">Xác nhận xoá</h2>
+                <p className="mb-4">
+                  Bạn có chắc chắn muốn xoá bài thi này không?
+                </p>
+                <div className="flex justify-end gap-2">
+                  <button
+                    className="px-3 py-1 bg-gray-300 rounded"
+                    onClick={() => setShowConfirmModal(false)}
+                  >
+                    Huỷ
+                  </button>
+                  <button
+                    className="px-3 py-1 bg-red-500 text-white rounded"
+                    onClick={() => {
+                      if (selectedTestId !== null)
+                        handleDeleteExam(selectedTestId);
+                      setShowConfirmModal(false);
+                    }}
+                  >
+                    Xoá
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Phân trang */}
           <PaginationComponent
             currentPage={page}
             totalPages={totalPages}
