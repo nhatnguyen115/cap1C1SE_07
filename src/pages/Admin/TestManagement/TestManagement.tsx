@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaTimes, FaUpload } from "react-icons/fa";
+import ExamDetailsManagementComponent from "../../../components/ExamDetailsManagementComponent";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
 import PaginationComponent from "../../../components/PaginationComponent";
 import AddExamModal from "../../../modal/AddExamModal";
@@ -18,11 +19,15 @@ const TestManagementPage: React.FC = () => {
   const [testToEdit, setTestToEdit] = useState<ExamType | null>(null);
   const [selectedTestId, setSelectedTestId] = useState<number>(-1);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 0 && newPage < totalPages) {
       setPage(newPage);
     }
+  };
+  const toggleRowExpand = (id: number) => {
+    setExpandedRowId(expandedRowId === id ? null : id); // Nếu dòng đã mở, đóng lại
   };
   const fetchData = async () => {
     try {
@@ -117,52 +122,63 @@ const TestManagementPage: React.FC = () => {
             </thead>
             <tbody className="text-gray-600 text-sm">
               {tests.map((test) => (
-                <tr
-                  key={test.id}
-                  className="border-b border-gray-200 hover:bg-gray-100"
-                >
-                  <td className="py-3 px-4 text-left">{test.id}</td>
-                  <td className="py-3 px-4 text-left font-semibold">
-                    {test.examName}
-                  </td>
-                  <td className="py-3 px-4 text-left">
-                    <span
-                      className={`px-2 py-1 text-xs rounded-full font-semibold ${
-                        test.testType === "Simulation Test"
-                          ? "bg-orange-200 text-orange-800"
-                          : test.testType === "MINI TEST"
-                          ? "bg-blue-200 text-blue-800"
-                          : "bg-yellow-200 text-yellow-800"
-                      }`}
-                    >
-                      {test.testType}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4 text-center">{test.totalScore}</td>
-                  <td className="py-3 px-4 text-center">
-                    {test.duration} phút
-                  </td>
-                  <td className="py-3 px-4 text-center space-x-2">
-                    <button
-                      className="px-2 py-1 text-xs bg-yellow-400 text-white rounded"
-                      onClick={() => {
-                        setTestToEdit(test);
-                        setEditTestModalOpen(true);
-                      }}
-                    >
-                      Sửa
-                    </button>
-                    <button
-                      className="px-2 py-1 text-xs bg-red-500 text-white rounded"
-                      onClick={() => {
-                        setSelectedTestId(test.id!);
-                        setShowConfirmModal(true);
-                      }}
-                    >
-                      Xoá
-                    </button>
-                  </td>
-                </tr>
+                <React.Fragment key={test.id}>
+                  <tr
+                    key={test.id}
+                    onClick={() => toggleRowExpand(test.id!)}
+                    className="border-b border-gray-200 hover:bg-gray-100"
+                  >
+                    <td className="py-3 px-4 text-left">{test.id}</td>
+                    <td className="py-3 px-4 text-left font-semibold">
+                      {test.examName}
+                    </td>
+                    <td className="py-3 px-4 text-left">
+                      <span
+                        className={`px-2 py-1 text-xs rounded-full font-semibold ${
+                          test.testType === "Simulation Test"
+                            ? "bg-orange-200 text-orange-800"
+                            : test.testType === "MINI TEST"
+                            ? "bg-blue-200 text-blue-800"
+                            : "bg-yellow-200 text-yellow-800"
+                        }`}
+                      >
+                        {test.testType}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-center">{test.totalScore}</td>
+                    <td className="py-3 px-4 text-center">
+                      {test.duration} phút
+                    </td>
+                    <td className="py-3 px-4 text-center space-x-2">
+                      <button
+                        className="px-2 py-1 text-xs bg-yellow-400 text-white rounded"
+                        onClick={() => {
+                          setTestToEdit(test);
+                          setEditTestModalOpen(true);
+                        }}
+                      >
+                        Sửa
+                      </button>
+                      <button
+                        className="px-2 py-1 text-xs bg-red-500 text-white rounded"
+                        onClick={() => {
+                          setSelectedTestId(test.id!);
+                          setShowConfirmModal(true);
+                        }}
+                      >
+                        Xoá
+                      </button>
+                    </td>
+                  </tr>
+                  {expandedRowId === test.id && ( // Hiển thị chi tiết khi dòng được mở rộng
+                    <tr>
+                      <td colSpan={6} className="py-3 px-4 bg-gray-100">
+                        <ExamDetailsManagementComponent selectedId={test.id} />{" "}
+                        {/* Hiển thị chi tiết câu hỏi bài thi */}
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               ))}
             </tbody>
           </table>
