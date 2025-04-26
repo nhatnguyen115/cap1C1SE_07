@@ -9,5 +9,6 @@ public record ExamResponse(
         Integer id,
         String examName,
         Integer totalScore,
+        String testType,
         Integer duration) implements Serializable {
 }

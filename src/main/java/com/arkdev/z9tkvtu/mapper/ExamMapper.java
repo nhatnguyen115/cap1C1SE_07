@@ -28,7 +28,8 @@ public class ExamMapper {
         return new ExamResponse(
                 exam.getId(),
                 exam.getExamName(),
-                exam.getDuration(),
-                exam.getTotalScore());
+                exam.getTotalScore(),
+                exam.getTest().getTestType(),
+                exam.getDuration());
     }
 }
