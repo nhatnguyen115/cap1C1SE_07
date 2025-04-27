@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { API_URIS } from "../api/URIConstant";
 import { http } from "../service/Http";
 
 interface AddQuestionModalProps {
@@ -26,7 +27,7 @@ const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
 
   const handleSubmit = async () => {
     try {
-      const response = await http.post(`/parts/${partId}/question`, {
+      const response = await http.post(API_URIS.PART.QUESTION_ADD(partId), {
         content,
         options,
         correctAnswer,

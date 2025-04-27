@@ -18,7 +18,6 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
 import History from "../pages/History/History";
 import Leaderboard from "../pages/Leaderboard/Leaderboard";
-import LessonPage from "../pages/Lesson/LessonPage";
 import { MockTest } from "../pages/MockTest/MockTest";
 import Result from "../pages/MockTest/Result";
 import { Test } from "../pages/MockTest/Test";
@@ -287,7 +286,7 @@ const routes = [
   },
   {
     path: PATH_CONSTANTS.LESSON.GET_BY_ID(":lessonId"),
-    element: <LessonPage />,
+    element: <PartDetailsPage />,
   },
   {
     path: PATH_CONSTANTS.PART.DETAIL_PATH,

@@ -35,6 +35,8 @@ export const API_URIS = {
     GET_ALL_BY_MODULE: (moduleId: number | string) =>
       `/sections?moduleId=${moduleId}`,
     GET_BY_ID: (id: number | string) => `/sections/${id}`,
+    GET_PAGING: (page: number) => `/sections?page=${page}`,
+    ADD: (moduleId: number | string) => `/modules/${moduleId}/sections`,
   },
   PRACTICE: {
     GET_ALL_BY_SECTION: (sectionId: number | string) =>
@@ -43,6 +45,9 @@ export const API_URIS = {
   },
   LESSON: {
     GET_BY_ID: (lessonId: number | string) => `/lessons/${lessonId}`,
+    ADD: (sectionId: number | string) => `/sections/${sectionId}/lessons`,
+    UPDATE: (lessonId: number | string) => `/lessons/${lessonId}`,
+    DELETE: (lessonId: number | string) => `/lessons/${lessonId}`,
   },
 
   TEST: {
@@ -51,6 +56,24 @@ export const API_URIS = {
 
   EXAMS: {
     GET_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
+  },
+
+  PART: {
+    PARTS: `/parts`,
+    ADD: (sectionId: number | string) => `/sections/${sectionId}/parts`,
+    UPDATE: (partId: number | string) => `/parts/${partId}`,
+    DELETE: (partId: number | string) => `/parts/${partId}`,
+
+    QUESTION: {
+      LIST: (partId: number | string, page: number, size?: number) => {
+        let url = `/questions?partId=${partId}&page=${page}`;
+        if (size !== undefined) {
+          url += `&size=${size}`;
+        }
+        return url;
+      },
+    },
+    QUESTION_ADD: (partId: number | string) => `/parts/${partId}/question`,
   },
   MENU: {
     GET_ALL: "/menu",

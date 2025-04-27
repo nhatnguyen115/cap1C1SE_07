@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { QuestionType } from "../types/part";
+import PaginationStaticComponent from "./PaginationStaticComponent";
 import QuestionCardComponent from "./QuestionCardComponent";
 
 type PartDetailsComponentProps = {
@@ -15,6 +16,8 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
   elapsedSeconds,
   formatTime,
 }) => {
+  const [answers, setAnswers] = useState<{ [questionId: number]: string }>({});
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -24,17 +27,25 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
         </div>
       </div>
 
-      {questions.map((question, index) => (
-        <QuestionCardComponent
-          key={question.id}
-          question={question}
-          index={index}
-        />
-      ))}
+      <PaginationStaticComponent
+        items={questions}
+        itemsPerPage={5}
+        renderItem={(question, index) => (
+          <QuestionCardComponent
+            key={question.id}
+            question={question}
+            index={index}
+            selectedOption={answers[question.id]}
+            onSelectOption={(optionKey) =>
+              setAnswers((prev) => ({ ...prev, [question.id]: optionKey }))
+            }
+          />
+        )}
+      />
 
       {/* Thanh điều hướng */}
       <div className="flex justify-between mt-10">
-        <div>
+        {/* <div>
           {questions.map((_, idx) => (
             <button
               key={idx}
@@ -43,7 +54,7 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
               {idx + 1}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* Restart */}
         <button

@@ -1,93 +1,93 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { FaTimes, FaUpload } from "react-icons/fa";
+import ExamDetailsManagementComponent from "../../../components/ExamDetailsManagementComponent";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
-import { FaEllipsisH, FaTimes, FaUpload } from "react-icons/fa";
+import PaginationComponent from "../../../components/PaginationComponent";
+import AddExamModal from "../../../modal/AddExamModal";
+import { http } from "../../../service/Http";
+import { ExamType } from "../../../types/exam";
 
 const TestManagementPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditExamModalOpen, setEditExamModalOpen] = useState(false);
+  const [isAddExamModalOpen, setAddExamModalOpen] = useState(false);
+  const [tests, setTests] = useState<ExamType[]>([]);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const testsdata = [
-    {
-      id: "BT1",
-      name: "TOEIC Full Test 1",
-      type: "FULL TEST",
-      questions: 100,
-      time: "2h",
-      date: "20/03/2025",
-    },
-    {
-      id: "BT2",
-      name: "TOEIC Full Test 2",
-      type: "LISTENING",
-      questions: 100,
-      time: "2h",
-      date: "21/03/2025",
-    },
-    {
-      id: "BT3",
-      name: "TOEIC Full Test 3",
-      type: "READING",
-      questions: 100,
-      time: "2h",
-      date: "22/03/2025",
-    },
-    {
-      id: "BT4",
-      name: "TOEIC Full Test 4",
-      type: "FULL TEST",
-      questions: 100,
-      time: "2h",
-      date: "23/03/2025",
-    },
-    {
-      id: "BT5",
-      name: "TOEIC Listening Practice 1",
-      type: "LISTENING",
-      questions: 50,
-      time: "1h",
-      date: "24/03/2025",
-    },
-    {
-      id: "BT6",
-      name: "TOEIC Reading Practice 1",
-      type: "READING",
-      questions: 50,
-      time: "1h",
-      date: "25/03/2025",
-    },
-    {
-      id: "BT7",
-      name: "TOEIC Full Test 5",
-      type: "FULL TEST",
-      questions: 100,
-      time: "2h",
-      date: "26/03/2025",
-    },
-    {
-      id: "BT8",
-      name: "TOEIC Listening Practice 2",
-      type: "LISTENING",
-      questions: 50,
-      time: "1h",
-      date: "27/03/2025",
-    },
-    {
-      id: "BT9",
-      name: "TOEIC Reading Practice 2",
-      type: "READING",
-      questions: 50,
-      time: "1h",
-      date: "28/03/2025",
-    },
-    {
-      id: "BT10",
-      name: "TOEIC Full Test 6",
-      type: "FULL TEST",
-      questions: 100,
-      time: "2h",
-      date: "29/03/2025",
-    },
-  ];
+  const [isEditTestModalOpen, setEditTestModalOpen] = useState(false);
+  const [testToEdit, setTestToEdit] = useState<ExamType | null>(null);
+  const [selectedTestId, setSelectedTestId] = useState<number>(-1);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
 
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 0 && newPage < totalPages) {
+      setPage(newPage);
+    }
+  };
+  const toggleRowExpand = (id: number) => {
+    setExpandedRowId(expandedRowId === id ? null : id); // Nếu dòng đã mở, đóng lại
+  };
+  const fetchData = async () => {
+    try {
+      const response = await http.get(`/exams?page=${page}`);
+      if (response.status === 200) {
+        setTests(response.data.data.items);
+        setTotalPages(response.data.data.totalPages);
+      }
+    } catch (error) {
+      console.error("Lỗi khi tải dữ liệu:", error);
+    }
+  };
+
+  const handleAddExam = async (exam: ExamType) => {
+    if (!exam.testId) return;
+    try {
+      const res = await http.post(`/tests/${exam.testId}/exams`, {
+        ...exam,
+      });
+      if (res.status === 200) {
+        alert(res.data.message);
+        fetchData(); // gọi lại useEffect hoặc fetchData riêng
+      }
+    } catch (err) {
+      console.error("Lỗi khi thêm bài học:", err);
+    }
+  };
+
+  const handleUpdateExam = async (updatedExam: ExamType) => {
+    try {
+      const response = await http.put(`/exams/${updatedExam.id}`, updatedExam);
+      if (response.status === 200) {
+        // Cập nhật lại danh sách tests
+        setTests((prev) =>
+          prev?.map((test) =>
+            test.id === updatedExam.id ? updatedExam : test,
+          ),
+        );
+        fetchData();
+        setEditTestModalOpen(false);
+      }
+    } catch (error) {
+      console.error("Lỗi khi cập nhật bài thi:", error);
+    }
+  };
+  const handleDeleteExam = async (testId: number | "") => {
+    try {
+      const response = await http.delete(`/exams/${testId}`);
+      if (response.status === 200) {
+        // Xoá test khỏi danh sách
+        setTests((prev) => prev?.filter((test) => test.id !== testId));
+      }
+    } catch (error) {
+      console.error("Lỗi khi xoá bài thi:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [page]);
   return (
     <div className="min-h-screen flex bg-gray-100">
       <LeftSidebarAdmin customHeight="h-auto w-64" />
@@ -96,10 +96,15 @@ const TestManagementPage: React.FC = () => {
           <h1 className="text-3xl font-bold text-gray-800">Quản lý Đề thi</h1>
           <button
             className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setAddExamModalOpen(true)}
           >
             Thêm đề thi mới
           </button>
+          <AddExamModal
+            isOpen={isAddExamModalOpen}
+            onClose={() => setAddExamModalOpen(false)}
+            onSubmit={handleAddExam}
+          />
         </div>
 
         {/* Bảng danh sách đề thi */}
@@ -110,47 +115,118 @@ const TestManagementPage: React.FC = () => {
                 <th className="py-3 px-4 text-left">ID</th>
                 <th className="py-3 px-4 text-left">Tên bài thi</th>
                 <th className="py-3 px-4 text-left">Loại bài thi</th>
-                <th className="py-3 px-4 text-center">Số câu hỏi</th>
+                <th className="py-3 px-4 text-center">Tổng điểm</th>
                 <th className="py-3 px-4 text-center">Thời gian</th>
-                <th className="py-3 px-4 text-center">Ngày tạo</th>
                 <th className="py-3 px-4 text-center">Hành động</th>
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm">
-              {testsdata.map((exam, index) => (
-                <tr
-                  key={exam.id}
-                  className={`border-b hover:bg-gray-100 transition ${
-                    index % 2 === 0 ? "bg-gray-50" : ""
-                  }`}
-                >
-                  <td className="py-4 px-4">{exam.id}</td>
-                  <td className="py-4 px-4">{exam.name}</td>
-                  <td className="py-4 px-4">
-                    <span
-                      className={`px-2 py-1 text-xs rounded-full font-semibold ${
-                        exam.type === "FULL TEST"
-                          ? "bg-blue-200 text-blue-800"
-                          : exam.type === "LISTENING"
-                          ? "bg-orange-200 text-orange-800"
-                          : "bg-yellow-200 text-yellow-800"
-                      }`}
-                    >
-                      {exam.type}
-                    </span>
-                  </td>
-                  <td className="py-4 px-4 text-center">{exam.questions}</td>
-                  <td className="py-4 px-4 text-center">{exam.time}</td>
-                  <td className="py-4 px-4 text-center">{exam.date}</td>
-                  <td className="py-4 px-4 text-center">
-                    <button className="text-gray-500 hover:text-gray-700 transition">
-                      <FaEllipsisH size={18} />
-                    </button>
-                  </td>
-                </tr>
+              {tests.map((test) => (
+                <React.Fragment key={test.id}>
+                  <tr
+                    key={test.id}
+                    onClick={() => toggleRowExpand(test.id!)}
+                    className="border-b border-gray-200 hover:bg-gray-100"
+                  >
+                    <td className="py-3 px-4 text-left">{test.id}</td>
+                    <td className="py-3 px-4 text-left font-semibold">
+                      {test.examName}
+                    </td>
+                    <td className="py-3 px-4 text-left">
+                      <span
+                        className={`px-2 py-1 text-xs rounded-full font-semibold ${
+                          test.testType === "Simulation Test"
+                            ? "bg-orange-200 text-orange-800"
+                            : test.testType === "MINI TEST"
+                            ? "bg-blue-200 text-blue-800"
+                            : "bg-yellow-200 text-yellow-800"
+                        }`}
+                      >
+                        {test.testType}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4 text-center">{test.totalScore}</td>
+                    <td className="py-3 px-4 text-center">
+                      {test.duration} phút
+                    </td>
+                    <td className="py-3 px-4 text-center space-x-2">
+                      <button
+                        className="px-2 py-1 text-xs bg-yellow-400 text-white rounded"
+                        onClick={() => {
+                          setTestToEdit(test);
+                          setEditTestModalOpen(true);
+                        }}
+                      >
+                        Sửa
+                      </button>
+                      <button
+                        className="px-2 py-1 text-xs bg-red-500 text-white rounded"
+                        onClick={() => {
+                          setSelectedTestId(test.id!);
+                          setShowConfirmModal(true);
+                        }}
+                      >
+                        Xoá
+                      </button>
+                    </td>
+                  </tr>
+                  {expandedRowId === test.id && ( // Hiển thị chi tiết khi dòng được mở rộng
+                    <tr>
+                      <td colSpan={6} className="py-3 px-4 bg-gray-100">
+                        <ExamDetailsManagementComponent selectedId={test.id} />{" "}
+                        {/* Hiển thị chi tiết câu hỏi bài thi */}
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               ))}
             </tbody>
           </table>
+
+          {/* Modal sửa */}
+          <AddExamModal
+            isOpen={isEditTestModalOpen}
+            initialData={testToEdit!}
+            onClose={() => setEditTestModalOpen(false)}
+            onSubmit={handleUpdateExam}
+          />
+
+          {/* Modal xác nhận xoá */}
+          {showConfirmModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-4 rounded shadow-md w-80">
+                <h2 className="text-lg font-semibold mb-2">Xác nhận xoá</h2>
+                <p className="mb-4">
+                  Bạn có chắc chắn muốn xoá bài thi này không?
+                </p>
+                <div className="flex justify-end gap-2">
+                  <button
+                    className="px-3 py-1 bg-gray-300 rounded"
+                    onClick={() => setShowConfirmModal(false)}
+                  >
+                    Huỷ
+                  </button>
+                  <button
+                    className="px-3 py-1 bg-red-500 text-white rounded"
+                    onClick={() => {
+                      if (selectedTestId !== null)
+                        handleDeleteExam(selectedTestId);
+                      setShowConfirmModal(false);
+                    }}
+                  >
+                    Xoá
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Phân trang */}
+          <PaginationComponent
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
 

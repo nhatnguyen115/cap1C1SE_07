@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API_URIS } from "../api/URIConstant";
 import AddQuestionModal from "../modal/AddQuestionModal";
 import { http } from "../service/Http";
 import PaginationComponent from "./PaginationComponent";
@@ -26,9 +27,7 @@ const PartDetailsManagementComponent: React.FC<{ partId: number }> = ({
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const res = await http.get(
-          `/questions?partId=${partId}&page=${page}&size=5`,
-        );
+        const res = await http.get(API_URIS.PART.QUESTION.LIST(partId, page));
         setQuestions(res.data.data.items);
         setTotalPages(res.data.data.totalPages);
       } catch (err) {

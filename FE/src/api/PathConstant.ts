@@ -121,6 +121,6 @@ export const PATH_CONSTANTS = {
   PART: {
     PARTS: "/parts",
     DETAIL: (partId: number | string) => `/parts/${partId}`,
-    DETAIL_PATH: "/parts/:partId", // dùng cho Route
+    DETAIL_PATH: "/parts/:partId",
   },
 };

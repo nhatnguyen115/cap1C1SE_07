@@ -4,16 +4,23 @@ import { QuestionType } from "../types/part";
 type Props = {
   question: QuestionType;
   index: number;
+  selectedOption?: string;
+  onSelectOption: (optionKey: string) => void;
 };
 
-const QuestionCardComponent: React.FC<Props> = ({ question, index }) => {
+const QuestionCardComponent: React.FC<Props> = ({
+  question,
+  index,
+  selectedOption,
+  onSelectOption,
+}) => {
   return (
     <div className="bg-white p-4 rounded-lg shadow mb-6">
       <div className="mb-4">
         <img
           src={question.url}
-          alt={`Question ${index + 1}`}
-          className="w-60 h-auto rounded"
+          alt={`Question ${index + 1}: ${question.content}`}
+          className="text-lg font-bold h-auto rounded"
         />
       </div>
       <div className="space-y-2">
@@ -23,6 +30,8 @@ const QuestionCardComponent: React.FC<Props> = ({ question, index }) => {
               type="radio"
               name={`question-${question.id}`}
               id={`${question.id}-${key}`}
+              checked={selectedOption === key}
+              onChange={() => onSelectOption(key)}
             />
             <label
               htmlFor={`${question.id}-${key}`}
