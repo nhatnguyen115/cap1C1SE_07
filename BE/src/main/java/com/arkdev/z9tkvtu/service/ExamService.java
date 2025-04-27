@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class ExamService {
     ExamMapper examMapper;
 
     public List<ExamResponse> getExams(Integer testId) {
-        return examRepository.findByTestIdOrderByExamName(testId)
+        return examRepository.findByTestIdOrderByCreatedAt(testId)
                 .stream()
                 .map(examMapper::toExamResponse)
                 .toList();
