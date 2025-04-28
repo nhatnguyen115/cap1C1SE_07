@@ -12,6 +12,9 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.Exam}
  */
+/**
+ * DTO for {@link com.arkdev.z9tkvtu.repository.Exam}
+ */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
