@@ -11,10 +11,6 @@ import org.hibernate.type.SqlTypes;
 @Setter
 @Entity
 @Table(name = "lesson")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "lesson_id",
-                nullable = false))
-})
 public class Lesson extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
