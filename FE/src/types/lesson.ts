@@ -14,6 +14,7 @@ export type LessonType = {
 };
 
 export type PartType = {
+  id?: number;
   partId?: number;
   partName: string;
   description: string;

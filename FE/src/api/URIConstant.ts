@@ -60,7 +60,8 @@ export const API_URIS = {
 
   PART: {
     PARTS: `/parts`,
-    ADD: (sectionId: number | string) => `/sections/${sectionId}/parts`,
+    ADD_SECTION: (sectionId: number | string) => `/sections/${sectionId}/parts`,
+    ADD_EXAM: (examId: number | string) => `/exams/${examId}/parts`,
     UPDATE: (partId: number | string) => `/parts/${partId}`,
     DELETE: (partId: number | string) => `/parts/${partId}`,
 

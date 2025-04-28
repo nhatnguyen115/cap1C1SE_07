@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FaTimes, FaUpload } from "react-icons/fa";
+import { API_URIS } from "../../../api/URIConstant";
 import ExamDetailsManagementComponent from "../../../components/ExamDetailsManagementComponent";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
 import PaginationComponent from "../../../components/PaginationComponent";
 import AddExamModal from "../../../modal/AddExamModal";
+import AddPartModal from "../../../modal/AddPartModal";
 import { http } from "../../../service/Http";
 import { ExamType } from "../../../types/exam";
+import { PartType } from "../../../types/lesson";
 
 const TestManagementPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,6 +23,10 @@ const TestManagementPage: React.FC = () => {
   const [selectedTestId, setSelectedTestId] = useState<number>(-1);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [expandedRowId, setExpandedRowId] = useState<number | null>(null);
+
+  const [isAddPartModalOpen, setAddPartModalOpen] = useState(false);
+
+  const [examId, setExamId] = useState<number>(0);
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 0 && newPage < totalPages) {
@@ -85,6 +92,21 @@ const TestManagementPage: React.FC = () => {
     }
   };
 
+  const handleAddpart = async (part: PartType) => {
+    if (!examId) return;
+    try {
+      const res = await http.post(API_URIS.PART.ADD_EXAM(examId), {
+        ...part,
+      });
+      if (res.status === 200) {
+        alert(res.data.message);
+        fetchData(); // gọi lại useEffect hoặc fetchData riêng
+      }
+    } catch (err) {
+      console.error("Lỗi khi thêm bài học:", err);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, [page]);
@@ -125,7 +147,10 @@ const TestManagementPage: React.FC = () => {
                 <React.Fragment key={test.id}>
                   <tr
                     key={test.id}
-                    onClick={() => toggleRowExpand(test.id!)}
+                    onClick={() => {
+                      toggleRowExpand(test.id!);
+                      setExamId(test.id!);
+                    }}
                     className="border-b border-gray-200 hover:bg-gray-100"
                   >
                     <td className="py-3 px-4 text-left">{test.id}</td>
@@ -150,6 +175,13 @@ const TestManagementPage: React.FC = () => {
                       {test.duration} phút
                     </td>
                     <td className="py-3 px-4 text-center space-x-2">
+                      <button
+                        onClick={() => setAddPartModalOpen(true)}
+                        className="px-3 py-1 bg-blue-600 text-white text-sm rounded"
+                      >
+                        Thêm phần
+                      </button>
+
                       <button
                         className="px-2 py-1 text-xs bg-yellow-400 text-white rounded"
                         onClick={() => {
@@ -189,6 +221,12 @@ const TestManagementPage: React.FC = () => {
             initialData={testToEdit!}
             onClose={() => setEditTestModalOpen(false)}
             onSubmit={handleUpdateExam}
+          />
+
+          <AddPartModal
+            isOpen={isAddPartModalOpen}
+            onClose={() => setAddPartModalOpen(false)}
+            onSubmit={handleAddpart}
           />
 
           {/* Modal xác nhận xoá */}

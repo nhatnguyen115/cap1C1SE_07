@@ -102,7 +102,7 @@ const SectionDetailsManagement: React.FC = () => {
   const handleAddpart = async (part: PartType) => {
     if (!sectionId) return;
     try {
-      const res = await http.post(API_URIS.PART.ADD(sectionId), {
+      const res = await http.post(API_URIS.PART.ADD_SECTION(sectionId), {
         ...part,
       });
       if (res.status === 200) {
@@ -130,7 +130,7 @@ const SectionDetailsManagement: React.FC = () => {
 
   const handleDeletePart = async (partId: number) => {
     try {
-      await http.delete(API_URIS.PART.UPDATE(partId!));
+      await http.delete(API_URIS.PART.DELETE(partId!));
       setParts((prev) => prev.filter((p) => p.partId !== partId));
     } catch (error) {
       console.error("Lỗi khi xóa phần:", error);
