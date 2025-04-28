@@ -11,9 +11,10 @@ interface Question {
   difficulty: string;
 }
 
-const PartDetailsManagementComponent: React.FC<{ partId: number }> = ({
-  partId,
-}) => {
+const PartDetailsManagementComponent: React.FC<{
+  partId: number;
+  isFetchQuestion?: boolean;
+}> = ({ partId, isFetchQuestion }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -36,7 +37,7 @@ const PartDetailsManagementComponent: React.FC<{ partId: number }> = ({
     };
 
     fetchQuestions();
-  }, [partId, page]);
+  }, [partId, page, isFetchQuestion]);
 
   return (
     <div className="mt-4 p-4 bg-gray-50 rounded shadow-inner">

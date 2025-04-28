@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
 import PartDetailsComponent from "../../components/PartDetailsComponent";
-import { TOTAL_PAGE } from "../../constant/PaginationConstant";
+import { PAGINATION_CONSTANT } from "../../constant/PaginationConstant";
 import { getQuestions } from "../../service/PartService";
 import { LessonPartType } from "../../types/lesson";
 import { QuestionType } from "../../types/part";
@@ -58,7 +58,11 @@ const PartDetailsPage: React.FC = () => {
       console.log("currentSections:", currentSections);
 
       try {
-        const response = await getQuestions(partId, page, TOTAL_PAGE[1000]);
+        const response = await getQuestions(
+          partId,
+          page,
+          PAGINATION_CONSTANT.SIZE[1000],
+        );
         setTotalPages(response.totalPages);
 
         if (response) {
