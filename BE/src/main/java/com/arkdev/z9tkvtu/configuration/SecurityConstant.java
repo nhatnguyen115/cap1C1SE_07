@@ -9,11 +9,15 @@ public class SecurityConstant {
             ,"/home"
             ,"/public/**"
             ,"/user"
-            ,"/api/v1/product/search"
             ,"/user/add"
             ,"/auth/**"
             ,"/menu"
             ,"/sections"
+            ,"/practice/**"
+            ,"/lessons/**"
+            ,"/questions/**"
+            ,"/exams/**"
+            ,"/tests/**"
     };
 
     public static final List<String> ORIGINS_ALLOWED = Arrays.asList(
