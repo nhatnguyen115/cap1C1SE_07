@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { http } from "../service/Http";
-import { TestNavigationProps } from "../types/exam";
+import { QuestionType, TestNavigationProps } from "../types/exam";
 
 const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   isView,
@@ -13,8 +13,6 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   const [time, setTime] = useState<number>((duration || 120) * 60);
 
   const formatTime = (timeInSeconds: number) => {
-    console.log("timeInSeconds: ", timeInSeconds);
-
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
     return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
@@ -61,18 +59,22 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
     console.log("timeInSeconds: ", duration);
   }, []);
 
-  const renderQuestionButtons = (numQuestions: number) => {
-    return Array.from({ length: numQuestions }, (_, index) => {
+  const renderQuestionButtons = (questions: QuestionType[]) => {
+    return questions.map((q, index) => {
       const questionNumber = questionCounter++;
       const questionIndex = questionNumber - 1;
+
+      const isAnswered = answers.some((a) => a.questionId === q.id);
+      const isCurrent = currentQuestion === q.id;
+
       return (
         <button
-          key={index}
-          onClick={() => onNavigate(questionIndex)}
+          key={q.id}
+          onClick={() => onNavigate(q.id)}
           className={`border rounded-md text-center text-sm transition-all duration-200 p-1 ${
-            currentQuestion === questionIndex
+            isCurrent
               ? "bg-blue-500 text-white"
-              : answers[questionIndex] != null
+              : isAnswered
               ? "bg-green-500 text-white"
               : "hover:bg-blue-500 hover:text-white"
           }`}
@@ -100,7 +102,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
           <div key={idx}>
             <h3 className="text-lg font-semibold mb-2">{partName}</h3>
             <div className="grid grid-cols-4 gap-2">
-              {renderQuestionButtons(detail.questions.length)}
+              {renderQuestionButtons(detail.questions)}
             </div>
           </div>
         );

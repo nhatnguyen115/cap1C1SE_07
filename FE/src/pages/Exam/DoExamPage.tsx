@@ -48,22 +48,28 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
     navigate(-1);
   };
   const handleAnswer = (
-    questionIndex: number,
     questionId: number,
     selectedOption: "A" | "B" | "C" | "D",
   ) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[questionIndex] = {
-      questionId,
-      selectedOption,
-    };
+    const existingIndex = updatedAnswers.findIndex(
+      (a) => a.questionId === questionId,
+    );
+
+    if (existingIndex !== -1) {
+      // Nếu đã tồn tại, cập nhật
+      updatedAnswers[existingIndex].selectedOption = selectedOption;
+    } else {
+      // Nếu chưa có, thêm mới
+      updatedAnswers.push({ questionId, selectedOption });
+    }
+
     setAnswers(updatedAnswers);
-    setCurrentQuestion(questionIndex);
   };
 
   const handleNavigate = (questionIndex: number) => {
     setCurrentQuestion(questionIndex);
-    const element = document.getElementById(`question-${questionIndex + 1}`);
+    const element = document.getElementById(`question-${questionIndex}`);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
@@ -95,13 +101,10 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
               {Object.entries(item.options).map(([optionKey, optionValue]) => (
                 <button
                   key={optionKey}
-                  onClick={() =>
-                    handleAnswer(
-                      index,
-                      item.id,
-                      optionKey as "A" | "B" | "C" | "D",
-                    )
-                  }
+                  onClick={() => {
+                    handleAnswer(item.id, optionKey as "A" | "B" | "C" | "D");
+                    setCurrentQuestion(item.id); // hoặc item.id nếu bạn theo dõi theo id
+                  }}
                   className={`border p-2 rounded-md w-full text-left mb-2 ${
                     selected?.selectedOption === optionKey
                       ? "bg-blue-500 text-white"
