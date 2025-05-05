@@ -153,6 +153,7 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
             details={examDetails?.details}
             currentQuestion={currentQuestion}
             answers={answers}
+            duration={examDetails?.exam.duration}
             onNavigate={handleNavigate}
           />
         </div>

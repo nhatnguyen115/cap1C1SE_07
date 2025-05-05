@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { http } from "../service/Http";
 import { TestNavigationProps } from "../types/exam";
 
 const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
@@ -6,9 +7,59 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   details,
   currentQuestion,
   answers,
+  duration,
   onNavigate,
 }) => {
+  const [time, setTime] = useState<number>((duration || 120) * 60);
+
+  const formatTime = (timeInSeconds: number) => {
+    console.log("timeInSeconds: ", timeInSeconds);
+
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+      2,
+      "0",
+    )}`;
+  };
   let questionCounter = 1;
+
+  const handleSubmitTest = async () => {
+    try {
+      const payload = answers.map((a) => ({
+        questionId: a.questionId,
+        selectedAnswer: a.selectedOption,
+      }));
+
+      const response = await http.post("/user-test/submit-test", payload, {
+        params: {
+          attemptId: 1, // hoặc lấy từ state/router tùy logic
+        },
+      });
+
+      console.log("Submit thành công:", response.data);
+      // Hiển thị thông báo thành công, hoặc chuyển trang
+    } catch (error) {
+      console.error("Lỗi khi submit:", error);
+      // Hiển thị thông báo lỗi
+    }
+  };
+
+  useEffect(() => {
+    // Only start timer if time is greater than 0
+    if (time > 0) {
+      const timer = setInterval(() => {
+        setTime((prevTime) => prevTime - 1);
+      }, 1000);
+
+      // Cleanup interval on component unmount or when time changes
+      return () => clearInterval(timer);
+    }
+  }, [time]);
+
+  useEffect(() => {
+    console.log("timeInSeconds: ", duration);
+  }, []);
 
   const renderQuestionButtons = (numQuestions: number) => {
     return Array.from({ length: numQuestions }, (_, index) => {
@@ -36,6 +87,12 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
 
   return (
     <div className="space-y-4">
+      <div className="flex justify-between mb-4">
+        <span className="text-sm">Thời gian còn lại:</span>
+        <span className="font-semibold text-xl">
+          {time > 0 ? formatTime(time) : "Hết giờ"}
+        </span>
+      </div>
       {details?.map((detail, idx) => {
         const partName = detail.part.partName || `Part ${idx + 1}`;
 
@@ -48,6 +105,14 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
           </div>
         );
       })}
+      <div className="mt-4 text-center">
+        <button
+          className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600"
+          onClick={handleSubmitTest}
+        >
+          Submit Test
+        </button>
+      </div>
     </div>
   );
 };

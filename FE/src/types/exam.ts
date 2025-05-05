@@ -51,5 +51,6 @@ export type TestNavigationProps = {
   details?: PartWithQuestionsType[];
   currentQuestion: number;
   answers: AnswerType[];
+  duration?: number;
   onNavigate: (index: number) => void;
 };
