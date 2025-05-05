@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { toeicTest } from "../../data/toeicMockData";
-import Navigation from "./component/Navigation";
 import { useNavigate } from "react-router-dom";
 import IcBreadcrumbGbk from "../../assets/icons/IcBreadcrumbGbk";
+import { toeicTest } from "../../data/toeicMockData";
+import Navigation from "./component/Navigation";
 interface TestProps {
   isView: boolean;
 }
-export const Test: React.FC<TestProps> = ({ isView = false }) => {
+export const TestTemp: React.FC<TestProps> = ({ isView = false }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   if (isView) console.log("viewing");
 
   const [answers, setAnswers] = useState(
-    new Array(toeicTest.questions).fill(null)
+    new Array(toeicTest.questions).fill(null),
   );
   const navigate = useNavigate();
   const handleGoBack = () => {
@@ -126,7 +126,7 @@ export const Test: React.FC<TestProps> = ({ isView = false }) => {
                       >
                         {option}
                       </button>
-                    )
+                    ),
                   )}
                 </div>
               );
@@ -162,7 +162,7 @@ export const Test: React.FC<TestProps> = ({ isView = false }) => {
                       >
                         {option}
                       </button>
-                    )
+                    ),
                   )}
                 </div>
               );
@@ -266,7 +266,7 @@ export const Test: React.FC<TestProps> = ({ isView = false }) => {
                       >
                         {option}
                       </button>
-                    )
+                    ),
                   )}
                 </div>
               );

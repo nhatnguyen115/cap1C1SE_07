@@ -12,7 +12,6 @@ import MainLayout from "../layouts/MainLayout";
 import DashboardPage from "../pages/Admin/Dashboard/Dashboard";
 import SectionDetailsManagement from "../pages/Admin/SectionManagement/SectionDetailsManagement";
 import SectionManagementPage from "../pages/Admin/SectionManagement/SectionManagement";
-import TestManagementPage from "../pages/Admin/TestManagement/TestManagement";
 import UserManagementPage from "../pages/Admin/UserManagement/UserManagement";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
@@ -20,7 +19,6 @@ import History from "../pages/History/History";
 import Leaderboard from "../pages/Leaderboard/Leaderboard";
 import { MockTest } from "../pages/MockTest/MockTest";
 import Result from "../pages/MockTest/Result";
-import { Test } from "../pages/MockTest/Test";
 import Payment from "../pages/Payment/Payment";
 import PaymentForm from "../pages/Payment/PaymentForm/PaymentForm"; // Giả lập trạng thái Auth
 import { Practice } from "../pages/Practice/Practice";
@@ -31,7 +29,10 @@ import Resource from "../pages/Resource/Resource";
 import ResourceDetail from "../pages/Resource/ResourceDetail";
 import EditSettings from "../pages/Settings/EditSettings/EditSettings";
 import Settings from "../pages/Settings/Settings";
+import TestManagementPage from "./../pages/Admin/TestManagement/TestManagement";
+import { DoExamPage } from "./../pages/Exam/DoExamPage";
 import ExamPageDetails from "./../pages/Exam/ExamPageDetails";
+import { TestTemp } from "./../pages/MockTest/TestTemp";
 import PartDetailsPage from "./../pages/Part/PartDetailsPage";
 import TestPage from "./../pages/Test/TestPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
@@ -98,7 +99,7 @@ const routes = [
     path: PATH_CONSTANTS.MOCK_TEST.MOCK_TEST_BY_ID(":id"),
     element: (
       <MainLayout>
-        <Test isView={false} />
+        <TestTemp isView={false} />
       </MainLayout>
     ),
   },
@@ -106,7 +107,7 @@ const routes = [
     path: PATH_CONSTANTS.MOCK_TEST.MOCK_TEST_VIEW_BY_ID(":id"),
     element: (
       <MainLayout>
-        <Test isView={true} />
+        <TestTemp isView={true} />
       </MainLayout>
     ),
   },
@@ -130,7 +131,7 @@ const routes = [
     path: PATH_CONSTANTS.EXAM.EXAMS_VIEW_BY_ID,
     element: (
       <MainLayout>
-        <Test isView={true} />
+        <DoExamPage isView={true} />
       </MainLayout>
     ),
   },

@@ -56,6 +56,7 @@ export const API_URIS = {
 
   EXAMS: {
     GET_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
+    DO_BY_EXAM_ID: (examId: number | string) => `/exams/${examId}`,
   },
 
   PART: {
