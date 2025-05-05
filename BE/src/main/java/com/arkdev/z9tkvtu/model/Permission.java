@@ -12,10 +12,6 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = "permission")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "permission_id",
-                nullable = false))
-})
 public class Permission extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
