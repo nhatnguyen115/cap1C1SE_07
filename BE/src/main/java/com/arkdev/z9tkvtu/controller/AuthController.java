@@ -4,7 +4,6 @@ import com.arkdev.z9tkvtu.dto.Request.SignInRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.service.JwtService;
-import com.arkdev.z9tkvtu.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.Map;
-
 @Slf4j
 @RestController
 @RequestMapping("/auth")
@@ -28,7 +24,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthController {
     JwtService jwtService;
-    UserService userService;
     AuthenticationManager manager;
 
     @PostMapping("/introspect")
@@ -47,27 +42,6 @@ public class AuthController {
             }
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "Introspect Error!");
-        }
-    }
-
-    @GetMapping("/external")
-    public ResponseData<?> external(@RequestParam("type") String type) {
-        try {
-            return new ResponseData<>(HttpStatus.OK.value(), "Get Auth External Url Successfully",
-                    userService.generateUrl(type.trim().toLowerCase()));
-        } catch (Exception e) {
-            return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), "Get Auth External Url Error!");
-        }
-    }
-
-    @GetMapping("/external/callback")
-    public ResponseData<?> externalCallback(@RequestParam("code") String code,
-                                            @RequestParam("type") String type) throws IOException {
-        try {
-            Map<String, Object> userInfo = userService.authenticateAndFetchProfile(code, type);
-            return new ResponseData<>(HttpStatus.OK.value(), "Get External Info Successfully", userInfo);
-        } catch (Exception e) {
-            return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), "Get External Info Error!");
         }
     }
 }

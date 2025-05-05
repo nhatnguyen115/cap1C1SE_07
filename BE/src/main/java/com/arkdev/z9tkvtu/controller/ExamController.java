@@ -7,7 +7,6 @@ import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.model.Exam;
 import com.arkdev.z9tkvtu.service.ExamService;
 import com.arkdev.z9tkvtu.service.PartService;
-import com.arkdev.z9tkvtu.service.UploadExamService;
 import com.arkdev.z9tkvtu.util.Pagination;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -17,9 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @RestController
 @Validated

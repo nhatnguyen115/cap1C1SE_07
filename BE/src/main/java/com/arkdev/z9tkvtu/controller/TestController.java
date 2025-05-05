@@ -4,9 +4,9 @@ import com.arkdev.z9tkvtu.dto.Request.ExamRequest;
 import com.arkdev.z9tkvtu.dto.Request.TestRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
+import com.arkdev.z9tkvtu.dto.Response.TestResponse;
 import com.arkdev.z9tkvtu.service.ExamService;
 import com.arkdev.z9tkvtu.service.TestService;
-import com.arkdev.z9tkvtu.service.UploadExamService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +14,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @RestController
 @Validated
@@ -26,7 +23,6 @@ import java.io.IOException;
 public class TestController {
     TestService testService;
     ExamService examService;
-    UploadExamService uploadExamService;
 
     @GetMapping("")
     public ResponseData<?> getTests() {
@@ -66,16 +62,6 @@ public class TestController {
             return new ResponseData<>(HttpStatus.OK.value(), "Add Exam Successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Exam could not be added");
-        }
-    }
-    @PostMapping("/{testId}/upload/excel")
-    public ResponseData<?> uploadExam(@RequestBody MultipartFile file,
-                                      @PathVariable("testId") Integer testId) throws IOException {
-        try {
-            uploadExamService.addExamFromExcel(testId, file);
-            return new ResponseData<>(HttpStatus.OK.value(), "Upload Exam Successfully");
-        }  catch (Exception e) {
-            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Upload Exam Failed");
         }
     }
 
