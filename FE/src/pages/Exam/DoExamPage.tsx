@@ -2,23 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URIS } from "../../api/URIConstant";
 import IcBreadcrumbGbk from "../../assets/icons/IcBreadcrumbGbk";
+import ExamNavigationComponent from "../../components/ExamNavigationComponent";
 import { toeicTest } from "../../data/toeicMockData";
 import { http } from "../../service/Http";
 import {
+  AnswerType,
   DoExamType,
   PartWithQuestionsType,
   QuestionType,
 } from "../../types/exam";
-import TestNavigationComponent from "./../../components/TestNavigationComponent";
 interface TestProps {
   isView: boolean;
 }
 export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
   if (isView) console.log("viewing");
 
-  const [answers, setAnswers] = useState(
-    new Array(toeicTest.questions).fill(null),
-  );
+  const [answers, setAnswers] = useState<AnswerType[]>([]);
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -48,12 +47,20 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
   const handleGoBack = () => {
     navigate(-1);
   };
-  const handleAnswer = (questionIndex: number, answerIndex: number) => {
+  const handleAnswer = (
+    questionIndex: number,
+    questionId: number,
+    selectedOption: "A" | "B" | "C" | "D",
+  ) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[questionIndex] = answerIndex;
+    updatedAnswers[questionIndex] = {
+      questionId,
+      selectedOption,
+    };
     setAnswers(updatedAnswers);
-    setCurrentQuestion(questionIndex); // Update current question when answering
+    setCurrentQuestion(questionIndex);
   };
+
   const handleNavigate = (questionIndex: number) => {
     setCurrentQuestion(questionIndex);
     const element = document.getElementById(`question-${questionIndex + 1}`);
@@ -75,28 +82,35 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
       <div>
         <h3 className="text-lg font-semibold mb-2">{part.part.partName}</h3>
         {part.questions.map((item: QuestionType, index: number) => {
-          const { id, number } = getQuestionProps();
+          const selected = answers.find((a) => a.questionId === item.id);
+
           return (
-            <div key={index} className="mb-4" id={id}>
-              <p className="font-semibold">Question {number}</p>
+            <div key={item.id} className="mb-4" id={`question-${item.id}`}>
+              <p className="font-semibold">Question {index + 1}</p>
+
               {item.url && (
                 <img src={item.url} alt="question" className="w-full mb-2" />
               )}
-              {Object.entries(item.options).map(
-                ([optionKey, optionValue], optionIndex) => (
-                  <button
-                    key={optionKey}
-                    onClick={() => handleAnswer(number - 1, optionIndex)}
-                    className={`border p-2 rounded-md w-full text-left mb-2 ${
-                      answers[number - 1] === optionIndex
-                        ? "bg-blue-500 text-white"
-                        : "hover:bg-gray-200"
-                    }`}
-                  >
-                    {optionValue}
-                  </button>
-                ),
-              )}
+
+              {Object.entries(item.options).map(([optionKey, optionValue]) => (
+                <button
+                  key={optionKey}
+                  onClick={() =>
+                    handleAnswer(
+                      index,
+                      item.id,
+                      optionKey as "A" | "B" | "C" | "D",
+                    )
+                  }
+                  className={`border p-2 rounded-md w-full text-left mb-2 ${
+                    selected?.selectedOption === optionKey
+                      ? "bg-blue-500 text-white"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  {optionValue}
+                </button>
+              ))}
             </div>
           );
         })}
@@ -134,7 +148,7 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
         </div>
 
         <div className=" p-4 bg-white h-full w-fit overflow-y-scroll">
-          <TestNavigationComponent
+          <ExamNavigationComponent
             isView={isView}
             details={examDetails?.details}
             currentQuestion={currentQuestion}

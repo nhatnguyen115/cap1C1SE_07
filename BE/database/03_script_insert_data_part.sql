@@ -15,4 +15,4 @@ INSERT INTO public.part (part_id,part_name,description,question_type,instruction
 (451,'Part 9','Part 9','MULTIPLE_CHOICE'::public.question_type,NULL,NULL,39,9),
 (501,'Part 10','Part 10','MULTIPLE_CHOICE'::public.question_type,NULL,NULL,39,10),
 (551,'Part 11','Part 11','MULTIPLE_CHOICE'::public.question_type,NULL,NULL,39,11);
-SELECT setval('part_seq', (SELECT MAX(part_id) FROM users));
+SELECT setval('part_seq', (SELECT MAX(part_id) FROM part));
