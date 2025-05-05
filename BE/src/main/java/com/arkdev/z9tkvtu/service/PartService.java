@@ -2,7 +2,7 @@ package com.arkdev.z9tkvtu.service;
 
 import com.arkdev.z9tkvtu.dto.Request.MediaRequest;
 import com.arkdev.z9tkvtu.dto.Request.PartRequest;
-import com.arkdev.z9tkvtu.dto.Response.PartDetailsResponse;
+import com.arkdev.z9tkvtu.dto.Response.PartResponse;
 import com.arkdev.z9tkvtu.mapper.MediaMapper;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.model.*;
@@ -27,23 +27,23 @@ public class PartService {
     MediaMapper mediaMapper;
     PartMapper partMapper;
 
-    public List<PartDetailsResponse> getPartsToSection(Integer sectionId) {
+    public List<PartResponse> getPartsToSection(Integer sectionId) {
         return partRepository.findBySectionsIdOrderByOrderNumber(sectionId)
                 .stream()
-                .map(partMapper::toPartDetailsResponse)
+                .map(partMapper::toPartResponse)
                 .toList();
     }
 
-    public List<PartDetailsResponse> getPartsToExam(Integer examId) {
+    public List<PartResponse> getPartsToExam(Integer examId) {
         return partRepository.findByExamsIdOrderByOrderNumber(examId)
                 .stream()
-                .map(partMapper::toPartDetailsResponse)
+                .map(partMapper::toPartResponse)
                 .toList();
     }
 
-    public PartDetailsResponse getPart(Integer partId) {
+    public PartResponse getPart(Integer partId) {
         return partRepository.findById(partId)
-                .map(partMapper::toPartDetailsResponse)
+                .map(partMapper::toPartResponse)
                 .orElseThrow(() -> new RuntimeException("part not found"));
     }
 

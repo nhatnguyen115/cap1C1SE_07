@@ -1,11 +1,16 @@
 package com.arkdev.z9tkvtu.service;
 
 import com.arkdev.z9tkvtu.dto.Request.ExamRequest;
-import com.arkdev.z9tkvtu.dto.Response.ExamResponse;
+import com.arkdev.z9tkvtu.dto.Response.*;
 import com.arkdev.z9tkvtu.mapper.ExamMapper;
+import com.arkdev.z9tkvtu.mapper.PartMapper;
+import com.arkdev.z9tkvtu.mapper.QuestionMapper;
 import com.arkdev.z9tkvtu.model.Exam;
+import com.arkdev.z9tkvtu.model.Part;
+import com.arkdev.z9tkvtu.model.Question;
 import com.arkdev.z9tkvtu.model.Test;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
+import com.arkdev.z9tkvtu.repository.QuestionRepository;
 import com.arkdev.z9tkvtu.repository.TestRepository;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -13,9 +18,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,8 @@ public class ExamService {
     TestRepository testRepository;
     ExamRepository examRepository;
     ExamMapper examMapper;
+    PartMapper partMapper;
+    QuestionMapper questionMapper;
 
     public List<ExamResponse> getExams(Integer testId) {
         return examRepository.findByTestIdOrderByCreatedAt(testId)
@@ -32,10 +38,26 @@ public class ExamService {
                 .toList();
     }
 
-    public ExamResponse getExam(Integer examId) {
-        return examRepository.findById(examId)
-                .map(examMapper::toExamResponse)
-                .orElseThrow(() -> new RuntimeException("Exam not found"));
+    public ExamDetailsResponse getExam(Integer examId) {
+        Exam exam = examRepository.findById(examId)
+                .orElseThrow(() -> new IllegalArgumentException("Exam not found"));
+        ExamResponse examResponse = examMapper.toExamResponse(exam);
+        List<Part> parts = exam.getParts().stream().toList();
+        List<PartDetailsResponse> partDetailsResponses = new ArrayList<>();
+        for (Part part : parts) {
+            PartResponse partResponse = partMapper.toPartResponse(part);
+            List<Question> questions = part.getQuestions().stream().toList();
+            List<QuestionResponse> questionResponses = new ArrayList<>();
+            for (Question question : questions) {
+                QuestionResponse questionResponse = questionMapper.toQuestionResponse(question);
+                questionResponses.add(questionResponse);
+            }
+            partDetailsResponses.add(new PartDetailsResponse(partResponse, questionResponses));
+        }
+        return new ExamDetailsResponse(
+                examResponse,
+                partDetailsResponses
+        );
     }
 
     @Transactional
