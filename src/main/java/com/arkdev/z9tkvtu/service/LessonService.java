@@ -10,11 +10,11 @@ import com.arkdev.z9tkvtu.model.Media;
 import com.arkdev.z9tkvtu.model.Section;
 import com.arkdev.z9tkvtu.repository.LessonRepository;
 import com.arkdev.z9tkvtu.repository.SectionRepository;
-import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

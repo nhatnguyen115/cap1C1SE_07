@@ -116,6 +116,16 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.15.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version> <!-- Đây là bản mới nhất tính đến 2024-04 -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+        </dependency>
     </dependencies>
 
     <build>
