@@ -88,11 +88,13 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
       <div>
         <h3 className="text-lg font-semibold mb-2">{part.part.partName}</h3>
         {part.questions.map((item: QuestionType, index: number) => {
+          const questionNumber = questionCounter++;
+
           const selected = answers.find((a) => a.questionId === item.id);
 
           return (
             <div key={item.id} className="mb-4" id={`question-${item.id}`}>
-              <p className="font-semibold">Question {index + 1}</p>
+              <p className="font-semibold">Question {questionNumber}</p>
 
               {item.url && (
                 <img src={item.url} alt="question" className="w-full mb-2" />
