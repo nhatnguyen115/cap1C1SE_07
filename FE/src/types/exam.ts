@@ -7,19 +7,49 @@ export interface ExamType {
   duration: number;
 }
 
-export interface QuestionType {
+export type PartType = {
+  id: number;
+  partName: string;
+  questionType: string;
+  questionCount: number;
+  description: string;
+  instructions: string | null;
+};
+
+export type QuestionType = {
   id: number;
   content: string;
   url: string;
-  options: { [key: string]: string };
-  correctAnswer: string;
-}
-
-export interface PartDetailType {
-  part: {
-    id: number;
-    partName: string;
-    description: string;
+  options: {
+    A: string;
+    B: string;
+    C: string;
+    D: string;
   };
+  correctAnswer: "A" | "B" | "C" | "D";
+  explanation: string | null;
+  difficulty: string;
+};
+
+export type PartWithQuestionsType = {
+  part: PartType;
   questions: QuestionType[];
-}
+};
+
+export type DoExamType = {
+  exam: ExamType;
+  details: PartWithQuestionsType[];
+};
+
+export type AnswerType = {
+  questionId: number;
+  selectedOption: string;
+};
+
+export type TestNavigationProps = {
+  isView: boolean;
+  details?: PartWithQuestionsType[];
+  currentQuestion: number;
+  answers: AnswerType[];
+  onNavigate: (index: number) => void;
+};
