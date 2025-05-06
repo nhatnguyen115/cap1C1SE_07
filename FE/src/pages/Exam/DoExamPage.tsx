@@ -3,14 +3,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { API_URIS } from "../../api/URIConstant";
 import IcBreadcrumbGbk from "../../assets/icons/IcBreadcrumbGbk";
 import ExamNavigationComponent from "../../components/ExamNavigationComponent";
-import { toeicTest } from "../../data/toeicMockData";
 import { http } from "../../service/Http";
+
 import {
   AnswerType,
   DoExamType,
   PartWithQuestionsType,
   QuestionType,
 } from "../../types/exam";
+import { shuffleArray } from "../../utils/commonUtils";
 interface TestProps {
   isView: boolean;
 }
@@ -30,9 +31,18 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
     const fetchExam = async () => {
       try {
         const res = await http.get(API_URIS.EXAMS.DO_BY_EXAM_ID(id!));
+        const rawData: DoExamType = res.data.data;
         console.log("res.data.data: ", res.data.data);
+        const shuffledDetails = rawData.details.map((detail) => ({
+          ...detail,
+          questions: shuffleArray(detail.questions),
+        }));
+        const shuffledData: DoExamType = {
+          ...rawData,
+          details: shuffledDetails,
+        };
 
-        setExamDetails(res.data.data);
+        setExamDetails(shuffledData);
       } catch (error) {
         console.error("Failed to fetch exam:", error);
       }
@@ -139,7 +149,7 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
             <audio
               controls
               className="w-full max-w-4xl mx-auto block"
-              src={toeicTest.audio}
+              // src={toeicTest.audio}
             >
               Your browser does not support the audio element.
             </audio>
