@@ -28,16 +28,21 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
           attemptId: 1, // hoặc lấy từ state/router
         },
       });
+      const statusHttp = response.data.status;
 
-      console.log("Submit thành công:", response.data);
+      const message = response.data.message;
 
-      if (isAutoSubmit) {
+      if (statusHttp == 500) {
+        notification.error({
+          message: message,
+        });
+      } else if (isAutoSubmit) {
         notification.info({
           message: "Bài thi đã được tự động nộp do hết thời gian.",
         });
       } else {
         notification.success({
-          message: "Bạn đã nộp bài thành công.",
+          message: message || "Bạn đã nộp bài thành công.",
         });
       }
       // Optional: chuyển trang hoặc disable giao diện

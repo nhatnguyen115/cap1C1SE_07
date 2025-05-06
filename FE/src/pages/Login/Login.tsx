@@ -25,7 +25,6 @@ const Login: React.FC = () => {
     };
 
     try {
-      debugger;
       const response = await login(payload); // Giả sử login() đã lưu token và role vào localStorage
       setUserRole(response.data.role);
       const role = localStorage.getItem(LOCAL_STORAGE_CONSTANT.ROLE); // 👈 Lấy role từ localStorage
