@@ -1,5 +1,5 @@
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // theme
 import { PartType } from "../types/lesson";
 
@@ -60,7 +60,9 @@ const AddPartModal: React.FC<AddPartModalProps> = ({
 
   const handleSubmit = () => {
     if (!partName.trim()) {
-      alert("Vui lòng nhập tên phần.");
+      notification.error({
+        message: "Vui lòng nhập tên phần.",
+      });
       return;
     }
 

@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // theme
@@ -42,7 +43,9 @@ const AddLessonModal: React.FC<AddLessonModalProps> = ({
 
   const handleSubmit = () => {
     if (!lessonName.trim()) {
-      alert("Vui lòng nhập tên bài học.");
+      notification.error({
+        message: "Vui lòng nhập tên bài học.",
+      });
       return;
     }
 

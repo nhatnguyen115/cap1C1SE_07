@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { API_URIS } from "../api/URIConstant";
 import { PAGINATION_CONSTANT } from "../constant/PaginationConstant";
@@ -45,7 +46,9 @@ const ExamDetailsManagementComponent: React.FC<{ selectedId: number }> = ({
         ...part,
       });
       if (res.status === 200) {
-        alert(res.data.message);
+        notification.success({
+          message: res.data.message,
+        });
         fetchParts();
         // fetchData();
       }

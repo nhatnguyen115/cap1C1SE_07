@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaTimes, FaUpload } from "react-icons/fa";
 import { API_URIS } from "../../../api/URIConstant";
@@ -55,7 +56,9 @@ const TestManagementPage: React.FC = () => {
         ...exam,
       });
       if (res.status === 200) {
-        alert(res.data.message);
+        notification.success({
+          message: res.data.message,
+        });
         fetchData(); // gọi lại useEffect hoặc fetchData riêng
       }
     } catch (err) {
@@ -99,7 +102,9 @@ const TestManagementPage: React.FC = () => {
         ...part,
       });
       if (res.status === 200) {
-        alert(res.data.message);
+        notification.success({
+          message: res.data.message,
+        });
         fetchData(); // gọi lại useEffect hoặc fetchData riêng
       }
     } catch (err) {

@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
@@ -24,7 +25,9 @@ const Register: React.FC = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Mật khẩu không khớp!");
+      notification.error({
+        message: "Mật khẩu không khớp!",
+      });
       return;
     }
 
@@ -43,7 +46,9 @@ const Register: React.FC = () => {
       const response = await register(payload);
       navigate(PATH_CONSTANTS.ROOT.ROOT); // 👈 chuyển về trang chủ
     } catch (error: any) {
-      alert("Đăng ký thất bại. Vui lòng thử lại.");
+      notification.error({
+        message: "Đăng ký thất bại. Vui lòng thử lại.",
+      });
       console.error("Registration error:", error);
     }
   };

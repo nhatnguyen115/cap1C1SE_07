@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { http } from "../service/Http";
 import { QuestionType, TestNavigationProps } from "../types/exam";
@@ -37,9 +38,19 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
 
       console.log("Submit thành công:", response.data);
       // Hiển thị thông báo thành công, hoặc chuyển trang
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        notification.error({
+          message: "Bạn cần đăng nhập để làm bài thi",
+        });
+
+        // Hoặc hiển thị custom modal/messagebox tại đây
+      } else {
+        const errorMsg =
+          error.response?.data?.message || "Đã xảy ra lỗi khi nộp bài.";
+        notification.error(errorMsg);
+      }
       console.error("Lỗi khi submit:", error);
-      // Hiển thị thông báo lỗi
     }
   };
 

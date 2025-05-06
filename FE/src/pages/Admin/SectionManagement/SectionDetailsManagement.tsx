@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { API_URIS } from "../../../api/URIConstant";
@@ -68,7 +69,9 @@ const SectionDetailsManagement: React.FC = () => {
         ...lesson,
       });
       if (res.status === 200) {
-        alert(res.data.message);
+        notification.success({
+          message: res.data.message,
+        });
         fetchData(); // gọi lại useEffect hoặc fetchData riêng
       }
     } catch (err) {
@@ -82,7 +85,9 @@ const SectionDetailsManagement: React.FC = () => {
         ...lesson,
       });
       if (res.status === 200) {
-        alert(res.data.message);
+        notification.success({
+          message: res.data.message,
+        });
         fetchData(); // cập nhật lại list
       }
     } catch (err) {
@@ -106,7 +111,9 @@ const SectionDetailsManagement: React.FC = () => {
         ...part,
       });
       if (res.status === 200) {
-        alert(res.data.message);
+        notification.success({
+          message: res.data.message,
+        });
         fetchData(); // gọi lại useEffect hoặc fetchData riêng
       }
     } catch (err) {
@@ -120,7 +127,9 @@ const SectionDetailsManagement: React.FC = () => {
         ...part,
       });
       if (res.status === 200) {
-        alert(res.data.message);
+        notification.success({
+          message: res.data.message,
+        });
         fetchData(); // cập nhật lại list
       }
     } catch (err) {
