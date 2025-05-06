@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
@@ -24,6 +25,7 @@ const Login: React.FC = () => {
     };
 
     try {
+      debugger;
       const response = await login(payload); // Giả sử login() đã lưu token và role vào localStorage
       setUserRole(response.data.role);
       const role = localStorage.getItem(LOCAL_STORAGE_CONSTANT.ROLE); // 👈 Lấy role từ localStorage
@@ -34,7 +36,9 @@ const Login: React.FC = () => {
         navigate(PATH_CONSTANTS.ROOT.ROOT);
       }
     } catch (error: any) {
-      alert("Đăng nhập thất bại. Vui lòng thử lại.");
+      notification.error({
+        message: "Đăng nhập thất bại. Vui lòng thử lại.",
+      });
       console.error("Login error:", error);
     }
   };

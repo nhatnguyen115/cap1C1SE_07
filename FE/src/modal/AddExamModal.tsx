@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { http } from "../service/Http";
 import { ExamType } from "../types/exam";
@@ -58,7 +59,9 @@ const AddExamModal: React.FC<AddExamModalProps> = ({
 
   const handleSubmit = () => {
     if (!examName.trim()) {
-      alert("Vui lòng nhập tên đề thi.");
+      notification.error({
+        message: "Vui lòng nhập tên đề thi.",
+      });
       return;
     }
 
