@@ -11,16 +11,8 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   duration,
   onNavigate,
 }) => {
-  const [time, setTime] = useState<number>((duration || 120) * 60);
+  const [time, setTime] = useState<number>(0);
 
-  const formatTime = (timeInSeconds: number) => {
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = timeInSeconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-      2,
-      "0",
-    )}`;
-  };
   let questionCounter = 1;
 
   const handleSubmitTest = async () => {
@@ -53,7 +45,14 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
       console.error("Lỗi khi submit:", error);
     }
   };
-
+  const formatTime = (timeInSeconds: number) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+      2,
+      "0",
+    )}`;
+  };
   useEffect(() => {
     // Only start timer if time is greater than 0
     if (time > 0) {
@@ -67,8 +66,15 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   }, [time]);
 
   useEffect(() => {
-    console.log("timeInSeconds: ", duration);
+    console.log("duration: ", duration);
+    console.log("details: ", details);
   }, []);
+
+  useEffect(() => {
+    if (duration) {
+      setTime(duration * 60);
+    }
+  }, [duration]);
 
   const renderQuestionButtons = (questions: QuestionType[]) => {
     return questions.map((q, index) => {
@@ -100,7 +106,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between mb-4">
+      <div className="flex justify-between items-center mb-4">
         <span className="text-sm">Thời gian còn lại:</span>
         <span className="font-semibold text-xl">
           {time > 0 ? formatTime(time) : "Hết giờ"}
