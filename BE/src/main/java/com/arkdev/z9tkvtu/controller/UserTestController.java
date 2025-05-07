@@ -44,8 +44,8 @@ public class UserTestController {
     @PostMapping("/start-test")
     public ResponseData<?> startTest(@RequestParam Integer examId) {
         try {
-            userTestService.startTest(examId);
-            return new ResponseData<>(HttpStatus.OK.value(), "Start Test Successfully");
+            return new ResponseData<>(HttpStatus.OK.value(), "Start Test Successfully",
+                    userTestService.startTest(examId));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Start Test Failed");
         }
