@@ -87,5 +87,6 @@ export const API_URIS = {
   USER_TEST: {
     START: "/user-test/start-test",
     SUBMIT: "/user-test/submit-test",
+    HISTORY: "/user-test",
   },
 };

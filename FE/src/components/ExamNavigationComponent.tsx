@@ -6,6 +6,7 @@ import { QuestionType, TestNavigationProps } from "../types/exam";
 
 const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   isView,
+  attemptId,
   details,
   currentQuestion,
   answers,
@@ -25,7 +26,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
 
       const response = await http.post(API_URIS.USER_TEST.SUBMIT, payload, {
         params: {
-          attemptId: 1, // hoặc lấy từ state/router
+          attemptId: attemptId, // hoặc lấy từ state/router
         },
       });
       const statusHttp = response.data.status;

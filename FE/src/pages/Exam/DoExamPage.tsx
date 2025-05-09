@@ -20,7 +20,7 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
 
   const [answers, setAnswers] = useState<AnswerType[]>([]);
   const navigate = useNavigate();
-
+  const [attemptId, setAttemptId] = useState<number>(0);
   const { id } = useParams();
 
   // const [answers, setAnswers] = useState<{ [questionId: number]: string }>({});
@@ -30,6 +30,17 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
   useEffect(() => {
     const fetchExam = async () => {
       try {
+        const startTest = await http.post(
+          API_URIS.USER_TEST.START,
+          {},
+          {
+            params: {
+              examId: id,
+            },
+          },
+        );
+        const attemptId = startTest.data.data;
+        setAttemptId(attemptId);
         const res = await http.get(API_URIS.EXAMS.DO_BY_EXAM_ID(id!));
         const rawData: DoExamType = res.data.data;
         console.log("res.data.data: ", res.data.data);
@@ -165,6 +176,7 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
         <div className=" p-4 bg-white h-full w-fit overflow-y-scroll">
           <ExamNavigationComponent
             isView={isView}
+            attemptId={attemptId}
             details={examDetails?.details}
             currentQuestion={currentQuestion}
             answers={answers}

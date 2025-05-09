@@ -48,6 +48,7 @@ export type AnswerType = {
 
 export type TestNavigationProps = {
   isView: boolean;
+  attemptId: number;
   details?: PartWithQuestionsType[];
   currentQuestion: number;
   answers: AnswerType[];
