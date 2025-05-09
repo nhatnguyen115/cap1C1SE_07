@@ -45,7 +45,7 @@ public class UserTestService {
     }
 
     @Transactional
-    public void startTest(Integer examId) {
+    public Integer startTest(Integer examId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserLoginData user = (UserLoginData) auth.getPrincipal();
 
@@ -57,7 +57,8 @@ public class UserTestService {
         testAttempt.setExam(exam);
         testAttempt.setUser(user);
         testAttempt.setStartTime(Timestamp.valueOf(LocalDateTime.now()));
-        userTestAttemptRepository.save(testAttempt);
+        testAttempt = userTestAttemptRepository.save(testAttempt);
+        return testAttempt.getId();
     }
 
     @Transactional
