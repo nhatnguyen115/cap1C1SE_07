@@ -6,16 +6,16 @@ import { Link } from "react-router-dom";
 interface HistoryTestCardProps {
   id: number;
   imageSrc: string; // Đường dẫn ảnh minh họa
-  title: string; // Tên bài test
-  score: string; // Điểm (vd "25/100")
+  examName: string; // Tên bài test
+  totalScore: number; // Điểm (vd "25/100")
   time: string; // Thời lượng (vd "2h20'")
 }
 
 const HistoryTestCard: React.FC<HistoryTestCardProps> = ({
   id,
   imageSrc,
-  title,
-  score,
+  examName,
+  totalScore,
   time,
 }) => {
   return (
@@ -35,10 +35,10 @@ const HistoryTestCard: React.FC<HistoryTestCardProps> = ({
 
       {/* Thông tin bài test */}
       <div className="flex-1">
-        <h3 className="text-lg font-semibold text-gray-800 mb-1">{title}</h3>
+        <h3 className="text-lg font-semibold text-gray-800 mb-1">{examName}</h3>
 
         <p className="text-gray-600 text-sm mb-2">
-          Điểm: <span className="text-blue-600 font-bold">{score}</span>
+          Điểm: <span className="text-blue-600 font-bold">{totalScore}</span>
         </p>
 
         {/* Thời lượng + nút bên phải */}
