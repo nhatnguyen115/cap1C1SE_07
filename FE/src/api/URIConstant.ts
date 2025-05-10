@@ -84,4 +84,9 @@ export const API_URIS = {
     UPDATE: (id: number | string) => `/menu/${id}`,
     DELETE: (id: number | string) => `/menu/${id}`,
   },
+  USER_TEST: {
+    START: "/user-test/start-test",
+    SUBMIT: "/user-test/submit-test",
+    HISTORY: "/user-test",
+  },
 };

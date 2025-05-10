@@ -1,50 +1,66 @@
 import { notification } from "antd";
 import React, { useEffect, useState } from "react";
+import { API_URIS } from "../api/URIConstant";
 import { http } from "../service/Http";
 import { QuestionType, TestNavigationProps } from "../types/exam";
 
 const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   isView,
+  attemptId,
   details,
   currentQuestion,
   answers,
   duration,
   onNavigate,
 }) => {
-  const [time, setTime] = useState<number>(0);
+  const [time, setTime] = useState<number>(1);
 
   let questionCounter = 1;
 
-  const handleSubmitTest = async () => {
+  const handleSubmitTest = async (isAutoSubmit = false) => {
     try {
       const payload = answers.map((a) => ({
         questionId: a.questionId,
         selectedAnswer: a.selectedOption,
       }));
 
-      const response = await http.post("/user-test/submit-test", payload, {
+      const response = await http.post(API_URIS.USER_TEST.SUBMIT, payload, {
         params: {
-          attemptId: 1, // hoặc lấy từ state/router tùy logic
+          attemptId: attemptId, // hoặc lấy từ state/router
         },
       });
+      const statusHttp = response.data.status;
 
-      console.log("Submit thành công:", response.data);
-      // Hiển thị thông báo thành công, hoặc chuyển trang
+      const message = response.data.message;
+
+      if (statusHttp == 500) {
+        notification.error({
+          message: message,
+        });
+      } else if (isAutoSubmit) {
+        notification.info({
+          message: "Bài thi đã được tự động nộp do hết thời gian.",
+        });
+      } else {
+        notification.success({
+          message: message || "Bạn đã nộp bài thành công.",
+        });
+      }
+      // Optional: chuyển trang hoặc disable giao diện
     } catch (error: any) {
       if (error.response?.status === 403) {
         notification.error({
           message: "Bạn cần đăng nhập để làm bài thi",
         });
-
-        // Hoặc hiển thị custom modal/messagebox tại đây
       } else {
         const errorMsg =
           error.response?.data?.message || "Đã xảy ra lỗi khi nộp bài.";
-        notification.error(errorMsg);
+        notification.error({ message: errorMsg });
       }
       console.error("Lỗi khi submit:", error);
     }
   };
+
   const formatTime = (timeInSeconds: number) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
@@ -54,15 +70,22 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
     )}`;
   };
   useEffect(() => {
-    // Only start timer if time is greater than 0
-    if (time > 0) {
-      const timer = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
-      }, 1000);
-
-      // Cleanup interval on component unmount or when time changes
-      return () => clearInterval(timer);
+    if (time <= 0) {
+      handleSubmitTest(true);
+      return;
     }
+
+    const timer = setInterval(() => {
+      setTime((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
   }, [time]);
 
   useEffect(() => {
@@ -108,10 +131,15 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-4">
         <span className="text-sm">Thời gian còn lại:</span>
-        <span className="font-semibold text-xl">
+        <span
+          className={`font-semibold text-xl ${
+            time <= 60 ? "text-red-600 animate-pulse" : ""
+          }`}
+        >
           {time > 0 ? formatTime(time) : "Hết giờ"}
         </span>
       </div>
+
       {details?.map((detail, idx) => {
         const partName = detail.part.partName || `Part ${idx + 1}`;
 
@@ -127,7 +155,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
       <div className="mt-4 text-center">
         <button
           className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600"
-          onClick={handleSubmitTest}
+          onClick={() => handleSubmitTest(false)}
         >
           Submit Test
         </button>
