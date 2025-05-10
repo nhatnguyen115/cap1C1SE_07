@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.Part}
  */
-public record PartDetailsResponse(
+public record PartDetailsResponse<T>(
         PartResponse part,
-        List<QuestionResponse> questions) implements Serializable {
+        List<T> list) implements Serializable {
 }

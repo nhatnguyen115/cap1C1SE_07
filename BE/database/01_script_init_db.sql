@@ -224,9 +224,12 @@ create table user_test_attempt (
     attempt_id int not null default nextval('user_test_attempt_seq'),
     user_id uuid not null,
     exam_id int not null,
-    start_time timestamp,
-    end_time timestamp,
     total_score smallint,
+    total_time smallint,
+    created_at timestamp default CURRENT_TIMESTAMP,
+    created_by uuid,
+    updated_at timestamp,
+    updated_by uuid,
     primary key (attempt_id)
 );
 create table user_answer (

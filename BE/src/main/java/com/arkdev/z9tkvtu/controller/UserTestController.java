@@ -35,9 +35,19 @@ public class UserTestController {
     public ResponseData<?> getTestResult(@RequestParam Integer attemptId) {
         try {
             return new ResponseData<>(HttpStatus.OK.value(), "Get Test Result Successfully",
-                    userTestService.getTestResult(attemptId));
+                    userTestService.getAttemptDetails(attemptId));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Test Result Failed");
+        }
+    }
+
+    @GetMapping("/user-rank")
+    public ResponseData<?> getUserRank(@RequestParam Integer examId) {
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "Get User Rank Successfully",
+                    userTestService.getUserRanks(examId));
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get User Rank Failed");
         }
     }
 
@@ -54,9 +64,10 @@ public class UserTestController {
 
     @PostMapping("/submit-test")
     public ResponseData<?> submitTest(@RequestParam Integer attemptId,
+                                      @RequestParam Integer totalTime,
                                       @RequestBody List<UserAnswerRequest> answers) {
         try {
-            userTestService.submitTest(attemptId, answers);
+            userTestService.submitTest(attemptId, totalTime, answers);
             return new ResponseData<>(HttpStatus.OK.value(), "Submit Test Successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Submit Test Failed");

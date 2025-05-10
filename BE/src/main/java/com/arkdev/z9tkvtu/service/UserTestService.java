@@ -1,8 +1,8 @@
 package com.arkdev.z9tkvtu.service;
 
 import com.arkdev.z9tkvtu.dto.Request.UserAnswerRequest;
-import com.arkdev.z9tkvtu.dto.Response.UserResultResponse;
-import com.arkdev.z9tkvtu.dto.Response.UserTestHistoryResponse;
+import com.arkdev.z9tkvtu.dto.Response.*;
+import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.mapper.UserTestMapper;
 import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.*;
@@ -14,9 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -29,6 +28,7 @@ public class UserTestService {
     ExamRepository examRepository;
     QuestionRepository questionRepository;
     UserTestMapper userTestMapper;
+    PartMapper partMapper;
 
     public List<UserTestHistoryResponse> getTestHistories() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -39,9 +39,33 @@ public class UserTestService {
                 .toList();
     }
 
-    public UserResultResponse getTestResult(Integer attemptId) {
-        List<Object[]> results = userTestAttemptRepository.findByAttemptWithAnswersByAttemptId(attemptId);
-        return mapToUserResultResponse(results);
+    public AttemptDetailsResponse getAttemptDetails(Integer attemptId) {
+        UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
+                .orElseThrow(() -> new RuntimeException("attempt not found"));
+        List<Part> parts = attempt.getExam().getParts().stream().toList();
+        List<PartDetailsResponse<?>> partDetailsResponses = new ArrayList<>();
+        for (Part part : parts) {
+            PartResponse partResponse = partMapper.toPartResponse(part);
+            List<Question> questions = part.getQuestions().stream().toList();
+            List<UserAnswerResponse> answerResponses = new ArrayList<>();
+            for (Question question : questions) {
+                UserAnswer answer = userAnswerRepository.findByQuestionIdAndAttemptId(question.getId(), attemptId);
+                UserAnswerResponse answerResponse = userTestMapper.toUserAnswerResponse(answer);
+                answerResponses.add(answerResponse);
+            }
+            partDetailsResponses.add(new PartDetailsResponse<>(partResponse, answerResponses));
+        }
+        return new AttemptDetailsResponse(
+                attempt.getExam().getExamName(),
+                attempt.getExam().getTotalScore(),
+                attempt.getTotalScore(),
+                attempt.getTotalTime(),
+                partDetailsResponses
+        );
+    }
+
+    public List<UserRankResponse> getUserRanks(Integer examId) {
+        return userTestAttemptRepository.findByUserOfRank(examId);
     }
 
     @Transactional
@@ -56,16 +80,16 @@ public class UserTestService {
         UserTestAttempt testAttempt = new UserTestAttempt();
         testAttempt.setExam(exam);
         testAttempt.setUser(user);
-        testAttempt.setStartTime(Timestamp.valueOf(LocalDateTime.now()));
         testAttempt = userTestAttemptRepository.save(testAttempt);
         return testAttempt.getId();
     }
 
     @Transactional
-    public void submitTest(Integer attemptId, List<UserAnswerRequest> answers) {
+    public void submitTest(Integer attemptId, Integer totalTime,
+                           List<UserAnswerRequest> answers) {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                 .orElseThrow(() -> new RuntimeException("Attempt not found"));
-        attempt.setEndTime(Timestamp.valueOf(LocalDateTime.now()));
+        attempt.setTotalTime(totalTime);
 
         List<Integer> questionIds = answers.stream()
                 .map(UserAnswerRequest::getQuestionId)
@@ -74,18 +98,21 @@ public class UserTestService {
         Map<Integer, Question> questions = questionRepository.findAllById(questionIds)
                 .stream()
                 .collect(Collectors.toMap(Question::getId, Function.identity()));
-
+        AtomicInteger result = new AtomicInteger();
         List<UserAnswer> userAnswers = answers.stream()
                 .map(answerRequest -> {
                     Question question = Optional.ofNullable(questions.get(answerRequest.getQuestionId()))
                             .orElseThrow(() -> new RuntimeException("Question not found"));
+                    if (question.getCorrectAnswer().equals(answerRequest.getSelectedAnswer())) {
+                        result.set(result.get() + 5);
+                    }
                     return new UserAnswer(
                             attempt,
                             question,
                             answerRequest.getSelectedAnswer()
                     );
                 }).toList();
-
+        attempt.setTotalScore(result.get());
         userAnswerRepository.saveAll(userAnswers);
     }
 
@@ -94,32 +121,5 @@ public class UserTestService {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                         .orElseThrow(() -> new RuntimeException("Attempt not found"));
         userTestAttemptRepository.delete(attempt);
-    }
-
-    private UserResultResponse mapToUserResultResponse(List<Object[]> data) {
-        String examName = null;
-        int totalScore = 0;
-        String partName;
-        Map<String, List<UserResultResponse.AnswerResponse>> map = new LinkedHashMap<>();
-
-        for (Object[] row : data) {
-            examName = (String) row[0];
-            totalScore = (Integer) row[1];
-            partName = (String) row[2];
-            UserResultResponse.AnswerResponse response = new UserResultResponse.AnswerResponse(
-                    (String) row[3],
-                    (Map<String, String>) row[4],
-                    (String) row[5],
-                    (String) row[6],
-                    (String) row[7]
-            );
-
-            map.computeIfAbsent(partName, k -> new ArrayList<>()).add(response);
-        }
-
-        List<UserResultResponse.PartAnswer> partAnswers = map.entrySet().stream()
-                .map(e -> new UserResultResponse.PartAnswer(e.getKey(), e.getValue()))
-                .toList();
-        return new UserResultResponse(examName, totalScore, partAnswers);
     }
 }

@@ -3,18 +3,16 @@ package com.arkdev.z9tkvtu.dto.Response;
 import com.arkdev.z9tkvtu.util.DifficultyLevel;
 import com.arkdev.z9tkvtu.util.MediaType;
 
-import java.io.Serializable;
 import java.util.Map;
 
-/**
- * DTO for {@link com.arkdev.z9tkvtu.model.Question}
- */
-public record QuestionResponse(
-        Integer id,
+public record UserAnswerResponse(
         String content,
         String url,
         MediaType mediaType,
         Map<String, Object> options,
+        String correctAnswer,
         String explanation,
-        DifficultyLevel difficulty) implements Serializable {
+        DifficultyLevel difficulty,
+        String selectedAnswer
+) {
 }

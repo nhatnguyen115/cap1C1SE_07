@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 public record UserTestHistoryResponse(
         Integer  id,
         String examName,
-        Timestamp startTime,
-        Timestamp endTime,
-        Integer totalScore) implements Serializable {
+        Integer totalScore,
+        Integer totalTime) implements Serializable {
 }
