@@ -39,7 +39,7 @@ public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt
 
     @Query(value = """
         SELECT
-            uld.username AS username,
+            COALESCE(uld.username, uld.email) AS username,
             uta.total_score as totalScore,
             uta.total_time as totalTime
         FROM user_test_attempt uta

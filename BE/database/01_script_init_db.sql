@@ -33,7 +33,8 @@ create table user_account (
 create table user_login_data (
     user_id uuid not null,
     username varchar(20),
-    password_hash varchar(255),
+    password varchar(255),
+    external_username varchar(50),
     email varchar(20),
     phone_number varchar(10),
     primary key (user_id)

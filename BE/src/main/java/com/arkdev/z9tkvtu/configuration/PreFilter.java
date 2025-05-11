@@ -1,6 +1,5 @@
 package com.arkdev.z9tkvtu.configuration;
 
-import com.arkdev.z9tkvtu.service.JwtService;
 import com.arkdev.z9tkvtu.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,7 +22,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class PreFilter extends OncePerRequestFilter {
     UserService userService;
-    JwtService jwtService;
+    JwtProvider jwtProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -35,13 +34,12 @@ public class PreFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
-            username = jwtService.extractUsername(token);
+            username = jwtProvider.extractUsername(token);
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userService.getUserDetailsService().loadUserByUsername(username);
-
-            if (jwtService.validateToken(token, userDetails)) {
+            if (jwtProvider.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

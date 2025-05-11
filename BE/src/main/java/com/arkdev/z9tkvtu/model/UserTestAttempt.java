@@ -35,6 +35,6 @@ public class UserTestAttempt extends AbstractEntity {
     @JoinColumn(name = "exam_id", nullable = false)
     private Exam exam;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "attempt", cascade = CascadeType.ALL,  orphanRemoval = true)
     private Set<UserAnswer> userAnswers;
 }

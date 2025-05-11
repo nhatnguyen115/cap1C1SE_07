@@ -25,8 +25,8 @@ public class UserLoginData extends UserAccount implements UserDetails {
     @Column(name = "username")
     String username;
 
-    @Column(name = "password_hash")
-    String passwordHash;
+    @Column(name = "password")
+    String password;
 
     @Column(name = "email")
     String email;
@@ -41,11 +41,6 @@ public class UserLoginData extends UserAccount implements UserDetails {
                 .map(permission ->
                         new SimpleGrantedAuthority("PERMISSION_" + permission.getPermissionName().toUpperCase()))
                 .toList();
-    }
-
-    @Override
-    public String getPassword() {
-        return passwordHash;
     }
 
     @Override

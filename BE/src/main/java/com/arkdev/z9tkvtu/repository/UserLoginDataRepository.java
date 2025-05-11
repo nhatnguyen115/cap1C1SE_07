@@ -16,4 +16,6 @@ public interface UserLoginDataRepository extends JpaRepository<UserLoginData, UU
   boolean existsByUsername(@NotNull(message = "Username must be not null")
                              @Size(message = "Username must be greater than 50 char", max = 50)
                              @NotBlank(message = "Username must be not blank") String username);
+
+    Optional<UserLoginData> findByEmail(String email);
 }
