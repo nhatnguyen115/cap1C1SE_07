@@ -36,3 +36,7 @@ build/
 mvnw.cmd
 mvnw
 .mvn
+
+# Environment variables
+.env
+*.env

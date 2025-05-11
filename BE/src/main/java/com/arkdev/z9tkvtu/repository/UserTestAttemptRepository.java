@@ -1,5 +1,7 @@
 package com.arkdev.z9tkvtu.repository;
 
+import com.arkdev.z9tkvtu.dto.Response.UserRankResponse;
+import com.arkdev.z9tkvtu.dto.Response.UserResponse;
 import com.arkdev.z9tkvtu.dto.Response.UserResultResponse;
 import com.arkdev.z9tkvtu.model.UserAccount;
 import com.arkdev.z9tkvtu.model.UserTestAttempt;
@@ -34,4 +36,17 @@ public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt
             ORDER BY p.orderNumber, q.orderNumber
             """)
     List<Object[]> findByAttemptWithAnswersByAttemptId(@Param("attemptId") Integer attemptId);
+
+    @Query(value = """
+        SELECT
+            uld.username AS username,
+            uta.total_score as totalScore,
+            uta.total_time as totalTime
+        FROM user_test_attempt uta
+        JOIN user_login_data uld ON uld.user_id = uta.user_id
+        WHERE uta.exam_id = :examId
+        ORDER BY uta.total_score DESC, uta.total_time
+        LIMIT 20;
+    """, nativeQuery = true)
+    List<UserRankResponse> findByUserOfRank(@Param("examId") Integer examId);
 }

@@ -17,6 +17,15 @@ spring:
     show-sql: false
     hibernate:
       ddl-auto: none
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:}
+            client-secret: ${GOOGLE_CLIENT_SECRET:}
+            redirect-uri: "${GOOGLE_REDIRECT_URI:http://localhost:1300/auth/google/callback}"
+            client-name: https://www.googleapis.com/oauth2/v3/userinfo
 
 api:
   security:

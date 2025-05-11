@@ -15,22 +15,17 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "user_test_attempt")
-public class UserTestAttempt implements Serializable {
+public class UserTestAttempt extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attempt_id", nullable = false, updatable = false)
     Integer id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "start_time")
-    private Timestamp startTime;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "end_time")
-    private Timestamp endTime;
-
     @Column(name = "total_score")
     private Integer totalScore;
+
+    @Column(name = "total_time")
+    private Integer totalTime;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

@@ -33,8 +33,8 @@ public class QuestionMapper {
                 question.getId(),
                 question.getContent(),
                 question.getMedia() != null ? question.getMedia().getUrl() : null,
+                question.getMedia() != null ? question.getMedia().getMediaType() : null,
                 question.getOptions(),
-                question.getCorrectAnswer(),
                 question.getExplanation(),
                 question.getDifficulty()
         );
