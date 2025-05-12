@@ -1,6 +1,5 @@
 package com.arkdev.z9tkvtu.repository;
 
-import com.arkdev.z9tkvtu.dto.Response.UserRankResponse;
 import com.arkdev.z9tkvtu.model.UserAccount;
 import com.arkdev.z9tkvtu.model.UserTestAttempt;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,12 +37,12 @@ public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt
         SELECT
             COALESCE(uld.username, uld.email) AS username,
             uta.total_score as totalScore,
-            uta.total_time as totalTime
+            CAST(ROUND(EXTRACT(EPOCH FROM (end_time - start_time)) / 60) AS BIGINT) as totalTime
         FROM user_test_attempt uta
         JOIN user_login_data uld ON uld.user_id = uta.user_id
         WHERE uta.exam_id = :examId
-        ORDER BY uta.total_score DESC, uta.total_time
+        ORDER BY uta.total_score DESC
         LIMIT 20;
     """, nativeQuery = true)
-    List<UserRankResponse> findByUserOfRank(@Param("examId") Integer examId);
+    List<Object[]> findByUserOfRank(@Param("examId") Integer examId);
 }
