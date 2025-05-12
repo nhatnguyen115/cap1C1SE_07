@@ -93,7 +93,7 @@ public class UserTestService {
     }
 
     @Transactional
-    public void submitTest(Integer attemptId, Integer totalTime,
+    public void submitTest(Integer attemptId,
                            List<UserAnswerRequest> answers) {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                 .orElseThrow(() -> new RuntimeException("Attempt not found"));
