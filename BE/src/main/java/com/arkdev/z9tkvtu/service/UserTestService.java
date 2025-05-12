@@ -68,7 +68,12 @@ public class UserTestService {
     }
 
     public List<UserRankResponse> getUserRanks(Integer examId) {
-        return userTestAttemptRepository.findByUserOfRank(examId);
+        return userTestAttemptRepository.findByUserOfRank(examId).stream()
+                .map(r -> new UserRankResponse(
+                        (String) r[0],
+                        ((Number) r[1]).intValue(),
+                        ((Number) r[2]).intValue()))
+                .toList();
     }
 
     @Transactional
