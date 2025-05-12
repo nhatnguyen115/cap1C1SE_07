@@ -64,10 +64,9 @@ public class UserTestController {
 
     @PostMapping("/submit-test")
     public ResponseData<?> submitTest(@RequestParam Integer attemptId,
-                                      @RequestParam Integer totalTime,
                                       @RequestBody List<UserAnswerRequest> answers) {
         try {
-            userTestService.submitTest(attemptId, totalTime, answers);
+            userTestService.submitTest(attemptId, answers);
             return new ResponseData<>(HttpStatus.OK.value(), "Submit Test Successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Submit Test Failed");
