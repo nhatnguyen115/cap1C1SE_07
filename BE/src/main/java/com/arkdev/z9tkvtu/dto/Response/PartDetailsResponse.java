@@ -10,5 +10,5 @@ import java.util.List;
  */
 public record PartDetailsResponse<T>(
         PartResponse part,
-        List<T> list) implements Serializable {
+        List<T> questions) implements Serializable {
 }
