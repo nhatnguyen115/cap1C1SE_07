@@ -29,6 +29,7 @@ import Resource from "../pages/Resource/Resource";
 import ResourceDetail from "../pages/Resource/ResourceDetail";
 import EditSettings from "../pages/Settings/EditSettings/EditSettings";
 import Settings from "../pages/Settings/Settings";
+import UserRankComponent from "./../components/UserRankComponent";
 import TestManagementPage from "./../pages/Admin/TestManagement/TestManagement";
 import { DoExamPage } from "./../pages/Exam/DoExamPage";
 import ExamPageDetails from "./../pages/Exam/ExamPageDetails";
@@ -124,6 +125,14 @@ const routes = [
     element: (
       <MainLayout>
         <ExamPageDetails />
+      </MainLayout>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.EXAM.EXAMS_DO_BY_ID,
+    element: (
+      <MainLayout>
+        <DoExamPage isView={false} />
       </MainLayout>
     ),
   },
@@ -299,6 +308,15 @@ const routes = [
     element: (
       <MainLayout>
         <TestPage />
+      </MainLayout>
+    ),
+  },
+
+  {
+    path: PATH_CONSTANTS.USER_TEST.RANK,
+    element: (
+      <MainLayout>
+        <UserRankComponent />
       </MainLayout>
     ),
   },

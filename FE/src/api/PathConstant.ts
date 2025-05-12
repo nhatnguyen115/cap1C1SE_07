@@ -19,6 +19,10 @@ export const PATH_CONSTANTS = {
     CHANGE_PASSWORD: "/user/change-password",
   },
 
+  USER_TEST: {
+    RANK: "/user-test/user-rank/:id",
+  },
+
   PRODUCT: {
     GET_ALL: "/products",
     GET_BY_ID: (id: number | string) => `/products/${id}`,
@@ -109,7 +113,8 @@ export const PATH_CONSTANTS = {
 
   EXAM: {
     TEST: "/test",
-    EXAMS_VIEW_BY_ID: "/exams/:id",
+    EXAMS_VIEW_BY_ID: (examId: number | string) => `/exams/view/${examId}`,
+    EXAMS_DO_BY_ID: "/exams/:id",
     EXAMS_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
     EXAMS: "/exams",
   },

@@ -28,38 +28,88 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0); // Track current question index
 
   useEffect(() => {
-    const fetchExam = async () => {
+    const fetchData = async () => {
+      debugger;
       try {
-        const startTest = await http.post(
-          API_URIS.USER_TEST.START,
-          {},
-          {
-            params: {
-              examId: id,
-            },
-          },
-        );
-        const attemptId = startTest.data.data;
-        setAttemptId(attemptId);
-        const res = await http.get(API_URIS.EXAMS.DO_BY_EXAM_ID(id!));
-        const rawData: DoExamType = res.data.data;
-        console.log("res.data.data: ", res.data.data);
-        const shuffledDetails = rawData.details.map((detail) => ({
-          ...detail,
-          questions: shuffleArray(detail.questions),
-        }));
-        const shuffledData: DoExamType = {
-          ...rawData,
-          details: shuffledDetails,
-        };
+        if (isView) {
+          const res = await http.get("/user-test/get-result", {
+            params: { attemptId: id },
+          });
+          const rawData = res.data.data;
 
-        setExamDetails(shuffledData);
+          // Đổi `list` thành `questions`
+          const details: PartWithQuestionsType[] = rawData.details.map(
+            (detail: any) => ({
+              part: detail.part,
+              questions: detail.list
+                .filter((q: any) => q !== null) // loại bỏ null
+                .map((q: any) => ({
+                  id: q.id || Math.random(), // fallback id nếu không có
+                  content: q.content,
+                  url: q.url,
+                  options: q.options,
+                  correctAnswer: q.correctAnswer,
+                  explanation: q.explanation,
+                  difficulty: q.difficulty,
+                  selectedAnswer: q.selectedAnswer,
+                })),
+            }),
+          );
+
+          const viewData: DoExamType = {
+            exam: {
+              examName: rawData.examName,
+              duration: rawData.userTime,
+              totalScore: rawData.examScore,
+            },
+            details,
+          };
+
+          setExamDetails(viewData);
+
+          // Tạo mảng answers từ selectedAnswer
+          const collectedAnswers: AnswerType[] = [];
+          details.forEach((part) => {
+            part.questions.forEach((q) => {
+              collectedAnswers.push({
+                questionId: q.id,
+                selectedOption: q.selectedAnswer,
+              });
+            });
+          });
+
+          setAnswers(collectedAnswers);
+        } else {
+          const startTest = await http.post(
+            API_URIS.USER_TEST.START,
+            {},
+            { params: { examId: id } },
+          );
+          const attemptId = startTest.data.data;
+          setAttemptId(attemptId);
+          const res = await http.get(API_URIS.EXAMS.DO_BY_EXAM_ID(id!));
+          const rawData: DoExamType = res.data.data;
+
+          const shuffledDetails = rawData.details.map((detail) => ({
+            ...detail,
+            questions: shuffleArray(detail.questions),
+          }));
+
+          const shuffledData: DoExamType = {
+            ...rawData,
+            details: shuffledDetails,
+          };
+
+          setExamDetails(shuffledData);
+        }
       } catch (error) {
-        console.error("Failed to fetch exam:", error);
+        console.error("Failed to fetch exam or result:", error);
       }
     };
-    fetchExam();
-  }, [id]);
+
+    fetchData();
+    console.log("id: ", id);
+  }, [id, isView]);
 
   useEffect(() => {
     console.log("answers: ", answers);
@@ -105,43 +155,93 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
   };
 
   const renderListeningPart = (part: PartWithQuestionsType) => {
-    return part.questions && part.questions.length > 0 ? (
-      <div>
-        <h3 className="text-lg font-semibold mb-2">{part.part.partName}</h3>
-        {part.questions.map((item: QuestionType, index: number) => {
-          const questionNumber = questionCounter++;
+    if (!part.questions || part.questions.length === 0) return null;
 
-          const selected = answers.find((a) => a.questionId === item.id);
+    return (
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold mb-4">{part.part.partName}</h3>
+        {part.questions.map((question: QuestionType) => {
+          const questionNumber = questionCounter++;
+          const selectedAnswer = answers.find(
+            (a) => a.questionId === question.id,
+          );
+          const hasSelected = !!selectedAnswer;
+
+          const renderOptionButton = (
+            optionKey: string,
+            optionValue: string,
+          ) => {
+            const isSelected = selectedAnswer?.selectedOption === optionKey;
+            const isCorrect = question.correctAnswer === optionKey;
+            const isWrong = isSelected && !isCorrect;
+
+            let style =
+              "border p-2 rounded-md w-full text-left mb-2 transition-colors ";
+
+            if (isView) {
+              if (!hasSelected) {
+                // Chưa chọn gì → chỉ border xanh đáp án đúng
+                style += isCorrect ? "border-green-500 bg-green-50" : "";
+              } else if (isSelected && isCorrect) {
+                // Chọn đúng → tô xanh đậm
+                style += "bg-green-500 text-white";
+              } else if (isWrong) {
+                // Chọn sai → sai tô đỏ, đúng vẫn tô xanh
+                style += "bg-red-500 text-white";
+              } else if (isCorrect) {
+                // Tô xanh đáp án đúng kể cả khi đã chọn sai
+                style += "bg-green-300 text-white";
+              }
+            } else {
+              // Trong chế độ làm bài, highlight nếu đang chọn
+              style += isSelected
+                ? "bg-blue-500 text-white"
+                : "hover:bg-gray-200";
+            }
+
+            return (
+              <button
+                key={optionKey}
+                onClick={() => {
+                  if (!isView) {
+                    handleAnswer(
+                      question.id,
+                      optionKey as "A" | "B" | "C" | "D",
+                    );
+                    setCurrentQuestion(question.id);
+                  }
+                }}
+                className={style}
+              >
+                {optionValue}
+              </button>
+            );
+          };
 
           return (
-            <div key={item.id} className="mb-4" id={`question-${item.id}`}>
-              <p className="font-semibold">Question {questionNumber}</p>
+            <div
+              key={question.id}
+              className="mb-6"
+              id={`question-${question.id}`}
+            >
+              <p className="font-medium mb-2">Question {questionNumber}</p>
 
-              {item.url && (
-                <img src={item.url} alt="question" className="w-full mb-2" />
+              {question.url && (
+                <img
+                  src={question.url}
+                  alt="question visual"
+                  className="w-full max-w-xl mb-3"
+                />
               )}
 
-              {Object.entries(item.options).map(([optionKey, optionValue]) => (
-                <button
-                  key={optionKey}
-                  onClick={() => {
-                    handleAnswer(item.id, optionKey as "A" | "B" | "C" | "D");
-                    setCurrentQuestion(item.id); // hoặc item.id nếu bạn theo dõi theo id
-                  }}
-                  className={`border p-2 rounded-md w-full text-left mb-2 ${
-                    selected?.selectedOption === optionKey
-                      ? "bg-blue-500 text-white"
-                      : "hover:bg-gray-200"
-                  }`}
-                >
-                  {optionValue}
-                </button>
-              ))}
+              {Object.entries(question.options).map(([key, value]) =>
+                renderOptionButton(key, value),
+              )}
             </div>
           );
         })}
       </div>
-    ) : null;
+    );
   };
 
   return (

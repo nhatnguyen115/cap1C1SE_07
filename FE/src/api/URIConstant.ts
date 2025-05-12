@@ -88,5 +88,6 @@ export const API_URIS = {
     START: "/user-test/start-test",
     SUBMIT: "/user-test/submit-test",
     HISTORY: "/user-test",
+    RANK: "/user-test/user-rank",
   },
 };

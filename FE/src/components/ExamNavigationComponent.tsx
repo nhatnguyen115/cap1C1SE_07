@@ -70,7 +70,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
     )}`;
   };
   useEffect(() => {
-    if (time <= 0) {
+    if (time <= 0 && !isView) {
       handleSubmitTest(true);
       return;
     }

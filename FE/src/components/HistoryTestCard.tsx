@@ -2,6 +2,7 @@
 import React from "react";
 import { FaRegClock } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { PATH_CONSTANTS } from "../api/PathConstant";
 
 interface HistoryTestCardProps {
   id: number;
@@ -47,7 +48,7 @@ const HistoryTestCard: React.FC<HistoryTestCardProps> = ({
             <FaRegClock />
             <span>{time}</span>
           </div>
-          <Link to={`/mock-test/view/${id}`}>
+          <Link to={PATH_CONSTANTS.EXAM.EXAMS_VIEW_BY_ID(id)}>
             <button
               className="
               bg-blue-600 text-white px-4 py-2 text-sm 
