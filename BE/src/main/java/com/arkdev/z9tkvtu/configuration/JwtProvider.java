@@ -1,4 +1,4 @@
-package com.arkdev.z9tkvtu.service;
+package com.arkdev.z9tkvtu.configuration;
 
 import com.arkdev.z9tkvtu.dto.Response.TokenResponse;
 import com.arkdev.z9tkvtu.model.UserLoginData;
@@ -19,8 +19,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JwtService {
-
+public class JwtProvider {
     @Value("${api.security.jwt.key.access}")
     private String accessKey;
 

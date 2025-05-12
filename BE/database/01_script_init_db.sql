@@ -33,7 +33,7 @@ create table user_account (
 create table user_login_data (
     user_id uuid not null,
     username varchar(20),
-    password_hash varchar(255),
+    password varchar(255),
     email varchar(20),
     phone_number varchar(10),
     primary key (user_id)
@@ -197,7 +197,7 @@ create table question (
     part_id int not null,
     content text not null,
     options jsonb not null,
-    correct_answer char(1),
+    correct_answer text not null,
     explanation text,
     difficulty difficulty_level default 'BEGINNER',
     order_number smallint not null,
@@ -225,11 +225,8 @@ create table user_test_attempt (
     user_id uuid not null,
     exam_id int not null,
     total_score smallint,
-    total_time smallint,
-    created_at timestamp default CURRENT_TIMESTAMP,
-    created_by uuid,
-    updated_at timestamp,
-    updated_by uuid,
+    start_time timestamp default CURRENT_TIMESTAMP,
+    end_time timestamp,
     primary key (attempt_id)
 );
 create table user_answer (

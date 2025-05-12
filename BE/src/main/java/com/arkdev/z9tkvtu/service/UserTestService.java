@@ -14,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -59,7 +61,8 @@ public class UserTestService {
                 attempt.getExam().getExamName(),
                 attempt.getExam().getTotalScore(),
                 attempt.getTotalScore(),
-                attempt.getTotalTime(),
+                attempt.getStartTime(),
+                attempt.getEndTime(),
                 partDetailsResponses
         );
     }
@@ -89,7 +92,7 @@ public class UserTestService {
                            List<UserAnswerRequest> answers) {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                 .orElseThrow(() -> new RuntimeException("Attempt not found"));
-        attempt.setTotalTime(totalTime);
+        attempt.setEndTime(Timestamp.valueOf(LocalDateTime.now()));
 
         List<Integer> questionIds = answers.stream()
                 .map(UserAnswerRequest::getQuestionId)

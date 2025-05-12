@@ -20,5 +20,4 @@ public class ExternalProvider extends AbstractEntity {
 
     @Column(name = "ws_endpoint")
     private String wsEndpoint;
-
 }

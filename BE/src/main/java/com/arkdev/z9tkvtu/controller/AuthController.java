@@ -3,7 +3,7 @@ package com.arkdev.z9tkvtu.controller;
 import com.arkdev.z9tkvtu.dto.Request.SignInRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
-import com.arkdev.z9tkvtu.service.JwtService;
+import com.arkdev.z9tkvtu.configuration.JwtProvider;
 import com.arkdev.z9tkvtu.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -18,7 +18,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -27,7 +26,7 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class AuthController {
-    JwtService jwtService;
+    JwtProvider jwtProvider;
     UserService userService;
     AuthenticationManager manager;
 
@@ -40,7 +39,7 @@ public class AuthController {
             if (auth.isAuthenticated()) {
                 return new ResponseData<>(HttpStatus.OK.value(),
                         "Introspect Successful!",
-                        jwtService.getToken(auth));
+                        jwtProvider.getToken(auth));
             } else {
                 return new ResponseData<>(HttpStatus.UNAUTHORIZED.value(),
                         "Introspect Failed!");
@@ -50,22 +49,10 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/external")
-    public ResponseData<?> external(@RequestParam("type") String type) {
-        try {
-            return new ResponseData<>(HttpStatus.OK.value(), "Get Auth External Url Successfully",
-                    userService.generateUrl(type.trim().toLowerCase()));
-        } catch (Exception e) {
-            return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), "Get Auth External Url Error!");
-        }
-    }
-
     @GetMapping("/external/callback")
-    public ResponseData<?> externalCallback(@RequestParam("code") String code,
-                                            @RequestParam("type") String type) throws IOException {
+    public ResponseData<?> externalCallback() throws IOException {
         try {
-            Map<String, Object> userInfo = userService.authenticateAndFetchProfile(code, type);
-            return new ResponseData<>(HttpStatus.OK.value(), "Get External Info Successfully", userInfo);
+            return new ResponseData<>(HttpStatus.OK.value(), "Get External Info Successfully");
         } catch (Exception e) {
             return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), "Get External Info Error!");
         }

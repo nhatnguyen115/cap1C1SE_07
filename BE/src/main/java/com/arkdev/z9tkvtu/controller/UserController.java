@@ -29,7 +29,8 @@ public class UserController {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             UserLoginData userLoginData = (UserLoginData) auth.getPrincipal();
-            return new ResponseData<>(HttpStatus.OK.value(), "Get User Authorities Successfully", userLoginData.getAuthorities());
+            return new ResponseData<>(HttpStatus.OK.value(), "Get User Authorities Successfully",
+                    userLoginData.getAuthorities());
         } catch (Exception e) {
             return new ResponseData<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get User Authorities Failed");
         }

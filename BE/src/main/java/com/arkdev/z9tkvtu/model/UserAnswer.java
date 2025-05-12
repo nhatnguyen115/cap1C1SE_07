@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "user_answer")
 @NoArgsConstructor
-public class UserAnswer extends AbstractEntity {
+public class UserAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "answer_id", nullable = false, updatable = false)
