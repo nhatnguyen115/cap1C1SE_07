@@ -34,7 +34,6 @@ create table user_login_data (
     user_id uuid not null,
     username varchar(20),
     password varchar(255),
-    external_username varchar(50),
     email varchar(20),
     phone_number varchar(10),
     primary key (user_id)
@@ -198,7 +197,7 @@ create table question (
     part_id int not null,
     content text not null,
     options jsonb not null,
-    correct_answer char(1),
+    correct_answer text not null,
     explanation text,
     difficulty difficulty_level default 'BEGINNER',
     order_number smallint not null,
