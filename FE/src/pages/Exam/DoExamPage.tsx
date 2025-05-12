@@ -29,7 +29,6 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      debugger;
       try {
         if (isView) {
           const res = await http.get("/user-test/get-result", {
@@ -38,32 +37,32 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
           const rawData = res.data.data;
 
           // Đổi `list` thành `questions`
-          const details: PartWithQuestionsType[] = rawData.details.map(
-            (detail: any) => ({
-              part: detail.part,
-              questions: detail.list
-                .filter((q: any) => q !== null) // loại bỏ null
-                .map((q: any) => ({
-                  id: q.id || Math.random(), // fallback id nếu không có
-                  content: q.content,
-                  url: q.url,
-                  options: q.options,
-                  correctAnswer: q.correctAnswer,
-                  explanation: q.explanation,
-                  difficulty: q.difficulty,
-                  selectedAnswer: q.selectedAnswer,
-                })),
-            }),
-          );
+          // const details: PartWithQuestionsType[] = rawData.details.map(
+          //   (detail: any) => ({
+          //     part: detail.part,
+          //     questions: detail.list
+          //       .filter((q: any) => q !== null) // loại bỏ null
+          //       .map((q: any) => ({
+          //         id: q.id || Math.random(), // fallback id nếu không có
+          //         content: q.content,
+          //         url: q.url,
+          //         options: q.options,
+          //         correctAnswer: q.correctAnswer,
+          //         explanation: q.explanation,
+          //         difficulty: q.difficulty,
+          //         selectedAnswer: q.selectedAnswer,
+          //       })),
+          //   }),
+          // );
 
-          const viewData: DoExamType = {
-            exam: {
-              examName: rawData.examName,
-              duration: rawData.userTime,
-              totalScore: rawData.examScore,
-            },
-            details,
-          };
+          // const viewData: DoExamType = {
+          //   exam: {
+          //     examName: rawData.examName,
+          //     duration: rawData.userTime,
+          //     totalScore: rawData.examScore,
+          //   },
+          //   details,
+          // };
 
           setExamDetails(viewData);
 
