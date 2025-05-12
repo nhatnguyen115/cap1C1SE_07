@@ -14,7 +14,8 @@ public class UserTestMapper {
                 testAttempt.getId(),
                 testAttempt.getExam().getExamName(),
                 testAttempt.getTotalScore(),
-                testAttempt.getTotalTime()
+                testAttempt.getStartTime(),
+                testAttempt.getEndTime()
         );
     }
 

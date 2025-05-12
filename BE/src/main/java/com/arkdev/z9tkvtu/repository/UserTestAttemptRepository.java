@@ -1,8 +1,6 @@
 package com.arkdev.z9tkvtu.repository;
 
 import com.arkdev.z9tkvtu.dto.Response.UserRankResponse;
-import com.arkdev.z9tkvtu.dto.Response.UserResponse;
-import com.arkdev.z9tkvtu.dto.Response.UserResultResponse;
 import com.arkdev.z9tkvtu.model.UserAccount;
 import com.arkdev.z9tkvtu.model.UserTestAttempt;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt, Integer> {

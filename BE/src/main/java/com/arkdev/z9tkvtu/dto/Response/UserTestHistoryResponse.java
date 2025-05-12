@@ -10,5 +10,6 @@ public record UserTestHistoryResponse(
         Integer  id,
         String examName,
         Integer totalScore,
-        Integer totalTime) implements Serializable {
+        Timestamp startTime,
+        Timestamp endTime) implements Serializable {
 }

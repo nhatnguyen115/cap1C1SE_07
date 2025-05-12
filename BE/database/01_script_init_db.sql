@@ -226,11 +226,8 @@ create table user_test_attempt (
     user_id uuid not null,
     exam_id int not null,
     total_score smallint,
-    total_time smallint,
-    created_at timestamp default CURRENT_TIMESTAMP,
-    created_by uuid,
-    updated_at timestamp,
-    updated_by uuid,
+    start_time timestamp default CURRENT_TIMESTAMP,
+    end_time timestamp,
     primary key (attempt_id)
 );
 create table user_answer (
