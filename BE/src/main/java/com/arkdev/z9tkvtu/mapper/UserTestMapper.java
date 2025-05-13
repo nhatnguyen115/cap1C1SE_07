@@ -19,19 +19,19 @@ public class UserTestMapper {
         );
     }
 
-    public UserAnswerResponse toUserAnswerResponse(UserAnswer userAnswer) {
-        if (userAnswer == null) return null;
-        return new UserAnswerResponse(
-                userAnswer.getQuestion().getContent(),
-                userAnswer.getQuestion().getMedia() != null ?
-                        userAnswer.getQuestion().getMedia().getUrl() : null,
-                userAnswer.getQuestion().getMedia() != null ?
-                        userAnswer.getQuestion().getMedia().getMediaType() : null,
-                userAnswer.getQuestion().getOptions(),
-                userAnswer.getQuestion().getCorrectAnswer(),
-                userAnswer.getQuestion().getExplanation(),
-                userAnswer.getQuestion().getDifficulty(),
-                userAnswer.getSelectedAnswer()
-        );
-    }
+//    public UserAnswerResponse toUserAnswerResponse(UserAnswer userAnswer) {
+//        if (userAnswer == null) return null;
+//        return new UserAnswerResponse(
+//                userAnswer.getQuestion().getContent(),
+//                userAnswer.getQuestion().getMedia() != null ?
+//                        userAnswer.getQuestion().getMedia().getUrl() : null,
+//                userAnswer.getQuestion().getMedia() != null ?
+//                        userAnswer.getQuestion().getMedia().getMediaType() : null,
+//                userAnswer.getQuestion().getOptions(),
+//                userAnswer.getQuestion().getCorrectAnswer(),
+//                userAnswer.getQuestion().getExplanation(),
+//                userAnswer.getQuestion().getDifficulty(),
+//                userAnswer.getSelectedAnswer()
+//        );
+//    }
 }
