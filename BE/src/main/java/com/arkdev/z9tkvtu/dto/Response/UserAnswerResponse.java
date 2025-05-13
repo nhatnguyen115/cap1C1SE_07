@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 public record UserAnswerResponse(
+        Integer id,
         String content,
         String url,
         MediaType mediaType,

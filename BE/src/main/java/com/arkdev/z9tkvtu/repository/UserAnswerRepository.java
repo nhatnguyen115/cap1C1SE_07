@@ -12,6 +12,7 @@ import java.util.List;
 public interface UserAnswerRepository extends JpaRepository<UserAnswer, Integer> {
     @Query(value = """
         SELECT
+            q.question_id AS id,
             q.content AS content,
             m.url AS url,
             m.media_type AS mediaType,
