@@ -232,13 +232,13 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
           </div>
 
           <div className="w-full max-w-2xl bg-gray-100 top-0 z-10 rounded-full my-10">
-            <audio
+            {/* <audio
               controls
               className="w-full max-w-4xl mx-auto block"
               // src={toeicTest.audio}
             >
               Your browser does not support the audio element.
-            </audio>
+            </audio> */}
           </div>
 
           <div className="w-full max-w-4xl">
