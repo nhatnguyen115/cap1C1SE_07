@@ -37,18 +37,7 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
             params: { attemptId: attemptIdView },
           });
           const rawData: DoExamType = res.data.data;
-          // Đổi `list` thành `questions`
           const details: PartWithQuestionsType[] = rawData.details;
-          console.log("rawData:", rawData);
-
-          // const viewData: DoExamType = {
-          //   exam: {
-          //     examName: rawData.examName,
-          //     duration: rawData.userTime,
-          //     totalScore: rawData.examScore,
-          //   },
-          //   details,
-          // };
 
           setExamDetails(rawData);
 

@@ -20,7 +20,7 @@ export interface Lesson {
 }
 
 export interface Part {
-  partId: number;
+  id: number;
   partName: string;
   questionType: string;
   questionCount: number;

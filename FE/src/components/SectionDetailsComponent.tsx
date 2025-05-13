@@ -125,14 +125,14 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
             <div className="border-l-4 border-orange-400 pl-4 space-y-4 ml-3">
               {parts.map((part, idx) => (
                 <Link
-                  key={part.partId}
+                  key={part.id}
                   to={{
-                    pathname: PATH_CONSTANTS.PART.DETAIL(part.partId),
+                    pathname: PATH_CONSTANTS.PART.DETAIL(part.id),
                   }}
                   state={{
                     sections: currentSections,
                     lessonPart: lessonPart,
-                    partId: part.partId,
+                    partId: part.id,
                     activeTabState: PART_DETAILS_CONSTANT.TAB_PART,
                   }}
                   className="block"
