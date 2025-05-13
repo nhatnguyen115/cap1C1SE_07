@@ -2,6 +2,7 @@ package com.arkdev.z9tkvtu.service;
 
 import com.arkdev.z9tkvtu.dto.Request.UserAnswerRequest;
 import com.arkdev.z9tkvtu.dto.Response.*;
+import com.arkdev.z9tkvtu.mapper.ExamMapper;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.mapper.UserTestMapper;
 import com.arkdev.z9tkvtu.model.*;
@@ -37,6 +38,7 @@ public class UserTestAttemptService {
     QuestionRepository questionRepository;
     UserTestMapper userTestMapper;
     PartMapper partMapper;
+    ExamMapper examMapper;
 
     public List<UserTestHistoryResponse> getTestHistories() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -51,6 +53,7 @@ public class UserTestAttemptService {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                 .orElseThrow(() -> new RuntimeException("attempt not found"));
         List<Part> parts = attempt.getExam().getParts().stream().toList();
+        ExamResponse examResponse = examMapper.toExamResponse(attempt);
         List<PartDetailsResponse<?>> partDetailsResponses = new ArrayList<>();
         for (Part part : parts) {
             PartResponse partResponse = partMapper.toPartResponse(part);
@@ -68,11 +71,7 @@ public class UserTestAttemptService {
             partDetailsResponses.add(new PartDetailsResponse<>(partResponse, answerResponses));
         }
         return new AttemptDetailsResponse(
-                attempt.getExam().getExamName(),
-                attempt.getExam().getTotalScore(),
-                attempt.getTotalScore(),
-                attempt.getStartTime(),
-                attempt.getEndTime(),
+                examResponse,
                 partDetailsResponses
         );
     }
@@ -98,6 +97,7 @@ public class UserTestAttemptService {
         UserTestAttempt testAttempt = new UserTestAttempt();
         testAttempt.setExam(exam);
         testAttempt.setUser(user);
+        testAttempt.setStartTime(Timestamp.valueOf(LocalDateTime.now()));
         testAttempt = userTestAttemptRepository.save(testAttempt);
         return testAttempt.getId();
     }

@@ -1,8 +1,10 @@
 package com.arkdev.z9tkvtu.mapper;
 
 import com.arkdev.z9tkvtu.dto.Request.ExamRequest;
+import com.arkdev.z9tkvtu.dto.Response.AttemptDetailsResponse;
 import com.arkdev.z9tkvtu.dto.Response.ExamResponse;
 import com.arkdev.z9tkvtu.model.Exam;
+import com.arkdev.z9tkvtu.model.UserTestAttempt;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,6 +32,24 @@ public class ExamMapper {
                 exam.getExamName(),
                 exam.getTotalScore(),
                 exam.getTest().getTestType(),
-                exam.getDuration());
+                exam.getDuration(),
+                null,
+                null,
+                null);
+    }
+
+    public ExamResponse toExamResponse(UserTestAttempt attempt) {
+        if (attempt == null) return null;
+        if (attempt.getExam() == null) return null;
+        return new ExamResponse(
+                attempt.getExam().getId(),
+                attempt.getExam().getExamName(),
+                attempt.getExam().getTotalScore(),
+                attempt.getExam().getTest().getTestType(),
+                attempt.getExam().getDuration(),
+                attempt.getTotalScore(),
+                attempt.getStartTime(),
+                attempt.getEndTime()
+        );
     }
 }
