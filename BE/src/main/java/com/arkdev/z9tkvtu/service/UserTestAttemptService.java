@@ -49,11 +49,11 @@ public class UserTestAttemptService {
                 .toList();
     }
 
-    public AttemptDetailsResponse getAttemptDetails(Integer attemptId) {
+    public AttemptDetailsResponse<?> getAttemptDetails(Integer attemptId) {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                 .orElseThrow(() -> new RuntimeException("attempt not found"));
         List<Part> parts = attempt.getExam().getParts().stream().toList();
-        ExamResponse examResponse = examMapper.toExamResponse(attempt);
+        ExamDetailsResponse detailsResponse = examMapper.toExamDetailsResponse(attempt);
         List<PartDetailsResponse<?>> partDetailsResponses = new ArrayList<>();
         for (Part part : parts) {
             PartResponse partResponse = partMapper.toPartResponse(part);
@@ -70,8 +70,8 @@ public class UserTestAttemptService {
                     )).toList();
             partDetailsResponses.add(new PartDetailsResponse<>(partResponse, answerResponses));
         }
-        return new AttemptDetailsResponse(
-                examResponse,
+        return new AttemptDetailsResponse<>(
+                detailsResponse,
                 partDetailsResponses
         );
     }

@@ -11,8 +11,5 @@ public record ExamResponse(
         String examName,
         Integer totalScore,
         String testType,
-        Integer duration,
-        Integer userScore,
-        Timestamp startTime,
-        Timestamp endTime) implements Serializable {
+        Integer duration) implements Serializable {
 }
