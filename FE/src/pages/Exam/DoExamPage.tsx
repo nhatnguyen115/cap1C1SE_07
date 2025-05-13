@@ -197,7 +197,9 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
               className="mb-6"
               id={`question-${question.id}`}
             >
-              <p className="font-medium mb-2">Question {questionNumber}</p>
+              <p className="font-medium mb-2">
+                Question {questionNumber}: {question.content}
+              </p>
 
               {question.url && (
                 <img
