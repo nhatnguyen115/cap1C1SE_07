@@ -1,9 +1,6 @@
 package com.arkdev.z9tkvtu.repository;
 
-import com.arkdev.z9tkvtu.dto.Response.UserAnswerProjection;
-import com.arkdev.z9tkvtu.dto.Response.UserAnswerResponse;
 import com.arkdev.z9tkvtu.model.UserAnswer;
-import com.arkdev.z9tkvtu.model.UserTestAttempt;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

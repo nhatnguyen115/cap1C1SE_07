@@ -1,6 +1,7 @@
 package com.arkdev.z9tkvtu.dto.Response;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.Exam}
@@ -10,5 +11,8 @@ public record ExamResponse(
         String examName,
         Integer totalScore,
         String testType,
-        Integer duration) implements Serializable {
+        Integer duration,
+        Integer userScore,
+        Timestamp startTime,
+        Timestamp endTime) implements Serializable {
 }
