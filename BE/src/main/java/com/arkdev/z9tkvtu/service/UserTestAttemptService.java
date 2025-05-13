@@ -57,7 +57,7 @@ public class UserTestAttemptService {
         List<PartDetailsResponse<?>> partDetailsResponses = new ArrayList<>();
         for (Part part : parts) {
             PartResponse partResponse = partMapper.toPartResponse(part);
-            List<UserAnswerResponse> answerResponses = userAnswerRepository.findByUserAnswerWithPartId(part.getId())
+            List<UserAnswerResponse> answerResponses = userAnswerRepository.findByUserAnswerWithPartId(part.getId(), attemptId)
                     .stream().map(r -> new UserAnswerResponse(
                             getString(r[0]),
                             getString(r[1]),
