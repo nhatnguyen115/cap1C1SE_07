@@ -6,6 +6,10 @@ import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.mapper.UserTestMapper;
 import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.*;
+import com.arkdev.z9tkvtu.util.DifficultyLevel;
+import com.arkdev.z9tkvtu.util.MediaType;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +25,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static com.arkdev.z9tkvtu.util.Convert.*;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserTestService {
+public class UserTestAttemptService {
     UserTestAttemptRepository userTestAttemptRepository;
     UserAnswerRepository userAnswerRepository;
     ExamRepository examRepository;
@@ -48,13 +54,17 @@ public class UserTestService {
         List<PartDetailsResponse<?>> partDetailsResponses = new ArrayList<>();
         for (Part part : parts) {
             PartResponse partResponse = partMapper.toPartResponse(part);
-            List<Question> questions = part.getQuestions().stream().toList();
-            List<UserAnswerResponse> answerResponses = new ArrayList<>();
-            for (Question question : questions) {
-                UserAnswer answer = userAnswerRepository.findByQuestionIdAndAttemptId(question.getId(), attemptId);
-                UserAnswerResponse answerResponse = userTestMapper.toUserAnswerResponse(answer);
-                answerResponses.add(answerResponse);
-            }
+            List<UserAnswerResponse> answerResponses = userAnswerRepository.findByUserAnswerWithPartId(part.getId())
+                    .stream().map(r -> new UserAnswerResponse(
+                            getString(r[0]),
+                            getString(r[1]),
+                            getEnum(MediaType.class, r[2]),
+                            parseOptions(getString(r[3])),
+                            getString(r[4]),
+                            getString(r[5]),
+                            getEnum(DifficultyLevel.class, r[6]),
+                            getString(r[7])
+                    )).toList();
             partDetailsResponses.add(new PartDetailsResponse<>(partResponse, answerResponses));
         }
         return new AttemptDetailsResponse(
@@ -70,10 +80,10 @@ public class UserTestService {
     public List<UserRankResponse> getUserRanks(Integer examId) {
         return userTestAttemptRepository.findByUserOfRank(examId).stream()
                 .map(r -> new UserRankResponse(
-                        (String) r[0],
-                        ((Number) r[1]).intValue(),
-                        ((Number) r[2]).intValue()))
-                .toList();
+                        getString(r[0]),
+                        getInt(r[1]),
+                        getInt(r[2])
+                )).toList();
     }
 
     @Transactional
@@ -129,5 +139,14 @@ public class UserTestService {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                         .orElseThrow(() -> new RuntimeException("Attempt not found"));
         userTestAttemptRepository.delete(attempt);
+    }
+
+    private Map<String, Object> parseOptions(String json) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(json, new TypeReference<>() {});
+        } catch (Exception e) {
+            return Map.of();
+        }
     }
 }
