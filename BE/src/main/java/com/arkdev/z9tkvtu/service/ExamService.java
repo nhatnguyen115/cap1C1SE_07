@@ -10,7 +10,6 @@ import com.arkdev.z9tkvtu.model.Part;
 import com.arkdev.z9tkvtu.model.Question;
 import com.arkdev.z9tkvtu.model.Test;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
-import com.arkdev.z9tkvtu.repository.QuestionRepository;
 import com.arkdev.z9tkvtu.repository.TestRepository;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -38,7 +37,7 @@ public class ExamService {
                 .toList();
     }
 
-    public ExamDetailsResponse getExam(Integer examId) {
+    public PracticeDetailsResponse<?> getExam(Integer examId) {
         Exam exam = examRepository.findById(examId)
                 .orElseThrow(() -> new IllegalArgumentException("Exam not found"));
         ExamResponse examResponse = examMapper.toExamResponse(exam);
@@ -54,7 +53,7 @@ public class ExamService {
             }
             partDetailsResponses.add(new PartDetailsResponse<>(partResponse, questionResponses));
         }
-        return new ExamDetailsResponse(
+        return new PracticeDetailsResponse<>(
                 examResponse,
                 partDetailsResponses
         );
