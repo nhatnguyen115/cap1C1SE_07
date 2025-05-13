@@ -1,6 +1,6 @@
 package com.arkdev.z9tkvtu.repository;
 
-import com.arkdev.z9tkvtu.dto.Response.SectionDetailsResponse;
+import com.arkdev.z9tkvtu.dto.Response.SectionContentResponse;
 import com.arkdev.z9tkvtu.model.Section;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +17,7 @@ public interface SectionRepository extends JpaRepository<Section, Integer> {
         select MAX(s.order_number) from section s where s.module_id = :moduleId
     """, nativeQuery = true)
     Integer findMaxOrderNumberByModuleId(Integer moduleId);
-    SectionDetailsResponse findSectionDetailsById(Integer id);
+    SectionContentResponse findSectionDetailsById(Integer id);
 
     List<Section> findAllByOrderByOrderNumber();
 }

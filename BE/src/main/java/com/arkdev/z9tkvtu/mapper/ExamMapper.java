@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.mapper;
 
 import com.arkdev.z9tkvtu.dto.Request.ExamRequest;
-import com.arkdev.z9tkvtu.dto.Response.AttemptDetailsResponse;
+import com.arkdev.z9tkvtu.dto.Response.ExamDetailsResponse;
 import com.arkdev.z9tkvtu.dto.Response.ExamResponse;
 import com.arkdev.z9tkvtu.model.Exam;
 import com.arkdev.z9tkvtu.model.UserTestAttempt;
@@ -32,16 +32,26 @@ public class ExamMapper {
                 exam.getExamName(),
                 exam.getTotalScore(),
                 exam.getTest().getTestType(),
-                exam.getDuration(),
-                null,
-                null,
-                null);
+                exam.getDuration());
     }
 
-    public ExamResponse toExamResponse(UserTestAttempt attempt) {
+//    public ExamDetailsResponse toExamDetailsResponse(Exam exam) {
+//        if (exam == null) return null;
+//        return new ExamDetailsResponse(
+//                exam.getId(),
+//                exam.getExamName(),
+//                exam.getTotalScore(),
+//                exam.getTest().getTestType(),
+//                exam.getDuration(),
+//                null,
+//                null,
+//                null);
+//    }
+
+    public ExamDetailsResponse toExamDetailsResponse(UserTestAttempt attempt) {
         if (attempt == null) return null;
         if (attempt.getExam() == null) return null;
-        return new ExamResponse(
+        return new ExamDetailsResponse(
                 attempt.getExam().getId(),
                 attempt.getExam().getExamName(),
                 attempt.getExam().getTotalScore(),
