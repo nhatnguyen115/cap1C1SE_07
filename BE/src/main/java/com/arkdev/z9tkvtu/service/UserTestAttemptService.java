@@ -59,14 +59,15 @@ public class UserTestAttemptService {
             PartResponse partResponse = partMapper.toPartResponse(part);
             List<UserAnswerResponse> answerResponses = userAnswerRepository.findByUserAnswerWithPartId(part.getId(), attemptId)
                     .stream().map(r -> new UserAnswerResponse(
-                            getString(r[0]),
+                            getInt(r[0]),
                             getString(r[1]),
-                            getEnum(MediaType.class, r[2]),
-                            parseOptions(getString(r[3])),
-                            getString(r[4]),
+                            getString(r[2]),
+                            getEnum(MediaType.class, r[3]),
+                            parseOptions(getString(r[4])),
                             getString(r[5]),
-                            getEnum(DifficultyLevel.class, r[6]),
-                            getString(r[7])
+                            getString(r[6]),
+                            getEnum(DifficultyLevel.class, r[7]),
+                            getString(r[8])
                     )).toList();
             partDetailsResponses.add(new PartDetailsResponse<>(partResponse, answerResponses));
         }
