@@ -21,7 +21,7 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
   const [answers, setAnswers] = useState<AnswerType[]>([]);
   const navigate = useNavigate();
   const [attemptId, setAttemptId] = useState<number>(0);
-  const { id } = useParams();
+  const { id, attemptIdView } = useParams();
 
   // const [answers, setAnswers] = useState<{ [questionId: number]: string }>({});
   const [examDetails, setExamDetails] = useState<DoExamType>();
@@ -31,29 +31,15 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
     const fetchData = async () => {
       try {
         if (isView) {
-          const res = await http.get("/user-test/get-result", {
-            params: { attemptId: id },
-          });
-          const rawData = res.data.data;
+          console.log("attemptIdView: ", attemptIdView);
 
+          const res = await http.get("/user-test/get-result", {
+            params: { attemptId: attemptIdView },
+          });
+          const rawData: DoExamType = res.data.data;
           // Đổi `list` thành `questions`
-          // const details: PartWithQuestionsType[] = rawData.details.map(
-          //   (detail: any) => ({
-          //     part: detail.part,
-          //     questions: detail.list
-          //       .filter((q: any) => q !== null) // loại bỏ null
-          //       .map((q: any) => ({
-          //         id: q.id || Math.random(), // fallback id nếu không có
-          //         content: q.content,
-          //         url: q.url,
-          //         options: q.options,
-          //         correctAnswer: q.correctAnswer,
-          //         explanation: q.explanation,
-          //         difficulty: q.difficulty,
-          //         selectedAnswer: q.selectedAnswer,
-          //       })),
-          //   }),
-          // );
+          const details: PartWithQuestionsType[] = rawData.details;
+          console.log("rawData:", rawData);
 
           // const viewData: DoExamType = {
           //   exam: {
@@ -64,7 +50,7 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
           //   details,
           // };
 
-          setExamDetails(viewData);
+          setExamDetails(rawData);
 
           // Tạo mảng answers từ selectedAnswer
           const collectedAnswers: AnswerType[] = [];
@@ -76,7 +62,6 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
               });
             });
           });
-
           setAnswers(collectedAnswers);
         } else {
           const startTest = await http.post(
@@ -279,7 +264,7 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
             details={examDetails?.details}
             currentQuestion={currentQuestion}
             answers={answers}
-            duration={examDetails?.exam.duration}
+            duration={examDetails?.exam.duration ?? -1}
             onNavigate={handleNavigate}
           />
         </div>

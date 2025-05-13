@@ -4,7 +4,7 @@ export interface ExamType {
   examName: string;
   totalScore: number;
   testType?: string;
-  duration: number;
+  duration?: number;
 }
 
 export type PartType = {

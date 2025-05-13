@@ -137,7 +137,7 @@ const routes = [
     ),
   },
   {
-    path: PATH_CONSTANTS.EXAM.EXAMS_VIEW_BY_ID(":examId"),
+    path: PATH_CONSTANTS.EXAM.EXAMS_VIEW_BY_ID(":attemptIdView"),
     element: (
       <MainLayout>
         <DoExamPage isView={true} />

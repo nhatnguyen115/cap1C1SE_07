@@ -94,7 +94,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   }, []);
 
   useEffect(() => {
-    if (duration) {
+    if (duration && duration > 0) {
       setTime(duration * 60);
     }
   }, [duration]);
@@ -129,16 +129,18 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-sm">Thời gian còn lại:</span>
-        <span
-          className={`font-semibold text-xl ${
-            time <= 60 ? "text-red-600 animate-pulse" : ""
-          }`}
-        >
-          {time > 0 ? formatTime(time) : "Hết giờ"}
-        </span>
-      </div>
+      {!isView ? (
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-sm">Thời gian còn lại:</span>
+          <span
+            className={`font-semibold text-xl ${
+              time <= 60 ? "text-red-600 animate-pulse" : ""
+            }`}
+          >
+            {time > 0 ? formatTime(time) : "Hết giờ"}
+          </span>
+        </div>
+      ) : null}
 
       {details?.map((detail, idx) => {
         const partName = detail.part.partName || `Part ${idx + 1}`;
