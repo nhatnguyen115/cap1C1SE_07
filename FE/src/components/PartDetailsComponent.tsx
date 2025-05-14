@@ -27,7 +27,7 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
     try {
       const payload = {
         partId: partId,
-        totalTime: Math.floor(elapsedSeconds / 60),
+        totalTime: Math.floor(elapsedSeconds),
         answers: Object.entries(answers).map(
           ([questionId, selectedAnswer]) => ({
             questionId: Number(questionId),

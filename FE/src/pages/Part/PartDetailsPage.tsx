@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
 import PartDetailsComponent from "../../components/PartDetailsComponent";
 import { PAGINATION_CONSTANT } from "../../constant/PaginationConstant";
-import { getQuestions } from "../../service/PartService";
+import { getQuestions, getResult } from "../../service/PartService";
 import { LessonPartType } from "../../types/lesson";
 import { QuestionType } from "../../types/part";
 import { SectionType } from "../../types/section";
@@ -53,33 +53,42 @@ const PartDetailsPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const loadQuestions = async () => {
       if (!partId) return;
       setLoading(true);
       console.log("currentSections:", currentSections);
 
       try {
-        const response = await getQuestions(
-          partId,
-          page,
-          PAGINATION_CONSTANT.SIZE[1000],
-        );
-        setTotalPages(response.totalPages);
+        // Gọi fetchResult() trước
+        const resultResponse = await getResult(partId);
 
-        if (response) {
-          console.log(response);
-
-          setQuestions(response.items || []);
-          setElapsedSeconds(response.elapsedSeconds || 0);
+        if (resultResponse?.questions && resultResponse.questions.length > 0) {
+          // Nếu có dữ liệu từ getResult thì dùng luôn
+          console.log("Result:", resultResponse);
+          setQuestions(resultResponse.questions);
+          setElapsedSeconds(resultResponse.part.totalTime || 0);
+          setTotalPages(resultResponse.part.questionCount);
+        } else {
+          // Nếu không có dữ liệu từ getResult thì fallback sang getQuestions
+          const questionResponse = await getQuestions(
+            partId,
+            page,
+            PAGINATION_CONSTANT.SIZE[1000],
+          );
+          console.log("Questions:", questionResponse);
+          setQuestions(questionResponse.items || []);
+          setElapsedSeconds(questionResponse.elapsedSeconds || 0);
+          setTotalPages(questionResponse.totalPages);
         }
       } catch (err) {
+        console.error(err);
         setError("Failed to load questions.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchQuestions();
+    loadQuestions();
   }, [partId, page]);
 
   useEffect(() => {

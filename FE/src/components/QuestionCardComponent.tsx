@@ -30,13 +30,22 @@ const QuestionCardComponent: React.FC<Props> = ({
               type="radio"
               name={`question-${question.id}`}
               id={`${question.id}-${key}`}
-              checked={selectedOption === key}
+              checked={
+                question.selectedAnswer
+                  ? key === question.selectedAnswer
+                  : key === selectedOption
+              }
               onChange={() => onSelectOption(key)}
             />
             <label
               htmlFor={`${question.id}-${key}`}
-              className="text-sm font-medium"
-            >{`(${key}) ${value}`}</label>
+              className="text-sm font-medium flex items-center gap-1"
+            >
+              {`(${key}) ${value}`}
+              {question.correctAnswer && key === question.correctAnswer && (
+                <span className="text-green-600 font-bold">✔</span>
+              )}
+            </label>
           </div>
         ))}
       </div>
