@@ -26,6 +26,7 @@ const PartDetailsPage: React.FC = () => {
 
   const lessonPartState = location.state?.lessonPart;
   const activeTabState = location.state?.activeTabState;
+  const partName = location.state?.partName;
 
   const { partId } = useParams();
 
@@ -54,7 +55,7 @@ const PartDetailsPage: React.FC = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       if (!partId) return;
-      setLoading(true); // reset loading để hiển thị "Đang tải..." khi chuyển tab
+      setLoading(true);
       console.log("currentSections:", currentSections);
 
       try {
@@ -177,15 +178,19 @@ const PartDetailsPage: React.FC = () => {
                 role="button"
                 tabIndex={0}
                 onClick={() => {
-                  if (part.partId !== undefined) {
-                    setActivePart(part.partId);
-                    navigate(PATH_CONSTANTS.PART.DETAIL(part.partId), {
-                      state: { lessonPart: lessonPart, partId: part.partId },
+                  if (part.id !== undefined) {
+                    setActivePart(part.id);
+                    navigate(PATH_CONSTANTS.PART.DETAIL(part.id), {
+                      state: {
+                        lessonPart: lessonPart,
+                        partId: part.id,
+                        partName: part.partName,
+                      },
                     });
                   }
                 }}
                 className={`text-xs transition rounded-xl px-3 py-1 flex flex-row justify-between${
-                  activePart == part.partId ? " bg-slate-300" : ""
+                  activePart == part.id ? " bg-slate-300" : ""
                 }`}
               >
                 <div>
@@ -209,7 +214,8 @@ const PartDetailsPage: React.FC = () => {
           <div>
             <PartDetailsComponent
               key={partId}
-              partName="Part 1: Photos"
+              partId={Number(partId)}
+              partName={partName}
               questions={questions}
               elapsedSeconds={elapsedSeconds}
               formatTime={formatTime}

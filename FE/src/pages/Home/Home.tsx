@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
+import { API_URIS } from "../../api/URIConstant";
 import IcArrow from "../../assets/icons/IcArrow";
+import ExamCardComponent from "../../components/ExamCardComponent";
+import { PAGINATION_CONSTANT } from "../../constant/PaginationConstant";
+import { SRC_IMAGE } from "../../constant/SrcImage";
+import { TEST_CONSTANTS } from "../../constant/TestConstant";
 import { toeicTest } from "../../data/toeicMockData";
-import ExamCard from "./component/ExamCard";
+import { http } from "../../service/Http";
+import { ExamType } from "../../types/exam";
 export interface Exam {
   id: number;
   title: string;
@@ -15,6 +21,48 @@ export interface Exam {
 
 const Home = ({ setIsOpen }) => {
   const examData = [toeicTest];
+  const [examsS, setExamsS] = useState<ExamType[]>([]);
+  const [examsM, setExamsM] = useState<ExamType[]>([]);
+  const [examsF, setExamsF] = useState<ExamType[]>([]);
+
+  useEffect(() => {
+    const params = {
+      page: 0,
+      size: PAGINATION_CONSTANT.SIZE[3],
+    };
+    const fetchExams = async () => {
+      const examsS = await http.get(
+        API_URIS.EXAMS.GET_BY_TEST_ID(TEST_CONSTANTS.SIMULATION_TEST),
+        { params: params },
+      );
+      setExamsS(examsS.data.data.items);
+      const examsM = await http.get(
+        API_URIS.EXAMS.GET_BY_TEST_ID(TEST_CONSTANTS.MINI_TEST),
+        { params: params },
+      );
+      setExamsM(examsM.data.data.items);
+      const examsF = await http.get(
+        API_URIS.EXAMS.GET_BY_TEST_ID(TEST_CONSTANTS.FULL_TEST),
+        { params: params },
+      );
+      setExamsF(examsF.data.data.items);
+    };
+    fetchExams();
+  }, []);
+  useEffect(() => {
+    const fetchPratice = async () => {
+      try {
+        const params = {
+          page: 0,
+          size: PAGINATION_CONSTANT.SIZE[100],
+        };
+
+        const response = await http.get(API_URIS.SECTION.GET_ALL, {
+          params: params,
+        });
+      } catch (error) {}
+    };
+  });
   return (
     <div className="w-full">
       {/* Hero Section */}
@@ -120,20 +168,44 @@ const Home = ({ setIsOpen }) => {
           </h1>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 gap-y-12 mb-12 max-w-[1000px] justify-center items-center">
-            {examData.map((item, index) => (
-              <ExamCard
-                id={item.id}
-                title={item.title}
-                image={item.image}
-                questions={item.questions}
-                students={item.students}
-                level={item.level}
+            {examsS.map((item, index) => (
+              <ExamCardComponent
+                key={item.id}
+                examName={item.examName}
+                duration={item.duration ?? 0}
+                totalScore={item.totalScore}
+                id={item.id ?? 0}
+                image={SRC_IMAGE.RANDOM}
+              />
+            ))}
+            {examsM.map((item, index) => (
+              <ExamCardComponent
+                key={item.id}
+                examName={item.examName}
+                duration={item.duration ?? 0}
+                totalScore={item.totalScore}
+                id={item.id ?? 0}
+                image={SRC_IMAGE.RANDOM}
+              />
+            ))}
+            {examsF.map((item, index) => (
+              <ExamCardComponent
+                key={item.id}
+                examName={item.examName}
+                duration={item.duration ?? 0}
+                totalScore={item.totalScore}
+                id={item.id ?? 0}
+                image={SRC_IMAGE.RANDOM}
               />
             ))}
           </div>
         </div>
 
-        <Link to={PATH_CONSTANTS.MOCK_TEST.MOCK_TEST}>
+        <Link
+          to={PATH_CONSTANTS.EXAM.EXAMS_BY_TEST_ID(
+            TEST_CONSTANTS.SIMULATION_TEST,
+          )}
+        >
           <button className="mt-6 px-8 py-2 bg-white text-blue-600 rounded-lg hover:bg-blue-700 hover:text-white border border-blue-600 focus:outline-none w-full max-w-[300px] flex mb-12">
             <div className=" justify-center w-full flex flex-row items-center">
               Xem thêm

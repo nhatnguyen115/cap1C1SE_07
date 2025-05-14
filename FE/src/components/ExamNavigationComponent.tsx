@@ -154,14 +154,16 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
           </div>
         );
       })}
-      <div className="mt-4 text-center">
-        <button
-          className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600"
-          onClick={() => handleSubmitTest(false)}
-        >
-          Submit Test
-        </button>
-      </div>
+      {!isView ? (
+        <div className="mt-4 text-center">
+          <button
+            className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600"
+            onClick={() => handleSubmitTest(false)}
+          >
+            Submit Test
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };

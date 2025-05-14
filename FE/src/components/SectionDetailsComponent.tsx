@@ -134,6 +134,7 @@ const SectionDetailsComponent: React.FC<SectionDetailsComponentProps> = ({
                     lessonPart: lessonPart,
                     partId: part.id,
                     activeTabState: PART_DETAILS_CONSTANT.TAB_PART,
+                    partName: part.partName,
                   }}
                   className="block"
                 >
