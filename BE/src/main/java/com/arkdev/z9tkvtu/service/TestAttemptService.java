@@ -31,7 +31,7 @@ import static com.arkdev.z9tkvtu.util.Convert.*;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserTestAttemptService {
+public class TestAttemptService {
     UserTestAttemptRepository userTestAttemptRepository;
     UserAnswerRepository userAnswerRepository;
     ExamRepository examRepository;
@@ -54,25 +54,26 @@ public class UserTestAttemptService {
                 .orElseThrow(() -> new RuntimeException("attempt not found"));
         List<Part> parts = attempt.getExam().getParts().stream().toList();
         ExamDetailsResponse detailsResponse = examMapper.toExamDetailsResponse(attempt);
-        List<PartDetailsResponse<?>> partDetailsResponses = new ArrayList<>();
+        List<PartAttemptResponse<?, ?>> partAttemptRespons = new ArrayList<>();
         for (Part part : parts) {
             PartResponse partResponse = partMapper.toPartResponse(part);
             List<UserAnswerResponse> answerResponses = userAnswerRepository.findByUserAnswerWithPartId(part.getId(), attemptId)
                     .stream().map(r -> new UserAnswerResponse(
-                            getString(r[0]),
+                            getInt(r[0]),
                             getString(r[1]),
-                            getEnum(MediaType.class, r[2]),
-                            parseOptions(getString(r[3])),
-                            getString(r[4]),
+                            getString(r[2]),
+                            getEnum(MediaType.class, r[3]),
+                            parseOptions(getString(r[4])),
                             getString(r[5]),
-                            getEnum(DifficultyLevel.class, r[6]),
-                            getString(r[7])
+                            getString(r[6]),
+                            getEnum(DifficultyLevel.class, r[7]),
+                            getString(r[8])
                     )).toList();
-            partDetailsResponses.add(new PartDetailsResponse<>(partResponse, answerResponses));
+            partAttemptRespons.add(new PartAttemptResponse<>(partResponse, answerResponses));
         }
         return new AttemptDetailsResponse<>(
                 detailsResponse,
-                partDetailsResponses
+                partAttemptRespons
         );
     }
 
@@ -139,14 +140,5 @@ public class UserTestAttemptService {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                         .orElseThrow(() -> new RuntimeException("Attempt not found"));
         userTestAttemptRepository.delete(attempt);
-    }
-
-    private Map<String, Object> parseOptions(String json) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(json, new TypeReference<>() {});
-        } catch (Exception e) {
-            return Map.of();
-        }
     }
 }

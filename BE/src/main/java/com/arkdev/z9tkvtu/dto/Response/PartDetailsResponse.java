@@ -3,12 +3,14 @@ package com.arkdev.z9tkvtu.dto.Response;
 import com.arkdev.z9tkvtu.util.QuestionType;
 
 import java.io.Serializable;
-import java.util.List;
 
-/**
- * DTO for {@link com.arkdev.z9tkvtu.model.Part}
- */
-public record PartDetailsResponse<T>(
-        PartResponse part,
-        List<T> questions) implements Serializable {
+public record PartDetailsResponse(
+        Integer id,
+        String partName,
+        QuestionType questionType,
+        Integer questionCount,
+        String description,
+        String instructions,
+        Integer correctCount,
+        Integer totalTime)implements Serializable {
 }
