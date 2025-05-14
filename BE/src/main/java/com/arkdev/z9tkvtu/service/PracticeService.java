@@ -58,7 +58,16 @@ public class PracticeService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserLoginData user = (UserLoginData) auth.getPrincipal();
         SectionPartPractice practice = practiceRepository.findByUserIdAndPartId(user.getId(), partId)
-                .orElseThrow(() -> new RuntimeException("Practice not found"));
+                .orElse(null);
+        if (practice == null) {
+            Part part = partRepository.findById(partId)
+                    .orElseThrow(() -> new RuntimeException("Part Not Found"));
+            PartDetailsResponse partDetailsResponse = partMapper.toPartDetailsResponse(part);
+            return new PartAttemptResponse<>(
+                    partDetailsResponse,
+                    null
+            );
+        }
         PartDetailsResponse partDetailsResponse = partMapper.toPartDetailsResponse(practice);
         List<UserAnswerResponse> answerResponses = answerRepository.findByPracticeIdWithPartId(practice.getId(), partId)
                 .stream().map(r -> new UserAnswerResponse(

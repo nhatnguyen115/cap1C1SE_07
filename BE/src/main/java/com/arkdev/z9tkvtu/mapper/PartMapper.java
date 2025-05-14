@@ -53,4 +53,18 @@ public class PartMapper {
                 practice.getTotalTime()
         );
     }
+
+    public PartDetailsResponse toPartDetailsResponse(Part part) {
+        if(part == null) return null;
+        return new PartDetailsResponse(
+                part.getId(),
+                part.getPartName(),
+                part.getQuestionType(),
+                part.getQuestionCount(),
+                part.getDescription(),
+                part.getInstructions(),
+                null,
+                null
+        );
+    }
 }
