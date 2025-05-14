@@ -13,8 +13,8 @@ create sequence question_seq start with 1 increment by 50;
 create sequence media_seq start with 1 increment by 50;
 create sequence user_test_attempt_seq start 1 increment by 50;
 create sequence user_answer_seq start 1 increment by 50;
-create sequence user_section_attempt_seq start 1 increment by 50;
-create sequence user_section_answer_seq start 1 increment by 50;
+create sequence section_part_practice_seq start 1 increment by 50;
+create sequence section_part_answer_seq start 1 increment by 50;
 ----------------------------------------Security----------------------------------------
 create type gender_type as enum ('MALE', 'FEMALE', 'OTHER');
 create type role_type as enum ('USER', 'ADMIN');
@@ -255,26 +255,27 @@ create table user_answer
     answer_id       int not null default nextval('user_answer_seq'),
     attempt_id      int not null,
     question_id     int not null,
-    selected_answer char(1),
+    selected_answer text,
     primary key (answer_id)
 );
-create table user_section_attempt
+create table section_part_practice
 (
-    attempt_id    int  not null default nextval('user_section_attempt_seq'),
+    practice_id    int  not null default nextval('section_part_practice_seq'),
     user_id       uuid not null,
-    section_id    int  not null,
+    part_id    int  not null,
     correct_count smallint,
+    total_time smallint, -- second
     created_at    timestamp     default CURRENT_TIMESTAMP,
     created_by    uuid,
     updated_at    timestamp,
     updated_by    uuid,
-    primary key (attempt_id)
+    primary key (practice_id)
 );
-create table user_section_answer
+create table section_part_answer
 (
-    answer_id       int not null default nextval('user_section_answer_seq'),
-    attempt_id      int not null,
+    answer_id       int not null default nextval('section_part_answer_seq'),
+    practice_id      int not null,
     question_id     int not null,
-    selected_answer char(1),
+    selected_answer text,
     primary key (answer_id)
 );
