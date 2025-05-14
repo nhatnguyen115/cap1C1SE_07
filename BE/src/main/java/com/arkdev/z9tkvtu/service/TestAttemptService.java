@@ -31,7 +31,7 @@ import static com.arkdev.z9tkvtu.util.Convert.*;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserTestAttemptService {
+public class TestAttemptService {
     UserTestAttemptRepository userTestAttemptRepository;
     UserAnswerRepository userAnswerRepository;
     ExamRepository examRepository;
@@ -54,7 +54,7 @@ public class UserTestAttemptService {
                 .orElseThrow(() -> new RuntimeException("attempt not found"));
         List<Part> parts = attempt.getExam().getParts().stream().toList();
         ExamDetailsResponse detailsResponse = examMapper.toExamDetailsResponse(attempt);
-        List<PartDetailsResponse<?>> partDetailsResponses = new ArrayList<>();
+        List<PartAttemptResponse<?, ?>> partAttemptRespons = new ArrayList<>();
         for (Part part : parts) {
             PartResponse partResponse = partMapper.toPartResponse(part);
             List<UserAnswerResponse> answerResponses = userAnswerRepository.findByUserAnswerWithPartId(part.getId(), attemptId)
@@ -69,11 +69,11 @@ public class UserTestAttemptService {
                             getEnum(DifficultyLevel.class, r[7]),
                             getString(r[8])
                     )).toList();
-            partDetailsResponses.add(new PartDetailsResponse<>(partResponse, answerResponses));
+            partAttemptRespons.add(new PartAttemptResponse<>(partResponse, answerResponses));
         }
         return new AttemptDetailsResponse<>(
                 detailsResponse,
-                partDetailsResponses
+                partAttemptRespons
         );
     }
 
@@ -140,14 +140,5 @@ public class UserTestAttemptService {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                         .orElseThrow(() -> new RuntimeException("Attempt not found"));
         userTestAttemptRepository.delete(attempt);
-    }
-
-    private Map<String, Object> parseOptions(String json) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(json, new TypeReference<>() {});
-        } catch (Exception e) {
-            return Map.of();
-        }
     }
 }

@@ -42,7 +42,7 @@ public class ExamService {
                 .orElseThrow(() -> new IllegalArgumentException("Exam not found"));
         ExamResponse examResponse = examMapper.toExamResponse(exam);
         List<Part> parts = exam.getParts().stream().toList();
-        List<PartDetailsResponse<?>> partDetailsResponses = new ArrayList<>();
+        List<PartAttemptResponse<?, ?>> partAttemptRespons = new ArrayList<>();
         for (Part part : parts) {
             PartResponse partResponse = partMapper.toPartResponse(part);
             List<Question> questions = part.getQuestions().stream().toList();
@@ -51,11 +51,11 @@ public class ExamService {
                 QuestionResponse questionResponse = questionMapper.toQuestionResponse(question);
                 questionResponses.add(questionResponse);
             }
-            partDetailsResponses.add(new PartDetailsResponse<>(partResponse, questionResponses));
+            partAttemptRespons.add(new PartAttemptResponse<>(partResponse, questionResponses));
         }
         return new PracticeDetailsResponse<>(
                 examResponse,
-                partDetailsResponses
+                partAttemptRespons
         );
     }
 

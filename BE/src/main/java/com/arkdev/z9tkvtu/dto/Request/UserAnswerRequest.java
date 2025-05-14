@@ -2,10 +2,7 @@ package com.arkdev.z9tkvtu.dto.Request;
 
 import com.arkdev.z9tkvtu.model.Question;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
@@ -14,6 +11,7 @@ import java.io.Serializable;
  * DTO for {@link com.arkdev.z9tkvtu.model.UserAnswer}
  */
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)

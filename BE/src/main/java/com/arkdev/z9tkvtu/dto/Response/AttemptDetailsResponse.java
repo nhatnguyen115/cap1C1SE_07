@@ -5,5 +5,5 @@ import java.util.List;
 
 public record AttemptDetailsResponse<T>(
         T exam,
-        List<PartDetailsResponse<?>> details)implements Serializable {
+        List<PartAttemptResponse<?, ?>> details)implements Serializable {
 }

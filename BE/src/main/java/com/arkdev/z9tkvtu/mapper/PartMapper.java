@@ -1,8 +1,10 @@
 package com.arkdev.z9tkvtu.mapper;
 
 import com.arkdev.z9tkvtu.dto.Request.PartRequest;
+import com.arkdev.z9tkvtu.dto.Response.PartDetailsResponse;
 import com.arkdev.z9tkvtu.dto.Response.PartResponse;
 import com.arkdev.z9tkvtu.model.Part;
+import com.arkdev.z9tkvtu.model.SectionPartPractice;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -36,6 +38,33 @@ public class PartMapper {
                 part.getQuestionCount(),
                 part.getDescription(),
                 part.getInstructions()
+        );
+    }
+    public PartDetailsResponse toPartDetailsResponse(SectionPartPractice practice) {
+        if(practice == null) return null;
+        return new PartDetailsResponse(
+                practice.getPart().getId(),
+                practice.getPart().getPartName(),
+                practice.getPart().getQuestionType(),
+                practice.getPart().getQuestionCount(),
+                practice.getPart().getDescription(),
+                practice.getPart().getInstructions(),
+                practice.getCorrectCount(),
+                practice.getTotalTime()
+        );
+    }
+
+    public PartDetailsResponse toPartDetailsResponse(Part part) {
+        if(part == null) return null;
+        return new PartDetailsResponse(
+                part.getId(),
+                part.getPartName(),
+                part.getQuestionType(),
+                part.getQuestionCount(),
+                part.getDescription(),
+                part.getInstructions(),
+                null,
+                null
         );
     }
 }
