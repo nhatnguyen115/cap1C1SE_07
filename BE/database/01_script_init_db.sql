@@ -15,6 +15,8 @@ create sequence user_test_attempt_seq start 1 increment by 50;
 create sequence user_answer_seq start 1 increment by 50;
 create sequence section_part_practice_seq start 1 increment by 50;
 create sequence section_part_answer_seq start 1 increment by 50;
+create sequence membership_plan_seq start 1 increment by 50;
+create sequence user_membership_seq start 1 increment by 50;
 ----------------------------------------Security----------------------------------------
 create type gender_type as enum ('MALE', 'FEMALE', 'OTHER');
 create type role_type as enum ('USER', 'ADMIN');
@@ -90,7 +92,7 @@ create table role_permission
 );
 ----------------------------------------Practice----------------------------------------
 create type content_type as enum ('VIDEO', 'TEXT');
-CREATE TYPE difficulty_level as enum ('BEGINNER', 'INTERMEDIATE', 'ADVANCED');
+create type difficulty_level as enum ('BEGINNER', 'intERMEDIATE', 'ADVANCED');
 create type section_type as enum ('LISTENING', 'READING', 'SPEAKING', 'WRITING');
 CREATE TYPE question_type as enum (
     'MULTIPLE_CHOICE',
@@ -98,7 +100,8 @@ CREATE TYPE question_type as enum (
     'AUDIO_BASED',
     'FILL_IN_BLANK'
     );
-CREATE TYPE media_type as enum ('AUDIO', 'VIDEO', 'IMAGE');
+create type media_type as enum ('AUDIO', 'VIDEO', 'IMAGE');
+create type status_type as enum ('ACTIVE', 'EXPIRED', 'CANCELLED', 'PENDING');
 
 create table menu
 (
@@ -260,11 +263,11 @@ create table user_answer
 );
 create table section_part_practice
 (
-    practice_id    int  not null default nextval('section_part_practice_seq'),
+    practice_id   int  not null default nextval('section_part_practice_seq'),
     user_id       uuid not null,
-    part_id    int  not null,
+    part_id       int  not null,
     correct_count smallint,
-    total_time smallint, -- second
+    total_time    smallint, -- second
     created_at    timestamp     default CURRENT_TIMESTAMP,
     created_by    uuid,
     updated_at    timestamp,
@@ -274,8 +277,36 @@ create table section_part_practice
 create table section_part_answer
 (
     answer_id       int not null default nextval('section_part_answer_seq'),
-    practice_id      int not null,
+    practice_id     int not null,
     question_id     int not null,
     selected_answer text,
     primary key (answer_id)
+);
+create table membership_plan
+(
+    plan_id       int            not null default nextval(''),
+    plan_name     varchar(100)   not null,
+    description   text,
+    price         decimal(10, 2) not null,
+    duration_days int            not null,
+    is_active     boolean                 default true,
+    created_at    timestamp               default CURRENT_TIMESTAMP,
+    created_by    uuid,
+    updated_at    timestamp,
+    updated_by    uuid,
+    primary key (plan_id)
+);
+create table user_membership
+(
+    membership_id int         not null default nextval(''),
+    user_id       int         not null,
+    plan_id       int         not null,
+    start_date    timestamp   not null,
+    end_date      timestamp   not null,
+    status        status_type not null,
+    created_at    timestamp            default CURRENT_TIMESTAMP,
+    created_by    uuid,
+    updated_at    timestamp,
+    updated_by    uuid,
+    primary key (membership_id)
 );
