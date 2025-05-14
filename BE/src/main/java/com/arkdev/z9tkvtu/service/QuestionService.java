@@ -2,6 +2,7 @@ package com.arkdev.z9tkvtu.service;
 
 import com.arkdev.z9tkvtu.dto.Request.MediaRequest;
 import com.arkdev.z9tkvtu.dto.Request.QuestionRequest;
+import com.arkdev.z9tkvtu.dto.Response.QuestionDetailsResponse;
 import com.arkdev.z9tkvtu.dto.Response.QuestionResponse;
 import com.arkdev.z9tkvtu.mapper.MediaMapper;
 import com.arkdev.z9tkvtu.mapper.QuestionMapper;
@@ -38,11 +39,16 @@ public class QuestionService {
     MediaMapper mediaMapper;
     QuestionMapper questionMapper;
 
-    public List<QuestionResponse> getQuestions(Integer partId) {
-        return questionRepository.findByPartIdOrderByOrderNumber(partId)
+    public QuestionDetailsResponse<?> getQuestions(Integer partId) {
+        Part part = partRepository.findById(partId)
+                .orElseThrow(() -> new IllegalArgumentException("Part Not Found"));
+        List<QuestionResponse> list = questionRepository.findByPartIdOrderByOrderNumber(partId)
                 .stream()
                 .map(questionMapper::toQuestionResponse)
                 .toList();
+        return new QuestionDetailsResponse<>(
+                part.getQuestionType(), part.getInstructions(), list
+        );
     }
 
     public QuestionResponse getQuestion(Integer questionId) {

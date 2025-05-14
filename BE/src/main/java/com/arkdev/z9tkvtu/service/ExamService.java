@@ -37,7 +37,7 @@ public class ExamService {
                 .toList();
     }
 
-    public PracticeDetailsResponse<?> getExam(Integer examId) {
+    public ExamContentResponse<?> getExam(Integer examId) {
         Exam exam = examRepository.findById(examId)
                 .orElseThrow(() -> new IllegalArgumentException("Exam not found"));
         ExamResponse examResponse = examMapper.toExamResponse(exam);
@@ -53,7 +53,7 @@ public class ExamService {
             }
             partAttemptRespons.add(new PartAttemptResponse<>(partResponse, questionResponses));
         }
-        return new PracticeDetailsResponse<>(
+        return new ExamContentResponse<>(
                 examResponse,
                 partAttemptRespons
         );

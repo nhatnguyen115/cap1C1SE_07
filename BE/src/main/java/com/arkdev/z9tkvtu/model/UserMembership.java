@@ -1,13 +1,15 @@
 package com.arkdev.z9tkvtu.model;
 
+import com.arkdev.z9tkvtu.util.MembershipStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDate;
-import java.util.UUID;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -19,19 +21,24 @@ public class UserMembership extends AbstractEntity {
     @Column(name = "membership_id")
     private Integer id;
 
-    @Column(name = "user_id")
-    private UUID userId;
-
-    @Column(name = "plan_id")
-    private Integer planId;
-
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_date")
-    private LocalDate startDate;
+    private Timestamp startDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date")
-    private LocalDate endDate;
+    private Timestamp endDate;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "status")
+    private MembershipStatus status;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserAccount user;
+
+    @ManyToOne
+    @JoinColumn(name = "plan_id", nullable = false)
+    private MembershipPlan plan;
 }
