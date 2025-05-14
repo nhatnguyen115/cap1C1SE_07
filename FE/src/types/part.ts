@@ -7,4 +7,5 @@ export type QuestionType = {
   explanation: string;
   difficulty: string;
   selectedAnswer?: string;
+  questionType: string;
 };

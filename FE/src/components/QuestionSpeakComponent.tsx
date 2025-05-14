@@ -18,12 +18,14 @@ declare global {
 type Props = {
   question: QuestionType;
   index: number;
+  answer?: string;
   onAnswer: (answer: string) => void;
 };
 
 const QuestionSpeakComponent: React.FC<Props> = ({
   question,
   index,
+  answer,
   onAnswer,
 }) => {
   const [isRecording, setIsRecording] = useState(false);
@@ -75,7 +77,9 @@ const QuestionSpeakComponent: React.FC<Props> = ({
       }
     }
   };
-
+  useEffect(() => {
+    setSpokenText(answer || "");
+  }, []);
   useEffect(() => {
     onAnswer(spokenText);
   }, [spokenText]);

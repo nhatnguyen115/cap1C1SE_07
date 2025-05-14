@@ -43,6 +43,8 @@ const PartDetailsPage: React.FC = () => {
     location.state?.sections,
   );
 
+  const [questionType, setQuestionType] = useState<string>("");
+
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const handlePageChange = (newPage: number) => {
@@ -65,6 +67,8 @@ const PartDetailsPage: React.FC = () => {
         if (resultResponse?.questions && resultResponse.questions.length > 0) {
           // Nếu có dữ liệu từ getResult thì dùng luôn
           console.log("Result:", resultResponse);
+          setQuestionType(resultResponse.part.questionType);
+
           setQuestions(resultResponse.questions);
           setElapsedSeconds(resultResponse.part.totalTime || 0);
           setTotalPages(resultResponse.part.questionCount);
@@ -76,6 +80,7 @@ const PartDetailsPage: React.FC = () => {
             PAGINATION_CONSTANT.SIZE[1000],
           );
           console.log("Questions:", questionResponse);
+          setQuestionType(questionResponse.questionType);
           setQuestions(questionResponse.items || []);
           setElapsedSeconds(questionResponse.elapsedSeconds || 0);
           setTotalPages(questionResponse.totalPages);
@@ -228,6 +233,7 @@ const PartDetailsPage: React.FC = () => {
               questions={questions}
               elapsedSeconds={elapsedSeconds}
               formatTime={formatTime}
+              questionType={questionType}
             />
           </div>
         )}

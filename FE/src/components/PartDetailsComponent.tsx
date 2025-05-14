@@ -1,5 +1,6 @@
 import { notification } from "antd";
 import React, { useEffect, useState } from "react";
+import { QUESTION_TYPE } from "../constant/TestConstant";
 import { http } from "../service/Http";
 import { QuestionType } from "../types/part";
 import { API_URIS } from "./../api/URIConstant";
@@ -13,6 +14,7 @@ type PartDetailsComponentProps = {
   questions: QuestionType[];
   elapsedSeconds: number;
   formatTime: (seconds: number) => string;
+  questionType?: string;
 };
 
 const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
@@ -21,6 +23,7 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
   questions,
   elapsedSeconds,
   formatTime,
+  questionType,
 }) => {
   const [answers, setAnswers] = useState<{ [questionId: number]: string }>({});
 
@@ -66,38 +69,43 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
         </div>
       </div>
 
-      <PaginationStaticComponent
-        items={questions}
-        itemsPerPage={5}
-        renderItem={(question, index) => (
-          <QuestionCardComponent
-            key={question.id}
-            question={question}
-            index={index}
-            selectedOption={answers[question.id]}
-            onSelectOption={(optionKey) =>
-              setAnswers((prev) => ({ ...prev, [question.id]: optionKey }))
-            }
-          />
-        )}
-      />
-      <PaginationStaticComponent
-        items={questions}
-        itemsPerPage={5}
-        renderItem={(question, index) => (
-          <div key={question.id}>
-            {/* QuestionSpeakComponent will replace QuestionCardComponent */}
-            <QuestionSpeakComponent
+      {questionType == QUESTION_TYPE.MULTIPLE_CHOICE ? (
+        <PaginationStaticComponent
+          items={questions}
+          itemsPerPage={5}
+          renderItem={(question, index) => (
+            <QuestionCardComponent
               key={question.id}
               question={question}
               index={index}
-              onAnswer={(answer) =>
-                setAnswers((prev) => ({ ...prev, [question.id]: answer }))
+              selectedOption={answers[question.id]}
+              onSelectOption={(optionKey) =>
+                setAnswers((prev) => ({ ...prev, [question.id]: optionKey }))
               }
             />
-          </div>
-        )}
-      />
+          )}
+        />
+      ) : null}
+      {questionType == QUESTION_TYPE.AUDIO_BASED ? (
+        <PaginationStaticComponent
+          items={questions}
+          itemsPerPage={5}
+          renderItem={(question, index) => (
+            <div key={question.id}>
+              <QuestionSpeakComponent
+                key={question.id}
+                question={question}
+                index={index}
+                answer={question.selectedAnswer}
+                onAnswer={(answer) =>
+                  setAnswers((prev) => ({ ...prev, [question.id]: answer }))
+                }
+              />
+            </div>
+          )}
+        />
+      ) : null}
+
       {/* Thanh điều hướng */}
       <div className="flex justify-between mt-10">
         {/* <div>
