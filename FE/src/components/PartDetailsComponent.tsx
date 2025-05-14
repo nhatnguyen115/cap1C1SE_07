@@ -5,6 +5,7 @@ import { QuestionType } from "../types/part";
 import { API_URIS } from "./../api/URIConstant";
 import PaginationStaticComponent from "./PaginationStaticComponent";
 import QuestionCardComponent from "./QuestionCardComponent";
+import QuestionSpeakComponent from "./QuestionSpeakComponent";
 
 type PartDetailsComponentProps = {
   partId: number;
@@ -80,7 +81,23 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
           />
         )}
       />
-
+      <PaginationStaticComponent
+        items={questions}
+        itemsPerPage={5}
+        renderItem={(question, index) => (
+          <div key={question.id}>
+            {/* QuestionSpeakComponent will replace QuestionCardComponent */}
+            <QuestionSpeakComponent
+              key={question.id}
+              question={question}
+              index={index}
+              onAnswer={(answer) =>
+                setAnswers((prev) => ({ ...prev, [question.id]: answer }))
+              }
+            />
+          </div>
+        )}
+      />
       {/* Thanh điều hướng */}
       <div className="flex justify-between mt-10">
         {/* <div>
