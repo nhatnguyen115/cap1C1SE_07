@@ -218,7 +218,7 @@ create table question
     media_id       int               default null,
     part_id        int      not null,
     content        text     not null,
-    options        jsonb    not null,
+    options        jsonb,
     correct_answer text     not null,
     explanation    text,
     difficulty     difficulty_level  default 'BEGINNER',

@@ -32,7 +32,7 @@ public class QuestionController {
                                         @RequestParam(defaultValue = "10") int size) {
         try {
             return new ResponseData<>(HttpStatus.OK.value(), "Get Questions Successfully",
-                    Pagination.paginate(questionService.getQuestions(partId), PageRequest.of(page, size)));
+                    Pagination.paginatePart(questionService.getQuestions(partId), PageRequest.of(page, size)));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Questions Failed");
         }

@@ -13,24 +13,27 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "membership_plan")
-public class MembershipPlan {
+public class MembershipPlan extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "plan_id", nullable = false)
+    @Column(name = "plan_id")
     private Integer id;
 
-    @Column(name = "plan_name", nullable = false)
+    @Column(name = "plan_name")
     private String planName;
 
     @Column(name = "description")
     private String description;
 
     @NotNull
-    @Column(name = "price", nullable = false, precision = 10, scale = 2)
+    @Column(name = "price")
     private BigDecimal price;
 
     @NotNull
-    @Column(name = "duration_days", nullable = false)
+    @Column(name = "duration_days")
     private Integer durationDays;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 
 }
