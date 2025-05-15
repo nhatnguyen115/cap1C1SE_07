@@ -26,6 +26,9 @@ public class UserTestAttempt {
     @Column(name = "end_time")
     private Timestamp endTime;
 
+    @Column(name = "complete")
+    private Boolean complete;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserAccount user;

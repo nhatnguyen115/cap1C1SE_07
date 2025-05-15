@@ -326,3 +326,5 @@ create table resource_access
     updated_by    uuid,
     primary key (access_id)
 );
+
+ALTER TABLE user_test_attempt ADD complete boolean DEFAULT false NOT NULL;
