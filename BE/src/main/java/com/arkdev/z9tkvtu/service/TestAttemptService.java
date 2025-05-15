@@ -99,6 +99,8 @@ public class TestAttemptService {
         testAttempt.setExam(exam);
         testAttempt.setUser(user);
         testAttempt.setStartTime(Timestamp.valueOf(LocalDateTime.now()));
+        testAttempt.setComplete(false);
+
         testAttempt = userTestAttemptRepository.save(testAttempt);
         return testAttempt.getId();
     }

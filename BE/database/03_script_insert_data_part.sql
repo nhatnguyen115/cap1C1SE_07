@@ -16,3 +16,13 @@ INSERT INTO public.part (part_id,part_name,description,question_type,instruction
 (501,'Part 10','Part 10','MULTIPLE_CHOICE'::public.question_type,NULL,NULL,39,10),
 (551,'Part 11','Part 11','MULTIPLE_CHOICE'::public.question_type,NULL,NULL,39,11);
 SELECT setval('part_seq', (SELECT MAX(part_id) FROM part));
+
+INSERT INTO public.section_part (section_id,part_id) VALUES
+                                                         (100200,51),
+                                                         (100200,101),
+                                                         (100200,151),
+                                                         (100200,201),
+                                                         (100200,251),
+                                                         (100200,601),
+                                                         (100200,651),
+                                                         (100200,701);

@@ -3,6 +3,7 @@ package com.arkdev.z9tkvtu.configuration;
 import com.arkdev.z9tkvtu.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
@@ -35,7 +36,12 @@ public class PreFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
             username = jwtProvider.extractUsername(token);
+        } else {
+            token = getTokenFromCookies(request);
+            username = jwtProvider.extractUsername(token);
+
         }
+
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userService.getUserDetailsService().loadUserByUsername(username);
@@ -49,4 +55,16 @@ public class PreFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+
+    private String getTokenFromCookies(HttpServletRequest request) {
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("token".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
 }

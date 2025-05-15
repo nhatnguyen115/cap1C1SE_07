@@ -2,6 +2,7 @@ package com.arkdev.z9tkvtu.configuration;
 
 import com.arkdev.z9tkvtu.dto.Response.TokenResponse;
 import com.arkdev.z9tkvtu.model.UserLoginData;
+import com.arkdev.z9tkvtu.util.RoleType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,6 +11,8 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -27,6 +30,20 @@ public class JwtProvider {
     private String refreshKey;
 
     public TokenResponse getToken(Authentication auth) {
+
+        if (auth instanceof OAuth2AuthenticationToken) {
+            OAuth2User oAuth2User = (OAuth2User) auth.getPrincipal();
+            Map<String, Object> attributes = oAuth2User.getAttributes();
+
+            String email = (String) attributes.get("email");
+            generateTokenFromEmail(email);
+            return new TokenResponse(
+                    generateTokenFromEmail(email),
+                    RoleType.USER
+            );
+        }
+
+
         UserLoginData user = (UserLoginData) auth.getPrincipal();
         return new TokenResponse(
                 generateToken(user.getUsername()),
@@ -37,6 +54,12 @@ public class JwtProvider {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, username);
     }
+
+    public String generateTokenFromEmail(String email) {
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, email);
+    }
+
 
     private String createToken(Map<String, Object> claims, String username) {
         return Jwts.builder()
