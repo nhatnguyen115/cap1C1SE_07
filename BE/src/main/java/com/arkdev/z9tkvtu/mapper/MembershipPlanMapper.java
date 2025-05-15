@@ -28,6 +28,7 @@ public class MembershipPlanMapper {
     public MembershipPlanResponse toMembershipPlanResponse(MembershipPlan membershipPlan) {
         if (membershipPlan == null) return null;
         return  new MembershipPlanResponse(
+                membershipPlan.getId(),
                 membershipPlan.getPlanName(),
                 membershipPlan.getDescription(),
                 membershipPlan.getPrice(),
