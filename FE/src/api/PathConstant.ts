@@ -89,6 +89,7 @@ export const PATH_CONSTANTS = {
   PAYMENT: {
     ROOT: "/payment",
     FORM: "/payment/paymentform",
+    CALL_BACK: "/user-memberships/payment/callback",
   },
 
   SETTING: {

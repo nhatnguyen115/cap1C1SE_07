@@ -31,7 +31,7 @@ public class UserMembershipService {
     PaymentService paymentService;
 
     @Transactional
-    public void registerMembership(Integer planId,
+    public String registerMembership(Integer planId,
                                    HttpServletRequest request,
                                    HttpServletResponse response) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -50,7 +50,7 @@ public class UserMembershipService {
         userMembership.setStatus(MembershipStatus.PENDING);
 
         userMembershipRepository.save(userMembership);
-        paymentService.createPaymentUrl(membershipPlan.getPrice().intValue(), request, response);
+        return paymentService.createPaymentUrl(membershipPlan.getPrice().intValue(), request, response);
     }
 
     @Transactional

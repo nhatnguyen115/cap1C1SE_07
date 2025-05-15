@@ -6,6 +6,7 @@ import { QuestionType } from "../types/part";
 import { API_URIS } from "./../api/URIConstant";
 import PaginationStaticComponent from "./PaginationStaticComponent";
 import QuestionCardComponent from "./QuestionCardComponent";
+import QuestionFillInBlankComponent from "./QuestionFillInBlankComponent";
 import QuestionSpeakComponent from "./QuestionSpeakComponent";
 
 type PartDetailsComponentProps = {
@@ -93,6 +94,25 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
           renderItem={(question, index) => (
             <div key={question.id}>
               <QuestionSpeakComponent
+                key={question.id}
+                question={question}
+                index={index}
+                answer={question.selectedAnswer}
+                onAnswer={(answer) =>
+                  setAnswers((prev) => ({ ...prev, [question.id]: answer }))
+                }
+              />
+            </div>
+          )}
+        />
+      ) : null}
+      {questionType == QUESTION_TYPE.FILL_IN_BLANK ? (
+        <PaginationStaticComponent
+          items={questions}
+          itemsPerPage={5}
+          renderItem={(question, index) => (
+            <div key={question.id}>
+              <QuestionFillInBlankComponent
                 key={question.id}
                 question={question}
                 index={index}

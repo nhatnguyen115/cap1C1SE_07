@@ -29,6 +29,7 @@ import Resource from "../pages/Resource/Resource";
 import ResourceDetail from "../pages/Resource/ResourceDetail";
 import EditSettings from "../pages/Settings/EditSettings/EditSettings";
 import Settings from "../pages/Settings/Settings";
+import PaymentSuccessComponent from "./../components/PaymentSuccessComponent";
 import UserRankComponent from "./../components/UserRankComponent";
 import TestManagementPage from "./../pages/Admin/TestManagement/TestManagement";
 import { DoExamPage } from "./../pages/Exam/DoExamPage";
@@ -205,6 +206,10 @@ const routes = [
         <PaymentForm />
       </MainLayout>
     ),
+  },
+  {
+    path: PATH_CONSTANTS.PAYMENT.CALL_BACK,
+    element: <PaymentSuccessComponent />,
   },
   {
     path: PATH_CONSTANTS.RESOURCE.ROOT,

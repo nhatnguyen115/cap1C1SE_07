@@ -18,6 +18,7 @@ public class SecurityConstant {
             ,"/questions/**"
             ,"/exams/**"
             ,"/tests/**"
+            ,"/user-memberships/payment/callback"
     };
 
     public static final List<String> ORIGINS_ALLOWED = Arrays.asList(

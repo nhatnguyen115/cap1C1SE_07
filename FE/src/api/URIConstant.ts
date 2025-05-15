@@ -92,4 +92,9 @@ export const API_URIS = {
     HISTORY: "/user-test",
     RANK: "/user-test/user-rank",
   },
+
+  PAYMENT: {
+    PLAN: "/membership-plans",
+    CALLBACK: "/user-memberships/payment/callback",
+  },
 };
