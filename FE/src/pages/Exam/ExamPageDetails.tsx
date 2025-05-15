@@ -31,6 +31,9 @@ const ExamPageDetails: React.FC = () => {
             duration={exam.duration ?? 0}
             totalScore={exam.totalScore}
             id={exam.id ?? 0}
+            questions={exam.questions ?? 10}
+            students={exam.students ?? 10}
+            level={exam.level ?? "BEGINNER"}
             image={SRC_IMAGE.TEST}
           />
         ))}

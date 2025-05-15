@@ -5,6 +5,10 @@ export interface ExamType {
   totalScore: number;
   testType?: string;
   duration?: number;
+  questions?: number;
+  students?: number;
+  level?: string;
+  image?: string;
 }
 
 export type PartType = {
