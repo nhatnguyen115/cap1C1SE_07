@@ -30,7 +30,6 @@ import java.io.IOException;
 public class ExamController {
     ExamService examService;
     PartService partService;
-    UserMembershipService userMembershipService;
 
     @GetMapping("")
     public ResponseData<?> getExams(@RequestParam(required = false) Integer testId,
@@ -47,8 +46,6 @@ public class ExamController {
     @GetMapping("/{examId}")
     public ResponseData<?> getExam(@PathVariable Integer examId) {
         try {
-            if (userMembershipService.checkResourceAccess(examId, "EXAM"))
-                return new ResponseData<>(HttpStatus.EXPECTATION_FAILED.value(), "Request membership package");
             return new ResponseData<>(HttpStatus.OK.value(), "Get Exam Successfully",
                     examService.getExam(examId));
         } catch (Exception e) {

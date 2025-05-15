@@ -40,7 +40,7 @@ public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt
             CAST(ROUND(EXTRACT(EPOCH FROM (end_time - start_time)) / 60) AS BIGINT) as totalTime
         FROM user_test_attempt uta
         JOIN user_login_data uld ON uld.user_id = uta.user_id
-        WHERE uta.exam_id = :examId
+        WHERE uta.exam_id = :examId AND  uta.complete = true
         ORDER BY uta.total_score DESC
         LIMIT 20;
     """, nativeQuery = true)

@@ -109,6 +109,7 @@ public class TestAttemptService {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                 .orElseThrow(() -> new RuntimeException("Attempt not found"));
         attempt.setEndTime(Timestamp.valueOf(LocalDateTime.now()));
+        attempt.setComplete(true);
 
         List<Integer> questionIds = answers.stream()
                 .map(UserAnswerRequest::getQuestionId)

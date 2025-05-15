@@ -30,10 +30,25 @@ public class ExamService {
     PartMapper partMapper;
     QuestionMapper questionMapper;
 
-    public List<ExamResponse> getExams(Integer testId) {
+    public List<ExamListResponse> getExams(Integer testId) {
         return examRepository.findByTestIdOrderByCreatedAt(testId)
                 .stream()
-                .map(examMapper::toExamResponse)
+                .map(exam -> {
+                    Integer questions = 0;
+                    for (Part part : exam.getParts()) {
+                        questions += part.getQuestionCount();
+                    }
+                    Integer students = testRepository.countByUserTestAttempt(exam.getId());
+                    return new ExamListResponse(
+                            exam.getId(),
+                            exam.getExamName(),
+                            exam.getTotalScore(),
+                            exam.getTest().getTestType(),
+                            exam.getDuration(),
+                            questions,
+                            students
+                    );
+                })
                 .toList();
     }
 
