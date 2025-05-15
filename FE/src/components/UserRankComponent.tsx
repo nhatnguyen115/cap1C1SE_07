@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-
 import { useParams } from "react-router-dom";
+import { animateScroll as scroll } from "react-scroll";
 import { API_URIS } from "../api/URIConstant";
 import crown1 from "../assets/crown1.png";
 import crown2 from "../assets/crown2.png";
@@ -11,12 +11,12 @@ import { UserRank } from "../types/userTest";
 const UserRankComponent = () => {
   const [rankings, setRankings] = useState<UserRank[]>([]);
   const { id } = useParams();
+
   useEffect(() => {
+    if (!id) return;
     http
       .get(API_URIS.USER_TEST.RANK, {
-        params: {
-          examId: id,
-        },
+        params: { examId: id },
       })
       .then((res) => {
         if (res.data.status === 200) {
@@ -28,6 +28,10 @@ const UserRankComponent = () => {
       });
   }, [id]);
 
+  useEffect(() => {
+    scroll.scrollToTop({ smooth: true, duration: 500 });
+  }, []);
+
   const getCrown = (index: number) => {
     if (index === 0) return crown1;
     if (index === 1) return crown2;
@@ -36,49 +40,56 @@ const UserRankComponent = () => {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h2 className="text-xl font-bold text-center mb-4">Bảng xếp hạng</h2>
+    <div className="p-4 max-w-4xl mx-auto">
+      <h2 className="text-2xl font-bold text-center mb-6">BẢNG XẾP HẠNG</h2>
 
-      <div className="flex justify-around items-end h-40 mb-6">
-        {[1, 0, 2].map((i) => (
-          <div
-            key={i}
-            className={`flex flex-col items-center ${
-              i === 0 ? "h-40" : i === 1 ? "h-32" : "h-28"
-            }`}
-          >
-            <img
-              src={getCrown(i) || ""}
-              alt="crown"
-              className="w-10 h-10 mb-1"
-            />
-            <div className="w-16 h-16 rounded-full bg-orange-200 flex items-center justify-center font-bold">
-              {rankings[i]?.username[0] || "?"}
-            </div>
-            <p className="text-sm mt-1">{rankings[i]?.username || "-"}</p>
-            <p className="text-sm font-semibold">
-              {rankings[i]?.totalScore ?? 0} điểm
-            </p>
-          </div>
-        ))}
-      </div>
+      <div className="overflow-x-auto rounded-lg shadow">
+        <table className="min-w-full divide-y divide-gray-200 bg-white">
+          <thead className="bg-gray-100 text-sm text-gray-700 font-semibold">
+            <tr>
+              <th className="w-32 py-3 text-center ">Hạng</th>
+              <th className="py-3 text-left">Thành viên</th>
+              <th className="w-32 py-3 text-center">Tổng điểm</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100 text-sm">
+            {rankings.map((user, index) => (
+              <tr
+                key={index}
+                className="hover:bg-gray-50 transition-colors duration-150 h-16 shadow-xl"
+              >
+                <td className="py-3 text-center font-bold">
+                  {index < 3 ? (
+                    <img
+                      src={getCrown(index) || ""}
+                      alt={`Rank ${index + 1}`}
+                      className="w-6 h-6 mx-auto"
+                    />
+                  ) : (
+                    <span>{String(index + 1).padStart(3, "0")}</span>
+                  )}
+                </td>
 
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        {rankings.slice(3).map((user, index) => (
-          <div
-            key={index + 4}
-            className="flex justify-between items-center p-3 border-b last:border-none"
-          >
-            <div className="flex items-center space-x-2">
-              <div className="w-8 text-gray-500">{index + 4}</div>
-              <div className="w-8 h-8 rounded-full bg-gray-300 text-center leading-8">
-                {user.username[0]}
-              </div>
-              <span>{user.username}</span>
-            </div>
-            <span className="font-medium">{user.totalScore} điểm</span>
-          </div>
-        ))}
+                <td className="py-3 flex items-center space-x-3">
+                  <img
+                    src={
+                      user.avatarUrl || "https://avatar.iran.liara.run/public"
+                    }
+                    alt="avatar"
+                    className="w-9 h-9 rounded-full object-cover"
+                  />
+                  <span className="font-medium text-gray-800">
+                    {user.username}
+                  </span>
+                </td>
+
+                <td className="py-3 text-center font-semibold text-gray-800">
+                  {user.totalScore} điểm
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

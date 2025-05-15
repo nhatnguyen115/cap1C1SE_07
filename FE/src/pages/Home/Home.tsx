@@ -175,6 +175,9 @@ const Home = ({ setIsOpen }) => {
                 duration={item.duration ?? 0}
                 totalScore={item.totalScore}
                 id={item.id ?? 0}
+                questions={item.questions ?? 10}
+                students={item.students ?? 10}
+                level={item.level ?? "BEGINNER"}
                 image={SRC_IMAGE.RANDOM}
               />
             ))}
@@ -185,6 +188,9 @@ const Home = ({ setIsOpen }) => {
                 duration={item.duration ?? 0}
                 totalScore={item.totalScore}
                 id={item.id ?? 0}
+                questions={item.questions ?? 10}
+                students={item.students ?? 10}
+                level={item.level ?? "BEGINNER"}
                 image={SRC_IMAGE.RANDOM}
               />
             ))}
@@ -195,6 +201,9 @@ const Home = ({ setIsOpen }) => {
                 duration={item.duration ?? 0}
                 totalScore={item.totalScore}
                 id={item.id ?? 0}
+                questions={item.questions ?? 10}
+                students={item.students ?? 10}
+                level={item.level ?? "BEGINNER"}
                 image={SRC_IMAGE.RANDOM}
               />
             ))}

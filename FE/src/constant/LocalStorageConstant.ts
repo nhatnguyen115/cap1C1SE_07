@@ -6,4 +6,5 @@ export const LOCAL_STORAGE_CONSTANT = {
   USER_NAME: "username",
   EMAIL: "email",
   PHONE_NUMBER: "phoneNumber",
+  FULL_NAME: "fullName",
 };

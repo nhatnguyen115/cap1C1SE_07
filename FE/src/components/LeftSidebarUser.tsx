@@ -3,6 +3,7 @@ import React from "react";
 import { FaCog, FaHistory, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { PATH_CONSTANTS } from "../api/PathConstant";
+import { LOCAL_STORAGE_CONSTANT } from "../constant/LocalStorageConstant";
 import { useUser } from "../context/UserContext";
 
 interface LeftSidebarUserProps {
@@ -11,6 +12,8 @@ interface LeftSidebarUserProps {
 
 const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
   const { setUserRole } = useUser();
+
+  const fullName = localStorage.getItem(LOCAL_STORAGE_CONSTANT.FULL_NAME);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -30,7 +33,7 @@ const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
           className="w-10 h-10 rounded-full mr-3"
         />
         <div>
-          <h2 className="text-lg font-semibold">Khanh Huyen</h2>
+          <h2 className="text-lg font-semibold">{fullName}</h2>
           <p className="text-sm text-gray-500 flex items-center">
             <span className="mr-1">🇻🇳</span> Vietnam
           </p>

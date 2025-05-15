@@ -11,6 +11,7 @@ export const API_URIS = {
     GET_PROFILE: "/user/profile",
     UPDATE_PROFILE: "/user/update",
     CHANGE_PASSWORD: "/user/change-password",
+    INFO: "/users",
   },
   PRODUCT: {
     GET_ALL: "/products",
