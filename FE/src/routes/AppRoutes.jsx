@@ -29,6 +29,7 @@ import Resource from "../pages/Resource/Resource";
 import ResourceDetail from "../pages/Resource/ResourceDetail";
 import EditSettings from "../pages/Settings/EditSettings/EditSettings";
 import Settings from "../pages/Settings/Settings";
+import ExternalLoginComponent from "./../components/ExternalLoginComponent";
 import PaymentSuccessComponent from "./../components/PaymentSuccessComponent";
 import UserRankComponent from "./../components/UserRankComponent";
 import TestManagementPage from "./../pages/Admin/TestManagement/TestManagement";
@@ -58,6 +59,10 @@ const routes = [
         </MainLayout>
       </ProtectedRoute>
     ),
+  },
+  {
+    path: PATH_CONSTANTS.AUTH.EXTERNAL,
+    element: <ExternalLoginComponent />,
   },
   {
     path: PATH_CONSTANTS.AUTH.FORGOT_PASSWORD,

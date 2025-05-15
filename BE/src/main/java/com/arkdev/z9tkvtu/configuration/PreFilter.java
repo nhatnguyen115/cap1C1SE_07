@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,7 +39,8 @@ public class PreFilter extends OncePerRequestFilter {
             username = jwtProvider.extractUsername(token);
         } else {
             token = getTokenFromCookies(request);
-            username = jwtProvider.extractUsername(token);
+
+            if (StringUtils.isNotBlank(token)) username = jwtProvider.extractUsername(token);
 
         }
 

@@ -5,6 +5,7 @@ export const API_URIS = {
     LOGOUT: "/auth/logout",
     REFRESH_TOKEN: "/auth/refresh-token",
     RESET_PASSWORD: "/auth/reset-password",
+    EXTERNAL: "/auth/external/callback",
   },
   USER: {
     ADD: "/user",

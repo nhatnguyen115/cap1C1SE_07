@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,7 +53,11 @@ public class AuthController {
     @GetMapping("/external/callback")
     public ResponseData<?> externalCallback() throws IOException {
         try {
-            return new ResponseData<>(HttpStatus.OK.value(), "Get External Info Successfully");
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+            return new ResponseData<>(HttpStatus.OK.value(),
+                    "Introspect Successful!",
+                    jwtProvider.getToken(auth));
         } catch (Exception e) {
             return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), "Get External Info Error!");
         }
