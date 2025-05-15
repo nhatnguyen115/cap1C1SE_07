@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { http } from "../service/Http";
 import { useNavigate } from "react-router-dom";
-import { SectionType } from "../types/section";
-import { sectionMockData } from "../data/sectionMockData";
-import { API_URIS } from "../api/URIConstant";
 import { PATH_CONSTANTS } from "../api/PathConstant";
+import { API_URIS } from "../api/URIConstant";
+import { sectionMockData } from "../data/sectionMockData";
+import { http } from "../service/Http";
+import { SectionType } from "../types/section";
 
 interface SectionComponentProps {
   moduleId: string;
@@ -33,7 +33,13 @@ const SectionComponent: React.FC<SectionComponentProps> = ({ moduleId }) => {
   }, [moduleId]);
 
   const renderCards = (
-    type: "LISTENING" | "READING" | "SPEAKING" | "WRITING",
+    type:
+      | "LISTENING"
+      | "READING"
+      | "SPEAKING"
+      | "WRITING"
+      | "GRAMMAR"
+      | "VOCABULARY",
   ) => {
     return sections
       .filter((s) => s.sectionType === type)
@@ -110,6 +116,22 @@ const SectionComponent: React.FC<SectionComponentProps> = ({ moduleId }) => {
           <h2 className="text-2xl font-bold mb-6">Luyện Viết</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {renderCards("WRITING")}
+          </div>
+        </div>
+      )}
+      {hasSection("GRAMMAR") && (
+        <div>
+          <h2 className="text-2xl font-bold mb-6">Luyện Viết</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {renderCards("GRAMMAR")}
+          </div>
+        </div>
+      )}
+      {hasSection("VOCABULARY") && (
+        <div>
+          <h2 className="text-2xl font-bold mb-6">Luyện Viết</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {renderCards("VOCABULARY")}
           </div>
         </div>
       )}

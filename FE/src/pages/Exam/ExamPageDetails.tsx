@@ -2,18 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { API_URIS } from "../../api/URIConstant";
 import ExamCardComponent from "../../components/ExamCardComponent";
+import { SRC_IMAGE } from "../../constant/SrcImage";
 import { http } from "../../service/Http";
-interface Exam {
-  id: number;
-  examName: string;
-  duration: number;
-  totalScore: number;
-}
+import { ExamType } from "../../types/exam";
 
 const ExamPageDetails: React.FC = () => {
   const [searchParams] = useSearchParams();
   const testId = searchParams.get("testId");
-  const [exams, setExams] = useState<Exam[]>([]);
+  const [exams, setExams] = useState<ExamType[]>([]);
 
   useEffect(() => {
     const fetchExams = async () => {
@@ -32,9 +28,10 @@ const ExamPageDetails: React.FC = () => {
           <ExamCardComponent
             key={exam.id}
             examName={exam.examName}
-            duration={exam.duration}
+            duration={exam.duration ?? 0}
             totalScore={exam.totalScore}
-            id={exam.id}
+            id={exam.id ?? 0}
+            image={SRC_IMAGE.RANDOM}
           />
         ))}
       </div>

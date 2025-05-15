@@ -70,7 +70,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
     )}`;
   };
   useEffect(() => {
-    if (time <= 0) {
+    if (time <= 0 && !isView) {
       handleSubmitTest(true);
       return;
     }
@@ -94,7 +94,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   }, []);
 
   useEffect(() => {
-    if (duration) {
+    if (duration && duration > 0) {
       setTime(duration * 60);
     }
   }, [duration]);
@@ -129,16 +129,18 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-sm">Thời gian còn lại:</span>
-        <span
-          className={`font-semibold text-xl ${
-            time <= 60 ? "text-red-600 animate-pulse" : ""
-          }`}
-        >
-          {time > 0 ? formatTime(time) : "Hết giờ"}
-        </span>
-      </div>
+      {!isView ? (
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-sm">Thời gian còn lại:</span>
+          <span
+            className={`font-semibold text-xl ${
+              time <= 60 ? "text-red-600 animate-pulse" : ""
+            }`}
+          >
+            {time > 0 ? formatTime(time) : "Hết giờ"}
+          </span>
+        </div>
+      ) : null}
 
       {details?.map((detail, idx) => {
         const partName = detail.part.partName || `Part ${idx + 1}`;
@@ -152,14 +154,16 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
           </div>
         );
       })}
-      <div className="mt-4 text-center">
-        <button
-          className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600"
-          onClick={() => handleSubmitTest(false)}
-        >
-          Submit Test
-        </button>
-      </div>
+      {!isView ? (
+        <div className="mt-4 text-center">
+          <button
+            className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600"
+            onClick={() => handleSubmitTest(false)}
+          >
+            Submit Test
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };

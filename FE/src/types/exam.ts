@@ -4,7 +4,7 @@ export interface ExamType {
   examName: string;
   totalScore: number;
   testType?: string;
-  duration: number;
+  duration?: number;
 }
 
 export type PartType = {
@@ -29,6 +29,7 @@ export type QuestionType = {
   correctAnswer: "A" | "B" | "C" | "D";
   explanation: string | null;
   difficulty: string;
+  selectedAnswer?: string;
 };
 
 export type PartWithQuestionsType = {
@@ -43,7 +44,7 @@ export type DoExamType = {
 
 export type AnswerType = {
   questionId: number;
-  selectedOption: string;
+  selectedOption?: string;
 };
 
 export type TestNavigationProps = {

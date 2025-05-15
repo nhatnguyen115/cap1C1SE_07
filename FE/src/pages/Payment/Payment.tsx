@@ -1,11 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaComments } from "react-icons/fa";
 import { GiBrain } from "react-icons/gi";
 import { IoPlayForward } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
+import { API_URIS } from "../../api/URIConstant";
+import { http } from "../../service/Http";
+import { MembershipPlan } from "../../types/payment";
 
 const PaymentPage: React.FC = () => {
+  const [plans, setPlans] = useState<MembershipPlan[]>([]);
+
+  const handleSubscribe = async (planId: number) => {
+    const confirmed = window.confirm("Bạn có muốn đăng ký gói này không?");
+    if (!confirmed) return;
+
+    try {
+      const response = await http.get(`/user-memberships?planId=${planId}`);
+      const paymentUrl = response.data.data;
+      window.location.href = paymentUrl;
+    } catch (error) {
+      console.error("Lỗi khi đăng ký gói:", error);
+      alert("Đăng ký thất bại!");
+    }
+  };
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const response = await http.get(API_URIS.PAYMENT.PLAN);
+        setPlans(response.data.data || []);
+      } catch (error) {
+        console.error("Error fetching membership plans:", error);
+      }
+    };
+
+    fetchPlans();
+  }, []);
+
+  const renderPlanCard = (plan: MembershipPlan, index: number) => {
+    const isHighlighted = index === 0; // Chọn thẻ đầu làm nổi bật (tuỳ chỉnh theo nhu cầu)
+    const originalPrice = plan.price + 50000; // Giá gạch bỏ giả định
+    const durationInMonths = Math.round(plan.durationDays / 30);
+    const discountPercent = Math.round(
+      100 - (plan.price / originalPrice) * 100,
+    );
+    return (
+      <div
+        key={plan.id}
+        className={`p-6 ${
+          isHighlighted
+            ? "bg-blue-50 border-blue-500"
+            : "bg-gray-100 border-gray-400"
+        } border rounded-lg text-center shadow-md`}
+      >
+        <div className="mb-4">
+          <h3 className="text-xl font-semibold text-blue-600">
+            {durationInMonths} tháng
+          </h3>
+          <p className="text-lg text-gray-700 line-through">
+            {originalPrice.toLocaleString("vi-VN")}đ/tháng
+          </p>
+          <p className="text-xl font-semibold text-blue-600">
+            {plan.price.toLocaleString("vi-VN")}đ/tháng
+          </p>
+        </div>
+        <button
+          onClick={() => handleSubscribe(plan.id)}
+          className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition duration-300 w-full inline-block"
+        >
+          Tiết kiệm {discountPercent}%
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center pt-5">
       {/* Content */}
@@ -21,60 +90,9 @@ const PaymentPage: React.FC = () => {
 
         {/* Payment Options */}
         <div className="grid grid-cols-3 gap-6 mb-6 pb-6">
-          {/* 12 months plan */}
-          <div className="p-6 bg-blue-50 border border-blue-500 rounded-lg text-center shadow-md">
-            <div className="mb-4">
-              <h3 className="text-xl font-semibold text-blue-600">12 tháng</h3>
-              <p className="text-lg text-gray-700 line-through">
-                299.000đ/tháng
-              </p>
-              <p className="text-xl font-semibold text-blue-600">
-                249.000đ/tháng
-              </p>
-            </div>
-            <Link
-              to={PATH_CONSTANTS.PAYMENT.FORM}
-              className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition duration-300 w-full"
-            >
-              Tiết kiệm 50%
-            </Link>
-          </div>
-          {/* 6 months plan */}
-          <div className="p-6 bg-gray-100 border border-gray-400 rounded-lg text-center">
-            <div className="mb-4">
-              <h3 className="text-xl font-semibold text-blue-600">6 tháng</h3>
-              <p className="text-lg text-gray-700 line-through">
-                299.000đ/tháng
-              </p>
-              <p className="text-xl font-semibold text-blue-600">
-                249.000đ/tháng
-              </p>
-            </div>
-            <Link
-              to={PATH_CONSTANTS.PAYMENT.FORM}
-              className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition duration-300 w-full"
-            >
-              Tiết kiệm 50%
-            </Link>
-          </div>
-          {/* 1 month plan */}
-          <div className="p-6 bg-gray-100 border border-gray-400 rounded-lg text-center">
-            <div className="mb-4">
-              <h3 className="text-xl font-semibold text-blue-600">1 tháng</h3>
-              <p className="text-lg text-gray-700 line-through">
-                299.000đ/tháng
-              </p>
-              <p className="text-xl font-semibold text-blue-600">
-                249.000đ/tháng
-              </p>
-            </div>
-            <Link
-              to={PATH_CONSTANTS.PAYMENT.FORM}
-              className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition duration-300 w-full"
-            >
-              Tiết kiệm 50%
-            </Link>
-          </div>
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"> */}
+          {plans.map((plan, index) => renderPlanCard(plan, index))}
+          {/* </div> */}
         </div>
 
         {/* Description Section */}

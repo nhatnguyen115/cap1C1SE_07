@@ -80,7 +80,7 @@ public class PaymentService {
 
         String secureHash = vnPayUtils.hmacSHA512(VNPayConstant.secretKey, hashData.toString());
         queryData.append("&vnp_SecureHash=").append(secureHash);
-
+//        response.sendRedirect(VNPayConstant.vnpPayUrl + "?" + queryData);
         return VNPayConstant.vnpPayUrl + "?" + queryData;
     }
 }

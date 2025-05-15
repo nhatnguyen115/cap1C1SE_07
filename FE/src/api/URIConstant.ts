@@ -37,11 +37,13 @@ export const API_URIS = {
     GET_BY_ID: (id: number | string) => `/sections/${id}`,
     GET_PAGING: (page: number) => `/sections?page=${page}`,
     ADD: (moduleId: number | string) => `/modules/${moduleId}/sections`,
+    GET_ALL: "/sections",
   },
   PRACTICE: {
     GET_ALL_BY_SECTION: (sectionId: number | string) =>
       `/practice?sectionId=${sectionId}`,
     GET_BY_ID: (id: number | string) => `/practice/${id}`,
+    SUBMIT_PART: "/practice/submit-part",
   },
   LESSON: {
     GET_BY_ID: (lessonId: number | string) => `/lessons/${lessonId}`,
@@ -88,5 +90,11 @@ export const API_URIS = {
     START: "/user-test/start-test",
     SUBMIT: "/user-test/submit-test",
     HISTORY: "/user-test",
+    RANK: "/user-test/user-rank",
+  },
+
+  PAYMENT: {
+    PLAN: "/membership-plans",
+    CALLBACK: "/user-memberships/payment/callback",
   },
 };

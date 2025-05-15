@@ -23,8 +23,8 @@ public class UserMembershipController {
                                               HttpServletRequest request,
                                               HttpServletResponse response) {
         try {
-            return new ResponseData<>(HttpStatus.OK.value(), "Register successfully",
-                    userMembershipService.registerMembership(planId, request, response));
+            String url = userMembershipService.registerMembership(planId, request, response);
+            return new ResponseData<>(HttpStatus.OK.value(), "Register successfully",url);
         }catch (Exception ex){
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Register failed");
         }

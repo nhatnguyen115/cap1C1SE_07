@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
 import PartDetailsComponent from "../../components/PartDetailsComponent";
 import { PAGINATION_CONSTANT } from "../../constant/PaginationConstant";
-import { getQuestions } from "../../service/PartService";
+import { getQuestions, getResult } from "../../service/PartService";
 import { LessonPartType } from "../../types/lesson";
 import { QuestionType } from "../../types/part";
 import { SectionType } from "../../types/section";
@@ -26,6 +26,7 @@ const PartDetailsPage: React.FC = () => {
 
   const lessonPartState = location.state?.lessonPart;
   const activeTabState = location.state?.activeTabState;
+  const partName = location.state?.partName;
 
   const { partId } = useParams();
 
@@ -42,6 +43,8 @@ const PartDetailsPage: React.FC = () => {
     location.state?.sections,
   );
 
+  const [questionType, setQuestionType] = useState<string>("");
+
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const handlePageChange = (newPage: number) => {
@@ -52,33 +55,45 @@ const PartDetailsPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const loadQuestions = async () => {
       if (!partId) return;
-      setLoading(true); // reset loading để hiển thị "Đang tải..." khi chuyển tab
+      setLoading(true);
       console.log("currentSections:", currentSections);
 
       try {
-        const response = await getQuestions(
-          partId,
-          page,
-          PAGINATION_CONSTANT.SIZE[1000],
-        );
-        setTotalPages(response.totalPages);
+        // Gọi fetchResult() trước
+        const resultResponse = await getResult(partId);
 
-        if (response) {
-          console.log(response);
+        if (resultResponse?.questions && resultResponse.questions.length > 0) {
+          // Nếu có dữ liệu từ getResult thì dùng luôn
+          console.log("Result:", resultResponse);
+          setQuestionType(resultResponse.part.questionType);
 
-          setQuestions(response.items || []);
-          setElapsedSeconds(response.elapsedSeconds || 0);
+          setQuestions(resultResponse.questions);
+          setElapsedSeconds(resultResponse.part.totalTime || 0);
+          setTotalPages(resultResponse.part.questionCount);
+        } else {
+          // Nếu không có dữ liệu từ getResult thì fallback sang getQuestions
+          const questionResponse = await getQuestions(
+            partId,
+            page,
+            PAGINATION_CONSTANT.SIZE[1000],
+          );
+          console.log("Questions:", questionResponse);
+          setQuestionType(questionResponse.questionType);
+          setQuestions(questionResponse.items || []);
+          setElapsedSeconds(questionResponse.elapsedSeconds || 0);
+          setTotalPages(questionResponse.totalPages);
         }
       } catch (err) {
+        console.error(err);
         setError("Failed to load questions.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchQuestions();
+    loadQuestions();
   }, [partId, page]);
 
   useEffect(() => {
@@ -177,15 +192,19 @@ const PartDetailsPage: React.FC = () => {
                 role="button"
                 tabIndex={0}
                 onClick={() => {
-                  if (part.partId !== undefined) {
-                    setActivePart(part.partId);
-                    navigate(PATH_CONSTANTS.PART.DETAIL(part.partId), {
-                      state: { lessonPart: lessonPart, partId: part.partId },
+                  if (part.id !== undefined) {
+                    setActivePart(part.id);
+                    navigate(PATH_CONSTANTS.PART.DETAIL(part.id), {
+                      state: {
+                        lessonPart: lessonPart,
+                        partId: part.id,
+                        partName: part.partName,
+                      },
                     });
                   }
                 }}
                 className={`text-xs transition rounded-xl px-3 py-1 flex flex-row justify-between${
-                  activePart == part.partId ? " bg-slate-300" : ""
+                  activePart == part.id ? " bg-slate-300" : ""
                 }`}
               >
                 <div>
@@ -209,10 +228,12 @@ const PartDetailsPage: React.FC = () => {
           <div>
             <PartDetailsComponent
               key={partId}
-              partName="Part 1: Photos"
+              partId={Number(partId)}
+              partName={partName}
               questions={questions}
               elapsedSeconds={elapsedSeconds}
               formatTime={formatTime}
+              questionType={questionType}
             />
           </div>
         )}

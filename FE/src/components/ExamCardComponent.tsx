@@ -1,5 +1,5 @@
+import { Award, BookOpen, Users } from "lucide-react";
 import React from "react";
-import { FaClock, FaLightbulb } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../api/PathConstant";
 
@@ -8,6 +8,10 @@ type ExamCardProps = {
   duration: number;
   totalScore: number;
   id: number | string;
+  questions?: number;
+  students?: number;
+  level?: string;
+  image?: string;
 };
 
 const ExamCardComponent: React.FC<ExamCardProps> = ({
@@ -15,35 +19,47 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
   duration,
   totalScore,
   id,
+  questions,
+  students,
+  level,
+  image,
 }) => {
   const navigate = useNavigate();
 
   return (
-    <div
-      onClick={() =>
-        navigate(
-          PATH_CONSTANTS.EXAM.EXAMS_VIEW_BY_ID.replace(":id", id.toString()),
-        )
-      }
-      className="p-10 mb-3 flex flex-col rounded-2xl shadow-xl transform transition duration-300 hover:scale-105"
-    >
-      <div>
-        <img />
+    <div className="border rounded-xl shadow-md p-4 bg-white w-80">
+      <img
+        src={image}
+        alt={examName}
+        className="w-full h-40 object-cover rounded-md"
+      />
+      <h2 className="text-lg font-semibold mt-3">{examName}</h2>
+      <div className="flex items-center gap-2 text-gray-600 text-sm mt-2">
+        <BookOpen size={16} /> <span>Questions: {questions}</span>
+        <Users size={16} className="ml-3" /> <span>Students: {students}</span>
       </div>
-      <div>
-        {" "}
-        <h2 className="text-lg font-semibold">{examName}</h2>
-      </div>
-      <div className="flex flex-row items-center">
-        <FaClock />
-        <p>Thời lượng: {duration} phút</p>
-      </div>
-      <div className="flex flex-row items-center">
-        <FaLightbulb />
-        <p>Tổng điểm: {totalScore}</p>
+      <div className="flex items-center gap-2 text-gray-600 text-sm mt-2">
+        <Award size={16} /> <span className="font-medium">{level}</span>
       </div>
       <div className="flex flex-col justify-center items-center">
-        <button className="bg-blue-500 text-white rounded-2xl px-5 py-2 mt-3 hover:shadow-xl">
+        <button
+          onClick={() =>
+            navigate(
+              PATH_CONSTANTS.USER_TEST.RANK.replace(":id", id.toString()),
+            )
+          }
+          className="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-all"
+        >
+          Bảng xếp hạng
+        </button>
+        <button
+          onClick={() =>
+            navigate(
+              PATH_CONSTANTS.EXAM.EXAMS_DO_BY_ID.replace(":id", id.toString()),
+            )
+          }
+          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-all"
+        >
           Luyện tập ngay
         </button>
       </div>
