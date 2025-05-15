@@ -33,9 +33,10 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
         if (isView) {
           console.log("attemptIdView: ", attemptIdView);
 
-          const res = await http.get("/user-test/get-result", {
+          const res = await http.get(API_URIS.USER_TEST.RESULT, {
             params: { attemptId: attemptIdView },
           });
+
           const rawData: DoExamType = res.data.data;
           const details: PartWithQuestionsType[] = rawData.details;
 
@@ -132,7 +133,9 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
 
     return (
       <div className="mb-8">
-        <h3 className="text-xl font-semibold mb-4">{part.part.partName}</h3>
+        <h3 className="text-3xl text-blue-700 font-semibold mb-4">
+          {part.part.partName}
+        </h3>
         {part.questions.map((question: QuestionType) => {
           const questionNumber = questionCounter++;
           const selectedAnswer = answers.find(
@@ -197,9 +200,14 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
               className="mb-6"
               id={`question-${question.id}`}
             >
-              <p className="font-bold mb-2">
-                Question {questionNumber}: {question.content}
-              </p>
+              <div className="flex flex-row items-center">
+                <div className=" rounded-full bg-blue-400 w-10 h-10 flex flex-col items-center justify-center mr-3">
+                  <p className="text-blue-700">{questionNumber}</p>
+                </div>
+                <p className="font-bold text-2xl ">
+                  Question {}: {question.content}
+                </p>
+              </div>
 
               {question.url && (
                 <img

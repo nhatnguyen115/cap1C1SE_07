@@ -92,6 +92,7 @@ export const API_URIS = {
     SUBMIT: "/user-test/submit-test",
     HISTORY: "/user-test",
     RANK: "/user-test/user-rank",
+    RESULT: "/user-test/get-result",
   },
 
   PAYMENT: {
