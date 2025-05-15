@@ -8,6 +8,7 @@ import com.arkdev.z9tkvtu.model.Exam;
 import com.arkdev.z9tkvtu.service.ExamService;
 import com.arkdev.z9tkvtu.service.PartService;
 import com.arkdev.z9tkvtu.service.UploadExamService;
+import com.arkdev.z9tkvtu.service.UserMembershipService;
 import com.arkdev.z9tkvtu.util.Pagination;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -29,6 +30,7 @@ import java.io.IOException;
 public class ExamController {
     ExamService examService;
     PartService partService;
+    UserMembershipService userMembershipService;
 
     @GetMapping("")
     public ResponseData<?> getExams(@RequestParam(required = false) Integer testId,
@@ -45,6 +47,8 @@ public class ExamController {
     @GetMapping("/{examId}")
     public ResponseData<?> getExam(@PathVariable Integer examId) {
         try {
+            if (userMembershipService.checkResourceAccess(examId, "EXAM"))
+                return new ResponseData<>(HttpStatus.EXPECTATION_FAILED.value(), "Request membership package");
             return new ResponseData<>(HttpStatus.OK.value(), "Get Exam Successfully",
                     examService.getExam(examId));
         } catch (Exception e) {

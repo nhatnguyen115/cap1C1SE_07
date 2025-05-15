@@ -1,11 +1,14 @@
 package com.arkdev.z9tkvtu.service;
 
 import com.arkdev.z9tkvtu.model.MembershipPlan;
+import com.arkdev.z9tkvtu.model.ResourceAccess;
 import com.arkdev.z9tkvtu.model.UserLoginData;
 import com.arkdev.z9tkvtu.model.UserMembership;
 import com.arkdev.z9tkvtu.repository.MembershipPlanRepository;
+import com.arkdev.z9tkvtu.repository.ResourceAccessRepository;
 import com.arkdev.z9tkvtu.repository.UserMembershipRepository;
 import com.arkdev.z9tkvtu.util.MembershipStatus;
+import com.arkdev.z9tkvtu.util.ResourceType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -28,6 +31,7 @@ import java.util.List;
 public class UserMembershipService {
     MembershipPlanRepository membershipPlanRepository;
     UserMembershipRepository userMembershipRepository;
+    ResourceAccessRepository resourceAccessRepository;
     PaymentService paymentService;
 
     @Transactional
@@ -51,6 +55,15 @@ public class UserMembershipService {
 
         userMembershipRepository.save(userMembership);
         return paymentService.createPaymentUrl(membershipPlan.getPrice().intValue(), request, response);
+    }
+
+    public boolean checkResourceAccess(Integer resourceId, String tableName) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserLoginData user = (UserLoginData) auth.getPrincipal();
+        ResourceAccess resourceAccess = resourceAccessRepository.findByResourceId(resourceId)
+                .orElse(new ResourceAccess());
+        return resourceAccess.getResourceType() == ResourceType.MEMBER &&
+                !userMembershipRepository.existsActiveMembership(user.getId());
     }
 
     @Transactional
