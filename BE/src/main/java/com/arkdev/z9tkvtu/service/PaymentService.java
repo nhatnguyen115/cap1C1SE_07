@@ -18,7 +18,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class PaymentService {
     private final VNPayUtils vnPayUtils;
-    public void createPaymentUrl(@NotNull Integer price,
+    public String createPaymentUrl(@NotNull Integer price,
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException {
         String version = "2.1.0";
@@ -81,6 +81,6 @@ public class PaymentService {
         String secureHash = vnPayUtils.hmacSHA512(VNPayConstant.secretKey, hashData.toString());
         queryData.append("&vnp_SecureHash=").append(secureHash);
 
-        response.sendRedirect(VNPayConstant.vnpPayUrl + "?" + queryData);
+        return VNPayConstant.vnpPayUrl + "?" + queryData;
     }
 }

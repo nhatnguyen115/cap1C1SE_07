@@ -17,6 +17,7 @@ create sequence section_part_practice_seq start 1 increment by 50;
 create sequence section_part_answer_seq start 1 increment by 50;
 create sequence membership_plan_seq start 1 increment by 50;
 create sequence user_membership_seq start 1 increment by 50;
+create sequence resource_access_seq start 1 increment by 50;
 ----------------------------------------Security----------------------------------------
 create type gender_type as enum ('MALE', 'FEMALE', 'OTHER');
 create type role_type as enum ('USER', 'ADMIN');
@@ -102,6 +103,7 @@ CREATE TYPE question_type as enum (
     );
 create type media_type as enum ('AUDIO', 'VIDEO', 'IMAGE');
 create type status_type as enum ('ACTIVE', 'EXPIRED', 'CANCELLED', 'PENDING');
+create type resource_type as enum ('FREE', 'MEMBER');
 
 create table menu
 (
@@ -310,4 +312,17 @@ create table user_membership
     updated_at    timestamp,
     updated_by    uuid,
     primary key (membership_id)
+);
+
+create table resource_access
+(
+    access_id     int           not null default nextval('resource_access_seq'),
+    resource_id   int           not null,
+    resource_type resource_type not null,
+    table_name    varchar(20)   not null,
+    created_at    timestamp              default CURRENT_TIMESTAMP,
+    created_by    uuid,
+    updated_at    timestamp,
+    updated_by    uuid,
+    primary key (access_id)
 );
