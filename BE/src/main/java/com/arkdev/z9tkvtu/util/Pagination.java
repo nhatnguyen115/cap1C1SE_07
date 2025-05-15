@@ -32,6 +32,4 @@ public class Pagination {
                 pageResponse.getPageSize()
         );
     }
-
-
 }
