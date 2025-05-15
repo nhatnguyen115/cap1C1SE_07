@@ -175,7 +175,7 @@ const Home = ({ setIsOpen }) => {
                 duration={item.duration ?? 0}
                 totalScore={item.totalScore}
                 id={item.id ?? 0}
-                image={SRC_IMAGE.RANDOM}
+                image={SRC_IMAGE.PRACTICE}
               />
             ))}
             {examsM.map((item, index) => (
@@ -185,7 +185,7 @@ const Home = ({ setIsOpen }) => {
                 duration={item.duration ?? 0}
                 totalScore={item.totalScore}
                 id={item.id ?? 0}
-                image={SRC_IMAGE.RANDOM}
+                image={SRC_IMAGE.PRACTICE}
               />
             ))}
             {examsF.map((item, index) => (
@@ -195,7 +195,7 @@ const Home = ({ setIsOpen }) => {
                 duration={item.duration ?? 0}
                 totalScore={item.totalScore}
                 id={item.id ?? 0}
-                image={SRC_IMAGE.RANDOM}
+                image={SRC_IMAGE.PRACTICE}
               />
             ))}
           </div>

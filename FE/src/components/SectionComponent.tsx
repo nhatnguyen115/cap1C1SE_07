@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../api/PathConstant";
 import { API_URIS } from "../api/URIConstant";
+import { SRC_IMAGE } from "../constant/SrcImage";
 import { sectionMockData } from "../data/sectionMockData";
 import { http } from "../service/Http";
 import { SectionType } from "../types/section";
@@ -56,8 +57,13 @@ const SectionComponent: React.FC<SectionComponentProps> = ({ moduleId }) => {
             })
           }
         >
-          <p className="font-bold text-sm text-gray-500">Phần {index + 1}</p>
-          <h3 className="font-bold text-lg">{s.sectionName}</h3>
+          <img
+            src={SRC_IMAGE.PROGRESS}
+            alt={s.sectionName}
+            className="w-full h-40 object-cover rounded-md mb-5"
+          />
+          {/* <p className="font-bold text-sm text-gray-500">Phần {index + 1}</p> */}
+          <h3 className="font-bold text-lg text-blue-700">{s.sectionName}</h3>
           <p className="text-sm text-gray-600 mt-2">{s.description}</p>
         </div>
       ));

@@ -31,7 +31,7 @@ const ExamPageDetails: React.FC = () => {
             duration={exam.duration ?? 0}
             totalScore={exam.totalScore}
             id={exam.id ?? 0}
-            image={SRC_IMAGE.RANDOM}
+            image={SRC_IMAGE.TEST}
           />
         ))}
       </div>
