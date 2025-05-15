@@ -22,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,8 +62,10 @@ public class UserService {
                 .toList();
     }
 
-    public UserResponse getUser(UUID userId) {
-        return userRepository.findById(userId)
+    public UserResponse getUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserLoginData user = (UserLoginData) auth.getPrincipal();
+        return userRepository.findById(user.getId())
                 .map(dataMapper::toUserResponse)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
@@ -73,6 +77,13 @@ public class UserService {
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void updateUser(UserUpdateRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserLoginData user = (UserLoginData) auth.getPrincipal();
+        dataMapper.updateUserLoginData(user, request);
     }
 
     @Transactional

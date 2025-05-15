@@ -18,25 +18,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class UserController {
     UserService userService;
 
-    @GetMapping("/authorities")
-    public ResponseData<?> getUserAuthorities() {
-        try {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            UserLoginData userLoginData = (UserLoginData) auth.getPrincipal();
-            return new ResponseData<>(HttpStatus.OK.value(), "Get User Authorities Successfully",
-                    userLoginData.getAuthorities());
-        } catch (Exception e) {
-            return new ResponseData<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get User Authorities Failed");
-        }
-    }
-
-    @GetMapping("")
+    @GetMapping("/list")
     public ResponseData<?> getUsers() {
         try {
             return new ResponseData<>(HttpStatus.OK.value(),
@@ -46,11 +34,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{userId}")
-    public ResponseData<?> getUserById(@PathVariable("userId") UUID userId) {
+    @GetMapping("")
+    public ResponseData<?> getUserById() {
         try {
             return new ResponseData<>(HttpStatus.OK.value(),
-                    "Get User Successfully", userService.getUser(userId));
+                    "Get User Successfully", userService.getUser());
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get User Failed");
         }
@@ -66,11 +54,10 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{userId}")
-    public ResponseData<?> updateUser(@PathVariable("userId") UUID userId,
-                                      @RequestBody @Valid UserUpdateRequest request) {
+    @PutMapping("")
+    public ResponseData<?> updateUser(@RequestBody @Valid UserUpdateRequest request) {
         try {
-            userService.updateUser(userId, request);
+            userService.updateUser(request);
             return new ResponseData<>(HttpStatus.OK.value(), "User updated successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "User could not be updated");
