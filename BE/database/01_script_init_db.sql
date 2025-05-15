@@ -93,7 +93,7 @@ create table role_permission
 );
 ----------------------------------------Practice----------------------------------------
 create type content_type as enum ('VIDEO', 'TEXT');
-create type difficulty_level as enum ('BEGINNER', 'intERMEDIATE', 'ADVANCED');
+create type difficulty_level as enum ('BEGINNER', 'INTERMEDIATE', 'ADVANCED');
 create type section_type as enum ('LISTENING', 'READING', 'SPEAKING', 'WRITING');
 CREATE TYPE question_type as enum (
     'MULTIPLE_CHOICE',
