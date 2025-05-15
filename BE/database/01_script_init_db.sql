@@ -135,7 +135,7 @@ create table section
     section_id   int          not null default nextval('section_seq'),
     module_id    int          not null,
     section_name varchar(255) not null,
-    section_type section_type not null,
+    section_type section_type,
     description  text,
     order_number int          not null,
     created_at   timestamp             default CURRENT_TIMESTAMP,
@@ -284,7 +284,7 @@ create table section_part_answer
 );
 create table membership_plan
 (
-    plan_id       int            not null default nextval(''),
+    plan_id       int            not null default nextval('membership_plan_seq'),
     plan_name     varchar(100)   not null,
     description   text,
     price         decimal(10, 2) not null,
@@ -296,10 +296,11 @@ create table membership_plan
     updated_by    uuid,
     primary key (plan_id)
 );
+
 create table user_membership
 (
-    membership_id int         not null default nextval(''),
-    user_id       int         not null,
+    membership_id int         not null default nextval('user_membership_seq'),
+    user_id       uuid        not null,
     plan_id       int         not null,
     start_date    timestamp   not null,
     end_date      timestamp   not null,

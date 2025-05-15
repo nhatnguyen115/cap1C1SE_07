@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/membership-plans")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -21,11 +21,10 @@ public class MembershipPlanController {
     MembershipPlanService membershipPlanService;
 
     @GetMapping("")
-    public ResponseData<?> getMembershipPlans(@RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "10") int size) {
+    public ResponseData<?> getMembershipPlans() {
         try {
             return new ResponseData<>(HttpStatus.OK.value(), "Get Membership Plans Successfully",
-                    Pagination.paginate(membershipPlanService.getMembershipPlans(), PageRequest.of(page, size)));
+                    membershipPlanService.getMembershipPlans());
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Membership Plans Failed");
         }
