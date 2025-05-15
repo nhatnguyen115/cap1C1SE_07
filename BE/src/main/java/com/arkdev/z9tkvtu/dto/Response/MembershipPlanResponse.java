@@ -8,8 +8,10 @@ import java.math.BigDecimal;
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.MembershipPlan}
  */
-public record MembershipPlanResponse(String planName,
-                                     String description,
-                                     BigDecimal price,
-                                     Integer durationDays) implements Serializable {
+public record MembershipPlanResponse(
+        Integer id,
+        String planName,
+        String description,
+        BigDecimal price,
+        Integer durationDays) implements Serializable {
 }
