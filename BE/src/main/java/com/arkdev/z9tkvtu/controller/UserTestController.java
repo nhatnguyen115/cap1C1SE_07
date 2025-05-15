@@ -4,6 +4,7 @@ import com.arkdev.z9tkvtu.dto.Request.UserAnswerRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.service.TestAttemptService;
+import com.arkdev.z9tkvtu.service.UserMembershipService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserTestController {
     TestAttemptService testAttemptService;
+    UserMembershipService userMembershipService;
 
     @GetMapping("")
     public ResponseData<?> getTestHistories() {
@@ -54,7 +56,9 @@ public class UserTestController {
     @PostMapping("/start-test")
     public ResponseData<?> startTest(@RequestParam Integer examId) {
         try {
-
+            if (userMembershipService.checkResourceAccess(examId, "EXAM"))
+                return new ResponseData<>(HttpStatus.EXPECTATION_FAILED.value(), "Request membership package",
+                        "MEMBERSHIP_REQUIREMENTS");
             return new ResponseData<>(HttpStatus.OK.value(), "Start Test Successfully",
                     testAttemptService.startTest(examId));
         } catch (Exception e) {
