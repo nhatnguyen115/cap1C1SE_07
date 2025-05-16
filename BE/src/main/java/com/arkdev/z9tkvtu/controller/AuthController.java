@@ -4,7 +4,10 @@ import com.arkdev.z9tkvtu.dto.Request.SignInRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.configuration.JwtProvider;
+import com.arkdev.z9tkvtu.dto.Response.TokenResponse;
+import com.arkdev.z9tkvtu.model.UserLoginData;
 import com.arkdev.z9tkvtu.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,16 +55,45 @@ public class AuthController {
     }
 
     @GetMapping("/external/callback")
-    public ResponseData<?> externalCallback() throws IOException {
+    public ResponseData<?> externalCallback(@RequestHeader("Authorization") String authHeader) {
         try {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return new ResponseData<>(HttpStatus.UNAUTHORIZED.value(), "Missing or invalid Authorization header!");
+            }
 
-            return new ResponseData<>(HttpStatus.OK.value(),
-                    "Introspect Successful!",
-                    jwtProvider.getToken(auth));
+            String token = authHeader.substring(7);
+            String usernameOrEmail = jwtProvider.extractUsername(token);
+
+            // Gọi hàm mới trong UserService
+            UserLoginData userDetails = userService.loadUserByUsernameOrEmail(usernameOrEmail);
+
+            if (!jwtProvider.validateToken(token, userDetails)) {
+                return new ResponseData<>(HttpStatus.UNAUTHORIZED.value(), "Invalid or expired token!");
+            }
+
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    userDetails.getAuthorities()
+            );
+
+            TokenResponse tokenResponse = jwtProvider.getToken(authentication);
+
+            return new ResponseData<>(HttpStatus.OK.value(), "Introspect Successful!", tokenResponse);
+
         } catch (Exception e) {
-            return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), "Get External Info Error!");
+            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "Get External Info Error!");
         }
+    }
+
+
+
+    private String extractTokenFromHeader(HttpServletRequest request) {
+        String bearer = request.getHeader("Authorization");
+        if (bearer != null && bearer.startsWith("Bearer ")) {
+            return bearer.substring(7);
+        }
+        return null;
     }
 }
 

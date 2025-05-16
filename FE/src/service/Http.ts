@@ -13,7 +13,24 @@ const http = axios.create({
 
 // Gắn token vào request nếu có
 http.interceptors.request.use((config) => {
-  const token = localStorage.getItem(LOCAL_STORAGE_CONSTANT.TOKEN);
+  let token = localStorage.getItem(LOCAL_STORAGE_CONSTANT.TOKEN);
+
+  // Nếu không có trong localStorage thì tìm trong cookie
+  if (!token) {
+    function getCookie(name: string) {
+      const cookies = document.cookie.split(";");
+      for (const cookie of cookies) {
+        const [key, value] = cookie.trim().split("=");
+        if (key === name) {
+          return value;
+        }
+      }
+      return null;
+    }
+
+    const tokenCookie = getCookie("token");
+    token = tokenCookie;
+  }
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

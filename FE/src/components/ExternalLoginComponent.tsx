@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URIS } from "../api/URIConstant";
 import { LOCAL_STORAGE_CONSTANT } from "../constant/LocalStorageConstant";
-import { httpNoAuth } from "../service/Http";
+import { useUser } from "../context/UserContext";
+import { http } from "../service/Http";
 import { PATH_CONSTANTS } from "./../api/PathConstant";
 
 type LoginResponse = {
@@ -18,21 +19,30 @@ const ExternalLoginComponent: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
+  const { setUserRole } = useUser();
 
-  const handleExternalLogin = async () => {
-    try {
-      const response = await httpNoAuth.get(API_URIS.AUTH.EXTERNAL);
+  useEffect(() => {
+    const handleExternalLogin = async () => {
+      try {
+        const response = await http.get(API_URIS.AUTH.EXTERNAL);
 
-      const { token, role } = response.data.data;
-      localStorage.setItem(LOCAL_STORAGE_CONSTANT.TOKEN, token);
-      localStorage.setItem(LOCAL_STORAGE_CONSTANT.ROLE, role);
+        const { token, role } = response.data.data;
+        localStorage.setItem(LOCAL_STORAGE_CONSTANT.TOKEN, token);
+        localStorage.setItem(LOCAL_STORAGE_CONSTANT.ROLE, role);
+        setUserRole(response.data.role);
 
-      setSuccess(true);
-    } catch (error) {
-      console.error("External login failed:", error);
-      setErrorMsg("Đăng nhập thất bại. Vui lòng thử lại!");
-    }
-  };
+        setSuccess(true);
+
+        setTimeout(() => {
+          navigate(PATH_CONSTANTS.ROOT.ROOT);
+        }, 3000);
+      } catch (error) {
+        console.error("External login failed:", error);
+        setErrorMsg("Đăng nhập thất bại. Vui lòng thử lại!");
+      }
+    };
+    handleExternalLogin();
+  }, [navigate]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4">
@@ -41,28 +51,20 @@ const ExternalLoginComponent: React.FC = () => {
           Đăng nhập với Google
         </h2>
 
-        {!success ? (
-          <>
-            <button
-              onClick={handleExternalLogin}
-              className="bg-blue-600 text-white w-full py-3 rounded-md hover:bg-blue-700 transition duration-300"
-            >
-              Đăng nhập
-            </button>
-            {errorMsg && (
-              <p className="mt-4 text-center text-red-500">{errorMsg}</p>
-            )}
-          </>
-        ) : (
+        {errorMsg && (
+          <p className="mt-4 text-center text-red-500">{errorMsg}</p>
+        )}
+
+        {success && (
           <div className="text-center">
             <p className="text-green-600 mb-4 font-medium">
-              Đăng nhập thành công!
+              Đăng nhập thành công! Đang chuyển về trang chủ...
             </p>
             <button
               onClick={() => navigate(PATH_CONSTANTS.ROOT.ROOT)}
               className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition"
             >
-              Quay về trang chủ
+              Quay về trang chủ ngay
             </button>
           </div>
         )}
