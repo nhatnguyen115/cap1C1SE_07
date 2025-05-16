@@ -10,6 +10,7 @@ import com.arkdev.z9tkvtu.repository.TestRepository;
 import com.arkdev.z9tkvtu.util.DifficultyLevel;
 import com.arkdev.z9tkvtu.util.MediaType;
 import com.arkdev.z9tkvtu.util.QuestionType;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
@@ -33,54 +34,74 @@ public class UploadExamService {
     TestRepository testRepository;
 
     @Transactional
-    public void addExamFromExcel(Integer testId, MultipartFile file) throws IOException {
+    public void addExamFromExcel(Integer testId, MultipartFile file) {
         try (Workbook workbook= new XSSFWorkbook(file.getInputStream())) {
-            Sheet sheet = workbook.getSheetAt(0);
             Test test = testRepository.findById(testId)
                     .orElseThrow(() -> new RuntimeException("test not found"));
-            Exam exam = new Exam();
-            Part part = new Part();
-            Question question = new Question();
-            Media media = new Media();
-            for (Row row : sheet) {
-                if (row.getCell(0).getStringCellValue().equalsIgnoreCase("EXAM")) {
-                    exam.setExamName(row.getCell(1).getStringCellValue());
-                    exam.setDuration((int) row.getCell(2).getNumericCellValue());
-                    exam.setTotalScore((int) row.getCell(3).getNumericCellValue());
-                    test.getExams().add(exam);
-                    exam.setTest(test);
-                } else if (row.getCell(0).getStringCellValue().equalsIgnoreCase("PART")) {
-                    part.setPartName(row.getCell(1).getStringCellValue());
-                    part.setDescription(row.getCell(2).getStringCellValue());
-                    part.setQuestionType(QuestionType.valueOf(row.getCell(3).getStringCellValue()));
-                    part.setInstructions(row.getCell(4).getStringCellValue());
-                    part.setQuestionCount((int) row.getCell(5).getNumericCellValue());
-                    part.setOrderNumber((int) row.getCell(6).getNumericCellValue());
-                    if (row.getCell(7) != null) {
-                        media.setMediaType(MediaType.valueOf(row.getCell(7).getStringCellValue()));
-                        media.setUrl(row.getCell(8).getStringCellValue());
-                        part.setMedia(media);
-                    }
-                    part = partRepository.save(part);
-                    exam.getParts().add(part);
-                } else if (row.getCell(0).getStringCellValue().equalsIgnoreCase("QUESTION")) {
-                    question.setContent(row.getCell(1).getStringCellValue());
-                    question.setOptions(new ObjectMapper().readValue(row.getCell(2).getStringCellValue(),
-                            new TypeReference<>() {}));
-                    question.setCorrectAnswer(row.getCell(3).getStringCellValue());
-                    question.setExplanation(row.getCell(4).getStringCellValue());
-                    question.setDifficulty(DifficultyLevel.valueOf(row.getCell(5).getStringCellValue()));
-                    if (row.getCell(6) != null) {
-                        media.setMediaType(MediaType.valueOf(row.getCell(6).getStringCellValue()));
-                        media.setUrl(row.getCell(7).getStringCellValue());
-                        question.setMedia(media);
-                    }
-                    part.getQuestions().add(question);
-                    question.setPart(part);
-                }
-            }
+            setExamData(workbook, test);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void setExamData(Workbook workbook, Test test) throws JsonProcessingException {
+        Row row = workbook.getSheet("EXAM").getRow(1);
+        Exam exam = new Exam();
+        exam.setExamName(row.getCell(0).getStringCellValue());
+        exam.setTotalScore((int) row.getCell(1).getNumericCellValue());
+        exam.setDuration((int) row.getCell(2).getNumericCellValue());
+        test.getExams().add(exam);
+        exam.setTest(test);
+        setPartsData(workbook, exam);
+    }
+
+    private void setPartsData(Workbook workbook, Exam exam) throws JsonProcessingException {
+        Sheet sheet = workbook.getSheet("PART");
+        Part part = new Part();
+        Media media = new Media();
+        for (Row row : sheet) {
+            if (row.getRowNum() == 0) continue;
+            part.setOrderNumber((int) row.getCell(0).getNumericCellValue());
+            part.setPartName(row.getCell(1).getStringCellValue());
+            part.setDescription(row.getCell(2).getStringCellValue());
+            part.setQuestionType(QuestionType.valueOf(row.getCell(3).getStringCellValue()));
+            part.setInstructions(row.getCell(4).getStringCellValue());
+            part.setQuestionCount((int) row.getCell(5).getNumericCellValue());
+            if(row.getCell(6) != null &&
+                    !row.getCell(6).getStringCellValue().isEmpty() &&
+                    !row.getCell(6).getStringCellValue().isBlank()) {
+                media.setMediaType(MediaType.valueOf(row.getCell(6).getStringCellValue()));
+                media.setUrl(row.getCell(7).getStringCellValue());
+                part.setMedia(media);
+            }
+            part = partRepository.save(part);
+            exam.getParts().add(part);
+            setQuestionsData(workbook, part);
+        }
+    }
+
+    private void setQuestionsData(Workbook workbook, Part part) throws JsonProcessingException {
+        Sheet sheet = workbook.getSheet(part.getPartName());
+        Question question = new Question();
+        Media media = new Media();
+        for (Row row : sheet) {
+            if (row.getRowNum() == 0) continue;
+            question.setOrderNumber((int) row.getCell(0).getNumericCellValue());
+            question.setContent(row.getCell(1).getStringCellValue());
+            question.setOptions(new ObjectMapper().readValue(row.getCell(2).getStringCellValue(),
+                    new TypeReference<>() {}));
+            question.setCorrectAnswer(row.getCell(3).getStringCellValue());
+            question.setExplanation(row.getCell(4).getStringCellValue());
+            question.setDifficulty(DifficultyLevel.valueOf(row.getCell(5).getStringCellValue()));
+            if (row.getCell(6) != null &&
+                    !row.getCell(6).getStringCellValue().isEmpty() &&
+                    !row.getCell(6).getStringCellValue().isBlank()) {
+                media.setMediaType(MediaType.valueOf(row.getCell(6).getStringCellValue()));
+                media.setUrl(row.getCell(7).getStringCellValue());
+                question.setMedia(media);
+            }
+            part.getQuestions().add(question);
+            question.setPart(part);
         }
     }
 }
