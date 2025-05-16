@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -57,23 +58,16 @@ public class UploadExamService {
 
     private void setPartsData(Workbook workbook, Exam exam) throws JsonProcessingException {
         Sheet sheet = workbook.getSheet("PART");
-        Part part = new Part();
-        Media media = new Media();
         for (Row row : sheet) {
             if (row.getRowNum() == 0) continue;
+            Part part = new Part();
             part.setOrderNumber((int) row.getCell(0).getNumericCellValue());
             part.setPartName(row.getCell(1).getStringCellValue());
             part.setDescription(row.getCell(2).getStringCellValue());
             part.setQuestionType(QuestionType.valueOf(row.getCell(3).getStringCellValue()));
             part.setInstructions(row.getCell(4).getStringCellValue());
             part.setQuestionCount((int) row.getCell(5).getNumericCellValue());
-            if(row.getCell(6) != null &&
-                    !row.getCell(6).getStringCellValue().isEmpty() &&
-                    !row.getCell(6).getStringCellValue().isBlank()) {
-                media.setMediaType(MediaType.valueOf(row.getCell(6).getStringCellValue()));
-                media.setUrl(row.getCell(7).getStringCellValue());
-                part.setMedia(media);
-            }
+            part.setMedia(setMediaData(row));
             part = partRepository.save(part);
             exam.getParts().add(part);
             setQuestionsData(workbook, part);
@@ -82,10 +76,9 @@ public class UploadExamService {
 
     private void setQuestionsData(Workbook workbook, Part part) throws JsonProcessingException {
         Sheet sheet = workbook.getSheet(part.getPartName());
-        Question question = new Question();
-        Media media = new Media();
         for (Row row : sheet) {
             if (row.getRowNum() == 0) continue;
+            Question question = new Question();
             question.setOrderNumber((int) row.getCell(0).getNumericCellValue());
             question.setContent(row.getCell(1).getStringCellValue());
             question.setOptions(new ObjectMapper().readValue(row.getCell(2).getStringCellValue(),
@@ -93,15 +86,20 @@ public class UploadExamService {
             question.setCorrectAnswer(row.getCell(3).getStringCellValue());
             question.setExplanation(row.getCell(4).getStringCellValue());
             question.setDifficulty(DifficultyLevel.valueOf(row.getCell(5).getStringCellValue()));
-            if (row.getCell(6) != null &&
-                    !row.getCell(6).getStringCellValue().isEmpty() &&
-                    !row.getCell(6).getStringCellValue().isBlank()) {
-                media.setMediaType(MediaType.valueOf(row.getCell(6).getStringCellValue()));
-                media.setUrl(row.getCell(7).getStringCellValue());
-                question.setMedia(media);
-            }
+            question.setMedia(setMediaData(row));
             part.getQuestions().add(question);
             question.setPart(part);
         }
+    }
+    private Media setMediaData(Row row) {
+        if (row.getCell(6) != null &&
+                !row.getCell(6).getStringCellValue().isEmpty() &&
+                !row.getCell(6).getStringCellValue().isBlank()) {
+            Media media = new Media();
+            media.setMediaType(MediaType.valueOf(row.getCell(6).getStringCellValue()));
+            media.setUrl(row.getCell(7).getStringCellValue());
+            return media;
+        }
+        return null;
     }
 }
