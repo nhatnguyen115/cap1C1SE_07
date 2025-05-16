@@ -63,3 +63,6 @@ VALUES (0, null, '/', -1, 0, true, null, ''),
 
 INSERT INTO public.menu (menu_id,"label",url,parent_id,order_number,description,status) VALUES
 	 (300303,'Trang Chủ','/',0,0,NULL,true);
+
+INSERT INTO public.menu (menu_id,"label",url,parent_id,order_number,description,status) VALUES
+ (300304,'Premium','/payment',0,6,NULL,true);

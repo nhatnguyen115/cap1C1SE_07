@@ -11,6 +11,7 @@ public class SecurityConstant {
             ,"/users"
             ,"/users/add"
             ,"/auth/**"
+            ,"/api/v1/auth/introspect"
             ,"/menu"
             ,"/sections"
             ,"/practice/**"
@@ -19,6 +20,8 @@ public class SecurityConstant {
             ,"/exams/**"
             ,"/tests/**"
             ,"/user-memberships/payment/callback"
+            ,"/auth/external/callback"
+            ,"/api/v1/auth/external/callback"
     };
 
     public static final List<String> ORIGINS_ALLOWED = Arrays.asList(

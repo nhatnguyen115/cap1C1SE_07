@@ -1,12 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-  FaTachometerAlt,
-  FaUsers,
-  FaQuestionCircle,
-  FaFileAlt,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { SRC_IMAGE } from "../constant/SrcImage";
 import { adminMenuItems } from "./data/adminMenuItems";
 
 interface LeftSidebarAdminProps {
@@ -27,7 +21,7 @@ const LeftSidebarAdmin: React.FC<LeftSidebarAdminProps> = ({
       {/* Phần thông tin người dùng */}
       <div className="flex items-center mb-6">
         <img
-          src="./../src/assets/images/ai-image.png" // Thay ảnh avatar của Admin
+          src={SRC_IMAGE.AI_IMAGE} // Thay ảnh avatar của Admin
           alt="Avatar"
           className="w-10 h-10 rounded-full mr-3"
         />

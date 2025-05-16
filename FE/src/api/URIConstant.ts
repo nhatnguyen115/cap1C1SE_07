@@ -5,12 +5,14 @@ export const API_URIS = {
     LOGOUT: "/auth/logout",
     REFRESH_TOKEN: "/auth/refresh-token",
     RESET_PASSWORD: "/auth/reset-password",
+    EXTERNAL: "/auth/external/callback",
   },
   USER: {
     ADD: "/user",
     GET_PROFILE: "/user/profile",
     UPDATE_PROFILE: "/user/update",
     CHANGE_PASSWORD: "/user/change-password",
+    INFO: "/users",
   },
   PRODUCT: {
     GET_ALL: "/products",
@@ -91,10 +93,12 @@ export const API_URIS = {
     SUBMIT: "/user-test/submit-test",
     HISTORY: "/user-test",
     RANK: "/user-test/user-rank",
+    RESULT: "/user-test/get-result",
   },
 
   PAYMENT: {
     PLAN: "/membership-plans",
     CALLBACK: "/user-memberships/payment/callback",
+    SUBSCRIBE: (planId: number) => `/user-memberships?planId=${planId}`,
   },
 };

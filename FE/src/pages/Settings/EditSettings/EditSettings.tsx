@@ -3,10 +3,12 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"; // Sử dụng react-icons c
 import { Link } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../../api/PathConstant";
 import LeftSidebarUser from "../../../components/LeftSidebarUser";
+import { LOCAL_STORAGE_CONSTANT } from "../../../constant/LocalStorageConstant";
 const EditSettings: React.FC = () => {
   // State để quản lý hiển thị/ẩn mật khẩu
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const fullName = localStorage.getItem(LOCAL_STORAGE_CONSTANT.FULL_NAME);
 
   return (
     <div className="min-h-screen flex">
@@ -26,7 +28,7 @@ const EditSettings: React.FC = () => {
               </label>
               <input
                 type="text"
-                defaultValue="Khanh Huyen"
+                defaultValue={fullName ?? ""}
                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>

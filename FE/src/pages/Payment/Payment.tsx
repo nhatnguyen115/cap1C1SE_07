@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaComments } from "react-icons/fa";
 import { GiBrain } from "react-icons/gi";
@@ -5,23 +6,29 @@ import { IoPlayForward } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
 import { API_URIS } from "../../api/URIConstant";
+import ConfirmDialogComponent from "../../components/ConfirmDialogComponent";
 import { http } from "../../service/Http";
 import { MembershipPlan } from "../../types/payment";
 
 const PaymentPage: React.FC = () => {
   const [plans, setPlans] = useState<MembershipPlan[]>([]);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const [planId, setPlanId] = useState<number>(0);
 
   const handleSubscribe = async (planId: number) => {
-    const confirmed = window.confirm("Bạn có muốn đăng ký gói này không?");
-    if (!confirmed) return;
-
     try {
-      const response = await http.get(`/user-memberships?planId=${planId}`);
-      const paymentUrl = response.data.data;
-      window.location.href = paymentUrl;
+      const response = await http.get(API_URIS.PAYMENT.SUBSCRIBE(planId));
+      if (response.data.status == 500) {
+        notification.error({
+          message: response.data.message,
+        });
+      } else {
+        const paymentUrl = response.data.data;
+        window.location.href = paymentUrl;
+      }
     } catch (error) {
       console.error("Lỗi khi đăng ký gói:", error);
-      alert("Đăng ký thất bại!");
     }
   };
 
@@ -66,7 +73,10 @@ const PaymentPage: React.FC = () => {
           </p>
         </div>
         <button
-          onClick={() => handleSubscribe(plan.id)}
+          onClick={() => {
+            setShowConfirm(true);
+            setPlanId(plan.id);
+          }}
           className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition duration-300 w-full inline-block"
         >
           Tiết kiệm {discountPercent}%
@@ -94,6 +104,17 @@ const PaymentPage: React.FC = () => {
           {plans.map((plan, index) => renderPlanCard(plan, index))}
           {/* </div> */}
         </div>
+
+        <ConfirmDialogComponent
+          isOpen={showConfirm}
+          title="Xác nhận đăng ký"
+          message="Bạn có muốn đăng ký gói này không?"
+          onConfirm={() => {
+            handleSubscribe(planId);
+            setShowConfirm(false);
+          }}
+          onCancel={() => setShowConfirm(false)}
+        />
 
         {/* Description Section */}
         <div className=" p-6 rounded-lg shadow-md max-w-md mx-auto">

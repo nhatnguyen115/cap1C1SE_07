@@ -175,7 +175,10 @@ const Home = ({ setIsOpen }) => {
                 duration={item.duration ?? 0}
                 totalScore={item.totalScore}
                 id={item.id ?? 0}
-                image={SRC_IMAGE.RANDOM}
+                questions={item.questions ?? 10}
+                students={item.students ?? 10}
+                level={item.level ?? "BEGINNER"}
+                image={SRC_IMAGE.PRACTICE}
               />
             ))}
             {examsM.map((item, index) => (
@@ -185,7 +188,10 @@ const Home = ({ setIsOpen }) => {
                 duration={item.duration ?? 0}
                 totalScore={item.totalScore}
                 id={item.id ?? 0}
-                image={SRC_IMAGE.RANDOM}
+                questions={item.questions ?? 10}
+                students={item.students ?? 10}
+                level={item.level ?? "BEGINNER"}
+                image={SRC_IMAGE.PRACTICE}
               />
             ))}
             {examsF.map((item, index) => (
@@ -195,7 +201,10 @@ const Home = ({ setIsOpen }) => {
                 duration={item.duration ?? 0}
                 totalScore={item.totalScore}
                 id={item.id ?? 0}
-                image={SRC_IMAGE.RANDOM}
+                questions={item.questions ?? 10}
+                students={item.students ?? 10}
+                level={item.level ?? "BEGINNER"}
+                image={SRC_IMAGE.PRACTICE}
               />
             ))}
           </div>

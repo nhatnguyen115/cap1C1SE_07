@@ -53,6 +53,7 @@ public class UserService {
     }
     public UserDetailsService getUserDetailsService() {
         return username -> userRepository.findByUsername(username)
+                .or(() -> userRepository.findByEmail(username))
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
@@ -99,4 +100,12 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         userRepository.delete(userLoginData);
     }
+
+    public UserLoginData loadUserByUsernameOrEmail(String usernameOrEmail) {
+        return userRepository.findByUsername(usernameOrEmail)
+                .or(() -> userRepository.findByEmail(usernameOrEmail))
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
+    }
+
+
 }

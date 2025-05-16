@@ -10,6 +10,7 @@ export const PATH_CONSTANTS = {
     REFRESH_TOKEN: "/auth/refresh-token",
     RESET_PASSWORD: "/reset-password",
     FORGOT_PASSWORD: "/forgot-password",
+    EXTERNAL: "/auth/external/callback",
   },
 
   USER: {

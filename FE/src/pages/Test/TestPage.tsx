@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../../api/PathConstant";
 import { API_URIS } from "../../api/URIConstant";
+import { SRC_IMAGE } from "../../constant/SrcImage";
 import { http } from "../../service/Http";
 import { TestType } from "../../types/test";
 
@@ -34,8 +35,13 @@ const TestPage: React.FC = () => {
         {tests.map((test) => (
           <div
             key={test.id}
-            className="px-5 py-5 mb-3 flex flex-col rounded-2xl bg-gradient-to-r from-yellow-100 via-yellow-200 to-red-200 transform transition duration-300 hover:scale-105"
+            className="px-5 py-5 mb-10 flex flex-col rounded-2xl bg-gradient-to-r from-yellow-100 via-yellow-200 to-red-200 transform transition duration-300 hover:scale-105"
           >
+            <img
+              src={SRC_IMAGE.TEST}
+              alt={test.testType}
+              className="w-full h-40 object-cover rounded-md mb-5"
+            />
             <h1>{test.testType}</h1>
             <span className="text-xs">
               Luyện thi mô phỏng trên máy tính như thi thật giúp bạn làm quen
