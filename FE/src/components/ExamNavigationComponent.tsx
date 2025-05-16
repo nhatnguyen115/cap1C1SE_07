@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { API_URIS } from "../api/URIConstant";
 import { http } from "../service/Http";
 import { QuestionType, TestNavigationProps } from "../types/exam";
+import { useNavigate } from "react-router-dom";
 
 const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   isView,
@@ -16,6 +17,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   const [time, setTime] = useState<number>(1);
 
   let questionCounter = 1;
+const navigate = useNavigate();
 
   const handleSubmitTest = async (isAutoSubmit = false) => {
     try {
@@ -45,6 +47,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
         notification.success({
           message: message || "Bạn đã nộp bài thành công.",
         });
+      navigate(`/exams/view/${attemptId}`);
       }
       // Optional: chuyển trang hoặc disable giao diện
     } catch (error: any) {
