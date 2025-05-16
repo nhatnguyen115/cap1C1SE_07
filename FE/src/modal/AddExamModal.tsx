@@ -106,7 +106,7 @@ const AddExamModal: React.FC<AddExamModalProps> = ({
             }}
             className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
           >
-            <option value="">-- Chọn test --</option>
+            <option value="">Chọn test</option>
             {tests.map((test) => (
               <option key={test.id} value={test.id}>
                 {test.testType}

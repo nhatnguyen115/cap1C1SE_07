@@ -5,6 +5,7 @@ import { API_URIS } from "../../../api/URIConstant";
 import ExamDetailsManagementComponent from "../../../components/ExamDetailsManagementComponent";
 import LeftSidebarAdmin from "../../../components/LeftSidebarAdmin";
 import PaginationComponent from "../../../components/PaginationComponent";
+import UploadExcelComponent from "../../../components/UploadExcelComponent";
 import AddExamModal from "../../../modal/AddExamModal";
 import AddPartModal from "../../../modal/AddPartModal";
 import { http } from "../../../service/Http";
@@ -28,6 +29,7 @@ const TestManagementPage: React.FC = () => {
   const [isAddPartModalOpen, setAddPartModalOpen] = useState(false);
 
   const [examId, setExamId] = useState<number>(0);
+  const [showUploader, setShowUploader] = useState(false);
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 0 && newPage < totalPages) {
@@ -121,6 +123,30 @@ const TestManagementPage: React.FC = () => {
       <div className="flex-1 p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Quản lý Đề thi</h1>
+          <button
+            onClick={() => setShowUploader(true)}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Tải lên Excel
+          </button>
+
+          {/* Modal Overlay */}
+          {showUploader && (
+            <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
+              <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg relative">
+                {/* Nút đóng */}
+                <button
+                  onClick={() => setShowUploader(false)}
+                  className="absolute top-2 right-5 text-gray-500 hover:text-gray-700 text-xl"
+                >
+                  &times;
+                </button>
+
+                {/* Component upload */}
+                <UploadExcelComponent />
+              </div>
+            </div>
+          )}
           <button
             className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition"
             onClick={() => setAddExamModalOpen(true)}

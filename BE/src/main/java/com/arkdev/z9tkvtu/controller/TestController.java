@@ -69,7 +69,7 @@ public class TestController {
         }
     }
     @PostMapping("/{testId}/upload/excel")
-    public ResponseData<?> uploadExam(@RequestBody MultipartFile file,
+    public ResponseData<?> uploadExam(@RequestParam MultipartFile file,
                                       @PathVariable("testId") Integer testId) throws IOException {
         try {
             uploadExamService.addExamFromExcel(testId, file);
