@@ -70,10 +70,10 @@ export const MenuNavComponent = ({ menuItems }: Props) => {
                 search: query ? `?${query}` : "",
               }}
               state={{ moduleId: item.itemId }}
-              className={`hidden sm:flex items-center gap-1 px-2 py-1 rounded transition duration-200 transform ${
+              className={`hidden sm:flex items-center gap-1 px-2 py-1 font-bold rounded transition duration-200 transform ${
                 isActive(item)
-                  ? "text-orange-600 text-xl"
-                  : "text-gray-600 hover:text-orange-500 hover:-translate-y-0.5"
+                  ? "text-blue-600 text-xl"
+                  : "text-gray-600 hover:text-blue-500 hover:-translate-y-0.5"
               }`}
             >
               <span>{item.label}</span>
@@ -108,7 +108,7 @@ export const MenuNavComponent = ({ menuItems }: Props) => {
                       }}
                       className={`block px-4 py-2 transition duration-150 ${
                         isActive(child)
-                          ? "text-orange-600 bg-gray-100"
+                          ? "text-blue-600 bg-gray-100"
                           : "text-gray-700 hover:bg-gray-100"
                       }`}
                     >
@@ -126,7 +126,7 @@ export const MenuNavComponent = ({ menuItems }: Props) => {
                 search: query ? `?${query}` : "",
               }}
               className={`sm:hidden block px-2 py-1 ${
-                isActive(item) ? "text-orange-600" : "text-gray-600"
+                isActive(item) ? "text-blue-600" : "text-gray-600"
               }`}
             >
               {item.label}

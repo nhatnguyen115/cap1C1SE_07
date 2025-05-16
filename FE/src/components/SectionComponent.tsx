@@ -127,7 +127,7 @@ const SectionComponent: React.FC<SectionComponentProps> = ({ moduleId }) => {
       )}
       {hasSection("GRAMMAR") && (
         <div>
-          <h2 className="text-2xl font-bold mb-6">Luyện Viết</h2>
+          <h2 className="text-2xl font-bold mb-6">Ngữ Pháp</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {renderCards("GRAMMAR")}
           </div>
@@ -135,7 +135,7 @@ const SectionComponent: React.FC<SectionComponentProps> = ({ moduleId }) => {
       )}
       {hasSection("VOCABULARY") && (
         <div>
-          <h2 className="text-2xl font-bold mb-6">Luyện Viết</h2>
+          <h2 className="text-2xl font-bold mb-6">Từ Vựng</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {renderCards("VOCABULARY")}
           </div>

@@ -5,6 +5,9 @@ import IcBreadcrumbGbk from "../../assets/icons/IcBreadcrumbGbk";
 import ExamNavigationComponent from "../../components/ExamNavigationComponent";
 import { http } from "../../service/Http";
 
+import { animateScroll as scroll } from "react-scroll";
+
+import { notification } from "antd";
 import {
   AnswerType,
   DoExamType,
@@ -59,6 +62,11 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
             {},
             { params: { examId: id } },
           );
+          if (startTest.data.status == 417) {
+            notification.error({
+              message: startTest.data.message,
+            });
+          }
           const attemptId = startTest.data.data;
           setAttemptId(attemptId);
           const res = await http.get(API_URIS.EXAMS.DO_BY_EXAM_ID(id!));
@@ -88,6 +96,10 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
   useEffect(() => {
     console.log("answers: ", answers);
   }, [answers]);
+
+  useEffect(() => {
+    scroll.scrollToTop({ smooth: true, duration: 500 });
+  }, []);
 
   const handleGoBack = () => {
     navigate(-1);
