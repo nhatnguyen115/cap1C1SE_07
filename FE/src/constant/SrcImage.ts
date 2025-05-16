@@ -7,4 +7,5 @@ export const SRC_IMAGE = {
   HANDS: "./../src/assets/images/hands-pinches.png",
   AI_IMAGE: "./../src/assets/images/ai-image.png",
   TEST: "./../src/assets/images/toeic-online-full-test.png",
+  GOOGLE: "./../src/assets/icons/google.png",
 };

@@ -5,7 +5,10 @@ import { PATH_CONSTANTS } from "../../api/PathConstant";
 import { LOCAL_STORAGE_CONSTANT } from "../../constant/LocalStorageConstant";
 import { useUser } from "../../context/UserContext";
 import { login } from "../../service/AuthService";
+import { httpNoAuth } from "../../service/Http";
 import { LoginType } from "../../types/auth";
+
+import { SRC_IMAGE } from "../../constant/SrcImage";
 
 const Login: React.FC = () => {
   // const [email, setEmail] = useState("");
@@ -15,6 +18,16 @@ const Login: React.FC = () => {
   const { setUserRole } = useUser(); // 👈 lấy từ context
 
   const navigate = useNavigate();
+
+  const handleGoogleLogin = async () => {
+    try {
+      const response = await httpNoAuth.get("/oauth2/authorization/google");
+    } catch (error: any) {
+      window.location.href = `${
+        import.meta.env.VITE_API_URL || "http://localhost:8080"
+      }/oauth2/authorization/google`;
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,6 +137,17 @@ const Login: React.FC = () => {
             >
               Đăng nhập
             </button>
+            <div className="mt-4 text-center">
+              <span className="text-sm text-gray-600">Đăng nhập với</span>
+              <div className="mt-2 flex justify-center">
+                <img
+                  src={SRC_IMAGE.GOOGLE}
+                  alt="Google"
+                  className="w-8 h-8 cursor-pointer hover:scale-110 transition"
+                  onClick={handleGoogleLogin}
+                />
+              </div>
+            </div>
           </form>
           <div className="mt-4 text-center">
             <p className="text-sm">
