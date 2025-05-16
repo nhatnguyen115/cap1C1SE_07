@@ -15,8 +15,26 @@ const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
 
   const fullName = localStorage.getItem(LOCAL_STORAGE_CONSTANT.FULL_NAME);
 
+  function deleteAllCookies() {
+    const cookies = document.cookie.split(";");
+
+    for (let cookie of cookies) {
+      const eqPos = cookie.indexOf("=");
+      const name =
+        eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim();
+
+      // Xoá cookie tại path hiện tại
+      document.cookie =
+        name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+      // Xoá thêm ở path gốc nếu cần
+      document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    }
+  }
+
   const handleLogout = () => {
     localStorage.clear();
+    deleteAllCookies();
     setUserRole(null);
   };
   return (

@@ -8,21 +8,27 @@ import com.arkdev.z9tkvtu.dto.Response.TokenResponse;
 import com.arkdev.z9tkvtu.model.UserLoginData;
 import com.arkdev.z9tkvtu.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -35,6 +41,8 @@ public class AuthController {
     UserService userService;
     AuthenticationManager manager;
 
+    @Autowired
+    private SecurityContextRepository securityContextRepository;
     @PostMapping("/introspect")
     public ResponseData<?> introspect(@RequestBody @Valid SignInRequest request) {
         try {
@@ -55,7 +63,7 @@ public class AuthController {
     }
 
     @GetMapping("/external/callback")
-    public ResponseData<?> externalCallback(@RequestHeader("Authorization") String authHeader) {
+    public ResponseData<?> externalCallback(@RequestHeader("Authorization") String authHeader, HttpServletRequest request, HttpServletResponse response) {
         try {
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 return new ResponseData<>(HttpStatus.UNAUTHORIZED.value(), "Missing or invalid Authorization header!");
@@ -76,7 +84,11 @@ public class AuthController {
                     null,
                     userDetails.getAuthorities()
             );
-
+            if (authentication.isAuthenticated()) {
+                SecurityContext sc = SecurityContextHolder.getContextHolderStrategy().createEmptyContext();
+                sc.setAuthentication(authentication);
+                securityContextRepository.saveContext(sc, request, response);
+            }
             TokenResponse tokenResponse = jwtProvider.getToken(authentication);
 
             return new ResponseData<>(HttpStatus.OK.value(), "Introspect Successful!", tokenResponse);
@@ -87,13 +99,5 @@ public class AuthController {
     }
 
 
-
-    private String extractTokenFromHeader(HttpServletRequest request) {
-        String bearer = request.getHeader("Authorization");
-        if (bearer != null && bearer.startsWith("Bearer ")) {
-            return bearer.substring(7);
-        }
-        return null;
-    }
 }
 
