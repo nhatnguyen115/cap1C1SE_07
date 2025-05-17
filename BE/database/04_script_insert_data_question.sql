@@ -267,3 +267,23 @@ INSERT INTO public.question (part_id, content, options, correct_answer, explanat
 (551, 'What does the woman say about the clients?', '{"A": "Their flight was delayed.", "B": "Their contract has not been signed.", "C": "They prefer to try a seafood restaurant.", "D": "They want to visit museums."}', 'C', '', 37),
 (551, 'What does the man suggest doing?', '{"A": "Updating an event calendar", "B": "Trying some local food", "C": "Taking a bus tour", "D": "Making reservations"}', 'B', '', 38),
 (551, 'Look at the graphic. Which location will the speakers go to?', '{"A": "65 Elm St.", "B": "2 Peach St.", "C": "41 Ames Ave.", "D": "7 Edson Rd."}', 'A', '', 39);
+
+ALTER TYPE question_type ADD VALUE 'ESSAY';
+UPDATE public."section"
+SET   "section_type"='WRITING'::public."section_type"
+WHERE section_id=100350;
+
+UPDATE public."section"
+SET   "section_type"='WRITING'::public."section_type"
+WHERE section_id=100351;
+
+UPDATE public."section"
+SET   "section_type"='WRITING'::public."section_type"
+WHERE section_id=100352;
+
+INSERT INTO public.part (part_id, part_name, description, "question_type", instructions, media_id, question_count, order_number, created_at, created_by, updated_at, updated_by)
+VALUES(1301, 'Part 13', 'Writing', 'ESSAY'::public."question_type", NULL, NULL, 5, 13, '2025-05-17 17:58:41.866', NULL, NULL, NULL);
+INSERT INTO public.section_part (section_id, part_id) VALUES(100350, 1301);
+INSERT INTO public.question (media_id, part_id, "content", "options", correct_answer, explanation, difficulty, order_number, created_at, created_by, updated_at, updated_by)
+VALUES(NULL, 1301, 'In this part of the test, you will write ONE sentence that is based on a picture. With each picture, you will be given TWO words or phrases that you must use in your sentence. You can change the forms of the words and you can use the words in any order.',
+       NULL, NULL, NULL, 'BEGINNER'::public."difficulty_level", 1, '2025-05-17 18:00:23.089', NULL, NULL, NULL);

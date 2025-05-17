@@ -94,7 +94,7 @@ create table role_permission
 ----------------------------------------Practice----------------------------------------
 create type content_type as enum ('VIDEO', 'TEXT');
 create type difficulty_level as enum ('BEGINNER', 'INTERMEDIATE', 'ADVANCED');
-create type section_type as enum ('LISTENING', 'READING', 'SPEAKING', 'WRITING');
+create type section_type as enum ('LISTENING', 'READING', 'SPEAKING', 'WRITING', 'GRAMMAR', 'VOCABULARY');
 CREATE TYPE question_type as enum (
     'MULTIPLE_CHOICE',
     'IMAGE_BASED',
@@ -221,7 +221,7 @@ create table question
     part_id        int      not null,
     content        text     not null,
     options        jsonb,
-    correct_answer text     not null,
+    correct_answer text,
     explanation    text,
     difficulty     difficulty_level  default 'BEGINNER',
     order_number   smallint not null,
