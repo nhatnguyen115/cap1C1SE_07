@@ -91,10 +91,8 @@ public class PartController {
 
     @PostMapping(value = "/{partId}/media")
     public ResponseData<?> addMediaToPart(@PathVariable Integer partId,
-                                          @RequestPart("mediaType") String mediaType,
-                                          @RequestPart("file") MultipartFile file) {
+                                          @RequestBody MediaRequest request) {
         try {
-            MediaRequest request = new MediaRequest(MediaType.valueOf(mediaType), file);
             partService.addMediaToPart(partId, request);
             return new ResponseData<>(HttpStatus.OK.value(), "Add Media To Part Successfully");
         } catch (Exception e) {
