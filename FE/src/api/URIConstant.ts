@@ -8,10 +8,10 @@ export const API_URIS = {
     EXTERNAL: "/auth/external/callback",
   },
   USER: {
-    ADD: "/user",
-    GET_PROFILE: "/user/profile",
-    UPDATE_PROFILE: "/user/update",
-    CHANGE_PASSWORD: "/user/change-password",
+    ADD: "/users",
+    GET_PROFILE: "/users/profile",
+    UPDATE_PROFILE: "/users/update",
+    CHANGE_PASSWORD: "/users/change-password",
     INFO: "/users",
   },
   PRODUCT: {
