@@ -9,6 +9,8 @@ export interface ExamType {
   students?: number;
   level?: string;
   image?: string;
+  url?: string;
+  mediaType?: string;
 }
 
 export type PartType = {
@@ -34,6 +36,7 @@ export type QuestionType = {
   explanation: string | null;
   difficulty: string;
   selectedAnswer?: string;
+  mediaType?: string;
 };
 
 export type PartWithQuestionsType = {

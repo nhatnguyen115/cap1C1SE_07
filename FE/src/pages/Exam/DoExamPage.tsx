@@ -221,17 +221,52 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
                 </p>
               </div>
 
-              {question.url && (
-                <img
-                  src={question.url}
-                  alt="question visual"
-                  className="w-full max-w-xl mb-3"
-                />
-              )}
+              {question.url &&
+                question.mediaType &&
+                (() => {
+                  switch (question.mediaType) {
+                    case "IMAGE":
+                      return (
+                        <img
+                          src={question.url}
+                          alt="question visual"
+                          className="w-full max-w-xl mb-3 rounded"
+                        />
+                      );
+                    case "AUDIO":
+                      return (
+                        <audio
+                          controls
+                          className="w-full max-w-4xl mx-auto mb-3 block"
+                          src={question.url}
+                        >
+                          Trình duyệt của bạn không hỗ trợ audio.
+                        </audio>
+                      );
+                    case "VIDEO":
+                      return (
+                        <video
+                          controls
+                          className="w-full max-w-4xl mx-auto mb-3 block rounded "
+                          src={question.url}
+                        >
+                          Trình duyệt của bạn không hỗ trợ video.
+                        </video>
+                      );
+                    default:
+                      return null;
+                  }
+                })()}
 
               {Object.entries(question.options).map(([key, value]) =>
                 renderOptionButton(key, value),
               )}
+              {isView ? (
+                <span className="italic text-green-600">
+                  <strong>Explanation: </strong>
+                  {question.explanation}
+                </span>
+              ) : null}
             </div>
           );
         })}
@@ -260,6 +295,42 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
               Your browser does not support the audio element.
             </audio> */}
           </div>
+          {examDetails?.exam.url &&
+            examDetails?.exam.mediaType &&
+            (() => {
+              switch (examDetails?.exam.mediaType) {
+                case "IMAGE":
+                  return (
+                    <img
+                      src={examDetails?.exam.url}
+                      alt="question visual"
+                      className="w-full max-w-xl mb-3 rounded"
+                    />
+                  );
+                case "AUDIO":
+                  return (
+                    <audio
+                      controls
+                      className="w-full max-w-4xl mx-auto mb-3 block"
+                      src={examDetails?.exam.url}
+                    >
+                      Trình duyệt của bạn không hỗ trợ audio.
+                    </audio>
+                  );
+                case "VIDEO":
+                  return (
+                    <video
+                      controls
+                      className="w-full max-w-4xl mx-auto mb-3 block rounded"
+                      src={examDetails?.exam.url}
+                    >
+                      Trình duyệt của bạn không hỗ trợ video.
+                    </video>
+                  );
+                default:
+                  return null;
+              }
+            })()}
 
           <div className="w-full max-w-4xl">
             {examDetails?.details.map((part, index) => {
