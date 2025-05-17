@@ -22,7 +22,7 @@ public class UploadMediaService {
     MediaMapper mediaMapper;
 
     public Media updateMedia(Media media, MultipartFile file, MediaType mediaType) throws IOException {
-        if (media.getUrl() != null) deleteMediaByUrl(media.getUrl(),
+        if (media != null && !media.getUrl().isEmpty()) deleteMediaByUrl(media.getUrl(),
                 media.getMediaType().toString());
         String url = uploadMedia(file, mediaType.toString());
         return mediaMapper.toMedia(mediaType, url);
