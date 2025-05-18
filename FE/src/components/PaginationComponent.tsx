@@ -5,12 +5,14 @@ type PaginationProps = {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  onOther?: (e: React.MouseEvent<HTMLDivElement>) => void;
 };
 
 const PaginationComponent = ({
   currentPage,
   totalPages,
   onPageChange,
+  onOther,
 }: PaginationProps) => {
   useEffect(() => {
     scroll.scrollToTop({
@@ -47,7 +49,12 @@ const PaginationComponent = ({
   };
 
   return (
-    <div className="flex justify-center items-center py-4 flex-wrap">
+    <div
+      onClick={(e) => {
+        onOther?.(e);
+      }}
+      className="flex justify-center items-center py-4 flex-wrap"
+    >
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage <= 0}

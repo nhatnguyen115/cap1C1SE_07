@@ -14,7 +14,6 @@ import {
   PartWithQuestionsType,
   QuestionType,
 } from "../../types/exam";
-import { shuffleArray } from "../../utils/commonUtils";
 interface TestProps {
   isView: boolean;
 }
@@ -72,17 +71,17 @@ export const DoExamPage: React.FC<TestProps> = ({ isView = false }) => {
           const res = await http.get(API_URIS.EXAMS.DO_BY_EXAM_ID(id!));
           const rawData: DoExamType = res.data.data;
 
-          const shuffledDetails = rawData.details.map((detail) => ({
-            ...detail,
-            questions: shuffleArray(detail.questions),
-          }));
+          // const shuffledDetails = rawData.details.map((detail) => ({
+          //   ...detail,
+          //   questions: shuffleArray(detail.questions),
+          // }));
 
-          const shuffledData: DoExamType = {
-            ...rawData,
-            details: shuffledDetails,
-          };
+          // const shuffledData: DoExamType = {
+          //   ...rawData,
+          //   details: shuffledDetails,
+          // };
 
-          setExamDetails(shuffledData);
+          setExamDetails(rawData);
         }
       } catch (error) {
         console.error("Failed to fetch exam or result:", error);

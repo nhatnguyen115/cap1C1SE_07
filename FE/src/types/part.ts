@@ -1,11 +1,12 @@
 export type QuestionType = {
-  id: number;
+  id?: number;
   content: string;
-  url: string;
+  url?: string;
   options: Record<string, string>;
   correctAnswer: string;
   explanation: string;
   difficulty: string;
   selectedAnswer?: string;
-  questionType: string;
+  questionType?: string;
+  orderNumber?: number;
 };
