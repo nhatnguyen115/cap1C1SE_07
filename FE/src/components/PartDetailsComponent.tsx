@@ -79,9 +79,12 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
               key={question.id}
               question={question}
               index={index}
-              selectedOption={answers[question.id]}
+              selectedOption={answers[question.id ?? 0]}
               onSelectOption={(optionKey) =>
-                setAnswers((prev) => ({ ...prev, [question.id]: optionKey }))
+                setAnswers((prev) => ({
+                  ...prev,
+                  [question.id ?? 0]: optionKey,
+                }))
               }
             />
           )}
@@ -99,7 +102,10 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
                 index={index}
                 answer={question.selectedAnswer}
                 onAnswer={(answer) =>
-                  setAnswers((prev) => ({ ...prev, [question.id]: answer }))
+                  setAnswers((prev) => ({
+                    ...prev,
+                    [question.id ?? 0]: answer,
+                  }))
                 }
               />
             </div>
@@ -118,7 +124,10 @@ const PartDetailsComponent: React.FC<PartDetailsComponentProps> = ({
                 index={index}
                 answer={question.selectedAnswer}
                 onAnswer={(answer) =>
-                  setAnswers((prev) => ({ ...prev, [question.id]: answer }))
+                  setAnswers((prev) => ({
+                    ...prev,
+                    [question.id ?? 0]: answer,
+                  }))
                 }
               />
             </div>
