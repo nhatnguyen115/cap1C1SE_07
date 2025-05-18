@@ -181,6 +181,7 @@ const PartDetailsManagementComponent: React.FC<{
         currentPage={page}
         totalPages={totalPages}
         onPageChange={handlePageChange}
+        onOther={(e) => e.stopPropagation()}
       />
     </div>
   );
