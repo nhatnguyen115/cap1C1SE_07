@@ -1,55 +1,96 @@
-import React, { useState } from "react";
+import { notification } from "antd";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { API_URIS } from "../api/URIConstant";
 import { http } from "../service/Http";
+import { QuestionType } from "../types/part";
 
-interface AddQuestionModalProps {
+interface AddEditQuestionModalProps {
   partId: number | string;
+  dataEdit?: QuestionType;
   onClose: () => void;
   onSubmitSuccess: () => void;
 }
 
-const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
+const AddEditQuestionModal: React.FC<AddEditQuestionModalProps> = ({
   partId,
+  dataEdit,
   onClose,
   onSubmitSuccess,
 }) => {
   const [content, setContent] = useState("");
-  const [options, setOptions] = useState({ A: "", B: "", C: "", D: "" });
+  const [options, setOptions] = useState<Record<string, string>>({
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+  });
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [explanation, setExplanation] = useState("");
   const [difficulty, setDifficulty] = useState("BEGINNER");
   const [orderNumber, setOrderNumber] = useState(1);
+  const [questionType, setQuestionType] = useState("LISTENING");
+
+  useEffect(() => {
+    if (dataEdit) {
+      setContent(dataEdit.content);
+      setOptions(dataEdit.options);
+      setCorrectAnswer(dataEdit.correctAnswer);
+      setExplanation(dataEdit.explanation);
+      setDifficulty(dataEdit.difficulty);
+      setOrderNumber(dataEdit.orderNumber ?? 10);
+      setQuestionType(dataEdit.questionType || "LISTENING");
+    }
+  }, [dataEdit]);
 
   const handleChangeOption = (key: string, value: string) => {
     setOptions((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSubmit = async () => {
-    try {
-      const response = await http.post(API_URIS.PART.QUESTION_ADD(partId), {
-        content,
-        options,
-        correctAnswer,
-        explanation,
-        difficulty,
-        orderNumber,
-      });
+    const basePayload = {
+      content,
+      options,
+      correctAnswer,
+      explanation,
+      difficulty,
+      questionType,
+      orderNumber,
+    };
 
-      if (response.status === 200) {
-        toast.success(response.data.message || "Thêm câu hỏi thành công");
-        onSubmitSuccess(); // callback khi thành công
+    const payload: Partial<QuestionType> = dataEdit
+      ? { ...basePayload, id: dataEdit.id }
+      : basePayload;
+
+    try {
+      const response = dataEdit
+        ? await http.put(
+            API_URIS.PART.QUESTION_UPDATE(dataEdit.id ?? 0),
+            payload,
+          )
+        : await http.post(API_URIS.PART.QUESTION_ADD(partId), payload);
+
+      if (response.status == 200 || response.status == 201) {
+        notification.success({
+          message: response.data.message,
+        });
+        onSubmitSuccess();
       }
     } catch (err) {
-      console.error("Lỗi khi thêm câu hỏi", err);
-      toast.error("Đã xảy ra lỗi khi thêm câu hỏi.");
+      console.error(dataEdit ? "Lỗi khi cập nhật" : "Lỗi khi thêm", err);
+      toast.error("Đã xảy ra lỗi.");
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ">
-      <div className="bg-white w-3/5 p-6 rounded shadow ">
-        <h2 className="text-lg font-semibold mb-4">Thêm câu hỏi</h2>
+    <div
+      onClick={(e) => e.stopPropagation()}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+    >
+      <div className="bg-white w-3/5 p-6 rounded shadow">
+        <h2 className="text-lg font-semibold mb-4">
+          {dataEdit ? "Chỉnh sửa câu hỏi" : "Thêm câu hỏi"}
+        </h2>
 
         <div className="mb-3">
           <label className="block text-sm mb-1">Nội dung</label>
@@ -66,7 +107,7 @@ const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
             <label className="block text-sm mb-1">Đáp án {opt}</label>
             <input
               className="w-full border rounded px-2 py-1"
-              value={options[opt as keyof typeof options]}
+              value={options[opt]}
               onChange={(e) => handleChangeOption(opt, e.target.value)}
             />
           </div>
@@ -131,7 +172,7 @@ const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
             className="px-3 py-1 bg-blue-600 text-white rounded text-sm"
             onClick={handleSubmit}
           >
-            Thêm
+            {dataEdit ? "Cập nhật" : "Thêm"}
           </button>
         </div>
       </div>
@@ -139,4 +180,4 @@ const AddQuestionModal: React.FC<AddQuestionModalProps> = ({
   );
 };
 
-export default AddQuestionModal;
+export default AddEditQuestionModal;

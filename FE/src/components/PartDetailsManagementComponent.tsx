@@ -4,26 +4,23 @@ import { API_URIS } from "../api/URIConstant";
 import AddMediaModal from "../modal/AddMediaModal";
 import AddQuestionModal from "../modal/AddQuestionModal";
 import { http } from "../service/Http";
+import { QuestionType } from "../types/part";
+import ConfirmDialogComponent from "./ConfirmDialogComponent";
 import PaginationComponent from "./PaginationComponent";
-interface Question {
-  id: number;
-  content: string;
-  options: Record<string, string>;
-  correctAnswer: string;
-  difficulty: string;
-}
 
 const PartDetailsManagementComponent: React.FC<{
   partId: number;
   isFetchQuestion?: boolean;
 }> = ({ partId, isFetchQuestion }) => {
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [editData, setEditData] = useState<Question | null>(null);
-
+  const [editData, setEditData] = useState<QuestionType | null>(null);
+  const [isEdited, setIsEdited] = useState(false);
   const [isAddMedia, setAddMedia] = useState(false);
+  const [showDeleteQuestion, setShowDeleteQuestion] = useState(false);
+  const [idQuestionDel, setIdQuestionDel] = useState<number>(0);
 
   const [questionMedia, setQuestionMedia] = useState<number>(0);
   const handlePageChange = (newPage: number) => {
@@ -63,6 +60,19 @@ const PartDetailsManagementComponent: React.FC<{
       });
     }
   };
+  const handleDeleteQuestion = async (id: number) => {
+    try {
+      const res = await http.delete(API_URIS.PART.QUESTION_DELETE(id));
+      if (res.data.status == 200) {
+        notification.success({
+          message: res.data.message || "Xoá thành công!",
+        });
+        setIsEdited(!isEdited);
+      }
+    } catch (err) {
+      console.error("Failed to fetch questions", err);
+    }
+  };
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -75,7 +85,7 @@ const PartDetailsManagementComponent: React.FC<{
     };
 
     fetchQuestions();
-  }, [partId, page, isFetchQuestion]);
+  }, [partId, page, isFetchQuestion, isEdited]);
 
   return (
     <div className="mt-4 p-4 bg-gray-50 rounded shadow-inner">
@@ -112,7 +122,8 @@ const PartDetailsManagementComponent: React.FC<{
             </button>
             <button
               className="px-2 py-1 text-xs bg-yellow-500 text-white rounded"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setEditData(q);
                 setShowAddModal(true);
               }}
@@ -120,7 +131,14 @@ const PartDetailsManagementComponent: React.FC<{
               Sửa
             </button>
 
-            <button className="px-2 py-1 text-xs bg-red-500 text-white rounded">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIdQuestionDel(q.id ?? 0);
+                setShowDeleteQuestion(true);
+              }}
+              className="px-2 py-1 text-xs bg-red-500 text-white rounded"
+            >
               Xoá
             </button>
           </div>
@@ -132,16 +150,27 @@ const PartDetailsManagementComponent: React.FC<{
             setShowAddModal(false);
             setEditData(null);
           }}
+          dataEdit={editData ?? undefined}
           onSubmitSuccess={() => {
             setShowAddModal(false);
             setEditData(null);
+            setIsEdited(!isEdited);
             // reload lại danh sách câu hỏi sau khi sửa
             setPage(0); // hoặc giữ nguyên nếu muốn
           }}
           partId={partId}
         />
       ) : null}
-
+      <ConfirmDialogComponent
+        isOpen={showDeleteQuestion}
+        title="Xác nhận xoá câu hỏi"
+        message="Bạn có muốn xoá câu hỏi này không?"
+        onConfirm={() => {
+          handleDeleteQuestion(idQuestionDel);
+          setShowDeleteQuestion(false);
+        }}
+        onCancel={() => setShowDeleteQuestion(false)}
+      />
       <AddMediaModal
         isOpen={isAddMedia}
         onClose={() => setAddMedia(false)}

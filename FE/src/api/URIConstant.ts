@@ -81,6 +81,10 @@ export const API_URIS = {
       },
     },
     QUESTION_ADD: (partId: number | string) => `/parts/${partId}/question`,
+    QUESTION_UPDATE: (questionId: number | string) =>
+      `/questions/${questionId}`,
+    QUESTION_DELETE: (questionId: number | string) =>
+      `/questions/${questionId}`,
   },
   MENU: {
     GET_ALL: "/menu",
