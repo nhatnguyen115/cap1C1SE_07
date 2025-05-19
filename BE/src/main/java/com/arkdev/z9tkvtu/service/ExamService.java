@@ -10,6 +10,8 @@ import com.arkdev.z9tkvtu.model.Part;
 import com.arkdev.z9tkvtu.model.Question;
 import com.arkdev.z9tkvtu.model.Test;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
+import com.arkdev.z9tkvtu.repository.PartRepository;
+import com.arkdev.z9tkvtu.repository.QuestionRepository;
 import com.arkdev.z9tkvtu.repository.TestRepository;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -26,6 +28,8 @@ import java.util.List;
 public class ExamService {
     TestRepository testRepository;
     ExamRepository examRepository;
+    PartRepository partRepository;
+    QuestionRepository questionRepository;
     ExamMapper examMapper;
     PartMapper partMapper;
     QuestionMapper questionMapper;
@@ -56,21 +60,21 @@ public class ExamService {
         Exam exam = examRepository.findById(examId)
                 .orElseThrow(() -> new IllegalArgumentException("Exam not found"));
         ExamResponse examResponse = examMapper.toExamResponse(exam);
-        List<Part> parts = exam.getParts().stream().toList();
-        List<PartAttemptResponse<?, ?>> partAttemptRespons = new ArrayList<>();
+        List<Part> parts = partRepository.findByExamsIdOrderByOrderNumber(examId);
+        List<PartAttemptResponse<?, ?>> partAttemptResponses = new ArrayList<>();
         for (Part part : parts) {
             PartResponse partResponse = partMapper.toPartResponse(part);
-            List<Question> questions = part.getQuestions().stream().toList();
+            List<Question> questions = questionRepository.findByPartIdOrderByOrderNumber(part.getId());
             List<QuestionResponse> questionResponses = new ArrayList<>();
             for (Question question : questions) {
                 QuestionResponse questionResponse = questionMapper.toQuestionResponse(question);
                 questionResponses.add(questionResponse);
             }
-            partAttemptRespons.add(new PartAttemptResponse<>(partResponse, questionResponses));
+            partAttemptResponses.add(new PartAttemptResponse<>(partResponse, questionResponses));
         }
         return new ExamContentResponse<>(
                 examResponse,
-                partAttemptRespons
+                partAttemptResponses
         );
     }
 
