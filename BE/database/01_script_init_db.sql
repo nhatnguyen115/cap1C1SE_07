@@ -95,6 +95,7 @@ create table role_permission
 create type content_type as enum ('VIDEO', 'TEXT');
 create type difficulty_level as enum ('BEGINNER', 'INTERMEDIATE', 'ADVANCED');
 create type section_type as enum ('LISTENING', 'READING', 'SPEAKING', 'WRITING', 'GRAMMAR', 'VOCABULARY');
+create type grading_type as enum ('LISTENING', 'READING', 'OTHER');
 CREATE TYPE question_type as enum (
     'MULTIPLE_CHOICE',
     'IMAGE_BASED',
@@ -157,33 +158,18 @@ create table test
     updated_by  uuid,
     primary key (test_id)
 );
-create table lesson
-(
-    lesson_id    int          not null default nextval('lesson_seq'),
-    section_id   int          not null,
-    lesson_name  varchar(255) not null,
-    content_type content_type          default 'TEXT',
-    media_id     int                   default null,
-    article_text text,
-    duration     smallint,
-    order_number int          not null,
-    created_at   timestamp             default CURRENT_TIMESTAMP,
-    created_by   uuid,
-    updated_at   timestamp,
-    updated_by   uuid,
-    primary key (lesson_id)
-);
 create table exam
 (
-    exam_id     int not null default nextval('exam_seq'),
-    test_id     int not null,
-    exam_name   varchar(255),
-    total_score smallint,
-    duration    smallint,
-    created_at  timestamp    default CURRENT_TIMESTAMP,
-    created_by  uuid,
-    updated_at  timestamp,
-    updated_by  uuid,
+    exam_id        int      not null default nextval('exam_seq'),
+    exam_name      varchar(255),
+    total_score    smallint,
+    duration       smallint,
+    difficulty     difficulty_level  default 'BEGINNER',
+    question_count smallint not null,
+    created_at     timestamp         default CURRENT_TIMESTAMP,
+    created_by     uuid,
+    updated_at     timestamp,
+    updated_by     uuid,
     primary key (exam_id)
 );
 create table part
@@ -216,16 +202,16 @@ create table exam_structure
 );
 create table question
 (
-    question_id    int      not null default nextval('question_seq'),
-    media_id       int               default null,
-    part_id        int      not null,
-    content        text     not null,
+    question_id    int          not null default nextval('question_seq'),
+    media_id       int                   default null,
+    part_id        int          not null,
+    content        text         not null,
     options        jsonb,
     correct_answer text,
     explanation    text,
-    difficulty     difficulty_level  default 'BEGINNER',
-    order_number   smallint not null,
-    created_at     timestamp         default CURRENT_TIMESTAMP,
+    grading_type   grading_type not null,
+    order_number   smallint     not null,
+    created_at     timestamp             default CURRENT_TIMESTAMP,
     created_by     uuid,
     updated_at     timestamp,
     updated_by     uuid,
@@ -327,4 +313,16 @@ create table resource_access
     primary key (access_id)
 );
 
-ALTER TABLE user_test_attempt ADD complete boolean DEFAULT false NOT NULL;
+ALTER TABLE user_test_attempt
+    ADD complete boolean DEFAULT false NOT NULL;
+
+create sequence score_seq start 1 increment by 50;
+
+create table if not exists score
+(
+    score_id        int not null default nextval('score_seq'),
+    correct_count   int not null,
+    listening_score int not null,
+    reading_score   int not null,
+    primary key (score_id)
+);

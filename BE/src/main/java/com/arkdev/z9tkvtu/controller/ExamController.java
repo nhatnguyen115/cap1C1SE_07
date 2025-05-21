@@ -30,14 +30,14 @@ import java.io.IOException;
 public class ExamController {
     ExamService examService;
     PartService partService;
+    UploadExamService uploadExamService;
 
     @GetMapping("")
-    public ResponseData<?> getExams(@RequestParam(required = false) Integer testId,
-                                    @RequestParam(defaultValue = "0") int page,
+    public ResponseData<?> getExams(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size) {
         try {
             return new ResponseData<>(HttpStatus.OK.value(), "Get Exams Successfully",
-                    Pagination.paginate(examService.getExams(testId), PageRequest.of(page, size)));
+                    Pagination.paginate(examService.getExams(), PageRequest.of(page, size)));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Exams Failed");
         }
@@ -50,6 +50,26 @@ public class ExamController {
                     examService.getExam(examId));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Exam Failed");
+        }
+    }
+
+    @PostMapping("")
+    public ResponseData<?> addExam(@Valid @RequestBody ExamRequest request) {
+        try {
+            examService.addExam(request);
+            return new ResponseData<>(HttpStatus.OK.value(), "Add Exam Successfully");
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Exam could not be added");
+        }
+    }
+
+    @PostMapping("/upload/excel")
+    public ResponseData<?> uploadExam(@RequestParam MultipartFile file) {
+        try {
+            uploadExamService.addExamFromExcel(file);
+            return new ResponseData<>(HttpStatus.OK.value(), "Upload Exam Successfully");
+        }  catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Upload Exam Failed");
         }
     }
 
