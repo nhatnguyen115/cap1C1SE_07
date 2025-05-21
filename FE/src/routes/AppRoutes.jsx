@@ -33,11 +33,11 @@ import ExternalLoginComponent from "./../components/ExternalLoginComponent";
 import PaymentSuccessComponent from "./../components/PaymentSuccessComponent";
 import UserRankComponent from "./../components/UserRankComponent";
 import TestManagementPage from "./../pages/Admin/TestManagement/TestManagement";
-import { DoExamPage } from "./../pages/Exam/DoExamPage";
-import ExamPageDetails from "./../pages/Exam/ExamPageDetails";
+import { AttemptExamPage } from "../pages/Exam/AttemptExamPage";
 import { TestTemp } from "./../pages/MockTest/TestTemp";
 import PartDetailsPage from "./../pages/Part/PartDetailsPage";
 import TestPage from "./../pages/Test/TestPage";
+import ExamResultDetailsPage from "../pages/Exam/ExamResultDetailsPage.tsx";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -127,18 +127,10 @@ const routes = [
     ),
   },
   {
-    path: PATH_CONSTANTS.EXAM.EXAMS,
-    element: (
-      <MainLayout>
-        <ExamPageDetails />
-      </MainLayout>
-    ),
-  },
-  {
     path: PATH_CONSTANTS.EXAM.EXAMS_DO_BY_ID,
     element: (
       <MainLayout>
-        <DoExamPage isView={false} />
+        <AttemptExamPage isView={false} />
       </MainLayout>
     ),
   },
@@ -146,7 +138,7 @@ const routes = [
     path: PATH_CONSTANTS.EXAM.EXAMS_VIEW_BY_ID(":attemptIdView"),
     element: (
       <MainLayout>
-        <DoExamPage isView={true} />
+        <ExamResultDetailsPage />
       </MainLayout>
     ),
   },

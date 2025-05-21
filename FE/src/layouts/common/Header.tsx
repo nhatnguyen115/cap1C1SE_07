@@ -6,7 +6,7 @@ import { LOCAL_STORAGE_CONSTANT } from "../../constant/LocalStorageConstant";
 import { useUser } from "../../context/UserContext";
 import { MenuItem } from "../../types/home";
 import { MenuNavComponent } from "../components/MenuNavComponent";
-import { getMenu } from "./../../service/HomeService";
+import { getMenu } from "../../service/HomeService";
 
 const Header: React.FC = () => {
   const { userRole } = useUser();

@@ -55,11 +55,12 @@ export const API_URIS = {
   },
 
   TEST: {
-    TESTS: "/tests",
+    TESTS: `/tests`,
     UPLOAD_EXCEL: (testId: number) => `/tests/${testId}/upload/excel`,
   },
 
   EXAMS: {
+    GET_ALL: `/exams`,
     GET_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
     DO_BY_EXAM_ID: (examId: number | string) => `/exams/${examId}`,
   },

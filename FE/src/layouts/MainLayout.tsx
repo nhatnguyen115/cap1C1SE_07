@@ -4,7 +4,7 @@ import Header from "./common/Header";
 import Footer from "./common/Footer";
 import Chatbot from "../pages/Chatbot/Chatbot";
 
-const MainLayout = ({ children }) => {
+const MainLayout = ({ children }:any) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
