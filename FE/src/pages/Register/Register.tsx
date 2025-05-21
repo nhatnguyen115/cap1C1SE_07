@@ -215,7 +215,7 @@ const Register: React.FC = () => {
               Bạn đã có tài khoản?{" "}
               <Link
                 className="text-blue-600 hover:underline"
-                to={PATH_CONSTANTS.AUTH.REGISTER}
+                to={PATH_CONSTANTS.AUTH.LOGIN}
               >
                 Đăng nhập
               </Link>

@@ -1,11 +1,14 @@
 package com.arkdev.z9tkvtu.controller;
 
+import com.arkdev.z9tkvtu.dto.Request.ResetPasswordRequest;
 import com.arkdev.z9tkvtu.dto.Request.SignInRequest;
+import com.arkdev.z9tkvtu.dto.Request.VerifyOtpRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.configuration.JwtProvider;
 import com.arkdev.z9tkvtu.dto.Response.TokenResponse;
 import com.arkdev.z9tkvtu.model.UserLoginData;
+import com.arkdev.z9tkvtu.service.PasswordResetService;
 import com.arkdev.z9tkvtu.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -40,6 +43,7 @@ public class AuthController {
     JwtProvider jwtProvider;
     UserService userService;
     AuthenticationManager manager;
+    PasswordResetService service;
 
     @Autowired
     private SecurityContextRepository securityContextRepository;
@@ -95,6 +99,41 @@ public class AuthController {
 
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "Get External Info Error!");
+        }
+    }
+
+    @PostMapping("/request")
+    public ResponseData<?> requestReset(@RequestParam String email) {
+        try {
+            service.generateAndSendOtp(email);
+            return new ResponseData<>(200, "OTP đã được gửi về email");
+        } catch (Exception e) {
+            log.error("Error in requestReset:", e);
+            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "Lỗi khi gửi OTP: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/verify")
+    public ResponseData<?> verifyOtp(@RequestBody VerifyOtpRequest request) {
+        try {
+            boolean valid = service.verifyOtp(request.getEmail(), request.getOtp());
+            return valid
+                    ? new ResponseData<>(200, "OTP hợp lệ")
+                    : new ResponseData<>(400, "OTP sai hoặc đã hết hạn");
+        } catch (Exception e) {
+            log.error("Error in verifyOtp:", e);
+            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "Lỗi khi xác thực OTP: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/reset")
+    public ResponseData<?> resetPassword(@RequestBody ResetPasswordRequest request) {
+        try {
+            service.resetPassword(request.getEmail(), request.getNewPassword());
+            return new ResponseData<>(200, "Mật khẩu đã được cập nhật");
+        } catch (Exception e) {
+            log.error("Error in resetPassword:", e);
+            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "Lỗi khi cập nhật mật khẩu: " + e.getMessage());
         }
     }
 
