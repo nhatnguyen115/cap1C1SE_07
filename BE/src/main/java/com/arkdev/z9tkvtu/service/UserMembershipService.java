@@ -1,5 +1,6 @@
 package com.arkdev.z9tkvtu.service;
 
+import com.arkdev.z9tkvtu.dto.Response.UserMembershipResponse;
 import com.arkdev.z9tkvtu.model.MembershipPlan;
 import com.arkdev.z9tkvtu.model.ResourceAccess;
 import com.arkdev.z9tkvtu.model.UserLoginData;
@@ -15,10 +16,12 @@ import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -33,6 +36,21 @@ public class UserMembershipService {
     UserMembershipRepository userMembershipRepository;
     ResourceAccessRepository resourceAccessRepository;
     PaymentService paymentService;
+
+
+    public UserMembershipResponse getUserMembership() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserLoginData user = (UserLoginData) auth.getPrincipal();
+        UserMembership userMembership = userMembershipRepository.findByUserIdAndStatus(user.getId(), MembershipStatus.ACTIVE)
+                .orElseThrow(() -> new RuntimeException("User membership not found"));
+        return new UserMembershipResponse(
+                userMembership.getPlan().getPlanName(),
+                userMembership.getPlan().getPrice(),
+                userMembership.getPlan().getDurationDays(),
+                userMembership.getStartDate(),
+                userMembership.getStatus()
+        );
+    }
 
     @Transactional
     public String registerMembership(Integer planId,

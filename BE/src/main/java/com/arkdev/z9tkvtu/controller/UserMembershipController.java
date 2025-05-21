@@ -30,6 +30,16 @@ public class UserMembershipController {
         }
     }
 
+    @GetMapping("/info")
+    public ResponseData<?> getUserMembership() {
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "Get Membership successfully",
+                    userMembershipService.getUserMembership());
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Membership failed");
+        }
+    }
+
     @GetMapping("/payment/callback")
     public ResponseData<?> getPaymentCallback(@RequestParam("vnp_ResponseCode") String responseCode) {
         try {
