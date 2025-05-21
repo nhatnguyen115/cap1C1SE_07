@@ -1,7 +1,10 @@
 package com.arkdev.z9tkvtu.service;
 
 import com.arkdev.z9tkvtu.model.*;
+import com.arkdev.z9tkvtu.repository.ExamRepository;
 import com.arkdev.z9tkvtu.repository.PartRepository;
+import com.arkdev.z9tkvtu.util.DifficultyLevel;
+import com.arkdev.z9tkvtu.util.GradingType;
 import com.arkdev.z9tkvtu.util.MediaType;
 import com.arkdev.z9tkvtu.util.QuestionType;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,13 +26,14 @@ import org.springframework.web.multipart.MultipartFile;
 @FieldDefaults(level = AccessLevel.PRIVATE,  makeFinal = true)
 public class UploadExamService {
     PartRepository partRepository;
+    ExamRepository examRepository;
 
     @Transactional
     public void addExamFromExcel(MultipartFile file) {
         try (Workbook workbook= new XSSFWorkbook(file.getInputStream())) {
             setExamData(workbook);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage(), e.getCause());
         }
     }
 
@@ -39,13 +43,17 @@ public class UploadExamService {
         exam.setExamName(row.getCell(0).getStringCellValue());
         exam.setTotalScore((int) row.getCell(1).getNumericCellValue());
         exam.setDuration((int) row.getCell(2).getNumericCellValue());
+        exam.setQuestionCount((int) row.getCell(3).getNumericCellValue());
+        exam.setLevel(DifficultyLevel.valueOf(row.getCell(4).getStringCellValue()));
         setPartsData(workbook, exam);
+        examRepository.save(exam);
     }
 
     private void setPartsData(Workbook workbook, Exam exam) throws JsonProcessingException {
         Sheet sheet = workbook.getSheet("PART");
         for (Row row : sheet) {
             if (row.getRowNum() == 0) continue;
+            if (String.valueOf(row.getCell(0).getNumericCellValue()).isEmpty()) continue;
             Part part = new Part();
             part.setOrderNumber((int) row.getCell(0).getNumericCellValue());
             part.setPartName(row.getCell(1).getStringCellValue());
@@ -53,7 +61,8 @@ public class UploadExamService {
             part.setQuestionType(QuestionType.valueOf(row.getCell(3).getStringCellValue()));
             part.setInstructions(row.getCell(4).getStringCellValue());
             part.setQuestionCount((int) row.getCell(5).getNumericCellValue());
-            part.setMedia(setMediaData(row));
+            part.setGradingType(GradingType.valueOf(row.getCell(6).getStringCellValue()));
+            part.setMedia(setMediaData(row, 7));
             part = partRepository.save(part);
             exam.getParts().add(part);
             setQuestionsData(workbook, part);
@@ -71,18 +80,18 @@ public class UploadExamService {
                     new TypeReference<>() {}));
             question.setCorrectAnswer(row.getCell(3).getStringCellValue());
             question.setExplanation(row.getCell(4).getStringCellValue());
-            question.setMedia(setMediaData(row));
+            question.setMedia(setMediaData(row, 5));
             part.getQuestions().add(question);
             question.setPart(part);
         }
     }
-    private Media setMediaData(Row row) {
-        if (row.getCell(6) != null &&
-                !row.getCell(6).getStringCellValue().isEmpty() &&
-                !row.getCell(6).getStringCellValue().isBlank()) {
+    private Media setMediaData(Row row, int i) {
+        if (row.getCell(i) != null &&
+                !row.getCell(i).getStringCellValue().isEmpty() &&
+                !row.getCell(i).getStringCellValue().isBlank()) {
             Media media = new Media();
-            media.setMediaType(MediaType.valueOf(row.getCell(6).getStringCellValue()));
-            media.setUrl(row.getCell(7).getStringCellValue());
+            media.setMediaType(MediaType.valueOf(row.getCell(i).getStringCellValue()));
+            media.setUrl(row.getCell(i + 1).getStringCellValue());
             return media;
         }
         return null;
