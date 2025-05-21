@@ -212,9 +212,7 @@ const Home = ({ setIsOpen }) => {
         </div>
 
         <Link
-          to={PATH_CONSTANTS.EXAM.EXAMS_BY_TEST_ID(
-            TEST_CONSTANTS.SIMULATION_TEST,
-          )}
+          to={PATH_CONSTANTS.TEST.TESTS}
         >
           <button className="mt-6 px-8 py-2 bg-white text-blue-600 rounded-lg hover:bg-blue-700 hover:text-white border border-blue-600 focus:outline-none w-full max-w-[300px] flex mb-12">
             <div className=" justify-center w-full flex flex-row items-center">
