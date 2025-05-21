@@ -1,6 +1,7 @@
 package com.arkdev.z9tkvtu.dto.Response;
 
 import com.arkdev.z9tkvtu.util.DifficultyLevel;
+import com.arkdev.z9tkvtu.util.GradingType;
 import com.arkdev.z9tkvtu.util.MediaType;
 
 import java.io.Serializable;
@@ -16,5 +17,5 @@ public record QuestionResponse(
         MediaType mediaType,
         Map<String, Object> options,
         String explanation,
-        DifficultyLevel difficulty) implements Serializable {
+        String correctAnswer) implements Serializable {
 }
