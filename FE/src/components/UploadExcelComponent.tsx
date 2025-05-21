@@ -28,7 +28,7 @@ const UploadExcelComponent: React.FC = () => {
     try {
       setUploading(true);
       const response = await http.post(
-        API_URIS.TEST.UPLOAD_EXCEL(testId || 0),
+        API_URIS.TEST.UPLOAD_EXCEL,
         formData,
         {
           headers: {
@@ -36,7 +36,12 @@ const UploadExcelComponent: React.FC = () => {
           },
         },
       );
-      setMessage("Tải lên thành công!");
+        const status = response.data.status;
+        if (status === 200 || status === 201) {
+            setMessage("Tải lên thành công!");
+        } else {
+            setMessage("Tải lên không thành công");
+        }
     } catch (error) {
       console.error("Upload error:", error);
       setMessage("Tải lên thất bại. Vui lòng thử lại.");
@@ -61,27 +66,6 @@ const UploadExcelComponent: React.FC = () => {
       <h2 className="text-xl font-semibold mb-4 text-center text-blue-600">
         Tải lên file Excel cho: {testType}
       </h2>
-      <div className="mb-4">
-        <label className="block mb-1 text-sm">Chọn Test</label>
-        <select
-          value={testId ?? ""}
-          onChange={(e) => {
-            const val = parseInt(e.target.value, 10);
-            setTestId(!isNaN(val) ? val : 0);
-            const selectedTest = tests.find((test) => test.id === val);
-
-            setTestType(selectedTest ? selectedTest.testType : "");
-          }}
-          className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
-        >
-          <option value="">Chọn test</option>
-          {tests.map((test) => (
-            <option key={test.id} value={test.id}>
-              {test.testType}
-            </option>
-          ))}
-        </select>
-      </div>
       <input
         type="file"
         multiple

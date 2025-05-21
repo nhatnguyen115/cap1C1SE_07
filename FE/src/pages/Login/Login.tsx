@@ -98,7 +98,7 @@ const Login: React.FC = () => {
                 htmlFor="password"
                 className="text-gray-700 text-sm font-medium"
               >
-                Mật khẩu
+                Password
               </label>
               <div className="relative">
                 <input

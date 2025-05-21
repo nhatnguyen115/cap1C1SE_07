@@ -56,7 +56,7 @@ export const API_URIS = {
 
   TEST: {
     TESTS: `/tests`,
-    UPLOAD_EXCEL: (testId: number) => `/tests/${testId}/upload/excel`,
+    UPLOAD_EXCEL: `/exams/upload/excel`,
   },
 
   EXAMS: {
