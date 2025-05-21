@@ -63,6 +63,7 @@ export const API_URIS = {
     GET_ALL: `/exams`,
     GET_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
     DO_BY_EXAM_ID: (examId: number | string) => `/exams/${examId}`,
+
   },
 
   PART: {
@@ -100,6 +101,7 @@ export const API_URIS = {
     HISTORY: "/user-test",
     RANK: "/user-test/user-rank",
     RESULT: "/user-test/get-result",
+    ATTEMPT: "/user-test/get-attempt"
   },
 
   PAYMENT: {

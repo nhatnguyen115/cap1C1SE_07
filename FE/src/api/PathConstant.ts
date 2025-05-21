@@ -115,8 +115,8 @@ export const PATH_CONSTANTS = {
 
   EXAM: {
     TEST: "/test",
-    EXAMS_VIEW_BY_ID: (attemptIdView: number | string) =>
-      `/exams/view/${attemptIdView}`,
+    EXAMS_VIEW_BY_ID: (attemptIdView: number | string) => `/exams/view/${attemptIdView}`,
+    EXAMS_RESUL_BY_ID: (attemptId: number | string) => `/exams/result/${attemptId}`,
     EXAMS_DO_BY_ID: "/exams/:id",
     EXAMS_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
     EXAMS: "/exams",

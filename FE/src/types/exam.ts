@@ -46,6 +46,23 @@ export type DoExamType = {
   details: PartWithQuestionsType[];
 };
 
+export type ResultType = {
+  id?: number;
+  examName: string;
+  duration?: number;
+  totalScore: number;
+  listeningScore: number;
+  readingScore: number;
+  correctCount: number;
+  incorrectCount: number;
+  skipCount: number;
+}
+
+export type ResultExamType = {
+  exam: ResultType;
+  details: PartWithQuestionsType[];
+}
+
 export type AnswerType = {
   questionId: number;
   selectedOption?: string;
@@ -65,4 +82,14 @@ export type AttemptNavigationProps = {
   details?: PartWithQuestionsType[];
   currentQuestion: number;
   onNavigate: (index: number) => void;
+}
+
+export type ResultProps = {
+  id:number;
+  totalScore: number;
+  listeningScore: number;
+  readingScore: number;
+  correctCount: number;
+  incorrectCount: number;
+  skipCount: number;
 }

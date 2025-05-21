@@ -38,6 +38,7 @@ import { TestTemp } from "./../pages/MockTest/TestTemp";
 import PartDetailsPage from "./../pages/Part/PartDetailsPage";
 import TestPage from "./../pages/Test/TestPage";
 import ExamResultDetailsPage from "../pages/Exam/ExamResultDetailsPage.tsx";
+import ExamResultPage from "../pages/Exam/ExamResultPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -140,6 +141,14 @@ const routes = [
       <MainLayout>
         <ExamResultDetailsPage />
       </MainLayout>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.EXAM.EXAMS_RESUL_BY_ID(":attemptId"),
+    element: (
+        <MainLayout>
+          <ExamResultPage />
+        </MainLayout>
     ),
   },
   {

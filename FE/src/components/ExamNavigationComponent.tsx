@@ -47,7 +47,7 @@ const navigate = useNavigate();
         notification.success({
           message: message || "Bạn đã nộp bài thành công.",
         });
-      navigate(`/exams/view/${attemptId}`);
+      navigate(`/exams/result/${attemptId}`);
       }
       // Optional: chuyển trang hoặc disable giao diện
     } catch (error: any) {

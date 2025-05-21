@@ -2,15 +2,35 @@ import React, {useEffect, useState} from "react";
 import {http} from "../../service/Http";
 import {API_URIS} from "../../api/URIConstant";
 import {useNavigate, useParams} from "react-router-dom";
-import {DoExamType, PartWithQuestionsType, QuestionType} from "../../types/exam";
+import {DoExamType, PartWithQuestionsType, QuestionType, ResultExamType} from "../../types/exam";
 import IcBreadcrumbGbk from "../../assets/icons/IcBreadcrumbGbk";
 import AttemptResultNavigationComponent from "../../components/AttemptResultNavigationComponent";
 import MediaComponent from "../../components/MediaComponent";
+import {CircleCheck, CircleX, Clock} from "lucide-react";
+
+const StatItem = ({
+                      label,
+                      value,
+                      color,
+                      icon,
+                  }: {
+    label: string;
+    value: number;
+    color?: string;
+    icon?: React.ReactNode;
+}) => (
+    <div className={`flex items-center justify-between rounded-xl bg-white p-4 shadow-sm`}>
+        <div className="flex items-center gap-2 text-gray-600 font-medium">
+            {icon} {label}
+        </div>
+        <div className={`text-lg font-bold ${color || 'text-gray-800'}`}>{value}</div>
+    </div>
+);
 
 const ExamResultDetailsPage: React.FC = () => {
     const {attemptIdView} = useParams();
     const navigate = useNavigate();
-    const [examDetails, setExamDetails] = useState<DoExamType>();
+    const [examDetails, setExamDetails] = useState<ResultExamType>();
     const [details, setDetails] = useState<PartWithQuestionsType[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<number>(0);
     let questionCounter = 1
@@ -44,6 +64,37 @@ const ExamResultDetailsPage: React.FC = () => {
     return (
         <div className="flex flex-col h-screen">
             <div className="flex flex-row justify-between flex-1 overflow-hidden">
+                <div className="max-w-xl mx-auto p-6 bg-gradient-to-br from-indigo-50 to-white rounded-2xl shadow-xl mt-10">
+                    <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6">🎓 Kết Quả Bài Thi TOEIC</h2>
+
+                    <div className="bg-indigo-100 text-indigo-800 rounded-xl py-4 mb-6 flex items-center justify-center shadow">
+                        <span className="text-xl font-semibold">Tổng điểm:</span>
+                        <span className="ml-3 text-3xl font-bold">{examDetails?.exam.totalScore || 0}</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                        <StatItem label="Nghe (Listening)" value={examDetails?.exam.listeningScore || 0} color="text-blue-600" />
+                        <StatItem label="Đọc (Reading)" value={examDetails?.exam.readingScore || 0} color="text-purple-600" />
+                        <StatItem
+                            label="Câu đúng"
+                            value={examDetails?.exam.correctCount || 0}
+                            color="text-green-600"
+                            icon={<CircleCheck className="w-5 h-5 text-green-500" />}
+                        />
+                        <StatItem
+                            label="Câu sai"
+                            value={examDetails?.exam.incorrectCount || 0}
+                            color="text-red-600"
+                            icon={<CircleX className="w-5 h-5 text-red-500" />}
+                        />
+                        <StatItem
+                            label="Bỏ qua"
+                            value={examDetails?.exam.skipCount || 0}
+                            color="text-gray-500"
+                            icon={<Clock className="w-5 h-5 text-gray-400" />}
+                        />
+                    </div>
+                </div>
                 <div className="flex-1 flex flex-col justify-start items-center p-4 overflow-auto">
                     <div
                         className="text-lg w-full text-main font-normal flex gap-3 text-start mb-5 cursor-pointer items-center"
