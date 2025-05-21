@@ -3,10 +3,11 @@ package com.arkdev.z9tkvtu.dto.Response;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public record ExamDetailsResponse(
+/**
+ * DTO for {@link com.arkdev.z9tkvtu.model.UserTestAttempt}
+ */
+public record AttemptResponse(
         Integer id,
-        String examName,
-        Integer duration,
         Integer totalScore,
         Integer listeningScore,
         Integer readingScore,
@@ -15,4 +16,5 @@ public record ExamDetailsResponse(
         Integer skipCount,
         Timestamp startTime,
         Timestamp endTime) implements Serializable {
+
 }

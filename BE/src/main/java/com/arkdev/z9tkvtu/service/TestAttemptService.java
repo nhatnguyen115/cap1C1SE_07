@@ -50,6 +50,12 @@ public class TestAttemptService {
                 .toList();
     }
 
+    public AttemptResponse getTestAttempt(Integer attemptId) {
+        return userTestAttemptRepository.findByIdAndCompleteTrue(attemptId)
+                .map(userTestMapper::toAttemptResponse)
+                .orElseThrow(() -> new RuntimeException("attempt not found"));
+    }
+
     public AttemptDetailsResponse<?> getAttemptDetails(Integer attemptId) {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                 .orElseThrow(() -> new RuntimeException("attempt not found"));

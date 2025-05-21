@@ -33,6 +33,16 @@ public class UserTestController {
         }
     }
 
+    @GetMapping("/get-attempt")
+    public ResponseData<?> getTestAttempts(@RequestParam Integer attemptId) {
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "Get Test Attempt Successfully",
+                    testAttemptService.getTestAttempt(attemptId));
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Test Attempt Failed");
+        }
+    }
+
     @GetMapping("/get-result")
     public ResponseData<?> getTestResult(@RequestParam Integer attemptId) {
         try {

@@ -46,9 +46,13 @@ public class ExamMapper {
         return new ExamDetailsResponse(
                 attempt.getExam().getId(),
                 attempt.getExam().getExamName(),
-                attempt.getExam().getTotalScore(),
                 attempt.getExam().getDuration(),
                 attempt.getTotalScore(),
+                attempt.getListeningScore(),
+                attempt.getReadingScore(),
+                attempt.getCorrectCount(),
+                attempt.getIncorrectCount(),
+                attempt.getSkipCount(),
                 attempt.getStartTime(),
                 attempt.getEndTime()
         );

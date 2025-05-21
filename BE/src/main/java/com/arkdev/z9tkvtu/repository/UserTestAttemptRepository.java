@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt, Integer> {
@@ -75,4 +76,6 @@ public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt
         where correct_count = :correctCount
     """, nativeQuery = true)
     Integer findReadingScore(@Param("correctCount") Integer correctCount);
+
+    Optional<UserTestAttempt> findByIdAndCompleteTrue(Integer attemptId);
 }
