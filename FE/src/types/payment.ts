@@ -5,3 +5,11 @@ export type MembershipPlan = {
   price: number;
   durationDays: number;
 };
+
+export type UserMembership = {
+  planName: string;
+  price: number;
+  durationDays: number;
+  startDate?: string;
+  status?: string;
+}

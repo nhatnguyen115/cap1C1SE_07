@@ -31,17 +31,30 @@ export const AttemptExamPage: React.FC = () => {
                 const startTest = await http.post(API_URIS.USER_TEST.START,
                     {}, {params: {examId: id}},
                 );
-                if (startTest.data.status == 417) {
-                    notification.error({
-                        message: startTest.data.message,
-                    });
-                    return
-                }
-                const attemptId = startTest.data.data;
-                setAttemptId(attemptId);
-                const res = await http.get(API_URIS.EXAMS.DO_BY_EXAM_ID(id!));
-                const rawData: DoExamType = res.data.data;
+                return startTest.data
+            } catch (error) {
+                console.error("Failed to start exam:", error);
+            }
+        };
 
+        const fetchExam = async () => {
+            try {
+                const res = await http.get(API_URIS.EXAMS.DO_BY_EXAM_ID(id!));
+                return res.data
+            } catch (error) {
+                console.error("Failed to fetch exam:", error);
+            }
+        }
+
+        fetchData().then(res => {
+            if (res.status === 200) {
+                const attemptId = res.data;
+                setAttemptId(attemptId);
+                fetchExam().then(r => {
+                    setExamDetails(r.data);
+                }).catch(error => {
+                    console.log(error)
+                });
                 // const shuffledDetails = rawData.details.map((detail) => ({
                 //   ...detail,
                 //   questions: shuffleArray(detail.questions),
@@ -51,14 +64,15 @@ export const AttemptExamPage: React.FC = () => {
                 //   ...rawData,
                 //   details: shuffledDetails,
                 // };
-
-                setExamDetails(rawData);
-            } catch (error) {
-                console.error("Failed to fetch exam or result:", error);
+            } else {
+                navigate("/payment")
+                notification.error({
+                    message: res.message,
+                });
             }
-        };
-
-        fetchData();
+        }).catch(error => {
+                console.log(error)
+            });
     }, [id]);
 
     useEffect(() => {
@@ -158,9 +172,8 @@ export const AttemptExamPage: React.FC = () => {
                             id={`question-${question.id}`}
                         >
                             <div className="flex flex-row items-center">
-                                <div
-                                    className=" rounded-full bg-blue-400 w-10 h-10 flex flex-col items-center justify-center mr-3">
-                                    <p className="text-blue-700">{questionNumber}</p>
+                                <div className=" rounded-full bg-blue-400 w-10 h-10 flex flex-col items-center justify-center mr-3">
+                                    <p className="text-blue-700 fa-bold">{questionNumber}</p>
                                 </div>
                                 <p className="font-bold text-2xl ">
                                     Question {}: {question.content}

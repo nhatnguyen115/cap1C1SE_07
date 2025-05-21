@@ -21,7 +21,6 @@ const PartDetailsManagementComponent: React.FC<{
   const [isAddMedia, setAddMedia] = useState(false);
   const [showDeleteQuestion, setShowDeleteQuestion] = useState(false);
   const [idQuestionDel, setIdQuestionDel] = useState<number>(0);
-
   const [questionMedia, setQuestionMedia] = useState<number>(0);
   const handlePageChange = (newPage: number) => {
     if (newPage >= 0 && newPage < totalPages) {

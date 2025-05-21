@@ -13,7 +13,7 @@ import { LessonType, PartType } from "../../../types/lesson";
 const SectionDetailsManagement: React.FC = () => {
   const [lessons, setLessons] = useState<LessonType[]>([]);
   const [parts, setParts] = useState<PartType[]>([]);
-  const [activeTab, setActiveTab] = useState<"lesson" | "part">("lesson");
+  const [activeTab, setActiveTab] = useState<"lesson" | "part">("part");
   const [searchParams] = useSearchParams();
 
   const sectionId = searchParams.get("sectionId");
@@ -104,7 +104,7 @@ const SectionDetailsManagement: React.FC = () => {
     }
   };
 
-  const handleAddpart = async (part: PartType) => {
+  const handleAddPart = async (part: PartType) => {
     if (!sectionId) return;
     try {
       const res = await http.post(API_URIS.PART.ADD_SECTION(sectionId), {
@@ -123,7 +123,7 @@ const SectionDetailsManagement: React.FC = () => {
 
   const handleUpdatePart = async (part: PartType) => {
     try {
-      const res = await http.put(API_URIS.PART.UPDATE(part.partId!), {
+      const res = await http.put(API_URIS.PART.UPDATE(part.id!), {
         ...part,
       });
       if (res.status === 200) {
@@ -154,16 +154,16 @@ const SectionDetailsManagement: React.FC = () => {
           Section Detail Management
         </h1>
         <div className="flex space-x-4 border-b border-gray-200 mb-4">
-          <button
-            onClick={() => setActiveTab("lesson")}
-            className={`pb-2 px-4 text-sm font-medium border-b-2 transition ${
-              activeTab === "lesson"
-                ? "border-blue-600 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-blue-600"
-            }`}
-          >
-            Lesson
-          </button>
+          {/*<button*/}
+          {/*  onClick={() => setActiveTab("lesson")}*/}
+          {/*  className={`pb-2 px-4 text-sm font-medium border-b-2 transition ${*/}
+          {/*    activeTab === "lesson"*/}
+          {/*      ? "border-blue-600 text-blue-600"*/}
+          {/*      : "border-transparent text-gray-500 hover:text-blue-600"*/}
+          {/*  }`}*/}
+          {/*>*/}
+          {/*  Lesson*/}
+          {/*</button>*/}
           <button
             onClick={() => setActiveTab("part")}
             className={`pb-2 px-4 text-sm font-medium border-b-2 transition ${
@@ -198,9 +198,9 @@ const SectionDetailsManagement: React.FC = () => {
             {lessons.length === 0 ? (
               <p className="text-gray-500">Không có dữ liệu bài học.</p>
             ) : (
-              <ul className="space-y-2">
+              <div className="space-y-2">
                 {lessons.map((lesson) => (
-                  <li
+                  <div
                     key={lesson.id}
                     className="p-4 bg-white rounded-md shadow-sm border border-gray-200 flex justify-between items-center"
                   >
@@ -233,7 +233,7 @@ const SectionDetailsManagement: React.FC = () => {
                         Xoá
                       </button>
                     </div>
-                  </li>
+                  </div>
                 ))}
                 {/* Sửa lesson */}
                 <AddLessonModal
@@ -272,7 +272,7 @@ const SectionDetailsManagement: React.FC = () => {
                     </div>
                   </div>
                 )}
-              </ul>
+              </div>
             )}
           </div>
         )}
@@ -292,24 +292,21 @@ const SectionDetailsManagement: React.FC = () => {
               <AddPartModal
                 isOpen={isAddPartModalOpen}
                 onClose={() => setAddPartModalOpen(false)}
-                onSubmit={handleAddpart}
+                onSubmit={handleAddPart}
               />
             </div>
             {parts.length === 0 ? (
               <p className="text-gray-500">Không có dữ liệu phần.</p>
             ) : (
-              <ul className="space-y-2">
+              <div className="space-y-2">
                 {parts.map((part) => (
-                  <li
-                    key={part.partId}
-                    className="p-4 bg-white rounded-md shadow-sm border border-gray-200"
+                  <div
+                    key={part.id}
+                    className="p-4 bg-white rounded-md shadow-sm border border-gray-200 cursor-pointer"
+                    onClick={() => part.id !== undefined && handleToggle(part.id)}
                   >
                     <div
-                      className="flex justify-between items-center cursor-pointer"
-                      onClick={() =>
-                        part.partId !== undefined && handleToggle(part.partId)
-                      }
-                    >
+                      className="flex justify-between items-center cursor-pointer">
                       <div>
                         <div className="font-medium text-gray-800">
                           {part.partName}
@@ -324,7 +321,7 @@ const SectionDetailsManagement: React.FC = () => {
                           className="px-3 py-1 bg-blue-600 text-white text-sm rounded"
                           onClick={(e) => {
                             e.stopPropagation();
-                            setSelectedPartIdForAdd(part.partId);
+                            setSelectedPartIdForAdd(part.id);
                             setIsAddQuestionModalOpen(true);
                           }}
                         >
@@ -344,7 +341,7 @@ const SectionDetailsManagement: React.FC = () => {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            setSelectedPartId(part.partId!);
+                            setSelectedPartId(part.id!);
                             setSelectedLessonId(null);
                             setShowConfirmModal(true);
                           }}
@@ -355,10 +352,12 @@ const SectionDetailsManagement: React.FC = () => {
                       </div>
                     </div>
 
-                    {expandedPartId === part.partId && (
-                      <PartDetailsManagementComponent partId={part.partId} />
+                    {expandedPartId === part.id && (
+                      <PartDetailsManagementComponent
+                          partId={part.id}
+                      />
                     )}
-                  </li>
+                  </div>
                 ))}
                 {isAddQuestionModalOpen && selectedPartIdForAdd && (
                   <AddQuestionModal
@@ -416,7 +415,7 @@ const SectionDetailsManagement: React.FC = () => {
                     </div>
                   </div>
                 )}
-              </ul>
+              </div>
             )}
           </div>
         )}

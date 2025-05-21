@@ -14,7 +14,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   duration,
   onNavigate,
 }) => {
-  const [time, setTime] = useState<number>(1);
+  const [time, setTime] = useState<number>(120);
 
   let questionCounter = 1;
 const navigate = useNavigate();
