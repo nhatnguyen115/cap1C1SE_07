@@ -52,9 +52,8 @@ const TestManagementPage: React.FC = () => {
   };
 
   const handleAddExam = async (exam: ExamType) => {
-    if (!exam.testId) return;
     try {
-      const res = await http.post(`/tests/${exam.testId}/exams`, {
+      const res = await http.post(`/exams`, {
         ...exam,
       });
       if (res.status === 200) {
@@ -97,7 +96,7 @@ const TestManagementPage: React.FC = () => {
     }
   };
 
-  const handleAddpart = async (part: PartType) => {
+  const handleAddPart = async (part: PartType) => {
     if (!examId) return;
     try {
       const res = await http.post(API_URIS.PART.ADD_EXAM(examId), {
@@ -167,9 +166,10 @@ const TestManagementPage: React.FC = () => {
               <tr className="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
                 <th className="py-3 px-4 text-left">ID</th>
                 <th className="py-3 px-4 text-left">Tên bài thi</th>
-                <th className="py-3 px-4 text-left">Loại bài thi</th>
                 <th className="py-3 px-4 text-center">Tổng điểm</th>
                 <th className="py-3 px-4 text-center">Thời gian</th>
+                <th className="py-3 px-4 text-center">Số lượng câu hỏi</th>
+                <th className="py-3 px-4 text-center">Cấp độ</th>
                 <th className="py-3 px-4 text-center">Hành động</th>
               </tr>
             </thead>
@@ -188,22 +188,15 @@ const TestManagementPage: React.FC = () => {
                     <td className="py-3 px-4 text-left font-semibold">
                       {test.examName}
                     </td>
-                    <td className="py-3 px-4 text-left">
-                      <span
-                        className={`px-2 py-1 text-xs rounded-full font-semibold ${
-                          test.testType === "Simulation Test"
-                            ? "bg-orange-200 text-orange-800"
-                            : test.testType === "MINI TEST"
-                            ? "bg-blue-200 text-blue-800"
-                            : "bg-yellow-200 text-yellow-800"
-                        }`}
-                      >
-                        {test.testType}
-                      </span>
-                    </td>
                     <td className="py-3 px-4 text-center">{test.totalScore}</td>
                     <td className="py-3 px-4 text-center">
                       {test.duration} phút
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      {test.questionCount}
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      {test.level}
                     </td>
                     <td className="py-3 px-4 text-center space-x-2">
                       <button
@@ -235,7 +228,7 @@ const TestManagementPage: React.FC = () => {
                   </tr>
                   {expandedRowId === test.id && ( // Hiển thị chi tiết khi dòng được mở rộng
                     <tr>
-                      <td colSpan={6} className="py-3 px-4 bg-gray-100">
+                      <td colSpan={10} className="py-3 px-4 bg-gray-100">
                         <ExamDetailsManagementComponent selectedId={test.id} />{" "}
                         {/* Hiển thị chi tiết câu hỏi bài thi */}
                       </td>
@@ -257,7 +250,7 @@ const TestManagementPage: React.FC = () => {
           <AddPartModal
             isOpen={isAddPartModalOpen}
             onClose={() => setAddPartModalOpen(false)}
-            onSubmit={handleAddpart}
+            onSubmit={handleAddPart}
           />
 
           {/* Modal xác nhận xoá */}
