@@ -27,7 +27,6 @@ const AddEditQuestionModal: React.FC<AddEditQuestionModalProps> = ({
   });
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [explanation, setExplanation] = useState("");
-  const [difficulty, setDifficulty] = useState("BEGINNER");
   const [orderNumber, setOrderNumber] = useState(1);
   const [questionType, setQuestionType] = useState("LISTENING");
 
@@ -37,7 +36,6 @@ const AddEditQuestionModal: React.FC<AddEditQuestionModalProps> = ({
       setOptions(dataEdit.options);
       setCorrectAnswer(dataEdit.correctAnswer);
       setExplanation(dataEdit.explanation);
-      setDifficulty(dataEdit.difficulty);
       setOrderNumber(dataEdit.orderNumber ?? 10);
       setQuestionType(dataEdit.questionType || "LISTENING");
     }
@@ -53,7 +51,6 @@ const AddEditQuestionModal: React.FC<AddEditQuestionModalProps> = ({
       options,
       correctAnswer,
       explanation,
-      difficulty,
       questionType,
       orderNumber,
     };
@@ -120,7 +117,7 @@ const AddEditQuestionModal: React.FC<AddEditQuestionModalProps> = ({
             value={correctAnswer}
             onChange={(e) => setCorrectAnswer(e.target.value)}
           >
-            <option value="">--Chọn--</option>
+            <option value="" disabled>--Chọn--</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
@@ -135,29 +132,6 @@ const AddEditQuestionModal: React.FC<AddEditQuestionModalProps> = ({
             rows={4}
             value={explanation}
             onChange={(e) => setExplanation(e.target.value)}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="block text-sm mb-1">Độ khó</label>
-          <select
-            className="w-full border rounded px-2 py-1"
-            value={difficulty}
-            onChange={(e) => setDifficulty(e.target.value)}
-          >
-            <option value="BEGINNER">Beginner</option>
-            <option value="INTERMEDIATE">Intermediate</option>
-            <option value="ADVANCED">Advanced</option>
-          </select>
-        </div>
-
-        <div className="mb-3">
-          <label className="block text-sm mb-1">Thứ tự</label>
-          <input
-            type="number"
-            className="w-full border rounded px-2 py-1"
-            value={orderNumber}
-            onChange={(e) => setOrderNumber(Number(e.target.value))}
           />
         </div>
 

@@ -24,22 +24,8 @@ const AddExamModal: React.FC<AddExamModalProps> = ({
   const [duration, setDuration] = useState<number | "">(
     initialData?.duration || 0,
   );
-  const [testId, setTestId] = useState<number | undefined>(initialData?.testId);
-  const [tests, setTests] = useState<{ id: number; testType: string }[]>([]);
-  useEffect(() => {
-    if (isOpen) {
-      http
-        .get("/tests")
-        .then((res) => {
-          if (res.data?.data) {
-            setTests(res.data.data);
-          }
-        })
-        .catch((err) => {
-          console.error("Failed to fetch tests:", err);
-        });
-    }
-  }, [isOpen]);
+  const [questionCount, setQuestionCount] = useState<number | "">(initialData?.questionCount || 0)
+  const [level, setLevel] = useState(initialData?.level || "")
 
   useEffect(() => {
     if (initialData) {
@@ -47,11 +33,15 @@ const AddExamModal: React.FC<AddExamModalProps> = ({
       setExamName(initialData.examName || "");
       setTotalScore(initialData.totalScore || 0);
       setDuration(initialData.duration || 0);
+      setQuestionCount(initialData.questionCount || 0)
+      setLevel(initialData.level || "BEGINNER")
     } else {
       setId(undefined);
-      setExamName("");
+      setExamName("EXAM");
       setTotalScore(0);
       setDuration(0);
+      setQuestionCount(0);
+      setLevel("")
     }
   }, [initialData, isOpen]);
 
@@ -70,7 +60,8 @@ const AddExamModal: React.FC<AddExamModalProps> = ({
       examName: examName.trim(),
       totalScore: Number(totalScore),
       duration: Number(duration),
-      testId,
+      questionCount: Number(questionCount),
+      level: level.trim()
     });
 
     onClose();
@@ -93,26 +84,6 @@ const AddExamModal: React.FC<AddExamModalProps> = ({
             className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
             placeholder="Nhập tên đề thi"
           />
-        </div>
-
-        {/* Chọn Test */}
-        <div className="mb-4">
-          <label className="block mb-1 text-sm">Chọn Test</label>
-          <select
-            value={testId ?? ""}
-            onChange={(e) => {
-              const val = parseInt(e.target.value, 10);
-              setTestId(!isNaN(val) ? val : undefined);
-            }}
-            className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
-          >
-            <option value="">Chọn test</option>
-            {tests.map((test) => (
-              <option key={test.id} value={test.id}>
-                {test.testType}
-              </option>
-            ))}
-          </select>
         </div>
 
         {/* Tổng điểm */}
@@ -145,6 +116,36 @@ const AddExamModal: React.FC<AddExamModalProps> = ({
           />
         </div>
 
+        <div className="mb-4">
+          <label className="block mb-1 text-sm">Số lượng câu hỏi</label>
+          <input
+              type="number"
+              min={0}
+              value={questionCount}
+              onChange={(e) =>
+                  setQuestionCount(e.target.value === "" ? "" : Number(e.target.value))
+              }
+              className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+              placeholder="Nhập số lượng câu hỏi"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block mb-1 text-sm">Cấp độ</label>
+          <select
+              value={level}
+              onChange={(e) => {
+                setLevel(e.target.value === "" ? "" : e.target.value)
+              }}
+              className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+              required={true}
+          >
+            <option value="" disabled>----Lựa chọn----</option>
+            <option value="BEGINNER">BEGINNER</option>
+            <option value="INTERMEDIATE">INTERMEDIATE</option>
+            <option value="ADVANCED">ADVANCED</option>
+          </select>
+        </div>
         {/* Buttons */}
         <div className="flex justify-end gap-2">
           <button
