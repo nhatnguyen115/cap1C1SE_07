@@ -15,10 +15,13 @@ import java.util.Optional;
 public interface ExamRepository extends JpaRepository<Exam, Integer> {
     Optional<Exam> findByExamName(@NotNull(message = "Exam name must be not null") String examName);
 
+    List<Exam> findAllByOrderByCreatedAtDesc();
+
     @Query(value = """
-        SELECT e FROM Exam e
-        WHERE (:testId IS NULL OR e.test.id = :testId)
-        ORDER BY e.createdAt desc
-    """)
-    List<Exam> findByTestIdOrderByCreatedAt(@Param("testId") Integer testId);
+        SELECT COUNT(DISTINCT uta.user_id)
+        FROM user_test_attempt uta
+        WHERE uta.exam_id = :examId
+        AND uta.complete = true
+    """, nativeQuery = true)
+    Integer countByUserTestAttempt(@Param("examId") Integer examId);
 }

@@ -19,13 +19,13 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Integer>
             q.options AS options,
             q.correct_answer AS correctAnswer,
             q.explanation AS explanation,
-            q.difficulty AS difficulty,
             ua.selected_answer AS selectedAnswer
         FROM question q
         INNER JOIN part p ON q.part_id = p.part_id
         LEFT JOIN user_answer ua ON q.question_id = ua.question_id AND ua.attempt_id = :attemptId
         LEFT JOIN media m ON m.media_id = q.media_id
         WHERE p.part_id = :partId
+        ORDER BY q.order_number
     """,  nativeQuery = true)
     List<Object[]> findByUserAnswerWithPartId(@Param("partId") Integer partId,
                                               @Param("attemptId") Integer attemptId);

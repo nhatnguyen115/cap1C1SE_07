@@ -45,4 +45,34 @@ public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt
         LIMIT 20;
     """, nativeQuery = true)
     List<Object[]> findByUserOfRank(@Param("examId") Integer examId);
+
+    @Query(value = """
+            SELECT
+                e.question_count as total_count,
+                COUNT(ua.*) as selected_count,
+                SUM(CASE WHEN ua.selected_answer = q.correct_answer AND p.grading = 'LISTENING' THEN 1 ELSE 0 END ) AS listening_correct_count,
+                SUM(CASE WHEN ua.selected_answer = q.correct_answer AND p.grading = 'READING' THEN 1 ELSE 0 END ) AS reading_correct_count
+            FROM part p
+            INNER JOIN exam_structure es ON es.part_id = p.part_id
+            INNER JOIN exam e ON e.exam_id = es.exam_id
+            INNER JOIN user_test_attempt uta ON uta.exam_id = e.exam_id
+            INNER JOIN question q ON q.part_id = p.part_id
+            INNER JOIN user_answer ua ON ua.question_id = q.question_id AND ua.attempt_id = :attemptId
+            WHERE uta.attempt_id = :attemptId group by e.question_count
+    """, nativeQuery = true)
+    List<Integer[]> answerParameterCalculation(@Param("attemptId") Integer attemptId);
+
+    @Query(value = """
+        select listening_score
+        from score
+        where correct_count = :correctCount
+    """, nativeQuery = true)
+    Integer findListeningScore(@Param("correctCount") Integer correctCount);
+
+    @Query(value = """
+        select reading_score
+        from score
+        where correct_count = :correctCount
+    """, nativeQuery = true)
+    Integer findReadingScore(@Param("correctCount") Integer correctCount);
 }

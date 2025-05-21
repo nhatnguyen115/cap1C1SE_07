@@ -93,26 +93,4 @@ public class QuestionService {
         question.setMedia(media);
         questionRepository.save(question);
     }
-
-    public void addQuestionsFromExcel(Integer partId, MultipartFile file) throws IOException {
-        Part part = partRepository.findById(partId)
-                .orElseThrow(() -> new RuntimeException("part not found"));
-        try (Workbook workbook= new XSSFWorkbook(file.getInputStream())) {
-            Sheet sheet = workbook.getSheetAt(0);
-            for (Row row : sheet) {
-
-                Question question = new Question();
-                question.setContent(row.getCell(0).getStringCellValue());
-                question.setOptions(new ObjectMapper().readValue(row.getCell(1).getStringCellValue(),
-                        new TypeReference<>() {}));
-                question.setCorrectAnswer(row.getCell(2).getStringCellValue());
-                question.setExplanation(row.getCell(3).getStringCellValue());
-                question.setDifficulty(DifficultyLevel.valueOf(row.getCell(4).getStringCellValue()));
-                part.getQuestions().add(question);
-            }
-            partRepository.save(part);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
