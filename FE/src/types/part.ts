@@ -5,7 +5,6 @@ export type QuestionType = {
   options: Record<string, string>;
   correctAnswer: string;
   explanation: string;
-  difficulty: string;
   selectedAnswer?: string;
   questionType?: string;
   orderNumber?: number;
