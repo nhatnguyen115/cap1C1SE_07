@@ -22,6 +22,11 @@ public class SecurityConstant {
             ,"/user-memberships/payment/callback"
             ,"/auth/external/callback"
             ,"/api/v1/auth/external/callback"
+            ,"/api/v1/auth/request"
+            ,"/auth/request"
+            ,"/auth/verify"
+            ,"/auth/reset"
+
     };
 
     public static final List<String> ORIGINS_ALLOWED = Arrays.asList(

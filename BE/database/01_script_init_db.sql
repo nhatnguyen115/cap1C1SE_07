@@ -18,6 +18,7 @@ create sequence section_part_answer_seq start 1 increment by 50;
 create sequence membership_plan_seq start 1 increment by 50;
 create sequence user_membership_seq start 1 increment by 50;
 create sequence resource_access_seq start 1 increment by 50;
+CREATE SEQUENCE password_reset_token_seq start with 1 increment by 50;
 ----------------------------------------Security----------------------------------------
 create type gender_type as enum ('MALE', 'FEMALE', 'OTHER');
 create type role_type as enum ('USER', 'ADMIN');
@@ -326,3 +327,15 @@ create table if not exists score
     reading_score   int not null,
     primary key (score_id)
 );
+
+
+CREATE TABLE password_reset_token (
+    id BIGINT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    otp VARCHAR(6) NOT NULL,
+    expiry_time TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE password_reset_token
+ALTER COLUMN id SET DEFAULT nextval('password_reset_token_seq');

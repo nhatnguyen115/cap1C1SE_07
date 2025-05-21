@@ -17,6 +17,8 @@ drop table if exists question;
 drop table if exists media;
 drop table if exists user_test_attempt;
 drop table if exists user_answer;
+drop table if exists password_reset_token;
+
 
 drop type if exists gender_type;
 drop type if exists role_type;
@@ -40,3 +42,4 @@ drop sequence if exists question_seq;
 drop sequence if exists media_seq;
 drop sequence if exists user_test_attempt_seq;
 drop sequence if exists user_answer_seq;
+drop sequence if exists password_reset_token_seq;
