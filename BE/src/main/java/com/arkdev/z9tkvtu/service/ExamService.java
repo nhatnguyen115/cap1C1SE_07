@@ -8,11 +8,9 @@ import com.arkdev.z9tkvtu.mapper.QuestionMapper;
 import com.arkdev.z9tkvtu.model.Exam;
 import com.arkdev.z9tkvtu.model.Part;
 import com.arkdev.z9tkvtu.model.Question;
-import com.arkdev.z9tkvtu.model.Test;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
 import com.arkdev.z9tkvtu.repository.PartRepository;
 import com.arkdev.z9tkvtu.repository.QuestionRepository;
-import com.arkdev.z9tkvtu.repository.TestRepository;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ExamService {
-    TestRepository testRepository;
     ExamRepository examRepository;
     PartRepository partRepository;
     QuestionRepository questionRepository;
@@ -34,23 +31,19 @@ public class ExamService {
     PartMapper partMapper;
     QuestionMapper questionMapper;
 
-    public List<ExamListResponse> getExams(Integer testId) {
-        return examRepository.findByTestIdOrderByCreatedAt(testId)
+    public List<ExamListResponse> getExams() {
+        return examRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
                 .map(exam -> {
-                    Integer questions = 0;
-                    for (Part part : exam.getParts()) {
-                        questions += part.getQuestionCount();
-                    }
-                    Integer students = testRepository.countByUserTestAttempt(exam.getId());
+                    Integer students = examRepository.countByUserTestAttempt(exam.getId());
                     return new ExamListResponse(
                             exam.getId(),
                             exam.getExamName(),
                             exam.getTotalScore(),
-                            exam.getTest().getTestType(),
                             exam.getDuration(),
-                            questions,
-                            students
+                            exam.getQuestionCount(),
+                            students,
+                            exam.getLevel()
                     );
                 })
                 .toList();
@@ -79,16 +72,12 @@ public class ExamService {
     }
 
     @Transactional
-    public void addExam(Integer testId, ExamRequest request) {
+    public void addExam(ExamRequest request) {
         examRepository.findByExamName(request.getExamName())
             .ifPresent(exam -> {
                 throw new RuntimeException("Exam name already exists");
             });
-        if (!testRepository.existsById(testId))
-            throw new RuntimeException("test not found");
-        Test test = testRepository.getReferenceById(testId);
         Exam exam = examMapper.toExam(request);
-        exam.setTest(test);
         examRepository.save(exam);
     }
 

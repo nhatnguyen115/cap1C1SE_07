@@ -78,8 +78,7 @@ public class PracticeService {
                         parseOptions(getString(r[4])),
                         getString(r[5]),
                         getString(r[6]),
-                        getEnum(DifficultyLevel.class, r[7]),
-                        getString(r[8])
+                        getString(r[7])
                 )).toList();
         return new PartAttemptResponse<>(
                 partDetailsResponse,

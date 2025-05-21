@@ -1,5 +1,6 @@
 package com.arkdev.z9tkvtu.dto.Request;
 
+import com.arkdev.z9tkvtu.util.GradingType;
 import com.arkdev.z9tkvtu.util.QuestionType;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -30,4 +31,6 @@ public class PartRequest implements Serializable {
 
     @NotNull(message = "Question count must be not null")
     Integer questionCount;
+
+    GradingType gradingType;
 }

@@ -7,7 +7,6 @@ public record ExamDetailsResponse(
         Integer id,
         String examName,
         Integer totalScore,
-        String testType,
         Integer duration,
         Integer userScore,
         Timestamp startTime,

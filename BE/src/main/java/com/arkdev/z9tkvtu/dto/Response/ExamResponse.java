@@ -1,5 +1,7 @@
 package com.arkdev.z9tkvtu.dto.Response;
 
+import com.arkdev.z9tkvtu.util.DifficultyLevel;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -10,6 +12,7 @@ public record ExamResponse(
         Integer id,
         String examName,
         Integer totalScore,
-        String testType,
-        Integer duration) implements Serializable {
+        Integer duration,
+        Integer questionCount,
+        DifficultyLevel level) implements Serializable {
 }

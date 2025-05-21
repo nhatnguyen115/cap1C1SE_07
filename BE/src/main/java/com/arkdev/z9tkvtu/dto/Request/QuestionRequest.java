@@ -1,6 +1,7 @@
 package com.arkdev.z9tkvtu.dto.Request;
 
 import com.arkdev.z9tkvtu.util.DifficultyLevel;
+import com.arkdev.z9tkvtu.util.GradingType;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -30,6 +31,4 @@ public class QuestionRequest implements Serializable {
     String correctAnswer;
 
     String explanation;
-
-    DifficultyLevel difficulty;
 }

@@ -34,6 +34,7 @@ import static com.arkdev.z9tkvtu.util.Convert.*;
 public class TestAttemptService {
     UserTestAttemptRepository userTestAttemptRepository;
     UserAnswerRepository userAnswerRepository;
+    PartRepository partRepository;
     ExamRepository examRepository;
     QuestionRepository questionRepository;
     UserTestMapper userTestMapper;
@@ -52,9 +53,9 @@ public class TestAttemptService {
     public AttemptDetailsResponse<?> getAttemptDetails(Integer attemptId) {
         UserTestAttempt attempt = userTestAttemptRepository.findById(attemptId)
                 .orElseThrow(() -> new RuntimeException("attempt not found"));
-        List<Part> parts = attempt.getExam().getParts().stream().toList();
+        List<Part> parts = partRepository.findByExamsIdOrderByOrderNumber(attempt.getExam().getId());
         ExamDetailsResponse detailsResponse = examMapper.toExamDetailsResponse(attempt);
-        List<PartAttemptResponse<?, ?>> partAttemptRespons = new ArrayList<>();
+        List<PartAttemptResponse<?, ?>> partAttemptResponses = new ArrayList<>();
         for (Part part : parts) {
             PartResponse partResponse = partMapper.toPartResponse(part);
             List<UserAnswerResponse> answerResponses = userAnswerRepository.findByUserAnswerWithPartId(part.getId(), attemptId)
@@ -66,14 +67,13 @@ public class TestAttemptService {
                             parseOptions(getString(r[4])),
                             getString(r[5]),
                             getString(r[6]),
-                            getEnum(DifficultyLevel.class, r[7]),
-                            getString(r[8])
+                            getString(r[7])
                     )).toList();
-            partAttemptRespons.add(new PartAttemptResponse<>(partResponse, answerResponses));
+            partAttemptResponses.add(new PartAttemptResponse<>(partResponse, answerResponses));
         }
         return new AttemptDetailsResponse<>(
                 detailsResponse,
-                partAttemptRespons
+                partAttemptResponses
         );
     }
 
@@ -120,22 +120,30 @@ public class TestAttemptService {
         Map<Integer, Question> questions = questionRepository.findAllById(questionIds)
                 .stream()
                 .collect(Collectors.toMap(Question::getId, Function.identity()));
-        AtomicInteger result = new AtomicInteger();
         List<UserAnswer> userAnswers = answers.stream()
                 .map(answerRequest -> {
                     Question question = Optional.ofNullable(questions.get(answerRequest.getQuestionId()))
                             .orElseThrow(() -> new RuntimeException("Question not found"));
-                    if (question.getCorrectAnswer().equals(answerRequest.getSelectedAnswer())) {
-                        result.set(result.get() + 5);
-                    }
                     return new UserAnswer(
                             attempt,
                             question,
                             answerRequest.getSelectedAnswer()
                     );
                 }).toList();
-        attempt.setTotalScore(result.get());
         userAnswerRepository.saveAll(userAnswers);
+        ExamGrading(attempt);
+    }
+
+    private void ExamGrading(UserTestAttempt attempt) {
+        List<Integer[]> list = userTestAttemptRepository.answerParameterCalculation(attempt.getId());
+        Integer listeningScore = userTestAttemptRepository.findListeningScore(getInt(list.getFirst()[2]));
+        Integer readingScore = userTestAttemptRepository.findReadingScore(getInt(list.getFirst()[3]));
+        attempt.setCorrectCount(getInt(list.getFirst()[2]) + getInt(list.getFirst()[3]));
+        attempt.setIncorrectCount(getInt(list.getFirst()[1]) - (getInt(list.getFirst()[2]) + getInt(list.getFirst()[3])));
+        attempt.setSkipCount(getInt(list.getFirst()[0]) - getInt(list.getFirst()[1]));
+        attempt.setListeningScore(listeningScore);
+        attempt.setReadingScore(readingScore);
+        attempt.setTotalScore(listeningScore + readingScore);
     }
 
     @Transactional

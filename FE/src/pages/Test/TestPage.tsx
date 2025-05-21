@@ -1,62 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { PATH_CONSTANTS } from "../../api/PathConstant";
 import { API_URIS } from "../../api/URIConstant";
 import { SRC_IMAGE } from "../../constant/SrcImage";
 import { http } from "../../service/Http";
-import { TestType } from "../../types/test";
+import ExamCardComponent from "../../components/ExamCardComponent";
+import {ExamType} from "../../types/exam";
 
 const TestPage: React.FC = () => {
-  const [tests, setTests] = useState<TestType[]>([]);
-
-  const navigate = useNavigate();
+  const [exams, setExams] = useState<ExamType[]>([]);
 
   useEffect(() => {
-    const fetchTests = async () => {
-      try {
-        const response = await http.get(API_URIS.TEST.TESTS);
-        if (response.status === 200) {
-          setTests(response.data.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch tests", error);
-      }
+    const fetchExams = async () => {
+      const res = await http.get(API_URIS.EXAMS.GET_ALL);
+      setExams(res.data.data.items);
     };
-
-    fetchTests();
+    fetchExams();
   }, []);
 
   return (
     <div className="p-4 max-w-4xl flex flex-col justify-center items-center min-h-screen mx-auto">
       <div>
-        <h1 className="text-xl font-bold mb-4">Danh sách bài test</h1>
+        <h1 className="text-4xl font-bold mb-2">Luyện đề thi thử TOEIC Online</h1>
       </div>
-      <div className="">
-        {tests.map((test) => (
-          <div
-            key={test.id}
-            className="px-5 py-5 mb-10 flex flex-col rounded-2xl bg-gradient-to-r from-yellow-100 via-yellow-200 to-red-200 transform transition duration-300 hover:scale-105"
-          >
-            <img
-              src={SRC_IMAGE.TEST}
-              alt={test.testType}
-              className="w-full h-40 object-cover rounded-md mb-5"
-            />
-            <h1>{test.testType}</h1>
-            <span className="text-xs">
-              Luyện thi mô phỏng trên máy tính như thi thật giúp bạn làm quen
-              khi bước vào kì thi chính thức
-            </span>
-            <button
-              className="p-4 ml-80 mt-5 bg-blue-300 rounded-2xl"
-              onClick={() =>
-                navigate(PATH_CONSTANTS.EXAM.EXAMS_BY_TEST_ID(test.id))
-              }
-            >
-              Làm bài thi ngay
-            </button>
-          </div>
-        ))}
+      <div className="min-h-screen flex flex-col items-center p-4">
+        <h1 className="text-2xl font-bold mb-6">Danh sách bài thi</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {exams.map((exam) => (
+              <ExamCardComponent
+                  key={exam.id}
+                  examName={exam.examName}
+                  duration={exam.duration ?? 0}
+                  totalScore={exam.totalScore}
+                  id={exam.id ?? 0}
+                  questions={exam.questionCount ?? 10}
+                  students={exam.students ?? 10}
+                  level={exam.level ?? "BEGINNER"}
+                  image={SRC_IMAGE.TEST}
+              />
+          ))}
+        </div>
       </div>
       <div className="text-justify space-y-4 p-4 rounded-2xl shadow-xl">
         <p>

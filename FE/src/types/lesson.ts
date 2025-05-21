@@ -21,6 +21,7 @@ export type PartType = {
   questionType: string;
   instructions: string;
   questionCount: number;
+  gradingType?: string;
 };
 
 export type LessonPartType = {

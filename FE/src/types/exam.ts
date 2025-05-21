@@ -1,11 +1,9 @@
 export interface ExamType {
   id?: number;
-  testId?: number;
   examName: string;
   totalScore: number;
-  testType?: string;
   duration?: number;
-  questions?: number;
+  questionCount?: number;
   students?: number;
   level?: string;
   image?: string;
@@ -34,7 +32,6 @@ export type QuestionType = {
   };
   correctAnswer: "A" | "B" | "C" | "D";
   explanation: string | null;
-  difficulty: string;
   selectedAnswer?: string;
   mediaType?: string;
 };
@@ -63,3 +60,9 @@ export type TestNavigationProps = {
   duration?: number;
   onNavigate: (index: number) => void;
 };
+
+export type AttemptNavigationProps = {
+  details?: PartWithQuestionsType[];
+  currentQuestion: number;
+  onNavigate: (index: number) => void;
+}

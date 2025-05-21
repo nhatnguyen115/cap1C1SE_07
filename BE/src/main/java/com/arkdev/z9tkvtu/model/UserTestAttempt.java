@@ -20,6 +20,21 @@ public class UserTestAttempt {
     @Column(name = "total_score")
     private Integer totalScore;
 
+    @Column(name = "listening_score")
+    private Integer listeningScore;
+
+    @Column(name = "reading_score")
+    private Integer readingScore;
+
+    @Column(name = "correct_count")
+    private Integer correctCount;
+
+    @Column(name = "incorrect_count")
+    private Integer incorrectCount;
+
+    @Column(name = "skip_count")
+    private Integer skipCount;
+
     @Column(name = "start_time")
     private Timestamp startTime;
 

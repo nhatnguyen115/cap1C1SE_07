@@ -34,6 +34,7 @@ const AddPartModal: React.FC<AddPartModalProps> = ({
   const [questionCountInput, setQuestionCountInput] = useState(
     initialData?.questionCount?.toString() || "",
   );
+  const [gradingType, setGradingType] = useState(initialData?.gradingType || "")
 
   useEffect(() => {
     if (initialData) {
@@ -44,6 +45,7 @@ const AddPartModal: React.FC<AddPartModalProps> = ({
       setInstructions(initialData.instructions || "");
       setQuestionCount(initialData.questionCount ?? 0);
       setQuestionCountInput(initialData.questionCount?.toString() || "");
+      setGradingType(initialData.gradingType || "")
     } else {
       // Reset nếu là thêm mới
       setPartId(undefined);
@@ -53,6 +55,7 @@ const AddPartModal: React.FC<AddPartModalProps> = ({
       setInstructions("");
       setQuestionCount(0);
       setQuestionCountInput("");
+      setGradingType("")
     }
   }, [initialData, isOpen]); // thêm isOpen để trigger khi mở modal
 
@@ -73,6 +76,7 @@ const AddPartModal: React.FC<AddPartModalProps> = ({
       questionType,
       instructions: instructions.trim(),
       questionCount: parseInt(questionCountInput || "0", 10),
+      gradingType: gradingType.trim()
     });
 
     onClose();
@@ -150,6 +154,20 @@ const AddPartModal: React.FC<AddPartModalProps> = ({
             className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
             placeholder="Nhập số lượng câu hỏi"
           />
+        </div>
+
+        {/* Chấm điểm */}
+        <div className="mb-4">
+          <label className="block mb-1 text-sm">Chấm điểm</label>
+          <select
+              value={gradingType}
+              onChange={(e) => setGradingType(e.target.value)}
+              className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+          >
+            <option value="LISTENING">Nghe</option>
+            <option value="READING">Đọc</option>
+            <option value="OTHER">Khác</option>
+          </select>
         </div>
 
         {/* Button */}

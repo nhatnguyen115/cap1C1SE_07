@@ -1,5 +1,6 @@
 package com.arkdev.z9tkvtu.dto.Request;
 
+import com.arkdev.z9tkvtu.util.DifficultyLevel;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,8 @@ public class ExamRequest implements Serializable {
     Integer totalScore;
     
     Integer duration;
+
+    Integer questionCount;
+
+    DifficultyLevel level;
 }

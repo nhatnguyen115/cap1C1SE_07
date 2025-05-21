@@ -1,8 +1,11 @@
 package com.arkdev.z9tkvtu.model;
 
+import com.arkdev.z9tkvtu.util.DifficultyLevel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,9 +29,13 @@ public class Exam extends AbstractEntity {
     @Column(name = "duration")
     private Integer duration;
 
-    @ManyToOne
-    @JoinColumn(name = "test_id", nullable = false)
-    private Test test;
+    @Column(name = "question_count")
+    private Integer questionCount;
+
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "level")
+    private DifficultyLevel level;
 
     @ManyToMany
     @JoinTable(

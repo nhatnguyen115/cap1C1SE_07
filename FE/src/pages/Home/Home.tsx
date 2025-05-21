@@ -19,6 +19,7 @@ export interface Exam {
   level: "Beginner" | "Intermediate" | "Advanced";
 }
 
+// @ts-ignore
 const Home = ({ setIsOpen }) => {
   const examData = [toeicTest];
   const [examsS, setExamsS] = useState<ExamType[]>([]);
@@ -30,24 +31,24 @@ const Home = ({ setIsOpen }) => {
       page: 0,
       size: PAGINATION_CONSTANT.SIZE[3],
     };
-    const fetchExams = async () => {
-      const examsS = await http.get(
-        API_URIS.EXAMS.GET_BY_TEST_ID(TEST_CONSTANTS.SIMULATION_TEST),
-        { params: params },
-      );
-      setExamsS(examsS.data.data.items);
-      const examsM = await http.get(
-        API_URIS.EXAMS.GET_BY_TEST_ID(TEST_CONSTANTS.MINI_TEST),
-        { params: params },
-      );
-      setExamsM(examsM.data.data.items);
-      const examsF = await http.get(
-        API_URIS.EXAMS.GET_BY_TEST_ID(TEST_CONSTANTS.FULL_TEST),
-        { params: params },
-      );
-      setExamsF(examsF.data.data.items);
-    };
-    fetchExams();
+    // const fetchExams = async () => {
+    //   const examsS = await http.get(
+    //     API_URIS.EXAMS.GET_BY_TEST_ID(TEST_CONSTANTS.SIMULATION_TEST),
+    //     { params: params },
+    //   );
+    //   setExamsS(examsS.data.data.items);
+    //   const examsM = await http.get(
+    //     API_URIS.EXAMS.GET_BY_TEST_ID(TEST_CONSTANTS.MINI_TEST),
+    //     { params: params },
+    //   );
+    //   setExamsM(examsM.data.data.items);
+    //   const examsF = await http.get(
+    //     API_URIS.EXAMS.GET_BY_TEST_ID(TEST_CONSTANTS.FULL_TEST),
+    //     { params: params },
+    //   );
+    //   setExamsF(examsF.data.data.items);
+    // };
+    // fetchExams();
   }, []);
   useEffect(() => {
     const fetchPratice = async () => {
@@ -167,47 +168,47 @@ const Home = ({ setIsOpen }) => {
             Luyện tập
           </h1>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 gap-y-12 mb-12 max-w-[1000px] justify-center items-center">
-            {examsS.map((item, index) => (
-              <ExamCardComponent
-                key={item.id}
-                examName={item.examName}
-                duration={item.duration ?? 0}
-                totalScore={item.totalScore}
-                id={item.id ?? 0}
-                questions={item.questions ?? 10}
-                students={item.students ?? 10}
-                level={item.level ?? "BEGINNER"}
-                image={SRC_IMAGE.PRACTICE}
-              />
-            ))}
-            {examsM.map((item, index) => (
-              <ExamCardComponent
-                key={item.id}
-                examName={item.examName}
-                duration={item.duration ?? 0}
-                totalScore={item.totalScore}
-                id={item.id ?? 0}
-                questions={item.questions ?? 10}
-                students={item.students ?? 10}
-                level={item.level ?? "BEGINNER"}
-                image={SRC_IMAGE.PRACTICE}
-              />
-            ))}
-            {examsF.map((item, index) => (
-              <ExamCardComponent
-                key={item.id}
-                examName={item.examName}
-                duration={item.duration ?? 0}
-                totalScore={item.totalScore}
-                id={item.id ?? 0}
-                questions={item.questions ?? 10}
-                students={item.students ?? 10}
-                level={item.level ?? "BEGINNER"}
-                image={SRC_IMAGE.PRACTICE}
-              />
-            ))}
-          </div>
+          {/*<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 gap-y-12 mb-12 max-w-[1000px] justify-center items-center">*/}
+          {/*  {examsS.map((item, index) => (*/}
+          {/*    <ExamCardComponent*/}
+          {/*      key={item.id}*/}
+          {/*      examName={item.examName}*/}
+          {/*      duration={item.duration ?? 0}*/}
+          {/*      totalScore={item.totalScore}*/}
+          {/*      id={item.id ?? 0}*/}
+          {/*      questions={item.questions ?? 10}*/}
+          {/*      students={item.students ?? 10}*/}
+          {/*      level={item.level ?? "BEGINNER"}*/}
+          {/*      image={SRC_IMAGE.PRACTICE}*/}
+          {/*    />*/}
+          {/*  ))}*/}
+          {/*  {examsM.map((item, index) => (*/}
+          {/*    <ExamCardComponent*/}
+          {/*      key={item.id}*/}
+          {/*      examName={item.examName}*/}
+          {/*      duration={item.duration ?? 0}*/}
+          {/*      totalScore={item.totalScore}*/}
+          {/*      id={item.id ?? 0}*/}
+          {/*      questions={item.questions ?? 10}*/}
+          {/*      students={item.students ?? 10}*/}
+          {/*      level={item.level ?? "BEGINNER"}*/}
+          {/*      image={SRC_IMAGE.PRACTICE}*/}
+          {/*    />*/}
+          {/*  ))}*/}
+          {/*  {examsF.map((item, index) => (*/}
+          {/*    <ExamCardComponent*/}
+          {/*      key={item.id}*/}
+          {/*      examName={item.examName}*/}
+          {/*      duration={item.duration ?? 0}*/}
+          {/*      totalScore={item.totalScore}*/}
+          {/*      id={item.id ?? 0}*/}
+          {/*      questions={item.questions ?? 10}*/}
+          {/*      students={item.students ?? 10}*/}
+          {/*      level={item.level ?? "BEGINNER"}*/}
+          {/*      image={SRC_IMAGE.PRACTICE}*/}
+          {/*    />*/}
+          {/*  ))}*/}
+          {/*</div>*/}
         </div>
 
         <Link

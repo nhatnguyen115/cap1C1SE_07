@@ -1,5 +1,6 @@
 package com.arkdev.z9tkvtu.model;
 
+import com.arkdev.z9tkvtu.util.GradingType;
 import com.arkdev.z9tkvtu.util.QuestionType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -39,6 +40,11 @@ public class Part extends AbstractEntity {
 
     @Column(name = "order_number")
     private Integer orderNumber;
+
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "grading")
+    private GradingType gradingType;
 
     @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Question> questions = new HashSet<>();

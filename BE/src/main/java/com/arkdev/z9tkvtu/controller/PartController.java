@@ -34,7 +34,7 @@ public class PartController {
     public ResponseData<?> getParts(@RequestParam Integer selectedId,
                                     @RequestParam boolean checked,
                                     @RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "100") int size) {
+                                    @RequestParam(defaultValue = "5") int size) {
         try {
             if (checked) {
                 return new ResponseData<>(HttpStatus.OK.value(), "Get Parts To Section Successfully",
@@ -99,17 +99,6 @@ public class PartController {
             return new ResponseData<>(HttpStatus.OK.value(), "Add Media To Part Successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Media could not be added");
-        }
-    }
-
-    @PostMapping("/{partId}/excel-question")
-    public ResponseData<?> addQuestionsFromExcel(@PathVariable Integer partId,
-                                                 @RequestParam MultipartFile file) {
-        try {
-            questionService.addQuestionsFromExcel(partId, file);
-            return new ResponseData<>(HttpStatus.OK.value(), "Add Questions From Excel Successfully");
-        } catch (IOException e) {
-            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Excel could not be added");
         }
     }
 }
