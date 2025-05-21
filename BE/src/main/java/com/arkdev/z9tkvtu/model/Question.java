@@ -1,6 +1,7 @@
 package com.arkdev.z9tkvtu.model;
 
 import com.arkdev.z9tkvtu.util.DifficultyLevel;
+import com.arkdev.z9tkvtu.util.GradingType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -36,11 +37,6 @@ public class Question extends AbstractEntity {
 
     @Column(name = "order_number")
     private Integer orderNumber;
-
-    @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
-    @Column(name = "difficulty")
-    private DifficultyLevel difficulty;
 
     @ManyToOne
     @JoinColumn(name = "part_id")

@@ -14,7 +14,6 @@ public class QuestionMapper {
         question.setOptions(request.getOptions());
         question.setCorrectAnswer(request.getCorrectAnswer());
         question.setExplanation(request.getExplanation());
-        question.setDifficulty(request.getDifficulty());
         return question;
     }
 
@@ -24,7 +23,6 @@ public class QuestionMapper {
         question.setOptions(request.getOptions());
         question.setCorrectAnswer(request.getCorrectAnswer());
         question.setExplanation(request.getExplanation());
-        question.setDifficulty(request.getDifficulty());
     }
 
     public QuestionResponse toQuestionResponse(Question question) {
@@ -36,7 +34,7 @@ public class QuestionMapper {
                 question.getMedia() != null ? question.getMedia().getMediaType() : null,
                 question.getOptions(),
                 question.getExplanation(),
-                question.getDifficulty()
+                question.getCorrectAnswer()
         );
     }
 }

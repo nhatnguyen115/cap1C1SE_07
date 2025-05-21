@@ -15,6 +15,8 @@ public class ExamMapper {
         exam.setExamName(request.getExamName());
         exam.setDuration(request.getDuration());
         exam.setTotalScore(request.getTotalScore());
+        exam.setQuestionCount(request.getQuestionCount());
+        exam.setLevel(request.getLevel());
         return exam;
     }
 
@@ -23,6 +25,8 @@ public class ExamMapper {
         exam.setExamName(request.getExamName());
         exam.setDuration(request.getDuration());
         exam.setTotalScore(request.getTotalScore());
+        exam.setQuestionCount(request.getQuestionCount());
+        exam.setLevel(request.getLevel());
     }
 
     public ExamResponse toExamResponse(Exam exam) {
@@ -31,22 +35,10 @@ public class ExamMapper {
                 exam.getId(),
                 exam.getExamName(),
                 exam.getTotalScore(),
-                exam.getTest().getTestType(),
-                exam.getDuration());
+                exam.getDuration(),
+                exam.getQuestionCount(),
+                exam.getLevel());
     }
-
-//    public ExamDetailsResponse toExamDetailsResponse(Exam exam) {
-//        if (exam == null) return null;
-//        return new ExamDetailsResponse(
-//                exam.getId(),
-//                exam.getExamName(),
-//                exam.getTotalScore(),
-//                exam.getTest().getTestType(),
-//                exam.getDuration(),
-//                null,
-//                null,
-//                null);
-//    }
 
     public ExamDetailsResponse toExamDetailsResponse(UserTestAttempt attempt) {
         if (attempt == null) return null;
@@ -55,7 +47,6 @@ public class ExamMapper {
                 attempt.getExam().getId(),
                 attempt.getExam().getExamName(),
                 attempt.getExam().getTotalScore(),
-                attempt.getExam().getTest().getTestType(),
                 attempt.getExam().getDuration(),
                 attempt.getTotalScore(),
                 attempt.getStartTime(),

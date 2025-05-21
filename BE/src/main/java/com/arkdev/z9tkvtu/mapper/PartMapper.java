@@ -17,6 +17,7 @@ public class PartMapper {
         part.setDescription(request.getDescription());
         part.setInstructions(request.getInstructions());
         part.setQuestionCount(request.getQuestionCount());
+        part.setGradingType(request.getGradingType());
         return part;
     }
 
@@ -27,6 +28,7 @@ public class PartMapper {
         part.setDescription(request.getDescription());
         part.setInstructions(request.getInstructions());
         part.setQuestionCount(request.getQuestionCount());
+        part.setGradingType(request.getGradingType());
     }
 
     public PartResponse toPartResponse(Part part) {
