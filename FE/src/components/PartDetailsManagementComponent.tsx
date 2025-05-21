@@ -106,8 +106,7 @@ const PartDetailsManagementComponent: React.FC<{
             ))}
           </ul>
           <div className="text-sm mt-1">
-            <strong>Đáp án đúng:</strong> {q.correctAnswer} |{" "}
-            <strong>Độ khó:</strong> {q.difficulty}
+            <strong>Đáp án đúng:</strong> {q.correctAnswer}
           </div>
           <div className="mt-2 space-x-2">
             <button

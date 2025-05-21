@@ -27,7 +27,7 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
   const navigate = useNavigate();
 
   return (
-    <div className="border rounded-xl shadow-md p-4 bg-white w-80">
+    <div className="border rounded-xl shadow-md p-4 bg-white w-full max-w-sm">
       <img
         src={image}
         alt={examName}
