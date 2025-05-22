@@ -13,6 +13,9 @@ export const API_URIS = {
     UPDATE_PROFILE: "/users/update",
     CHANGE_PASSWORD: "/users/change-password",
     INFO: "/users",
+    PAGING: "/users/paging",
+    DISABLE: (id: string) => `/users/disable/${id}`,
+    ENABLE: (id: string) => `/users/enable/${id}`,
   },
   PRODUCT: {
     GET_ALL: "/products",
@@ -63,7 +66,6 @@ export const API_URIS = {
     GET_ALL: `/exams`,
     GET_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
     DO_BY_EXAM_ID: (examId: number | string) => `/exams/${examId}`,
-
   },
 
   PART: {
@@ -101,7 +103,7 @@ export const API_URIS = {
     HISTORY: "/user-test",
     RANK: "/user-test/user-rank",
     RESULT: "/user-test/get-result",
-    ATTEMPT: "/user-test/get-attempt"
+    ATTEMPT: "/user-test/get-attempt",
   },
 
   PAYMENT: {

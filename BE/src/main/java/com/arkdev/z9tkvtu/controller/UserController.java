@@ -1,5 +1,6 @@
 package com.arkdev.z9tkvtu.controller;
 
+import com.arkdev.z9tkvtu.dto.Request.PagingRequest;
 import com.arkdev.z9tkvtu.dto.Request.UserCreationRequest;
 import com.arkdev.z9tkvtu.dto.Request.UserUpdateRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
@@ -29,6 +30,16 @@ public class UserController {
         try {
             return new ResponseData<>(HttpStatus.OK.value(),
                     "Get All Users Successfully", userService.getUsers());
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get All Users Failed");
+        }
+    }
+
+    @GetMapping("/paging")
+    public ResponseData<?> getUsersPaging(@ModelAttribute PagingRequest pagingRequest) {
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(),
+                    "Get All Users Successfully", userService.getAllUser(pagingRequest));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get All Users Failed");
         }
@@ -71,6 +82,26 @@ public class UserController {
             return new ResponseData<>(HttpStatus.OK.value(), "User deleted successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "User could not be deleted");
+        }
+    }
+
+    @PutMapping("disable/{userId}")
+    public ResponseData<?> disableUser(@PathVariable("userId") UUID userId) {
+        try {
+            userService.disableUser(userId);
+            return new ResponseData<>(HttpStatus.OK.value(), "User deleted successfully");
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "User could not be deleted");
+        }
+    }
+
+    @PutMapping("enable/{userId}")
+    public ResponseData<?> enableUser(@PathVariable("userId") UUID userId) {
+        try {
+            userService.enableUser(userId);
+            return new ResponseData<>(HttpStatus.OK.value(), "User enabled successfully");
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "User could not be enabled");
         }
     }
 }

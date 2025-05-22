@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.UserLoginData}
@@ -20,6 +21,9 @@ import java.util.Date;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserUpdateRequest implements Serializable {
+
+    UUID id;
+
     @NotNull(message = "First name must be not null")
     @Size(message = "First name must be less than 20", max = 20)
     String firstName;
@@ -31,7 +35,7 @@ public class UserUpdateRequest implements Serializable {
     @NotNull(message = "Gender must be not null")
     Gender gender;
 
-    @NotNull(message = "Date of birth must be not null")
+//    @NotNull(message = "Date of birth must be not null")
     Date dob;
 
     @NotNull(message = "Email must be not null")

@@ -62,7 +62,7 @@ public class AuthController {
                         "Introspect Failed!");
             }
         } catch (Exception e) {
-            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "Introspect Error!");
+            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         }
     }
 
@@ -78,7 +78,9 @@ public class AuthController {
 
             // Gọi hàm mới trong UserService
             UserLoginData userDetails = userService.loadUserByUsernameOrEmail(usernameOrEmail);
-
+            if (!userDetails.isEnabled()) {
+                return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "Tài khoản của bạn đã bị vô hiệu hóa");
+            }
             if (!jwtProvider.validateToken(token, userDetails)) {
                 return new ResponseData<>(HttpStatus.UNAUTHORIZED.value(), "Invalid or expired token!");
             }

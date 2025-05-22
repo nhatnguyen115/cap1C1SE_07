@@ -1,5 +1,6 @@
 package com.arkdev.z9tkvtu.service;
 
+import com.arkdev.z9tkvtu.dto.Request.PagingRequest;
 import com.arkdev.z9tkvtu.dto.Request.UserCreationRequest;
 import com.arkdev.z9tkvtu.dto.Request.UserUpdateRequest;
 import com.arkdev.z9tkvtu.dto.Response.UserResponse;
@@ -20,8 +21,12 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -82,9 +87,10 @@ public class UserService {
 
     @Transactional
     public void updateUser(UserUpdateRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserLoginData user = (UserLoginData) auth.getPrincipal();
+        UserLoginData user = userRepository.findById(request.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
         dataMapper.updateUserLoginData(user, request);
+        userRepository.save(user);
     }
 
     @Transactional
@@ -101,11 +107,41 @@ public class UserService {
         userRepository.delete(userLoginData);
     }
 
-    public UserLoginData loadUserByUsernameOrEmail(String usernameOrEmail) {
-        return userRepository.findByUsername(usernameOrEmail)
-                .or(() -> userRepository.findByEmail(usernameOrEmail))
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
+    @Transactional
+    public void disableUser(UUID userId) {
+        UserLoginData userLoginData = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        userLoginData.setActive(false);
+        userRepository.save(userLoginData);
     }
 
+    @Transactional
+    public void enableUser(UUID userId) {
+        UserLoginData userLoginData = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        userLoginData.setActive(true);
+        userRepository.save(userLoginData);
+    }
+
+
+    public UserLoginData loadUserByUsernameOrEmail(String usernameOrEmail) {
+        UserLoginData user =  userRepository.findByUsername(usernameOrEmail)
+                .or(() -> userRepository.findByEmail(usernameOrEmail))
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
+        if (!user.isActive()) {
+            throw new DisabledException("Tài khoản đã bị vô hiệu hóa");
+        }
+        return user;
+    }
+
+    public Page<UserLoginData> getAllUser(PagingRequest request){
+        Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
+        Page<UserLoginData> users = userRepository.findAllByOrderByUsernameAsc(pageable);
+
+        return users.map(user -> {
+            user.setPassword(null);
+            return user;
+        });
+    }
 
 }

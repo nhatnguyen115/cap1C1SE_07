@@ -38,18 +38,26 @@ const Login: React.FC = () => {
     };
 
     try {
-      const response = await login(payload); // Giả sử login() đã lưu token và role vào localStorage
-      setUserRole(response.data.role);
-      const role = localStorage.getItem(LOCAL_STORAGE_CONSTANT.ROLE); // 👈 Lấy role từ localStorage
+      const response = await login(payload);
+      if (response.status == 200) {
+        setUserRole(response.data.role);
+        const role = localStorage.getItem(LOCAL_STORAGE_CONSTANT.ROLE); // 👈 Lấy role từ localStorage
 
-      if (role === LOCAL_STORAGE_CONSTANT.ROLE_ADMIN) {
-        navigate(PATH_CONSTANTS.ADMIN.ADMIN_DASHBOARD, { replace: true });
+        if (role === LOCAL_STORAGE_CONSTANT.ROLE_ADMIN) {
+          navigate(PATH_CONSTANTS.ADMIN.ADMIN_DASHBOARD, { replace: true });
+        } else {
+          navigate(PATH_CONSTANTS.ROOT.ROOT);
+        }
       } else {
-        navigate(PATH_CONSTANTS.ROOT.ROOT);
+        notification.error({
+          message: response.message || "Đăng nhập thất bại. Vui lòng thử lại.",
+        });
       }
     } catch (error: any) {
+      console.log("errorLogin: ", error);
+
       notification.error({
-        message: "Đăng nhập thất bại. Vui lòng thử lại.",
+        message: error.data.message || "Đăng nhập thất bại. Vui lòng thử lại.",
       });
       console.error("Login error:", error);
     }

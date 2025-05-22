@@ -47,6 +47,11 @@ public class PreFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userService.getUserDetailsService().loadUserByUsername(username);
+            if (!userDetails.isEnabled()) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Tài khoản của bạn đã bị vô hiệu hóa");
+                return;
+            }
             if (jwtProvider.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()

@@ -4,6 +4,8 @@ import com.arkdev.z9tkvtu.model.UserLoginData;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +20,7 @@ public interface UserLoginDataRepository extends JpaRepository<UserLoginData, UU
                              @NotBlank(message = "Username must be not blank") String username);
 
     Optional<UserLoginData> findByEmail(String email);
+
+    Page<UserLoginData> findAllByOrderByUsernameAsc(Pageable pageable);
+
 }

@@ -60,6 +60,6 @@ public class UserLoginData extends UserAccount implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return this.isActive();
     }
 }

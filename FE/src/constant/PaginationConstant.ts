@@ -6,4 +6,7 @@ export const PAGINATION_CONSTANT = {
     100: 100,
     1000: 1000,
   },
+  PAGE: {
+    0: 0,
+  },
 };
