@@ -60,7 +60,7 @@ const SectionDetailsManagement: React.FC = () => {
         try {
             const res = await http.post(`/exams`, {
                 ...exam,
-            });
+            }, {params: {sectionId: sectionId}});
             if (res.status === 200) {
                 notification.success({
                     message: res.data.message,

@@ -149,10 +149,6 @@ const ExamResultDetailsPage: React.FC = () => {
                                                         </button>
                                                     )
                                                 })}
-                                                <span className="italic text-black">
-                                                    <strong>Giải Thích: </strong>
-                                                    {question.explanation}
-                                                </span>
                                             </div>
                                         )
                                     })}

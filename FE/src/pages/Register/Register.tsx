@@ -44,6 +44,12 @@ const Register: React.FC = () => {
 
     try {
       const response = await register(payload);
+      if(response.status !== 201) {
+        notification.error({
+          message: response.message || "Đăng ký thất bại. Vui lòng thử lại.",
+        });
+        return;
+      }
       notification.success({
         message: response.message,
       });

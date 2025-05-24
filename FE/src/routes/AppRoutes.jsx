@@ -277,7 +277,7 @@ const routes = [
     path: PATH_CONSTANTS.SECTION.DETAIL_MANAGEMENT(":sectionId"),
     element: (
       <MainLayout>
-        {/*<SectionDetailsManagement />*/}
+        <SectionDetailsManagement />
       </MainLayout>
     ),
   },
@@ -293,7 +293,7 @@ const routes = [
     path: PATH_CONSTANTS.SECTION.DETAIL(":sectionId"),
     element: (
       <MainLayout>
-        <SectionDetailsManagement />
+        <PracticeDetailsPage />
       </MainLayout>
     ),
   },

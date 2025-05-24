@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { API_URIS } from "../api/URIConstant";
 import { http } from "../service/Http";
 
-const UploadExcelComponent: React.FC = () => {
+const UploadExcelComponent: React.FC<{isPractice?: boolean; sectionId?: number}> = ({isPractice, sectionId}) => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
@@ -27,15 +27,30 @@ const UploadExcelComponent: React.FC = () => {
 
     try {
       setUploading(true);
-      const response = await http.post(
-        API_URIS.TEST.UPLOAD_EXCEL,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
+      let response = null
+      if (isPractice) {
+          response = await http.post(
+              API_URIS.TEST.UPLOAD_EXCEL,
+              formData,
+              {
+                  headers: {
+                      "Content-Type": "multipart/form-data",
+                  },
+                  params: {sectionId: sectionId}
+              },
+          );
+      } else {
+          response = await http.post(
+              API_URIS.TEST.UPLOAD_EXCEL,
+              formData,
+              {
+                  headers: {
+                      "Content-Type": "multipart/form-data",
+                  },
+              },
+          );
+      }
+
         const status = response.data.status;
         if (status === 200 || status === 201) {
             setMessage("Tải lên thành công!");
