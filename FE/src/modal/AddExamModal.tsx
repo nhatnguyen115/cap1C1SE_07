@@ -7,14 +7,12 @@ interface AddExamModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (exam: ExamType) => void;
+  testType?: string
   initialData?: ExamType;
 }
 
 const AddExamModal: React.FC<AddExamModalProps> = ({
-  isOpen,
-  onClose,
-  onSubmit,
-  initialData,
+  isOpen, onClose, onSubmit, testType, initialData,
 }) => {
   const [id, setId] = useState<number | undefined>(initialData?.id);
   const [examName, setExamName] = useState(initialData?.examName || "");
@@ -61,7 +59,8 @@ const AddExamModal: React.FC<AddExamModalProps> = ({
       totalScore: Number(totalScore),
       duration: Number(duration),
       questionCount: Number(questionCount),
-      level: level.trim()
+      level: level.trim(),
+      testType: testType?.trim()
     });
 
     onClose();

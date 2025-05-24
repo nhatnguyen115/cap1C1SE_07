@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaMicrophone } from "react-icons/fa";
-import { QuestionType } from "../types/part";
+import { QuestionType } from "../types/exam";
 
 // Thêm khai báo để tránh lỗi TypeScript
 declare global {
@@ -16,15 +16,11 @@ declare global {
 }
 
 type Props = {
-  question: QuestionType;
-  index: number;
   answer?: string;
   onAnswer: (answer: string) => void;
 };
 
 const QuestionSpeakComponent: React.FC<Props> = ({
-  question,
-  index,
   answer,
   onAnswer,
 }) => {
@@ -85,10 +81,6 @@ const QuestionSpeakComponent: React.FC<Props> = ({
   }, [spokenText]);
   return (
     <div className="bg-white p-4 rounded-lg shadow mb-6">
-      <h2 className="font-bold mb-2 text-gray-800">{`Câu ${index + 1}`}</h2>
-
-      <p className="text-base mb-4 text-gray-700">{question.content}</p>
-
       <button
         onClick={handleMicClick}
         className={`flex items-center gap-2 px-4 py-2 rounded ${

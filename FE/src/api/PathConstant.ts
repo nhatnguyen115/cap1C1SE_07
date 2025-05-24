@@ -52,11 +52,11 @@ export const PATH_CONSTANTS = {
     GET_BY_ID: (sectionId: number | string) => `/sections/${sectionId}`,
     LIST: "/sections",
     DETAIL: (sectionId: string | number) => `/sections/${sectionId}`,
-    DETAIL_MANAGEMENT: "/section-detail",
+    DETAIL_MANAGEMENT: (sectionId: string | number) => `/section-detail?sectionId=${sectionId}`,
   },
 
   PRACTICE: {
-    ROOT: "/practice",
+
     GET_ALL_BY_SECTION: (sectionId: number | string) =>
       `/practice?sectionId=${sectionId}`,
     GET_BY_ID: (id: number | string) => `/practice/${id}`,
@@ -117,7 +117,9 @@ export const PATH_CONSTANTS = {
     TEST: "/test",
     EXAMS_VIEW_BY_ID: (attemptIdView: number | string) => `/exams/view/${attemptIdView}`,
     EXAMS_RESUL_BY_ID: (attemptId: number | string) => `/exams/result/${attemptId}`,
+    PRACTICE_RESUL_BY_ID: (attemptId: number | string) => `/practice/result/${attemptId}`,
     EXAMS_DO_BY_ID: "/exams/:id",
+    PRACTICE: "/practice/:id",
     EXAMS_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
     EXAMS: "/exams",
   },

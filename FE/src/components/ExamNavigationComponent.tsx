@@ -11,7 +11,7 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   details,
   currentQuestion,
   answers,
-  duration,
+  duration, isPractice,
   onNavigate,
 }) => {
   const [time, setTime] = useState<number>(120);
@@ -25,12 +25,21 @@ const navigate = useNavigate();
         questionId: a.questionId,
         selectedAnswer: a.selectedOption,
       }));
+      let response = null;
+      if (isPractice) {
+        response = await http.post(API_URIS.PRACTICE.SUBMIT_PRACTICE, payload, {
+          params: {
+            attemptId: attemptId, // hoặc lấy từ state/router
+          },
+        });
+      } else {
+        response = await http.post(API_URIS.USER_TEST.SUBMIT, payload, {
+          params: {
+            attemptId: attemptId, // hoặc lấy từ state/router
+          },
+        });
+      }
 
-      const response = await http.post(API_URIS.USER_TEST.SUBMIT, payload, {
-        params: {
-          attemptId: attemptId, // hoặc lấy từ state/router
-        },
-      });
       const statusHttp = response.data.status;
 
       const message = response.data.message;
@@ -47,7 +56,8 @@ const navigate = useNavigate();
         notification.success({
           message: message || "Bạn đã nộp bài thành công.",
         });
-      navigate(`/exams/result/${attemptId}`);
+        if (isPractice) navigate(`/practice/result/${attemptId}`);
+        else navigate(`/exams/result/${attemptId}`);
       }
       // Optional: chuyển trang hoặc disable giao diện
     } catch (error: any) {

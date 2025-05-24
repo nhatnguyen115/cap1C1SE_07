@@ -2,15 +2,11 @@ import React, { useEffect, useState } from "react";
 import { QuestionType } from "../types/part";
 
 type Props = {
-  question: QuestionType;
-  index: number;
   answer?: string;
   onAnswer: (answer: string) => void;
 };
 
 const QuestionWriteComponent: React.FC<Props> = ({
-  question,
-  index,
   answer = "",
   onAnswer,
 }) => {
@@ -22,11 +18,7 @@ const QuestionWriteComponent: React.FC<Props> = ({
 
   return (
     <div className="bg-white p-4 rounded-lg shadow mb-6">
-      <h2 className="font-bold mb-2 text-gray-800">{`Câu ${index + 1}`}</h2>
-
-      <p className="text-base mb-4 text-gray-700">{question.content}</p>
-
-      <textarea
+        <textarea
         className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         rows={4}
         value={writtenText}

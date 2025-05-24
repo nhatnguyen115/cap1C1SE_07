@@ -17,11 +17,9 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
 import History from "../pages/History/History";
 import Leaderboard from "../pages/Leaderboard/Leaderboard";
-import { MockTest } from "../pages/MockTest/MockTest";
 import Result from "../pages/MockTest/Result";
 import Payment from "../pages/Payment/Payment";
 import PaymentForm from "../pages/Payment/PaymentForm/PaymentForm"; // Giả lập trạng thái Auth
-import { Practice } from "../pages/Practice/Practice";
 import { PracticeDetailsPage } from "../pages/Practice/PracticeDetailsPage";
 import { PracticePage } from "../pages/Practice/PracticePage";
 import Register from "../pages/Register/Register";
@@ -39,6 +37,8 @@ import PartDetailsPage from "./../pages/Part/PartDetailsPage";
 import TestPage from "./../pages/Test/TestPage";
 import ExamResultDetailsPage from "../pages/Exam/ExamResultDetailsPage.tsx";
 import ExamResultPage from "../pages/Exam/ExamResultPage";
+import {PracticeExamPage} from "../pages/Exam/PracticeExamPage";
+import PracticeResultDetailsPage from "../pages/Exam/PracticeResultDetailsPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -96,14 +96,6 @@ const routes = [
     ),
   },
   {
-    path: PATH_CONSTANTS.MOCK_TEST.MOCK_TEST,
-    element: (
-      <MainLayout>
-        <MockTest />
-      </MainLayout>
-    ),
-  },
-  {
     path: PATH_CONSTANTS.MOCK_TEST.MOCK_TEST_BY_ID(":id"),
     element: (
       <MainLayout>
@@ -120,18 +112,18 @@ const routes = [
     ),
   },
   {
-    path: PATH_CONSTANTS.EXAM.TEST,
-    element: (
-      <MainLayout>
-        <MockTest />
-      </MainLayout>
-    ),
-  },
-  {
     path: PATH_CONSTANTS.EXAM.EXAMS_DO_BY_ID,
     element: (
       <MainLayout>
         <AttemptExamPage isView={false} />
+      </MainLayout>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.EXAM.PRACTICE,
+    element: (
+      <MainLayout>
+        <PracticeExamPage isView={false} />
       </MainLayout>
     ),
   },
@@ -148,6 +140,14 @@ const routes = [
     element: (
         <MainLayout>
           <ExamResultPage />
+        </MainLayout>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.EXAM.PRACTICE_RESUL_BY_ID(":attemptIdView"),
+    element: (
+        <MainLayout>
+          <PracticeResultDetailsPage />
         </MainLayout>
     ),
   },
@@ -242,14 +242,6 @@ const routes = [
     ),
   },
   {
-    path: PATH_CONSTANTS.PRACTICE.ROOT,
-    element: (
-      <MainLayout>
-        <Practice />
-      </MainLayout>
-    ),
-  },
-  {
     path: PATH_CONSTANTS.ADMIN.ADMIN_DASHBOARD,
     element: (
       <MainLayout>
@@ -282,10 +274,10 @@ const routes = [
     ),
   },
   {
-    path: PATH_CONSTANTS.SECTION.DETAIL_MANAGEMENT,
+    path: PATH_CONSTANTS.SECTION.DETAIL_MANAGEMENT(":sectionId"),
     element: (
       <MainLayout>
-        <SectionDetailsManagement />
+        {/*<SectionDetailsManagement />*/}
       </MainLayout>
     ),
   },
@@ -301,7 +293,7 @@ const routes = [
     path: PATH_CONSTANTS.SECTION.DETAIL(":sectionId"),
     element: (
       <MainLayout>
-        <PracticeDetailsPage />
+        <SectionDetailsManagement />
       </MainLayout>
     ),
   },

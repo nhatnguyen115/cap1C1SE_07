@@ -41,12 +41,6 @@ export const API_URIS = {
     ADD: (moduleId: number | string) => `/modules/${moduleId}/sections`,
     GET_ALL: "/sections",
   },
-  PRACTICE: {
-    GET_ALL_BY_SECTION: (sectionId: number | string) =>
-      `/practice?sectionId=${sectionId}`,
-    GET_BY_ID: (id: number | string) => `/practice/${id}`,
-    SUBMIT_PART: "/practice/submit-part",
-  },
   LESSON: {
     GET_BY_ID: (lessonId: number | string) => `/lessons/${lessonId}`,
     ADD: (sectionId: number | string) => `/sections/${sectionId}/lessons`,
@@ -103,7 +97,14 @@ export const API_URIS = {
     RESULT: "/user-test/get-result",
     ATTEMPT: "/user-test/get-attempt"
   },
-
+  PRACTICE: {
+    GET_ALL_BY_SECTION: (sectionId: number | string) =>
+        `/practice?sectionId=${sectionId}`,
+    GET_BY_ID: (id: number | string) => `/practice/${id}`,
+    SUBMIT_PART: "/practice/submit-part",
+    START_PRACTICE: "/practice/start-practice",
+    SUBMIT_PRACTICE: "/practice/submit-practice",
+  },
   PAYMENT: {
     PLAN: "/membership-plans",
     INFO: "user-memberships/info",

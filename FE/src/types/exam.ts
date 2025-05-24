@@ -6,6 +6,7 @@ export interface ExamType {
   questionCount?: number;
   students?: number;
   level?: string;
+  testType?: string;
   image?: string;
 }
 
@@ -75,6 +76,7 @@ export type TestNavigationProps = {
   currentQuestion: number;
   answers: AnswerType[];
   duration?: number;
+  isPractice?: boolean
   onNavigate: (index: number) => void;
 };
 

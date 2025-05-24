@@ -41,7 +41,7 @@ const TestManagementPage: React.FC = () => {
   };
   const fetchData = async () => {
     try {
-      const response = await http.get(`/exams?page=${page}`);
+        const response = await http.get(`/exams?page=${page}`);
       if (response.status === 200) {
         setTests(response.data.data.items);
         setTotalPages(response.data.data.totalPages);
@@ -121,7 +121,7 @@ const TestManagementPage: React.FC = () => {
       <LeftSidebarAdmin customHeight="h-auto w-64" />
       <div className="flex-1 p-8">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Quản lý Đề thi</h1>
+          <h1 className="text-3xl font-bold text-gray-800">Quản lý đề thi</h1>
           <button
             onClick={() => setShowUploader(true)}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
@@ -147,7 +147,7 @@ const TestManagementPage: React.FC = () => {
             </div>
           )}
           <button
-            className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
             onClick={() => setAddExamModalOpen(true)}
           >
             Thêm đề thi mới
@@ -156,6 +156,7 @@ const TestManagementPage: React.FC = () => {
             isOpen={isAddExamModalOpen}
             onClose={() => setAddExamModalOpen(false)}
             onSubmit={handleAddExam}
+            testType={"TEST"}
           />
         </div>
 
