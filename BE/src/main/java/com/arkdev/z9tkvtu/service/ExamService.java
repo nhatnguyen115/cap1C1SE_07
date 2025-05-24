@@ -11,6 +11,7 @@ import com.arkdev.z9tkvtu.model.Question;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
 import com.arkdev.z9tkvtu.repository.PartRepository;
 import com.arkdev.z9tkvtu.repository.QuestionRepository;
+import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +32,14 @@ public class ExamService {
     PartMapper partMapper;
     QuestionMapper questionMapper;
 
-    public List<ExamListResponse> getExams() {
-        return examRepository.findAllByOrderByCreatedAtDesc()
-                .stream()
+    public List<ExamListResponse> getExams(String testType, Integer sectionId) {
+        List<Exam> exams;
+        if (sectionId == null || sectionId.describeConstable().isEmpty()) {
+            exams = examRepository.findAllByTestTypeOrderByCreatedAtDesc(TestType.valueOf(testType));
+        } else {
+            exams = examRepository.findAllBySectionsIdAndTestTypeOrderByCreatedAtDesc(sectionId, TestType.valueOf(testType));
+        }
+        return exams.stream()
                 .map(exam -> {
                     Integer students = examRepository.countByUserTestAttempt(exam.getId());
                     return new ExamListResponse(

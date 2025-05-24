@@ -10,6 +10,7 @@ import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.*;
 import com.arkdev.z9tkvtu.util.DifficultyLevel;
 import com.arkdev.z9tkvtu.util.MediaType;
+import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -34,24 +35,25 @@ public class PracticeService {
     LessonRepository lessonRepository;
     PartRepository partRepository;
     SectionPartPracticeRepository practiceRepository;
+    ExamRepository examRepository;
     SectionPartAnswerRepository answerRepository;
     QuestionRepository questionRepository;
     LessonMapper lessonMapper;
     PartMapper partMapper;
 
-    public SectionContentResponse getSectionDetails(Integer sectionId) {
-        List<LessonResponse> lessons = lessonRepository.findBySectionIdOrderByOrderNumber(sectionId)
+    public List<ExamListResponse> getSectionDetails(Integer sectionId) {
+        return examRepository.findAllBySectionsIdAndTestTypeOrderByCreatedAtDesc(sectionId, TestType.MINITEST)
                 .stream()
-                .map(lessonMapper::toLessonResponse)
+                .map(exam -> new ExamListResponse(
+                        exam.getId(),
+                        exam.getExamName(),
+                        exam.getTotalScore(),
+                        exam.getDuration(),
+                        exam.getQuestionCount(),
+                        null,
+                        exam.getLevel()
+                ))
                 .toList();
-        List<PartResponse> parts = partRepository.findBySectionsIdOrderByOrderNumber(sectionId)
-                .stream()
-                .map(partMapper::toPartResponse)
-                .toList();
-        return new SectionContentResponse(
-                lessons,
-                parts
-        );
     }
 
     public PartAttemptResponse<?, ?> getPracticeResult(Integer partId) {

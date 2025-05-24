@@ -2,6 +2,8 @@ package com.arkdev.z9tkvtu.repository;
 
 import com.arkdev.z9tkvtu.model.UserAccount;
 import com.arkdev.z9tkvtu.model.UserTestAttempt;
+import com.arkdev.z9tkvtu.util.TestType;
+import org.antlr.v4.runtime.misc.MultiMap;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt, Integer> {
@@ -64,6 +67,21 @@ public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt
     List<Integer[]> answerParameterCalculation(@Param("attemptId") Integer attemptId);
 
     @Query(value = """
+            SELECT
+                e.question_count as total_count,
+                COUNT(ua.*) as selected_count,
+                SUM(CASE WHEN ua.selected_answer = q.correct_answer THEN 1 ELSE 0 END ) AS correct_count
+            FROM user_test_attempt uta
+            INNER JOIN exam e ON e.exam_id = uta.exam_id
+            INNER JOIN exam_structure es ON es.exam_id = e.exam_id
+            INNER JOIN part p ON p.part_id = es.part_id
+            INNER JOIN question q ON q.part_id = p.part_id
+            INNER JOIN user_answer ua ON ua.question_id = q.question_id AND ua.attempt_id = uta.attempt_id
+            WHERE uta.attempt_id = :attemptId group by e.question_count
+    """, nativeQuery = true)
+    List<Integer[]> answerPracticeCalculation(@Param("attemptId") Integer attemptId);
+
+    @Query(value = """
         select listening_score
         from score
         where correct_count = :correctCount
@@ -78,4 +96,6 @@ public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt
     Integer findReadingScore(@Param("correctCount") Integer correctCount);
 
     Optional<UserTestAttempt> findByIdAndCompleteTrue(Integer attemptId);
+
+    Optional<UserTestAttempt> findByUserIdAndExamIdAndExamTestType(UUID userId, Integer examId, TestType examTestType);
 }

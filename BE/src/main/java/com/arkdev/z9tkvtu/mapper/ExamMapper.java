@@ -17,6 +17,7 @@ public class ExamMapper {
         exam.setTotalScore(request.getTotalScore());
         exam.setQuestionCount(request.getQuestionCount());
         exam.setLevel(request.getLevel());
+        exam.setTestType(request.getTestType());
         return exam;
     }
 
@@ -27,6 +28,7 @@ public class ExamMapper {
         exam.setTotalScore(request.getTotalScore());
         exam.setQuestionCount(request.getQuestionCount());
         exam.setLevel(request.getLevel());
+        exam.setTestType(request.getTestType());
     }
 
     public ExamResponse toExamResponse(Exam exam) {

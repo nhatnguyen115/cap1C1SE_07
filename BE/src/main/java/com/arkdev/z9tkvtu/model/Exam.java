@@ -1,6 +1,7 @@
 package com.arkdev.z9tkvtu.model;
 
 import com.arkdev.z9tkvtu.util.DifficultyLevel;
+import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,10 +38,18 @@ public class Exam extends AbstractEntity {
     @Column(name = "level")
     private DifficultyLevel level;
 
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "test")
+    private TestType testType;
+
     @ManyToMany
     @JoinTable(
             name = "exam_structure",
             joinColumns = @JoinColumn(name = "exam_id"),
             inverseJoinColumns = @JoinColumn(name = "part_id"))
     private Set<Part> parts = new HashSet<>();
+
+    @ManyToMany(mappedBy = "exams")
+    private Set<Section> sections = new HashSet<>();
 }
