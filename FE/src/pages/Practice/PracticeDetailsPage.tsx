@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { API_URIS } from "../../api/URIConstant";
-import SectionDetailsComponent from "../../components/SectionDetailsComponent";
+import SectionExamComponent from "../../components/SectionExamComponent";
 import { sectionMockData } from "../../data/sectionMockData";
 import { http } from "../../service/Http";
 import { SectionType } from "../../types/section";
@@ -39,7 +39,7 @@ export const PracticeDetailsPage = () => {
   return (
     <div>
       {sectionId && sectionName && sections ? (
-        <SectionDetailsComponent
+        <SectionExamComponent
           sectionId={sectionId}
           sectionName={sectionName}
           sections={sections}

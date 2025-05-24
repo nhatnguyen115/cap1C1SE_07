@@ -15,8 +15,12 @@ import {
     QuestionType,
 } from "../../types/exam";
 import MediaComponent from "../../components/MediaComponent";
+import {QUESTION_TYPE} from "../../constant/TestConstant";
+import QuestionSpeakComponent from "../../components/QuestionSpeakComponent";
+import QuestionFillInBlankComponent from "../../components/QuestionFillInBlankComponent";
+import QuestionWriteComponent from "../../components/QuestionWriteComponent";
 
-export const AttemptExamPage: React.FC = () => {
+export const PracticeExamPage: React.FC = () => {
     const [answers, setAnswers] = useState<AnswerType[]>([]);
     const navigate = useNavigate();
     const [attemptId, setAttemptId] = useState<number>(0);
@@ -28,7 +32,7 @@ export const AttemptExamPage: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const startTest = await http.post(API_URIS.USER_TEST.START,
+                const startTest = await http.post(API_URIS.PRACTICE.START_PRACTICE,
                     {}, {params: {examId: id}},
                 );
                 return startTest.data
@@ -63,8 +67,8 @@ export const AttemptExamPage: React.FC = () => {
                 });
             }
         }).catch(error => {
-                console.log(error)
-            });
+            console.log(error)
+        });
     }, [id]);
 
     useEffect(() => {
@@ -76,7 +80,7 @@ export const AttemptExamPage: React.FC = () => {
     }, []);
     const handleAnswer = (
         questionId: number,
-        selectedOption: "A" | "B" | "C" | "D",
+        selectedOption: string,
     ) => {
         const updatedAnswers = [...answers];
         const existingIndex = updatedAnswers.findIndex(
@@ -103,16 +107,9 @@ export const AttemptExamPage: React.FC = () => {
     };
     let questionCounter = 1;
 
-    const getQuestionProps = () => {
-        const id = `question-${questionCounter}`;
-        const number = questionCounter;
-        questionCounter++;
-        return {id, number};
-    };
-
     const renderListeningPart = (part: PartWithQuestionsType) => {
         if (!part.questions || part.questions.length === 0) return null;
-
+        console.log(part.part.questionType)
         return (
             <div className="mb-8">
                 <h3 className="text-3xl text-blue-700 font-semibold mb-4">
@@ -175,9 +172,42 @@ export const AttemptExamPage: React.FC = () => {
                                 mediaType={question.mediaType}
                                 url={question.url}
                             />
-                            {Object.entries(question.options).map(([key, value]) =>
-                                renderOptionButton(key, value),
-                            )}
+                            {part.part.questionType === QUESTION_TYPE.MULTIPLE_CHOICE ? (
+                                Object.entries(question.options).map(([key, value]) =>
+                                        renderOptionButton(key, value),
+                                    )
+                            ) : null}
+                            {part.part.questionType === QUESTION_TYPE.AUDIO_BASED ? (
+                                <div key={question.id}>
+                                    <QuestionSpeakComponent
+                                        key={question.id}
+                                        answer={question.selectedAnswer}
+                                        onAnswer={(answer) =>{
+                                            handleAnswer(question.id, answer)
+                                        }}
+                                    />
+                                </div>
+                            ) : null}
+                            {part.part.questionType === QUESTION_TYPE.FILL_IN_BLANK ? (
+                                <div key={question.id}>
+                                    <QuestionFillInBlankComponent
+                                        key={question.id}
+                                        answer={question.selectedAnswer}
+                                        onAnswer={(answer) => handleAnswer(question.id, answer)}
+                                    />
+                                </div>
+                            ) : null}
+                            {part.part.questionType === QUESTION_TYPE.ESSAY ? (
+                                <div key={question.id}>
+                                    <QuestionWriteComponent
+                                        key={question.id}
+                                        answer={question.selectedAnswer}
+                                        onAnswer={(answer) =>
+                                            handleAnswer(question.id, answer)
+                                        }
+                                    />
+                                </div>
+                            ) : null}
                         </div>
                     );
                 })}
@@ -189,38 +219,39 @@ export const AttemptExamPage: React.FC = () => {
         <div className="flex flex-col h-screen">
             {doExam &&
                 (<div className="flex flex-row justify-between flex-1 overflow-hidden">
-                <div className="flex-1 flex flex-col justify-start items-center p-4 overflow-auto">
-                    <div
-                        className="text-lg w-full text-main font-normal flex gap-3 text-start mb-5 cursor-pointer items-center"
-                        onClick={() => navigate(-1)}>
-                        <IcBreadcrumbGbk/>
-                        <span>{"Return"}</span>
+                    <div className="flex-1 flex flex-col justify-start items-center p-4 overflow-auto">
+                        <div
+                            className="text-lg w-full text-main font-normal flex gap-3 text-start mb-5 cursor-pointer items-center"
+                            onClick={() => navigate(-1)}>
+                            <IcBreadcrumbGbk/>
+                            <span>{"Return"}</span>
+                        </div>
+
+                        <div>
+                            <h2 className="text-4xl font-bold text-blue-600">
+                                {examDetails?.exam.examName}
+                            </h2>
+                        </div>
+                        <div className="w-full max-w-4xl">
+                            {examDetails?.details.map((part, index) => {
+                                return renderListeningPart(part);
+                            })}
+                        </div>
                     </div>
 
-                    <div>
-                        <h2 className="text-4xl font-bold text-blue-600">
-                            {examDetails?.exam.examName}
-                        </h2>
+                    <div className=" p-4 bg-white h-full w-fit overflow-y-scroll">
+                        <ExamNavigationComponent
+                            isView= {false}
+                            attemptId={attemptId}
+                            details={examDetails?.details}
+                            currentQuestion={currentQuestion}
+                            answers={answers}
+                            duration={examDetails?.exam.duration ?? -1}
+                            onNavigate={handleNavigate}
+                            isPractice={true}
+                        />
                     </div>
-                    <div className="w-full max-w-4xl">
-                        {examDetails?.details.map((part, index) => {
-                            return renderListeningPart(part);
-                        })}
-                    </div>
-                </div>
-
-                <div className=" p-4 bg-white h-full w-fit overflow-y-scroll">
-                    <ExamNavigationComponent
-                        isView= {false}
-                        attemptId={attemptId}
-                        details={examDetails?.details}
-                        currentQuestion={currentQuestion}
-                        answers={answers}
-                        duration={examDetails?.exam.duration ?? -1}
-                        onNavigate={handleNavigate}
-                    />
-                </div>
-            </div>)}
+                </div>)}
         </div>
     );
 };

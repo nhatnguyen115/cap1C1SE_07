@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserAnswerRepository extends JpaRepository<UserAnswer, Integer> {
@@ -29,4 +30,6 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Integer>
     """,  nativeQuery = true)
     List<Object[]> findByUserAnswerWithPartId(@Param("partId") Integer partId,
                                               @Param("attemptId") Integer attemptId);
+
+    Optional<UserAnswer> findByQuestionIdAndAttemptId(Integer questionId, Integer attemptId);
 }

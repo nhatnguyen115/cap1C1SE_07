@@ -48,4 +48,11 @@ public class Section extends AbstractEntity {
             joinColumns = @JoinColumn(name = "section_id"),
             inverseJoinColumns = @JoinColumn(name = "part_id"))
     private Set<Part> parts = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "section_exam",
+            joinColumns = @JoinColumn(name = "section_id"),
+            inverseJoinColumns = @JoinColumn(name = "exam_id"))
+    private Set<Exam> exams = new HashSet<>();
 }

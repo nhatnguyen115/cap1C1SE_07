@@ -149,7 +149,7 @@ const SectionManagementPage: React.FC = () => {
               {sections.map((section, index) => (
                 <tr
                   onClick={() =>
-                    navigate(`/section-detail?sectionId=${section.id}`)
+                    navigate(`/section-detail/${section.id}`)
                   }
                   key={section.id}
                   className={`border-b hover:bg-gray-100 transition ${
@@ -174,7 +174,7 @@ const SectionManagementPage: React.FC = () => {
                   <td className="py-4 px-4 text-center">
                     <button
                       onClick={() =>
-                        navigate(`/section-detail?sectionId=${section.id}`)
+                        navigate(`/section-detail/${section.id}`)
                       }
                       className="text-gray-500 hover:text-gray-700 transition"
                       title="Chi tiết"

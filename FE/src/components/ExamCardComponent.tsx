@@ -11,6 +11,8 @@ type ExamCardProps = {
   questions?: number;
   students?: number;
   level?: string;
+  isTest?: boolean;
+  isPractice?: boolean;
   image?: string;
 };
 
@@ -21,7 +23,7 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
   id,
   questions,
   students,
-  level,
+  level, isTest, isPractice,
   image,
 }) => {
   const navigate = useNavigate();
@@ -36,28 +38,48 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
       <h2 className="text-lg font-semibold mt-3">{examName}</h2>
       <div className="flex items-center gap-2 text-gray-600 text-sm mt-2">
         <BookOpen size={16} /> <span>Questions: {questions}</span>
-        <Users size={16} className="ml-3" /> <span>Students: {students}</span>
+          {isTest && (<><Users size={16} className="ml-3"/><span>Students: {students}</span></>)}
       </div>
       <div className="flex items-center gap-2 text-gray-600 text-sm mt-2">
         <Award size={16} /> <span className="font-medium">{level}</span>
       </div>
       <div className="flex flex-col justify-center items-center">
+          {isTest && (
+              <button
+                  onClick={() =>
+                      navigate(
+                          PATH_CONSTANTS.USER_TEST.RANK.replace(":id", id.toString()),
+                      )
+                  }
+                  className="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-all"
+              >
+                  Bảng xếp hạng
+              </button>
+          )}
+          {isPractice && (
+              <button
+                  onClick={() =>
+                      navigate(
+                          PATH_CONSTANTS.USER_TEST.RANK.replace(":id", id.toString()),
+                      )
+                  }
+                  className="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-all"
+              >
+                  Kết Quả
+              </button>
+          )}
         <button
-          onClick={() =>
-            navigate(
-              PATH_CONSTANTS.USER_TEST.RANK.replace(":id", id.toString()),
-            )
-          }
-          className="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-all"
-        >
-          Bảng xếp hạng
-        </button>
-        <button
-          onClick={() =>
-            navigate(
-              PATH_CONSTANTS.EXAM.EXAMS_DO_BY_ID.replace(":id", id.toString()),
-            )
-          }
+          onClick={() => {
+              if (isTest) {
+                  navigate(
+                      PATH_CONSTANTS.EXAM.EXAMS_DO_BY_ID.replace(":id", id.toString()),
+                  )
+              } else {
+                  navigate(
+                      PATH_CONSTANTS.EXAM.PRACTICE.replace(":id", id.toString()),
+                  )
+              }
+          }}
           className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-all"
         >
           Luyện tập ngay

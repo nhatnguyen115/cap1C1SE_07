@@ -47,7 +47,7 @@ public class UserTestController {
     public ResponseData<?> getTestResult(@RequestParam Integer attemptId) {
         try {
             return new ResponseData<>(HttpStatus.OK.value(), "Get Test Result Successfully",
-                    testAttemptService.getAttemptDetails(attemptId));
+                    testAttemptService.getDetails(attemptId));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Test Result Failed");
         }

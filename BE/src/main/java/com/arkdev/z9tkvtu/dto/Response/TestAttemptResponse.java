@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 /**
  * DTO for {@link com.arkdev.z9tkvtu.model.UserTestAttempt}
  */
-public record AttemptResponse(
+public record TestAttemptResponse(
         Integer id,
         Integer totalScore,
         Integer listeningScore,

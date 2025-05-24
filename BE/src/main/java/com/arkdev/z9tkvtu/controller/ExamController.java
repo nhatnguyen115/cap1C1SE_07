@@ -10,6 +10,7 @@ import com.arkdev.z9tkvtu.service.PartService;
 import com.arkdev.z9tkvtu.service.UploadExamService;
 import com.arkdev.z9tkvtu.service.UserMembershipService;
 import com.arkdev.z9tkvtu.util.Pagination;
+import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -33,11 +34,14 @@ public class ExamController {
     UploadExamService uploadExamService;
 
     @GetMapping("")
-    public ResponseData<?> getExams(@RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "10") int size) {
+    public ResponseData<?> getExams(
+            @RequestParam(defaultValue = "TEST") String testType,
+            @RequestParam(defaultValue = "") Integer sectionId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         try {
             return new ResponseData<>(HttpStatus.OK.value(), "Get Exams Successfully",
-                    Pagination.paginate(examService.getExams(), PageRequest.of(page, size)));
+                    Pagination.paginate(examService.getExams(testType, sectionId), PageRequest.of(page, size)));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Exams Failed");
         }

@@ -1,9 +1,8 @@
 package com.arkdev.z9tkvtu.mapper;
 
-import com.arkdev.z9tkvtu.dto.Response.AttemptResponse;
-import com.arkdev.z9tkvtu.dto.Response.UserAnswerResponse;
+import com.arkdev.z9tkvtu.dto.Response.MiniTestAttemptResponse;
+import com.arkdev.z9tkvtu.dto.Response.TestAttemptResponse;
 import com.arkdev.z9tkvtu.dto.Response.UserTestHistoryResponse;
-import com.arkdev.z9tkvtu.model.UserAnswer;
 import com.arkdev.z9tkvtu.model.UserTestAttempt;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +19,26 @@ public class UserTestMapper {
         );
     }
 
-    public AttemptResponse toAttemptResponse(UserTestAttempt testAttempt) {
+    public TestAttemptResponse toAttemptResponse(UserTestAttempt testAttempt) {
         if (testAttempt == null) return null;
-        return new AttemptResponse(
+        return new TestAttemptResponse(
                 testAttempt.getId(),
                 testAttempt.getTotalScore(),
                 testAttempt.getListeningScore(),
                 testAttempt.getReadingScore(),
+                testAttempt.getCorrectCount(),
+                testAttempt.getIncorrectCount(),
+                testAttempt.getSkipCount(),
+                testAttempt.getStartTime(),
+                testAttempt.getEndTime()
+        );
+    }
+
+    public MiniTestAttemptResponse toMiniAttemptResponse(UserTestAttempt testAttempt) {
+        if (testAttempt == null) return null;
+        return new MiniTestAttemptResponse(
+                testAttempt.getId(),
+                testAttempt.getTotalScore(),
                 testAttempt.getCorrectCount(),
                 testAttempt.getIncorrectCount(),
                 testAttempt.getSkipCount(),
