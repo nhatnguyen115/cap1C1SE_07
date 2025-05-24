@@ -8,9 +8,11 @@ import com.arkdev.z9tkvtu.mapper.QuestionMapper;
 import com.arkdev.z9tkvtu.model.Exam;
 import com.arkdev.z9tkvtu.model.Part;
 import com.arkdev.z9tkvtu.model.Question;
+import com.arkdev.z9tkvtu.model.Section;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
 import com.arkdev.z9tkvtu.repository.PartRepository;
 import com.arkdev.z9tkvtu.repository.QuestionRepository;
+import com.arkdev.z9tkvtu.repository.SectionRepository;
 import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -26,6 +28,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ExamService {
     ExamRepository examRepository;
+    SectionRepository sectionRepository;
     PartRepository partRepository;
     QuestionRepository questionRepository;
     ExamMapper examMapper;
@@ -78,12 +81,18 @@ public class ExamService {
     }
 
     @Transactional
-    public void addExam(ExamRequest request) {
+    public void addExam(ExamRequest request, Integer sectionId) {
         examRepository.findByExamName(request.getExamName())
             .ifPresent(exam -> {
                 throw new RuntimeException("Exam name already exists");
             });
         Exam exam = examMapper.toExam(request);
+        if (sectionId != null) {
+            Section section = sectionRepository.findById(sectionId)
+                            .orElseThrow(() -> new IllegalArgumentException("Section not found"));
+            exam.getSections().add(section);
+            section.getExams().add(exam);
+        }
         examRepository.save(exam);
     }
 

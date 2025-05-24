@@ -58,9 +58,10 @@ public class ExamController {
     }
 
     @PostMapping("")
-    public ResponseData<?> addExam(@Valid @RequestBody ExamRequest request) {
+    public ResponseData<?> addExam(@Valid @RequestBody ExamRequest request,
+                                   @RequestParam(required = false) Integer sectionId) {
         try {
-            examService.addExam(request);
+            examService.addExam(request, sectionId);
             return new ResponseData<>(HttpStatus.OK.value(), "Add Exam Successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Exam could not be added");
@@ -68,9 +69,10 @@ public class ExamController {
     }
 
     @PostMapping("/upload/excel")
-    public ResponseData<?> uploadExam(@RequestParam MultipartFile file) {
+    public ResponseData<?> uploadExam(@RequestParam MultipartFile file,
+                                      @RequestParam(required = false) Integer sectionId) {
         try {
-            uploadExamService.addExamFromExcel(file);
+            uploadExamService.addExamFromExcel(file, sectionId);
             return new ResponseData<>(HttpStatus.OK.value(), "Upload Exam Successfully");
         }  catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Upload Exam Failed");

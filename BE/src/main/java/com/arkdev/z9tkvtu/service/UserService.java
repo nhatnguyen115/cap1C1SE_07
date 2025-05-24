@@ -5,8 +5,10 @@ import com.arkdev.z9tkvtu.dto.Request.UserCreationRequest;
 import com.arkdev.z9tkvtu.dto.Request.UserUpdateRequest;
 import com.arkdev.z9tkvtu.dto.Response.UserResponse;
 import com.arkdev.z9tkvtu.mapper.UserLoginDataMapper;
+import com.arkdev.z9tkvtu.model.PasswordResetToken;
 import com.arkdev.z9tkvtu.model.Role;
 import com.arkdev.z9tkvtu.model.UserLoginData;
+import com.arkdev.z9tkvtu.repository.PasswordResetTokenRepository;
 import com.arkdev.z9tkvtu.repository.RoleRepository;
 import com.arkdev.z9tkvtu.repository.UserLoginDataRepository;
 import com.arkdev.z9tkvtu.util.RoleType;
@@ -18,14 +20,17 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeToken
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,14 +38,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +54,8 @@ public class UserService {
     private final UserLoginDataMapper dataMapper;
     private final PasswordEncoder passwordEncoder;
     private Role userRole;
+    private PasswordResetTokenRepository tokenRepository;
+    private JavaMailSender mailSender;
 
     @PostConstruct
     private void init() {
@@ -77,7 +83,11 @@ public class UserService {
     }
 
     @Transactional
-    public void addUser(UserCreationRequest request) {
+    public void addUser(UserCreationRequest request) throws Exception {
+        boolean isSendMail = generateAndSendOtp(request.getEmail());
+        if(!isSendMail) {
+            throw new BadCredentialsException("Vui lòng kiểm tra lại gmail");
+        }
         UserLoginData user = dataMapper.toUserLoginData(request);
         user.setRole(userRole);
         user.setActive(true);
@@ -142,6 +152,31 @@ public class UserService {
             user.setPassword(null);
             return user;
         });
+    }
+
+
+    @Transactional
+    public boolean generateAndSendOtp(String email) {
+        try{
+            String otp = String.format("%06d", new Random().nextInt(1000000));
+            LocalDateTime expiry = LocalDateTime.now().plusMinutes(5);
+
+            tokenRepository.deleteByEmail(email);
+            PasswordResetToken token = new PasswordResetToken();
+            token.setEmail(email);
+            token.setOtp(otp);
+            token.setExpiryTime(expiry);
+            tokenRepository.save(token);
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(email);
+            message.setSubject("Xác nhận đăng ký tài khoản");
+            message.setText("Mã OTP của bạn là: " + otp + " (Hiệu lực trong 5 phút)");
+            mailSender.send(message);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+
     }
 
 }

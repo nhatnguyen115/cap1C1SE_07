@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,10 @@ public class UserController {
         try {
             userService.addUser(request);
             return new ResponseData<>(HttpStatus.CREATED.value(), "User added successfully");
-        } catch (Exception e) {
+        }catch (BadCredentialsException be){
+            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), be.getMessage());
+        }
+        catch (Exception e) {
             return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "User could not be added");
         }
     }
