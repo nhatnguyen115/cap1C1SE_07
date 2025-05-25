@@ -20,7 +20,6 @@ import Leaderboard from "../pages/Leaderboard/Leaderboard";
 import Result from "../pages/MockTest/Result";
 import Payment from "../pages/Payment/Payment";
 import PaymentForm from "../pages/Payment/PaymentForm/PaymentForm"; // Giả lập trạng thái Auth
-import { PracticeDetailsPage } from "../pages/Practice/PracticeDetailsPage";
 import { PracticePage } from "../pages/Practice/PracticePage";
 import Register from "../pages/Register/Register";
 import Resource from "../pages/Resource/Resource";
