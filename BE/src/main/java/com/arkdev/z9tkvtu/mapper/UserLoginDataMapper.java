@@ -1,8 +1,8 @@
 package com.arkdev.z9tkvtu.mapper;
 
-import com.arkdev.z9tkvtu.dto.Request.UserCreationRequest;
-import com.arkdev.z9tkvtu.dto.Request.UserUpdateRequest;
-import com.arkdev.z9tkvtu.dto.Response.UserResponse;
+import com.arkdev.z9tkvtu.dto.request.UserCreationRequest;
+import com.arkdev.z9tkvtu.dto.request.UserUpdateRequest;
+import com.arkdev.z9tkvtu.dto.response.UserResponse;
 import com.arkdev.z9tkvtu.model.UserLoginData;
 import org.springframework.stereotype.Component;
 

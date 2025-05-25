@@ -22,13 +22,13 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @PrimaryKeyJoinColumn(name = "user_id")
 public class UserLoginData extends UserAccount implements UserDetails {
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     String username;
 
     @Column(name = "password")
     String password;
 
-    @Column(name = "email")
+    @Column(name = "email", updatable = false)
     String email;
 
     @Column(name = "phone_number")

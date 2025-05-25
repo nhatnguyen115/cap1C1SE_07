@@ -1,16 +1,13 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.Request.ExamRequest;
-import com.arkdev.z9tkvtu.dto.Request.PartRequest;
-import com.arkdev.z9tkvtu.dto.Response.ResponseData;
-import com.arkdev.z9tkvtu.dto.Response.ResponseError;
-import com.arkdev.z9tkvtu.model.Exam;
+import com.arkdev.z9tkvtu.dto.request.ExamRequest;
+import com.arkdev.z9tkvtu.dto.request.PartRequest;
+import com.arkdev.z9tkvtu.dto.response.ResponseData;
+import com.arkdev.z9tkvtu.dto.response.ResponseError;
 import com.arkdev.z9tkvtu.service.ExamService;
 import com.arkdev.z9tkvtu.service.PartService;
 import com.arkdev.z9tkvtu.service.UploadExamService;
-import com.arkdev.z9tkvtu.service.UserMembershipService;
 import com.arkdev.z9tkvtu.util.Pagination;
-import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @RestController
 @Validated
@@ -70,9 +65,10 @@ public class ExamController {
 
     @PostMapping("/upload/excel")
     public ResponseData<?> uploadExam(@RequestParam MultipartFile file,
-                                      @RequestParam(required = false) Integer sectionId) {
+                                      @RequestParam(required = false) Integer sectionId,
+                                      @RequestParam(defaultValue = "TEST") String testType) {
         try {
-            uploadExamService.addExamFromExcel(file, sectionId);
+            uploadExamService.addExamFromExcel(file, sectionId, testType);
             return new ResponseData<>(HttpStatus.OK.value(), "Upload Exam Successfully");
         }  catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Upload Exam Failed");

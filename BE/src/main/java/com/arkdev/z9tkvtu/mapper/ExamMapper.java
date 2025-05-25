@@ -1,8 +1,8 @@
 package com.arkdev.z9tkvtu.mapper;
 
-import com.arkdev.z9tkvtu.dto.Request.ExamRequest;
-import com.arkdev.z9tkvtu.dto.Response.ExamDetailsResponse;
-import com.arkdev.z9tkvtu.dto.Response.ExamResponse;
+import com.arkdev.z9tkvtu.dto.request.ExamRequest;
+import com.arkdev.z9tkvtu.dto.response.ExamDetailsResponse;
+import com.arkdev.z9tkvtu.dto.response.ExamResponse;
 import com.arkdev.z9tkvtu.model.Exam;
 import com.arkdev.z9tkvtu.model.UserTestAttempt;
 import org.springframework.stereotype.Component;

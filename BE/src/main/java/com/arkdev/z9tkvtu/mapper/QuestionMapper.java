@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.mapper;
 
-import com.arkdev.z9tkvtu.dto.Request.QuestionRequest;
-import com.arkdev.z9tkvtu.dto.Response.QuestionResponse;
+import com.arkdev.z9tkvtu.dto.request.QuestionRequest;
+import com.arkdev.z9tkvtu.dto.response.QuestionResponse;
 import com.arkdev.z9tkvtu.model.Question;
 import org.springframework.stereotype.Component;
 

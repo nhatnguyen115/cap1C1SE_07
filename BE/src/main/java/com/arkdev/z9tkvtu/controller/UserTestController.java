@@ -1,8 +1,8 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.Request.UserAnswerRequest;
-import com.arkdev.z9tkvtu.dto.Response.ResponseData;
-import com.arkdev.z9tkvtu.dto.Response.ResponseError;
+import com.arkdev.z9tkvtu.dto.request.UserAnswerRequest;
+import com.arkdev.z9tkvtu.dto.response.ResponseData;
+import com.arkdev.z9tkvtu.dto.response.ResponseError;
 import com.arkdev.z9tkvtu.service.TestAttemptService;
 import com.arkdev.z9tkvtu.service.UserMembershipService;
 import lombok.AccessLevel;

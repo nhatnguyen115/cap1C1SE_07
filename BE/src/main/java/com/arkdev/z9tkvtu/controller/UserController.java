@@ -1,11 +1,10 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.Request.PagingRequest;
-import com.arkdev.z9tkvtu.dto.Request.UserCreationRequest;
-import com.arkdev.z9tkvtu.dto.Request.UserUpdateRequest;
-import com.arkdev.z9tkvtu.dto.Response.ResponseData;
-import com.arkdev.z9tkvtu.dto.Response.ResponseError;
-import com.arkdev.z9tkvtu.model.UserLoginData;
+import com.arkdev.z9tkvtu.dto.request.PagingRequest;
+import com.arkdev.z9tkvtu.dto.request.UserCreationRequest;
+import com.arkdev.z9tkvtu.dto.request.UserUpdateRequest;
+import com.arkdev.z9tkvtu.dto.response.ResponseData;
+import com.arkdev.z9tkvtu.dto.response.ResponseError;
 import com.arkdev.z9tkvtu.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -13,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;

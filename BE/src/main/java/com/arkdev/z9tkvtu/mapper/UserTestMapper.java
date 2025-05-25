@@ -1,8 +1,8 @@
 package com.arkdev.z9tkvtu.mapper;
 
-import com.arkdev.z9tkvtu.dto.Response.MiniTestAttemptResponse;
-import com.arkdev.z9tkvtu.dto.Response.TestAttemptResponse;
-import com.arkdev.z9tkvtu.dto.Response.UserTestHistoryResponse;
+import com.arkdev.z9tkvtu.dto.response.MiniTestAttemptResponse;
+import com.arkdev.z9tkvtu.dto.response.TestAttemptResponse;
+import com.arkdev.z9tkvtu.dto.response.UserTestHistoryResponse;
 import com.arkdev.z9tkvtu.model.UserTestAttempt;
 import org.springframework.stereotype.Component;
 

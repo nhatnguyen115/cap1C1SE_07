@@ -1,6 +1,5 @@
 package com.arkdev.z9tkvtu.mapper;
 
-import com.arkdev.z9tkvtu.dto.Request.MediaRequest;
 import com.arkdev.z9tkvtu.model.Media;
 import com.arkdev.z9tkvtu.util.MediaType;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.arkdev.z9tkvtu.dto.Response;
+package com.arkdev.z9tkvtu.dto.response;
 
 public class ResponseError<T> extends ResponseData<T> {
 

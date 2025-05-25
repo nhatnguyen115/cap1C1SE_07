@@ -14,7 +14,6 @@ import java.util.UUID;
 
 @Repository
 public interface PartRepository extends JpaRepository<Part, Integer> {
-    List<Part> findBySectionsIdOrderByOrderNumber(Integer sectionId);
     List<Part> findByExamsIdOrderByOrderNumber(Integer examId);
     Optional<Part> findByPartNameAndSectionsId(@NotNull(message = "Part name must be not null") String partName, Integer sectionId);
 

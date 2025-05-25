@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.mapper;
 
-import com.arkdev.z9tkvtu.dto.Request.MembershipPlanRequest;
-import com.arkdev.z9tkvtu.dto.Response.MembershipPlanResponse;
+import com.arkdev.z9tkvtu.dto.request.MembershipPlanRequest;
+import com.arkdev.z9tkvtu.dto.response.MembershipPlanResponse;
 import com.arkdev.z9tkvtu.model.MembershipPlan;
 import org.springframework.stereotype.Component;
 

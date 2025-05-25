@@ -1,4 +1,4 @@
-package com.arkdev.z9tkvtu.dto.Response;
+package com.arkdev.z9tkvtu.dto.response;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

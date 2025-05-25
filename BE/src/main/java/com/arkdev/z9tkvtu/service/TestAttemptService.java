@@ -1,26 +1,18 @@
 package com.arkdev.z9tkvtu.service;
 
-import com.arkdev.z9tkvtu.dto.Request.UserAnswerRequest;
-import com.arkdev.z9tkvtu.dto.Response.*;
+import com.arkdev.z9tkvtu.dto.request.UserAnswerRequest;
+import com.arkdev.z9tkvtu.dto.response.*;
 import com.arkdev.z9tkvtu.mapper.ExamMapper;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.mapper.UserTestMapper;
 import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.*;
-import com.arkdev.z9tkvtu.util.MediaType;
 import jakarta.transaction.Transactional;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static com.arkdev.z9tkvtu.util.Convert.*;
 

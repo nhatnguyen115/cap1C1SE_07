@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.mapper;
 
-import com.arkdev.z9tkvtu.dto.Request.PermissionRequest;
-import com.arkdev.z9tkvtu.dto.Response.PermissionResponse;
+import com.arkdev.z9tkvtu.dto.request.PermissionRequest;
+import com.arkdev.z9tkvtu.dto.response.PermissionResponse;
 import com.arkdev.z9tkvtu.model.Permission;
 import org.springframework.stereotype.Component;
 

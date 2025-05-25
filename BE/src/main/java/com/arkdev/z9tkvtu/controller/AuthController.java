@@ -1,12 +1,12 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.Request.ResetPasswordRequest;
-import com.arkdev.z9tkvtu.dto.Request.SignInRequest;
-import com.arkdev.z9tkvtu.dto.Request.VerifyOtpRequest;
-import com.arkdev.z9tkvtu.dto.Response.ResponseData;
-import com.arkdev.z9tkvtu.dto.Response.ResponseError;
+import com.arkdev.z9tkvtu.dto.request.ResetPasswordRequest;
+import com.arkdev.z9tkvtu.dto.request.SignInRequest;
+import com.arkdev.z9tkvtu.dto.request.VerifyOtpRequest;
+import com.arkdev.z9tkvtu.dto.response.ResponseData;
+import com.arkdev.z9tkvtu.dto.response.ResponseError;
 import com.arkdev.z9tkvtu.configuration.JwtProvider;
-import com.arkdev.z9tkvtu.dto.Response.TokenResponse;
+import com.arkdev.z9tkvtu.dto.response.TokenResponse;
 import com.arkdev.z9tkvtu.model.UserLoginData;
 import com.arkdev.z9tkvtu.service.PasswordResetService;
 import com.arkdev.z9tkvtu.service.UserService;
@@ -24,14 +24,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @RestController

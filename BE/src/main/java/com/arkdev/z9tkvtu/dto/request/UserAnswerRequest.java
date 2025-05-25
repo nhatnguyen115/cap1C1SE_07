@@ -1,6 +1,5 @@
-package com.arkdev.z9tkvtu.dto.Request;
+package com.arkdev.z9tkvtu.dto.request;
 
-import com.arkdev.z9tkvtu.model.Question;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

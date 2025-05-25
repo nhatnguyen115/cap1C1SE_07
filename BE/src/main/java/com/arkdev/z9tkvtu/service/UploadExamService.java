@@ -4,10 +4,7 @@ import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
 import com.arkdev.z9tkvtu.repository.PartRepository;
 import com.arkdev.z9tkvtu.repository.SectionRepository;
-import com.arkdev.z9tkvtu.util.DifficultyLevel;
-import com.arkdev.z9tkvtu.util.GradingType;
-import com.arkdev.z9tkvtu.util.MediaType;
-import com.arkdev.z9tkvtu.util.QuestionType;
+import com.arkdev.z9tkvtu.util.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,15 +28,15 @@ public class UploadExamService {
     SectionRepository sectionRepository;
 
     @Transactional
-    public void addExamFromExcel(MultipartFile file, Integer sectionId) {
+    public void addExamFromExcel(MultipartFile file, Integer sectionId, String testType) {
         try (Workbook workbook= new XSSFWorkbook(file.getInputStream())) {
-            setExamData(workbook, sectionId);
+            setExamData(workbook, sectionId, testType);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e.getCause());
         }
     }
 
-    private void setExamData(Workbook workbook, Integer sectionId) throws JsonProcessingException {
+    private void setExamData(Workbook workbook, Integer sectionId, String testType) throws JsonProcessingException {
         Row row = workbook.getSheet("EXAM").getRow(1);
         Exam exam = new Exam();
         exam.setExamName(row.getCell(0) == null ? "EXAM" : row.getCell(0).getStringCellValue());
@@ -53,6 +50,7 @@ public class UploadExamService {
             exam.getSections().add(section);
             section.getExams().add(exam);
         }
+        exam.setTestType(TestType.valueOf(testType));
         setPartsData(workbook, exam);
         examRepository.save(exam);
     }
@@ -99,7 +97,7 @@ public class UploadExamService {
                 !row.getCell(i).getStringCellValue().isBlank()) {
             Media media = new Media();
             media.setMediaType(row.getCell(i) == null ? null : MediaType.valueOf(row.getCell(i).getStringCellValue()));
-            media.setUrl(row.getCell(i) == null ? "" : row.getCell(i).getStringCellValue());
+            media.setUrl(row.getCell(i + 1) == null ? "" : row.getCell(i + 1).getStringCellValue());
             return media;
         }
         return null;

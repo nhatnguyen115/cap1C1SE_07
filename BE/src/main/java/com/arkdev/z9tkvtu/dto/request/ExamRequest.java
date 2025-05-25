@@ -1,4 +1,4 @@
-package com.arkdev.z9tkvtu.dto.Request;
+package com.arkdev.z9tkvtu.dto.request;
 
 import com.arkdev.z9tkvtu.util.DifficultyLevel;
 import com.arkdev.z9tkvtu.util.TestType;

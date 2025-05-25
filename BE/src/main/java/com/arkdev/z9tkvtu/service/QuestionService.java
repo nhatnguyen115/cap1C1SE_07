@@ -1,34 +1,24 @@
 package com.arkdev.z9tkvtu.service;
 
-import com.arkdev.z9tkvtu.dto.Request.MediaRequest;
-import com.arkdev.z9tkvtu.dto.Request.QuestionRequest;
-import com.arkdev.z9tkvtu.dto.Response.QuestionDetailsResponse;
-import com.arkdev.z9tkvtu.dto.Response.QuestionResponse;
+import com.arkdev.z9tkvtu.dto.request.MediaRequest;
+import com.arkdev.z9tkvtu.dto.request.QuestionRequest;
+import com.arkdev.z9tkvtu.dto.response.QuestionDetailsResponse;
+import com.arkdev.z9tkvtu.dto.response.QuestionResponse;
 import com.arkdev.z9tkvtu.mapper.MediaMapper;
 import com.arkdev.z9tkvtu.mapper.QuestionMapper;
 import com.arkdev.z9tkvtu.model.Media;
 import com.arkdev.z9tkvtu.model.Part;
 import com.arkdev.z9tkvtu.model.Question;
-import com.arkdev.z9tkvtu.repository.ExamRepository;
 import com.arkdev.z9tkvtu.repository.PartRepository;
 import com.arkdev.z9tkvtu.repository.QuestionRepository;
-import com.arkdev.z9tkvtu.util.DifficultyLevel;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor

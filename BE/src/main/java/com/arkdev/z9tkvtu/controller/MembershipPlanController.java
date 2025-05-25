@@ -1,16 +1,13 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.Request.MembershipPlanRequest;
-import com.arkdev.z9tkvtu.dto.Response.ResponseData;
-import com.arkdev.z9tkvtu.dto.Response.ResponseError;
+import com.arkdev.z9tkvtu.dto.request.MembershipPlanRequest;
+import com.arkdev.z9tkvtu.dto.response.ResponseData;
+import com.arkdev.z9tkvtu.dto.response.ResponseError;
 import com.arkdev.z9tkvtu.service.MembershipPlanService;
-import com.arkdev.z9tkvtu.util.Pagination;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

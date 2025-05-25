@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.mapper;
 
-import com.arkdev.z9tkvtu.dto.Request.RoleRequest;
-import com.arkdev.z9tkvtu.dto.Response.RoleResponse;
+import com.arkdev.z9tkvtu.dto.request.RoleRequest;
+import com.arkdev.z9tkvtu.dto.response.RoleResponse;
 import com.arkdev.z9tkvtu.model.Role;
 import org.springframework.stereotype.Component;
 

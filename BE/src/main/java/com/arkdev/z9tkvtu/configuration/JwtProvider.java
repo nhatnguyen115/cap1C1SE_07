@@ -1,6 +1,6 @@
 package com.arkdev.z9tkvtu.configuration;
 
-import com.arkdev.z9tkvtu.dto.Response.TokenResponse;
+import com.arkdev.z9tkvtu.dto.response.TokenResponse;
 import com.arkdev.z9tkvtu.model.UserLoginData;
 import com.arkdev.z9tkvtu.util.RoleType;
 import io.jsonwebtoken.Claims;

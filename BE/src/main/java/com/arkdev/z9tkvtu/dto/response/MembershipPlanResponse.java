@@ -1,6 +1,4 @@
-package com.arkdev.z9tkvtu.dto.Response;
-
-import jakarta.validation.constraints.NotNull;
+package com.arkdev.z9tkvtu.dto.response;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

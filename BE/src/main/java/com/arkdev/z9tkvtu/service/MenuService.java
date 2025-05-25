@@ -1,6 +1,6 @@
 package com.arkdev.z9tkvtu.service;
 
-import com.arkdev.z9tkvtu.dto.Response.MenuResponse;
+import com.arkdev.z9tkvtu.dto.response.MenuResponse;
 import com.arkdev.z9tkvtu.model.Menu;
 import com.arkdev.z9tkvtu.repository.MenuRepository;
 import lombok.AccessLevel;

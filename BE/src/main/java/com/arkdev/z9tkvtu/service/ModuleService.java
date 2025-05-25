@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.service;
 
-import com.arkdev.z9tkvtu.dto.Request.ModuleRequest;
-import com.arkdev.z9tkvtu.dto.Response.ModuleResponse;
+import com.arkdev.z9tkvtu.dto.request.ModuleRequest;
+import com.arkdev.z9tkvtu.dto.response.ModuleResponse;
 import com.arkdev.z9tkvtu.mapper.ModuleMapper;
 import com.arkdev.z9tkvtu.model.Module;
 import com.arkdev.z9tkvtu.repository.ModuleRepository;
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service

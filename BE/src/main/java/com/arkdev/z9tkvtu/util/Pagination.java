@@ -1,9 +1,9 @@
 package com.arkdev.z9tkvtu.util;
 
 
-import com.arkdev.z9tkvtu.dto.Response.PageResponse;
-import com.arkdev.z9tkvtu.dto.Response.PartContentResponse;
-import com.arkdev.z9tkvtu.dto.Response.QuestionDetailsResponse;
+import com.arkdev.z9tkvtu.dto.response.PageResponse;
+import com.arkdev.z9tkvtu.dto.response.PartContentResponse;
+import com.arkdev.z9tkvtu.dto.response.QuestionDetailsResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

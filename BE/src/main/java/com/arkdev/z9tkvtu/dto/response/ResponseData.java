@@ -1,4 +1,4 @@
-package com.arkdev.z9tkvtu.dto.Response;
+package com.arkdev.z9tkvtu.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;

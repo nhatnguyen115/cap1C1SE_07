@@ -1,8 +1,8 @@
 package com.arkdev.z9tkvtu.service;
 
-import com.arkdev.z9tkvtu.dto.Request.UserAnswerRequest;
-import com.arkdev.z9tkvtu.dto.Response.ExamListResponse;
-import com.arkdev.z9tkvtu.dto.Response.MiniTestAttemptResponse;
+import com.arkdev.z9tkvtu.dto.request.UserAnswerRequest;
+import com.arkdev.z9tkvtu.dto.response.ExamListResponse;
+import com.arkdev.z9tkvtu.dto.response.MiniTestAttemptResponse;
 import com.arkdev.z9tkvtu.mapper.ExamMapper;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.mapper.UserTestMapper;
@@ -47,6 +47,13 @@ public class PracticeAttemptService extends AttemptService {
                 .toList();
     }
 
+    public Integer getAttemptId(Integer examId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserLoginData user = (UserLoginData) auth.getPrincipal();
+        UserTestAttempt attempt = userTestAttemptRepository.findByUserIdAndExamIdAndExamTestType(user.getId(), examId, TestType.MINITEST)
+                .orElse(null);
+        return attempt != null ? attempt.getId() : null;
+    }
     public MiniTestAttemptResponse getMiniTestAttempt(Integer attemptId) {
         return userTestAttemptRepository.findByIdAndCompleteTrue(attemptId)
                 .map(userTestMapper::toMiniAttemptResponse)

@@ -1,7 +1,5 @@
-package com.arkdev.z9tkvtu.dto.Response;
+package com.arkdev.z9tkvtu.dto.response;
 
-import com.arkdev.z9tkvtu.util.DifficultyLevel;
-import com.arkdev.z9tkvtu.util.GradingType;
 import com.arkdev.z9tkvtu.util.MediaType;
 
 import java.io.Serializable;

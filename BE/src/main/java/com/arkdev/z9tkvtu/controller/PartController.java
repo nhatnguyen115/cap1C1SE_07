@@ -1,10 +1,10 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.Request.MediaRequest;
-import com.arkdev.z9tkvtu.dto.Request.PartRequest;
-import com.arkdev.z9tkvtu.dto.Request.QuestionRequest;
-import com.arkdev.z9tkvtu.dto.Response.ResponseData;
-import com.arkdev.z9tkvtu.dto.Response.ResponseError;
+import com.arkdev.z9tkvtu.dto.request.MediaRequest;
+import com.arkdev.z9tkvtu.dto.request.PartRequest;
+import com.arkdev.z9tkvtu.dto.request.QuestionRequest;
+import com.arkdev.z9tkvtu.dto.response.ResponseData;
+import com.arkdev.z9tkvtu.dto.response.ResponseError;
 import com.arkdev.z9tkvtu.service.PartService;
 import com.arkdev.z9tkvtu.service.QuestionService;
 import com.arkdev.z9tkvtu.util.MediaType;
@@ -19,8 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @RestController
 @Validated
 @RequestMapping("/parts")
@@ -31,18 +29,12 @@ public class PartController {
     QuestionService questionService;
 
     @GetMapping("")
-    public ResponseData<?> getParts(@RequestParam Integer selectedId,
-                                    @RequestParam boolean checked,
+    public ResponseData<?> getParts(@RequestParam Integer examId,
                                     @RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "5") int size) {
         try {
-            if (checked) {
-                return new ResponseData<>(HttpStatus.OK.value(), "Get Parts To Section Successfully",
-                        Pagination.paginate(partService.getPartsToSection(selectedId), PageRequest.of(page, size)));
-            } else {
-                return new ResponseData<>(HttpStatus.OK.value(), "Get Parts To Exam Successfully",
-                        Pagination.paginate(partService.getPartsToExam(selectedId), PageRequest.of(page, size)));
-            }
+            return new ResponseData<>(HttpStatus.OK.value(), "Get Parts To Exam Successfully",
+                        Pagination.paginate(partService.getPartsToExam(examId), PageRequest.of(page, size)));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Parts Failed");
         }

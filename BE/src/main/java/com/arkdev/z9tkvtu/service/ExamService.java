@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.service;
 
-import com.arkdev.z9tkvtu.dto.Request.ExamRequest;
-import com.arkdev.z9tkvtu.dto.Response.*;
+import com.arkdev.z9tkvtu.dto.request.ExamRequest;
+import com.arkdev.z9tkvtu.dto.response.*;
 import com.arkdev.z9tkvtu.mapper.ExamMapper;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.mapper.QuestionMapper;

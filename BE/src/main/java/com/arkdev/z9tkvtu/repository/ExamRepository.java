@@ -1,6 +1,5 @@
 package com.arkdev.z9tkvtu.repository;
 
-import com.arkdev.z9tkvtu.dto.Response.ExamListResponse;
 import com.arkdev.z9tkvtu.model.Exam;
 import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.validation.constraints.NotNull;
@@ -9,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 

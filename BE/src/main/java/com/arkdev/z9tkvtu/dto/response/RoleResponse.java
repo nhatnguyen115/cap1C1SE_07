@@ -1,7 +1,6 @@
-package com.arkdev.z9tkvtu.dto.Response;
+package com.arkdev.z9tkvtu.dto.response;
 
 import com.arkdev.z9tkvtu.util.RoleType;
-import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 

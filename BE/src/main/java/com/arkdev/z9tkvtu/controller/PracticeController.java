@@ -1,8 +1,8 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.Request.UserAnswerRequest;
-import com.arkdev.z9tkvtu.dto.Response.ResponseData;
-import com.arkdev.z9tkvtu.dto.Response.ResponseError;
+import com.arkdev.z9tkvtu.dto.request.UserAnswerRequest;
+import com.arkdev.z9tkvtu.dto.response.ResponseData;
+import com.arkdev.z9tkvtu.dto.response.ResponseError;
 import com.arkdev.z9tkvtu.service.PracticeAttemptService;
 import com.arkdev.z9tkvtu.util.Pagination;
 import lombok.AccessLevel;
@@ -32,6 +32,16 @@ public class PracticeController {
                     Pagination.paginate(practiceAttemptService.getSectionDetails(sectionId), PageRequest.of(page, size)));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Practice Failed");
+        }
+    }
+
+    @GetMapping("/get-attempt")
+    public ResponseData<?> getAttempt(@RequestParam Integer examId) {
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "Get Attempt Successfully",
+                    practiceAttemptService.getAttemptId(examId));
+        } catch (Exception e)  {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Attempt Failed");
         }
     }
 

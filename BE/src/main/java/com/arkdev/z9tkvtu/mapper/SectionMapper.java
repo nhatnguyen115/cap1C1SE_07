@@ -1,7 +1,7 @@
 package com.arkdev.z9tkvtu.mapper;
 
-import com.arkdev.z9tkvtu.dto.Request.SectionRequest;
-import com.arkdev.z9tkvtu.dto.Response.SectionResponse;
+import com.arkdev.z9tkvtu.dto.request.SectionRequest;
+import com.arkdev.z9tkvtu.dto.response.SectionResponse;
 import com.arkdev.z9tkvtu.model.Section;
 import org.springframework.stereotype.Component;
 

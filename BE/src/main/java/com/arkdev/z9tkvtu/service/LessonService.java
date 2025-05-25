@@ -1,10 +1,9 @@
 package com.arkdev.z9tkvtu.service;
 
-import com.arkdev.z9tkvtu.dto.Request.LessonRequest;
-import com.arkdev.z9tkvtu.dto.Request.MediaRequest;
-import com.arkdev.z9tkvtu.dto.Response.LessonDetailsResponse;
+import com.arkdev.z9tkvtu.dto.request.LessonRequest;
+import com.arkdev.z9tkvtu.dto.request.MediaRequest;
+import com.arkdev.z9tkvtu.dto.response.LessonDetailsResponse;
 import com.arkdev.z9tkvtu.mapper.LessonMapper;
-import com.arkdev.z9tkvtu.mapper.MediaMapper;
 import com.arkdev.z9tkvtu.model.Lesson;
 import com.arkdev.z9tkvtu.model.Media;
 import com.arkdev.z9tkvtu.model.Section;

@@ -1,10 +1,10 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.Request.LessonRequest;
-import com.arkdev.z9tkvtu.dto.Request.PartRequest;
-import com.arkdev.z9tkvtu.dto.Request.SectionRequest;
-import com.arkdev.z9tkvtu.dto.Response.ResponseData;
-import com.arkdev.z9tkvtu.dto.Response.ResponseError;
+import com.arkdev.z9tkvtu.dto.request.LessonRequest;
+import com.arkdev.z9tkvtu.dto.request.PartRequest;
+import com.arkdev.z9tkvtu.dto.request.SectionRequest;
+import com.arkdev.z9tkvtu.dto.response.ResponseData;
+import com.arkdev.z9tkvtu.dto.response.ResponseError;
 import com.arkdev.z9tkvtu.service.LessonService;
 import com.arkdev.z9tkvtu.service.PartService;
 import com.arkdev.z9tkvtu.service.SectionService;

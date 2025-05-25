@@ -1,4 +1,4 @@
-package com.arkdev.z9tkvtu.dto.Request;
+package com.arkdev.z9tkvtu.dto.request;
 
 import com.arkdev.z9tkvtu.util.MediaType;
 import jakarta.validation.constraints.NotNull;

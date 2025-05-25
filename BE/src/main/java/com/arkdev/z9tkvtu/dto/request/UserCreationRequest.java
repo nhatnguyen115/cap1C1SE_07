@@ -1,6 +1,7 @@
-package com.arkdev.z9tkvtu.dto.Request;
+package com.arkdev.z9tkvtu.dto.request;
 
 import com.arkdev.z9tkvtu.util.Gender;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,6 +30,9 @@ public class UserCreationRequest implements Serializable {
 
     Date dob;
 
+    @NotNull(message = "Email must be not null")
+    @NotBlank(message = "Email must be not blank")
+    @Email
     String email;
 
     String phoneNumber;

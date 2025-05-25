@@ -1,9 +1,9 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.Request.ModuleRequest;
-import com.arkdev.z9tkvtu.dto.Request.SectionRequest;
-import com.arkdev.z9tkvtu.dto.Response.ResponseData;
-import com.arkdev.z9tkvtu.dto.Response.ResponseError;
+import com.arkdev.z9tkvtu.dto.request.ModuleRequest;
+import com.arkdev.z9tkvtu.dto.request.SectionRequest;
+import com.arkdev.z9tkvtu.dto.response.ResponseData;
+import com.arkdev.z9tkvtu.dto.response.ResponseError;
 import com.arkdev.z9tkvtu.service.ModuleService;
 import com.arkdev.z9tkvtu.service.SectionService;
 import jakarta.validation.Valid;

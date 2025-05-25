@@ -1,9 +1,9 @@
 package com.arkdev.z9tkvtu.service;
 
-import com.arkdev.z9tkvtu.dto.Request.PagingRequest;
-import com.arkdev.z9tkvtu.dto.Request.UserCreationRequest;
-import com.arkdev.z9tkvtu.dto.Request.UserUpdateRequest;
-import com.arkdev.z9tkvtu.dto.Response.UserResponse;
+import com.arkdev.z9tkvtu.dto.request.PagingRequest;
+import com.arkdev.z9tkvtu.dto.request.UserCreationRequest;
+import com.arkdev.z9tkvtu.dto.request.UserUpdateRequest;
+import com.arkdev.z9tkvtu.dto.response.UserResponse;
 import com.arkdev.z9tkvtu.mapper.UserLoginDataMapper;
 import com.arkdev.z9tkvtu.model.PasswordResetToken;
 import com.arkdev.z9tkvtu.model.Role;
@@ -12,22 +12,11 @@ import com.arkdev.z9tkvtu.repository.PasswordResetTokenRepository;
 import com.arkdev.z9tkvtu.repository.RoleRepository;
 import com.arkdev.z9tkvtu.repository.UserLoginDataRepository;
 import com.arkdev.z9tkvtu.util.RoleType;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -39,10 +28,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -83,12 +69,17 @@ public class UserService {
     }
 
     @Transactional
-    public void addUser(UserCreationRequest request) throws Exception {
+    public void addUser(UserCreationRequest request) {
+        UserLoginData user = userRepository.findByUsername(request.getUsername())
+                .or(() -> userRepository.findByEmail(request.getEmail()))
+                .orElse(null);
+        if (user != null)
+            throw new BadCredentialsException("User already exists");
         boolean isSendMail = generateAndSendOtp(request.getEmail());
         if(!isSendMail) {
             throw new BadCredentialsException("Vui lòng kiểm tra lại gmail");
         }
-        UserLoginData user = dataMapper.toUserLoginData(request);
+        user = dataMapper.toUserLoginData(request);
         user.setRole(userRole);
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(request.getPassword()));

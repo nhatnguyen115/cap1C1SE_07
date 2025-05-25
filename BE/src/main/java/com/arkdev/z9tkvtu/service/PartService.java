@@ -1,9 +1,8 @@
 package com.arkdev.z9tkvtu.service;
 
-import com.arkdev.z9tkvtu.dto.Request.MediaRequest;
-import com.arkdev.z9tkvtu.dto.Request.PartRequest;
-import com.arkdev.z9tkvtu.dto.Response.PartResponse;
-import com.arkdev.z9tkvtu.mapper.MediaMapper;
+import com.arkdev.z9tkvtu.dto.request.MediaRequest;
+import com.arkdev.z9tkvtu.dto.request.PartRequest;
+import com.arkdev.z9tkvtu.dto.response.PartResponse;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
@@ -27,13 +26,6 @@ public class PartService {
     ExamRepository examRepository;
     UploadMediaService uploadMediaService;
     PartMapper partMapper;
-
-    public List<PartResponse> getPartsToSection(Integer sectionId) {
-        return partRepository.findBySectionsIdOrderByOrderNumber(sectionId)
-                .stream()
-                .map(partMapper::toPartResponse)
-                .toList();
-    }
 
     public List<PartResponse> getPartsToExam(Integer examId) {
         return partRepository.findByExamsIdOrderByOrderNumber(examId)
