@@ -35,6 +35,7 @@ const TestPage: React.FC = () => {
                   students={exam.students ?? 10}
                   level={exam.level ?? "BEGINNER"}
                   image={SRC_IMAGE.TEST}
+                  isTest={true}
               />
           ))}
         </div>

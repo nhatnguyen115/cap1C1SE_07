@@ -2,6 +2,8 @@ import { Award, BookOpen, Users } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../api/PathConstant";
+import {http} from "../service/Http";
+import {notification} from "antd";
 
 type ExamCardProps = {
   examName: string;
@@ -27,7 +29,14 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
   image,
 }) => {
   const navigate = useNavigate();
-
+    const fetchResult = async () => {
+        try {
+            const res = await http.get(`/practice/get-attempt`, {params: {examId: id}});
+            return res.data
+        } catch (e) {
+            console.error(e)
+        }
+    };
   return (
     <div className="border rounded-xl shadow-md p-4 bg-white w-full max-w-sm">
       <img
@@ -58,11 +67,21 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
           )}
           {isPractice && (
               <button
-                  onClick={() =>
-                      navigate(
-                          PATH_CONSTANTS.USER_TEST.RANK.replace(":id", id.toString()),
-                      )
+                  onClick={() => {
+                      fetchResult().then(res => {
+                          if (res.data != null) {
+                              navigate(PATH_CONSTANTS.EXAM.PRACTICE_RESUL_BY_ID(res.data))
+                          } else {
+                              notification.success({
+                                  message: "Bạn chưa làm bài lần nào"
+                              })
+                          }
+
+                      }).catch(error => notification.error({
+                          message: "Lấy kết quả thất bại"
+                      }))
                   }
+              }
                   className="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-all"
               >
                   Kết Quả

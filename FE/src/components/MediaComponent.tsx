@@ -2,6 +2,7 @@ import React from "react";
 import {MediaProps} from "../types/media";
 
 const MediaComponent: React.FC<MediaProps> = ({mediaType, url}) => {
+    console.log(mediaType, url)
     switch (mediaType) {
         case "IMAGE":
             return (

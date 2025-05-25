@@ -7,11 +7,13 @@ import { http } from "../service/Http";
 import { QuestionType } from "../types/part";
 import ConfirmDialogComponent from "./ConfirmDialogComponent";
 import PaginationComponent from "./PaginationComponent";
+import {QUESTION_TYPE} from "../constant/TestConstant";
 
 const PartDetailsManagementComponent: React.FC<{
   partId: number;
   isFetchQuestion?: boolean;
-}> = ({ partId, isFetchQuestion }) => {
+  type?: string;
+}> = ({ partId, isFetchQuestion, type }) => {
   const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -97,13 +99,15 @@ const PartDetailsManagementComponent: React.FC<{
           <div className="font-medium text-gray-800 mb-1">
             Câu hỏi: {q.content}
           </div>
-          <ul className="pl-4 list-disc text-sm text-gray-700">
-            {Object.entries(q.options).map(([key, value]) => (
-              <li key={key}>
-                <strong>{key}</strong>: {value}
-              </li>
-            ))}
-          </ul>
+          {type === QUESTION_TYPE.MULTIPLE_CHOICE && (
+              <ul className="pl-4 list-disc text-sm text-gray-700">
+                {Object.entries(q.options).map(([key, value]) => (
+                    <li key={key}>
+                      <strong>{key}</strong>: {value}
+                    </li>
+                ))}
+              </ul>
+          )}
           <div className="text-sm mt-1">
             <strong>Đáp án đúng:</strong> {q.correctAnswer}
           </div>

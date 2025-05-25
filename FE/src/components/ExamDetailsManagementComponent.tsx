@@ -105,8 +105,7 @@ const ExamDetailsManagementComponent: React.FC<{ selectedId: number }> = ({
     try {
       const res = await http.get(API_URIS.PART.PARTS, {
         params: {
-          selectedId: selectedId,
-          checked: false,
+          examId: selectedId,
           page: page,
           size: PAGINATION_CONSTANT.SIZE[5],
         },
@@ -189,6 +188,7 @@ const ExamDetailsManagementComponent: React.FC<{ selectedId: number }> = ({
             <PartDetailsManagementComponent
               partId={part.id}
               isFetchQuestion={isFetchQuestion}
+              type={part.questionType}
             />
           )}
         </div>

@@ -38,6 +38,7 @@ import ExamResultDetailsPage from "../pages/Exam/ExamResultDetailsPage.tsx";
 import ExamResultPage from "../pages/Exam/ExamResultPage";
 import {PracticeExamPage} from "../pages/Exam/PracticeExamPage";
 import PracticeResultDetailsPage from "../pages/Exam/PracticeResultDetailsPage";
+import PracticeDetailsPage from "../pages/Practice/PracticeDetailsPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes

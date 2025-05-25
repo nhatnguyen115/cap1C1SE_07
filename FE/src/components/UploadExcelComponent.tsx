@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { API_URIS } from "../api/URIConstant";
 import { http } from "../service/Http";
 
-const UploadExcelComponent: React.FC<{isPractice?: boolean; sectionId?: number}> = ({isPractice, sectionId}) => {
+const UploadExcelComponent: React.FC<{isPractice?: boolean; sectionId?: any}> = ({isPractice, sectionId}) => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
@@ -36,7 +36,7 @@ const UploadExcelComponent: React.FC<{isPractice?: boolean; sectionId?: number}>
                   headers: {
                       "Content-Type": "multipart/form-data",
                   },
-                  params: {sectionId: sectionId}
+                  params: {sectionId: sectionId, testType: "MINITEST"}
               },
           );
       } else {

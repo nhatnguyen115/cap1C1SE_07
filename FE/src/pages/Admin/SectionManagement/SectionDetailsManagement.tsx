@@ -148,7 +148,7 @@ const SectionDetailsManagement: React.FC = () => {
                                 </button>
 
                                 {/* Component upload */}
-                                <UploadExcelComponent />
+                                <UploadExcelComponent isPractice={true} sectionId={sectionId}/>
                             </div>
                         </div>
                     )}

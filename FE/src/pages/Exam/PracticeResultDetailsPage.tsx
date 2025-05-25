@@ -34,6 +34,7 @@ const PracticeResultDetailsPage: React.FC = () => {
     const [examDetails, setExamDetails] = useState<ResultExamType>();
     const [details, setDetails] = useState<PartWithQuestionsType[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+    const [isScore, setIsScore] = useState(true)
     let questionCounter = 1
 
     useEffect(() => {
@@ -65,33 +66,35 @@ const PracticeResultDetailsPage: React.FC = () => {
     return (
         <div className="flex flex-col h-screen">
             <div className="flex flex-row justify-between flex-1 overflow-hidden">
-                <div className="max-w-xl mx-auto p-6 bg-gradient-to-br from-indigo-50 to-white rounded-2xl shadow-xl mt-10">
-                    <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6">🎓 Kết Quả Bài Thi TOEIC</h2>
-                    <div className="bg-indigo-100 text-indigo-800 rounded-xl py-4 mb-6 flex items-center justify-center shadow">
-                        <span className="text-xl font-semibold">Tổng điểm:</span>
-                        <span className="ml-3 text-3xl font-bold">{examDetails?.exam.totalScore || 0}</span>
+                {isScore && (
+                    <div className="max-w-xl mx-auto p-6 bg-gradient-to-br from-indigo-50 to-white rounded-2xl shadow-xl mt-10">
+                        <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6">🎓 Kết Quả Bài Thi TOEIC</h2>
+                        <div className="bg-indigo-100 text-indigo-800 rounded-xl py-4 mb-6 flex items-center justify-center shadow">
+                            <span className="text-xl font-semibold">Tổng điểm:</span>
+                            <span className="ml-3 text-3xl font-bold">{examDetails?.exam.totalScore || 0}</span>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                            <StatItem
+                                label="Câu đúng"
+                                value={examDetails?.exam.correctCount || 0}
+                                color="text-green-600"
+                                icon={<CircleCheck className="w-5 h-5 text-green-500" />}
+                            />
+                            <StatItem
+                                label="Câu sai"
+                                value={examDetails?.exam.incorrectCount || 0}
+                                color="text-red-600"
+                                icon={<CircleX className="w-5 h-5 text-red-500" />}
+                            />
+                            <StatItem
+                                label="Bỏ qua"
+                                value={examDetails?.exam.skipCount || 0}
+                                color="text-gray-500"
+                                icon={<Clock className="w-5 h-5 text-gray-400" />}
+                            />
+                        </div>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                        <StatItem
-                            label="Câu đúng"
-                            value={examDetails?.exam.correctCount || 0}
-                            color="text-green-600"
-                            icon={<CircleCheck className="w-5 h-5 text-green-500" />}
-                        />
-                        <StatItem
-                            label="Câu sai"
-                            value={examDetails?.exam.incorrectCount || 0}
-                            color="text-red-600"
-                            icon={<CircleX className="w-5 h-5 text-red-500" />}
-                        />
-                        <StatItem
-                            label="Bỏ qua"
-                            value={examDetails?.exam.skipCount || 0}
-                            color="text-gray-500"
-                            icon={<Clock className="w-5 h-5 text-gray-400" />}
-                        />
-                    </div>
-                </div>
+                )}
                 <div className="flex-1 flex flex-col justify-start items-center p-4 overflow-auto">
                     <div
                         className="text-lg w-full text-main font-normal flex gap-3 text-start mb-5 cursor-pointer items-center"
@@ -109,6 +112,7 @@ const PracticeResultDetailsPage: React.FC = () => {
                     <div className="w-full max-w-4xl">
                         {details.map((detail) => {
                             if (!detail.questions || detail.questions.length === 0) return null
+                            if (detail.part.questionType != QUESTION_TYPE.MULTIPLE_CHOICE) setIsScore(false)
                             return (
                                 <div className="mb-8">
                                     <h3 className="text-3xl text-blue-700 font-semibold mb-4">

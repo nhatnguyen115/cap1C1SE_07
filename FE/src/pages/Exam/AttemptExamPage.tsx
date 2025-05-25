@@ -119,7 +119,7 @@ export const AttemptExamPage: React.FC = () => {
                     {part.part.partName}
                 </h3>
                 <MediaComponent
-                    mediaType={part.part.url}
+                    mediaType={part.part.mediaType}
                     url={part.part.url}
                 />
                 {part.questions.map((question: QuestionType) => {
@@ -218,6 +218,7 @@ export const AttemptExamPage: React.FC = () => {
                         answers={answers}
                         duration={examDetails?.exam.duration ?? -1}
                         onNavigate={handleNavigate}
+                        isPractice={false}
                     />
                 </div>
             </div>)}

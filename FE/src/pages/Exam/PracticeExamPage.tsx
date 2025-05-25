@@ -116,7 +116,7 @@ export const PracticeExamPage: React.FC = () => {
                     {part.part.partName}
                 </h3>
                 <MediaComponent
-                    mediaType={part.part.url}
+                    mediaType={part.part.mediaType}
                     url={part.part.url}
                 />
                 {part.questions.map((question: QuestionType) => {

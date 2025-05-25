@@ -6,7 +6,7 @@ import { sectionMockData } from "../../data/sectionMockData";
 import { http } from "../../service/Http";
 import { SectionType } from "../../types/section";
 
-export const PracticeDetailsPage = () => {
+const PracticeDetailsPage = () => {
   const { sectionId } = useParams<{ sectionId: string }>();
   const location = useLocation();
   const sectionName = location.state?.sectionName;
@@ -51,3 +51,5 @@ export const PracticeDetailsPage = () => {
     </div>
   );
 };
+
+export default PracticeDetailsPage
