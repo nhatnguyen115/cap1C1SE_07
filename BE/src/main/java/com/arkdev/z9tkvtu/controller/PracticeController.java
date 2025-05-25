@@ -1,11 +1,9 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.Request.SectionPartRequest;
 import com.arkdev.z9tkvtu.dto.Request.UserAnswerRequest;
 import com.arkdev.z9tkvtu.dto.Response.ResponseData;
 import com.arkdev.z9tkvtu.dto.Response.ResponseError;
 import com.arkdev.z9tkvtu.service.PracticeAttemptService;
-import com.arkdev.z9tkvtu.service.PracticeService;
 import com.arkdev.z9tkvtu.util.Pagination;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,6 @@ import java.util.List;
 @RequestMapping("/practice")
 @RequiredArgsConstructor
 public class PracticeController {
-    PracticeService practiceService;
     PracticeAttemptService practiceAttemptService;
 
     @GetMapping("")
@@ -32,7 +29,7 @@ public class PracticeController {
                                        @RequestParam(defaultValue = "10") int size) {
         try {
             return new ResponseData<>(HttpStatus.OK.value(), "Get Practice Successfully",
-                    Pagination.paginate(practiceService.getSectionDetails(sectionId), PageRequest.of(page, size)));
+                    Pagination.paginate(practiceAttemptService.getSectionDetails(sectionId), PageRequest.of(page, size)));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Practice Failed");
         }

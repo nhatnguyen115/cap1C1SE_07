@@ -1,6 +1,7 @@
 package com.arkdev.z9tkvtu.service;
 
 import com.arkdev.z9tkvtu.dto.Request.UserAnswerRequest;
+import com.arkdev.z9tkvtu.dto.Response.ExamListResponse;
 import com.arkdev.z9tkvtu.dto.Response.MiniTestAttemptResponse;
 import com.arkdev.z9tkvtu.mapper.ExamMapper;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
@@ -29,6 +30,21 @@ public class PracticeAttemptService extends AttemptService {
                                   ExamMapper examMapper) {
         super(userTestAttemptRepository, userAnswerRepository, partRepository,
                 examRepository, questionRepository, userTestMapper, partMapper, examMapper);
+    }
+
+    public List<ExamListResponse> getSectionDetails(Integer sectionId) {
+        return examRepository.findAllBySectionsIdAndTestTypeOrderByCreatedAtDesc(sectionId, TestType.MINITEST)
+                .stream()
+                .map(exam -> new ExamListResponse(
+                        exam.getId(),
+                        exam.getExamName(),
+                        exam.getTotalScore(),
+                        exam.getDuration(),
+                        exam.getQuestionCount(),
+                        null,
+                        exam.getLevel()
+                ))
+                .toList();
     }
 
     public MiniTestAttemptResponse getMiniTestAttempt(Integer attemptId) {
