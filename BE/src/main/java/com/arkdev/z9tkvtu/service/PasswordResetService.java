@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,6 +60,24 @@ public class PasswordResetService {
         return tokenRepository.findByEmailAndOtp(email, otp)
                 .filter(t -> t.getExpiryTime().isAfter(LocalDateTime.now()))
                 .isPresent();
+    }
+
+    public boolean verifyAccountOtp(String email, String otp) {
+        UserLoginData user = userLoginDataRepository.findByEmail(email)
+                .orElse(null);
+        if (user == null)
+            throw new BadCredentialsException("User does not exist");
+
+        user.setActive(true);
+        boolean isCorrect = tokenRepository.findByEmailAndOtp(email, otp)
+                .filter(t -> t.getExpiryTime().isAfter(LocalDateTime.now()))
+                .isPresent();
+        if (isCorrect){
+            userLoginDataRepository.save(user);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Transactional

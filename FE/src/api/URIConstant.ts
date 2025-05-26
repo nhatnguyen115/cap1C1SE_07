@@ -6,6 +6,7 @@ export const API_URIS = {
     REFRESH_TOKEN: "/auth/refresh-token",
     RESET_PASSWORD: "/auth/reset-password",
     EXTERNAL: "/auth/external/callback",
+    VERIFY: "/auth/verify-account",
   },
   USER: {
     ADD: "/users",
@@ -101,7 +102,7 @@ export const API_URIS = {
   },
   PRACTICE: {
     GET_ALL_BY_SECTION: (sectionId: number | string) =>
-        `/practice?sectionId=${sectionId}`,
+      `/practice?sectionId=${sectionId}`,
     GET_BY_ID: (id: number | string) => `/practice/${id}`,
     SUBMIT_PART: "/practice/submit-part",
     START_PRACTICE: "/practice/start-practice",

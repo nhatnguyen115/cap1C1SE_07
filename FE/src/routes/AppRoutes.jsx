@@ -13,6 +13,11 @@ import DashboardPage from "../pages/Admin/Dashboard/Dashboard";
 import SectionDetailsManagement from "../pages/Admin/SectionManagement/SectionDetailsManagement";
 import SectionManagementPage from "../pages/Admin/SectionManagement/SectionManagement";
 import UserManagementPage from "../pages/Admin/UserManagement/UserManagement";
+import { AttemptExamPage } from "../pages/Exam/AttemptExamPage";
+import ExamResultDetailsPage from "../pages/Exam/ExamResultDetailsPage.tsx";
+import ExamResultPage from "../pages/Exam/ExamResultPage";
+import { PracticeExamPage } from "../pages/Exam/PracticeExamPage";
+import PracticeResultDetailsPage from "../pages/Exam/PracticeResultDetailsPage";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword";
 import History from "../pages/History/History";
@@ -20,6 +25,7 @@ import Leaderboard from "../pages/Leaderboard/Leaderboard";
 import Result from "../pages/MockTest/Result";
 import Payment from "../pages/Payment/Payment";
 import PaymentForm from "../pages/Payment/PaymentForm/PaymentForm"; // Giả lập trạng thái Auth
+import PracticeDetailsPage from "../pages/Practice/PracticeDetailsPage";
 import { PracticePage } from "../pages/Practice/PracticePage";
 import Register from "../pages/Register/Register";
 import Resource from "../pages/Resource/Resource";
@@ -30,15 +36,10 @@ import ExternalLoginComponent from "./../components/ExternalLoginComponent";
 import PaymentSuccessComponent from "./../components/PaymentSuccessComponent";
 import UserRankComponent from "./../components/UserRankComponent";
 import TestManagementPage from "./../pages/Admin/TestManagement/TestManagement";
-import { AttemptExamPage } from "../pages/Exam/AttemptExamPage";
 import { TestTemp } from "./../pages/MockTest/TestTemp";
 import PartDetailsPage from "./../pages/Part/PartDetailsPage";
+import VerifyAccountPage from "./../pages/Register/VerifyAccountPage";
 import TestPage from "./../pages/Test/TestPage";
-import ExamResultDetailsPage from "../pages/Exam/ExamResultDetailsPage.tsx";
-import ExamResultPage from "../pages/Exam/ExamResultPage";
-import {PracticeExamPage} from "../pages/Exam/PracticeExamPage";
-import PracticeResultDetailsPage from "../pages/Exam/PracticeResultDetailsPage";
-import PracticeDetailsPage from "../pages/Practice/PracticeDetailsPage";
 const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
 
 // Cấu hình routes
@@ -138,17 +139,17 @@ const routes = [
   {
     path: PATH_CONSTANTS.EXAM.EXAMS_RESUL_BY_ID(":attemptId"),
     element: (
-        <MainLayout>
-          <ExamResultPage />
-        </MainLayout>
+      <MainLayout>
+        <ExamResultPage />
+      </MainLayout>
     ),
   },
   {
     path: PATH_CONSTANTS.EXAM.PRACTICE_RESUL_BY_ID(":attemptIdView"),
     element: (
-        <MainLayout>
-          <PracticeResultDetailsPage />
-        </MainLayout>
+      <MainLayout>
+        <PracticeResultDetailsPage />
+      </MainLayout>
     ),
   },
   {
@@ -322,6 +323,11 @@ const routes = [
         <UserRankComponent />
       </MainLayout>
     ),
+  },
+
+  {
+    path: PATH_CONSTANTS.AUTH.VERIFY,
+    element: <VerifyAccountPage />,
   },
 ];
 

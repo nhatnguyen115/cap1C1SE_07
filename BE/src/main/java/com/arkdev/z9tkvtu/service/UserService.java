@@ -14,6 +14,7 @@ import com.arkdev.z9tkvtu.repository.UserLoginDataRepository;
 import com.arkdev.z9tkvtu.util.RoleType;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,8 +41,13 @@ public class UserService {
     private final UserLoginDataMapper dataMapper;
     private final PasswordEncoder passwordEncoder;
     private Role userRole;
+    @Autowired
     private PasswordResetTokenRepository tokenRepository;
+    @Autowired
     private JavaMailSender mailSender;
+
+
+    public static final String URL_VERIFY = "http://localhost:3000/auth/verify?email=";
 
     @PostConstruct
     private void init() {
@@ -70,18 +76,21 @@ public class UserService {
 
     @Transactional
     public void addUser(UserCreationRequest request) {
-        UserLoginData user = userRepository.findByUsername(request.getUsername())
-                .or(() -> userRepository.findByEmail(request.getEmail()))
+        UserLoginData userUsername = userRepository.findByUsername(request.getUsername())
                 .orElse(null);
-        if (user != null)
-            throw new BadCredentialsException("User already exists");
+        UserLoginData userEmail = userRepository.findByEmail(request.getEmail())
+                .orElse(null);
+        if (userUsername != null)
+            throw new BadCredentialsException("Username already exists");
+        if (userEmail != null)
+            throw new BadCredentialsException("Email already exists");
         boolean isSendMail = generateAndSendOtp(request.getEmail());
         if(!isSendMail) {
             throw new BadCredentialsException("Vui lòng kiểm tra lại gmail");
         }
-        user = dataMapper.toUserLoginData(request);
+        UserLoginData user = dataMapper.toUserLoginData(request);
         user.setRole(userRole);
-        user.setActive(true);
+        user.setActive(false);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
     }
@@ -161,7 +170,7 @@ public class UserService {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(email);
             message.setSubject("Xác nhận đăng ký tài khoản");
-            message.setText("Mã OTP của bạn là: " + otp + " (Hiệu lực trong 5 phút)");
+            message.setText("Mã OTP của bạn là: " + otp + " (Hiệu lực trong 5 phút)\nTruy cập vào: " + URL_VERIFY + email + " để kích hoạt tài khoản");
             mailSender.send(message);
             return true;
         }catch(Exception e){

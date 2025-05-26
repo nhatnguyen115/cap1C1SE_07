@@ -6,6 +6,7 @@ import com.arkdev.z9tkvtu.dto.request.UserUpdateRequest;
 import com.arkdev.z9tkvtu.dto.response.ResponseData;
 import com.arkdev.z9tkvtu.dto.response.ResponseError;
 import com.arkdev.z9tkvtu.service.UserService;
+import com.arkdev.z9tkvtu.validator.UserCreationValidator;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -56,13 +58,19 @@ public class UserController {
     @PostMapping("")
     public ResponseData<?> addUser(@RequestBody @Valid UserCreationRequest request) {
         try {
+            List<String> validationErrors = UserCreationValidator.validate(request);
+
+            if (!validationErrors.isEmpty()) {
+                throw new IllegalArgumentException(String.join("; ", validationErrors));
+            }
+
             userService.addUser(request);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "User added successfully");
+            return new ResponseData<>(HttpStatus.CREATED.value(), "Đăng ký thành công, vui lòng xác minh tài khoản trong Email");
         }catch (BadCredentialsException be){
             return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), be.getMessage());
         }
         catch (Exception e) {
-            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "User could not be added");
+            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         }
     }
 

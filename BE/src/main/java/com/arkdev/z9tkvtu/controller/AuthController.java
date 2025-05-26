@@ -135,5 +135,19 @@ public class AuthController {
     }
 
 
+    @PostMapping("/verify-account")
+    public ResponseData<?> verifyAccountOtp(@RequestBody VerifyOtpRequest request) {
+        try {
+            boolean valid = service.verifyAccountOtp(request.getEmail(), request.getOtp());
+            return valid
+                    ? new ResponseData<>(200, "OTP hợp lệ")
+                    : new ResponseData<>(400, "OTP sai hoặc đã hết hạn");
+        } catch (Exception e) {
+            log.error("Error in verifyOtp:", e);
+            return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), "Lỗi khi xác thực OTP: " + e.getMessage());
+        }
+    }
+
+
 }
 
