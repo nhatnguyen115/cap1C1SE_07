@@ -28,6 +28,7 @@ import java.util.Optional;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     UserLoginDataRepository userLoginDataRepository;
     RoleRepository roleRepository;
+    UserService userService;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
@@ -54,8 +55,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 userLoginData.setLastName((String) attributes.get("last_name"));
                 break;
         }
-        userLoginData.setActive(true);
+        userLoginData.setActive(false);
         userLoginData.setEmail((String) attributes.get("email"));
+        boolean isSendMail = userService.generateAndSendOtp(userLoginData.getEmail());
+
         Role role = roleRepository.findByRoleType(RoleType.USER)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
         userLoginData.setRole(role);

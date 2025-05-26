@@ -38,7 +38,7 @@ const ExternalLoginComponent: React.FC = () => {
         }, 3000);
       } catch (error) {
         console.error("External login failed:", error);
-        setErrorMsg("Đăng nhập thất bại. Vui lòng thử lại!");
+        setErrorMsg("Vui lòng kiểm tra Email và kích hoạt tài khoản!");
       }
     };
     handleExternalLogin();
