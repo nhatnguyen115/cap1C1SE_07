@@ -7,6 +7,7 @@ import IcBreadcrumbGbk from "../../assets/icons/IcBreadcrumbGbk";
 import AttemptResultNavigationComponent from "../../components/AttemptResultNavigationComponent";
 import MediaComponent from "../../components/MediaComponent";
 import {CircleCheck, CircleX, Clock} from "lucide-react";
+import {GoSkip} from "react-icons/go";
 
 const StatItem = ({
                       label,
@@ -15,7 +16,7 @@ const StatItem = ({
                       icon,
                   }: {
     label: string;
-    value: number;
+    value: any;
     color?: string;
     icon?: React.ReactNode;
 }) => (
@@ -33,6 +34,7 @@ const ExamResultDetailsPage: React.FC = () => {
     const [examDetails, setExamDetails] = useState<ResultExamType>();
     const [details, setDetails] = useState<PartWithQuestionsType[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+    const [totalTime, setTotalTime] = useState<string>();
     let questionCounter = 1
 
     useEffect(() => {
@@ -49,6 +51,16 @@ const ExamResultDetailsPage: React.FC = () => {
         fetchResult().then(res => {
             setExamDetails(res.data);
             setDetails(res.data.details)
+
+            const start = new Date(res.data.exam.startTime);
+            const end = new Date(res.data.exam.endTime);
+            const durationMs = end.getTime() - start.getTime();
+            const totalMinutes = Math.floor(durationMs / 1000 / 60);
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            const time =  `${hours}h${minutes}`;
+            console.log(time)
+            setTotalTime(time)
         }).catch(error => {
             console.log(error)
         });
@@ -73,8 +85,8 @@ const ExamResultDetailsPage: React.FC = () => {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                        <StatItem label="Nghe (Listening)" value={examDetails?.exam.listeningScore || 0} color="text-blue-600" />
-                        <StatItem label="Đọc (Reading)" value={examDetails?.exam.readingScore || 0} color="text-purple-600" />
+                        <StatItem label="Điểm Nghe" value={examDetails?.exam.listeningScore ?? 0} color="text-blue-600" />
+                        <StatItem label="Điểm Đọc" value={examDetails?.exam.readingScore ?? 0} color="text-purple-600" />
                         <StatItem
                             label="Câu đúng"
                             value={examDetails?.exam.correctCount || 0}
@@ -90,6 +102,12 @@ const ExamResultDetailsPage: React.FC = () => {
                         <StatItem
                             label="Bỏ qua"
                             value={examDetails?.exam.skipCount || 0}
+                            color="text-gray-500"
+                            icon={<GoSkip className="w-5 h-5 text-gray-400" />}
+                        />
+                        <StatItem
+                            label="Thời gian"
+                            value={totalTime}
                             color="text-gray-500"
                             icon={<Clock className="w-5 h-5 text-gray-400" />}
                         />

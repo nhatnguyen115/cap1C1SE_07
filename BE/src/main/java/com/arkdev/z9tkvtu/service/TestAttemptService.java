@@ -7,6 +7,7 @@ import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.mapper.UserTestMapper;
 import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.*;
+import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +32,7 @@ public class TestAttemptService extends AttemptService{
     public List<UserTestHistoryResponse> getTestHistories() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserLoginData user = (UserLoginData) auth.getPrincipal();
-        return userTestAttemptRepository.findByUser(user)
+        return userTestAttemptRepository.findByUserIdAndCompleteTrueAndExamTestType(user.getId(), TestType.TEST)
                 .stream()
                 .map(userTestMapper::toTestHistoryResponse)
                 .toList();

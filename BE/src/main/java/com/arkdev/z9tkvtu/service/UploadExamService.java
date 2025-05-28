@@ -1,5 +1,7 @@
 package com.arkdev.z9tkvtu.service;
 
+import com.arkdev.z9tkvtu.dto.response.ImportError;
+import com.arkdev.z9tkvtu.exception.ImportException;
 import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.ExamRepository;
 import com.arkdev.z9tkvtu.repository.PartRepository;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -19,6 +22,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.*;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,  makeFinal = true)
@@ -26,80 +32,188 @@ public class UploadExamService {
     PartRepository partRepository;
     ExamRepository examRepository;
     SectionRepository sectionRepository;
+    DataValidator dataValidator;
+
+    public final String NOT_FOUND_SHEET = "Không tìm thấy sheet:";
 
     @Transactional
-    public void addExamFromExcel(MultipartFile file, Integer sectionId, String testType) {
+    public void addExamFromExcel(MultipartFile file, Integer sectionId, String testType) throws IOException {
         try (Workbook workbook= new XSSFWorkbook(file.getInputStream())) {
             setExamData(workbook, sectionId, testType);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
         }
     }
 
-    private void setExamData(Workbook workbook, Integer sectionId, String testType) throws JsonProcessingException {
-        Row row = workbook.getSheet("EXAM").getRow(1);
-        Exam exam = new Exam();
-        exam.setExamName(row.getCell(0) == null ? "EXAM" : row.getCell(0).getStringCellValue());
-        exam.setTotalScore(row.getCell(1) == null ? 0 : (int) row.getCell(1).getNumericCellValue());
-        exam.setDuration(row.getCell(2) == null ? 10 : (int) row.getCell(2).getNumericCellValue());
-        exam.setQuestionCount(row.getCell(3) == null ? 0 : (int) row.getCell(3).getNumericCellValue());
-        exam.setLevel(row.getCell(4) == null ? DifficultyLevel.BEGINNER : DifficultyLevel.valueOf(row.getCell(4).getStringCellValue()));
+    private void setExamData(Workbook workbook, Integer sectionId, String testType) {
+        Sheet sheet = workbook.getSheet("EXAM");
+        if (sheet == null)
+            throw new ImportException(
+                    "NOT_FOUND_SHEET",
+                    new ImportError(
+                            "EXAM",
+                            null,
+                            null,
+                            NOT_FOUND_SHEET
+                    )
+            );
+        Row row = sheet.getRow(1);
+        Exam exam = mapToExam(row);
         if (sectionId != null) {
             Section section = sectionRepository.findById(sectionId)
                     .orElseThrow(() -> new IllegalArgumentException("Section not found"));
             exam.getSections().add(section);
             section.getExams().add(exam);
         }
-        exam.setTestType(TestType.valueOf(testType));
+        exam.setTestType(Optional.ofNullable(testType)
+                .map(TestType::valueOf).orElse(TestType.TEST));
+        ImportError error = dataValidator.validateExam(exam, row.getRowNum(), "EXAM");
+        if (error != null)
+            throw new ImportException(
+                    "ROW_ERROR",
+                    error
+            );
         setPartsData(workbook, exam);
         examRepository.save(exam);
     }
 
-    private void setPartsData(Workbook workbook, Exam exam) throws JsonProcessingException {
+    private void setPartsData(Workbook workbook, Exam exam) {
         Sheet sheet = workbook.getSheet("PART");
-        for (Row row : sheet) {
-            if (row.getRowNum() == 0) continue;
-            if (String.valueOf(row.getCell(0).getNumericCellValue()).isEmpty()) continue;
-            Part part = new Part();
-            part.setOrderNumber((int) row.getCell(0).getNumericCellValue());
-            part.setPartName(row.getCell(1) == null ? "PART" : row.getCell(1).getStringCellValue());
-            part.setDescription(row.getCell(2).getStringCellValue() == null ? "" : row.getCell(2).getStringCellValue());
-            part.setQuestionType(row.getCell(3) == null ? QuestionType.MULTIPLE_CHOICE : QuestionType.valueOf(row.getCell(3).getStringCellValue()));
-            part.setInstructions(row.getCell(4) == null ? "" : row.getCell(4).getStringCellValue());
-            part.setQuestionCount(row.getCell(5) == null ? 0 : (int) row.getCell(5).getNumericCellValue());
-            part.setGradingType(row.getCell(6) == null ? GradingType.OTHER : GradingType.valueOf(row.getCell(6).getStringCellValue()));
-            part.setMedia(setMediaData(row, 7));
+        if (sheet == null)
+            throw new ImportException(
+                    "NOT_FOUND_SHEET",
+                    new ImportError(
+                            "PART",
+                            null,
+                            null,
+                            NOT_FOUND_SHEET
+                    )
+            );
+        Iterator<Row> rows = sheet.iterator();
+        if (rows.hasNext()) rows.next();
+        while (rows.hasNext()) {
+            Row row = rows.next();
+            Part part = mapToPart(row);
+            ImportError error = dataValidator.validatePart(part, row.getRowNum(), "PART");
+            if (error != null)
+                throw new ImportException(
+                        "ROW_ERROR",
+                        error
+                );
             part = partRepository.save(part);
             exam.getParts().add(part);
             setQuestionsData(workbook, part);
         }
     }
 
-    private void setQuestionsData(Workbook workbook, Part part) throws JsonProcessingException {
+    private void setQuestionsData(Workbook workbook, Part part) {
         Sheet sheet = workbook.getSheet(part.getPartName());
-        for (Row row : sheet) {
-            if (row.getRowNum() == 0) continue;
-            Question question = new Question();
-            question.setOrderNumber((int) row.getCell(0).getNumericCellValue());
-            question.setContent(row.getCell(1) == null ? "" : row.getCell(1).getStringCellValue());
-            question.setOptions(row.getCell(2) == null ? null : new ObjectMapper().readValue(row.getCell(2)
-                    .getStringCellValue(), new TypeReference<>() {}));
-            question.setCorrectAnswer(row.getCell(3) == null ? "" : row.getCell(3).getStringCellValue());
-            question.setExplanation(row.getCell(4) == null ? "" : row.getCell(4).getStringCellValue());
-            question.setMedia(setMediaData(row, 5));
+        if (sheet == null)
+            throw new ImportException(
+                    "NOT_FOUND_SHEET",
+                    new ImportError(
+                            part.getPartName(),
+                            null,
+                            null,
+                            NOT_FOUND_SHEET
+                    )
+            );
+        Iterator<Row> rows = sheet.iterator();
+        if (rows.hasNext()) rows.next();
+        while (rows.hasNext()) {
+            Row row = rows.next();
+            Question question = mapToQuestion(row);
+            ImportError error = dataValidator.validateQuestion(question, row.getRowNum(), part.getPartName());
+            if (error != null)
+                throw new ImportException(
+                        "ROW_ERROR",
+                        error
+                );
             part.getQuestions().add(question);
             question.setPart(part);
         }
     }
-    private Media setMediaData(Row row, int i) {
-        if (row.getCell(i) != null &&
-                !row.getCell(i).getStringCellValue().isEmpty() &&
-                !row.getCell(i).getStringCellValue().isBlank()) {
-            Media media = new Media();
-            media.setMediaType(row.getCell(i) == null ? null : MediaType.valueOf(row.getCell(i).getStringCellValue()));
-            media.setUrl(row.getCell(i + 1) == null ? "" : row.getCell(i + 1).getStringCellValue());
-            return media;
-        }
-        return null;
+
+    private Question mapToQuestion(Row row) {
+        Question question = new Question();
+        question.setOrderNumber(Optional.ofNullable(getCellValue(row.getCell(0)))
+                .map(Double::valueOf)
+                .map(Double::intValue).orElse(null));
+        question.setContent(Optional.ofNullable(getCellValue(row.getCell(1)))
+                .map(String::valueOf).orElse(null));
+        question.setOptions(Optional.ofNullable(getCellValue(row.getCell(2)))
+                .map(value -> {
+                    try {
+                        return new ObjectMapper().readValue(value,
+                                new TypeReference<Map<String, Object>>() {});
+                    } catch (JsonProcessingException e) {
+                        return null;
+                    }
+                })
+                .orElse(null));
+        question.setCorrectAnswer(Optional.ofNullable(getCellValue(row.getCell(3)))
+                .map(String::valueOf).orElse(null));
+        question.setExplanation(Optional.ofNullable(getCellValue(row.getCell(4)))
+                .map(String::valueOf).orElse(null));
+        question.setMedia(Optional.ofNullable(getCellValue(row.getCell(5)))
+                .map(type -> mapToMedia(type, row, 6)).orElse(null));
+        return question;
+    }
+
+    private Part mapToPart(Row row) {
+        Part part = new Part();
+        part.setOrderNumber(Optional.ofNullable(getCellValue(row.getCell(0)))
+                .map(Double::valueOf)
+                .map(Double::intValue).orElse(null));
+        part.setPartName(Optional.ofNullable(getCellValue(row.getCell(1)))
+                .map(String::valueOf).orElse(null));
+        part.setDescription(Optional.ofNullable(getCellValue(row.getCell(2)))
+                .map(String::valueOf).orElse(null));
+        part.setQuestionType(Optional.ofNullable(getCellValue(row.getCell(3)))
+                .map(QuestionType::valueOf).orElse(null));
+        part.setInstructions(Optional.ofNullable(getCellValue(row.getCell(4)))
+                .map(String::valueOf).orElse(null));
+        part.setQuestionCount(Optional.ofNullable(getCellValue(row.getCell(5)))
+                .map(Double::valueOf)
+                .map(Double::intValue).orElse(null));
+        part.setGradingType(Optional.ofNullable(getCellValue(row.getCell(6)))
+                .map(GradingType::valueOf).orElse(null));
+        part.setMedia(Optional.ofNullable(getCellValue(row.getCell(7)))
+                .map(type -> mapToMedia(type, row, 8)).orElse(null));
+        return part;
+    }
+
+    private Media mapToMedia(String type, Row row, int i) {
+        Media media = new Media();
+        media.setMediaType(MediaType.valueOf(type));
+        media.setUrl(Optional.ofNullable(getCellValue(row.getCell(i)))
+                .map(String::valueOf).orElse(null));
+        return media;
+    }
+
+    private Exam mapToExam(Row row) {
+        Exam exam = new Exam();
+        exam.setExamName(getCellValue(row.getCell(0)));
+        exam.setTotalScore(Optional.ofNullable(getCellValue(row.getCell(1)))
+                .map(Double::valueOf)
+                .map(Double::intValue).orElse(null));
+        exam.setDuration(Optional.ofNullable(getCellValue(row.getCell(2)))
+                .map(Double::valueOf)
+                .map(Double::intValue).orElse(null));
+        exam.setQuestionCount(Optional.ofNullable(getCellValue(row.getCell(3)))
+                .map(Double::valueOf)
+                .map(Double::intValue).orElse(null));
+        exam.setLevel(Optional.ofNullable(getCellValue(row.getCell(4)))
+                .map(DifficultyLevel::valueOf).orElse(DifficultyLevel.BEGINNER));
+        return exam;
+    }
+
+    private String getCellValue(Cell cell) {
+        if (cell == null) return null;
+        return switch (cell.getCellType()) {
+            case STRING -> cell.getStringCellValue();
+            case NUMERIC -> String.valueOf(cell.getNumericCellValue());
+            case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
+            case FORMULA -> cell.getCellFormula();
+            default -> null;
+        };
     }
 }

@@ -1,4 +1,4 @@
-import { Award, BookOpen, Users } from "lucide-react";
+import {Award, BookOpen, Users, Workflow} from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH_CONSTANTS } from "../api/PathConstant";
@@ -15,6 +15,7 @@ type ExamCardProps = {
   level?: string;
   isTest?: boolean;
   isPractice?: boolean;
+  attemptCount?: number;
   image?: string;
 };
 
@@ -25,7 +26,7 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
   id,
   questions,
   students,
-  level, isTest, isPractice,
+  level, isTest, isPractice, attemptCount,
   image,
 }) => {
   const navigate = useNavigate();
@@ -46,11 +47,12 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
       />
       <h2 className="text-lg font-semibold mt-3">{examName}</h2>
       <div className="flex items-center gap-2 text-gray-600 text-sm mt-2">
-        <BookOpen size={16} /> <span>Questions: {questions}</span>
-          {isTest && (<><Users size={16} className="ml-3"/><span>Students: {students}</span></>)}
+        <BookOpen size={12} /> <span>Questions: {questions}</span>
+          {isTest && (<><Users size={12} className="ml-3"/><span>Students: {students}</span></>)}
       </div>
       <div className="flex items-center gap-2 text-gray-600 text-sm mt-2">
-        <Award size={16} /> <span className="font-medium">{level}</span>
+        <Award size={12} /> <span className="font-medium">{level}</span>
+          {isTest && (<><Workflow size={12} className="ml-3"/><span>Attempts: {students}</span></>)}
       </div>
       <div className="flex flex-col justify-center items-center">
           {isTest && (
@@ -72,7 +74,7 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
                           if (res.data != null) {
                               navigate(PATH_CONSTANTS.EXAM.PRACTICE_RESUL_BY_ID(res.data))
                           } else {
-                              notification.success({
+                              notification.error({
                                   message: "Bạn chưa làm bài lần nào"
                               })
                           }

@@ -180,49 +180,20 @@ const HistoryPage: React.FC = () => {
       <div className="flex-1 flex pl-8 pr">
         {/* Left Sidebar */}
         <LeftSidebarUser customHeight="h-auto w-64" />
-
-        {/* Khu vực Biểu đồ (Tổng quan) */}
-        <div className="flex-1 p-8">
-          <h1 className="text-2xl font-bold text-gray-800 mb-6">
-            Lịch sử làm bài
-          </h1>
-
-          <div className="bg-white rounded-lg shadow p-6 flex flex-col md:flex-row gap-4">
-            {/* Placeholder Biểu đồ */}
-            <div className="flex-1 flex flex-col items-center justify-center border-r border-gray-200 pr-4">
-              <h2 className="text-xl font-semibold mb-2">Tổng quan</h2>
-              <div className="w-full h-40 bg-blue-50 flex items-center justify-center text-blue-400">
-                <Line data={chartData} options={chartOptions} />
-              </div>
-              <div className="flex space-x-4 mt-3 text-sm"></div>
-            </div>
-
-            {/* Thông tin thống kê */}
-            <div className="flex-1 flex flex-col items-center justify-center md:justify-around">
-              <ProgressCard
-                progress={32} // Tiến độ
-                level="A1" // Cấp độ hiện tại
-                totalTests={10} // Số bài thi đã thực hiện
-                averageScore={75} // Điểm trung bình
-              />
-            </div>
+        {/* Phần dưới: Danh sách bài test */}
+        <div className="bg-white p-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {historyTest.map((item) => (
+                <HistoryTestCard
+                    key={item.id}
+                    id={item.id}
+                    imageSrc={item.imageSrc}
+                    examName={item.examName}
+                    totalScore={item.totalScore}
+                    time={item.time}
+                />
+            ))}
           </div>
-        </div>
-      </div>
-
-      {/* Phần dưới: Danh sách bài test */}
-      <div className="bg-white p-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {historyTest.map((item) => (
-            <HistoryTestCard
-              key={item.id}
-              id={item.id}
-              imageSrc={item.imageSrc}
-              examName={item.examName}
-              totalScore={item.totalScore}
-              time={item.time}
-            />
-          ))}
         </div>
       </div>
     </div>

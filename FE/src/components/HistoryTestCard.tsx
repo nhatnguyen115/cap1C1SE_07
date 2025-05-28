@@ -44,14 +44,14 @@ const HistoryTestCard: React.FC<HistoryTestCardProps> = ({
 
         {/* Thời lượng + nút bên phải */}
         <div className="flex items-center justify-between text-sm mb-2">
-          <div className="text-gray-500 flex items-center gap-1">
+          <div className="text-gray-500 flex items-center gap-0.5">
             <FaRegClock />
             <span>{time}</span>
           </div>
           <Link to={PATH_CONSTANTS.EXAM.EXAMS_VIEW_BY_ID(id)}>
             <button
               className="
-              bg-blue-600 text-white px-4 py-2 text-sm 
+              bg-blue-600 text-white px-4 py-2 text-sm ml-4
               rounded 
               hover:bg-blue-700 transition-colors duration-300
             "

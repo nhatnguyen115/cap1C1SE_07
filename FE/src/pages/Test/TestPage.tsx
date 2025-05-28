@@ -34,6 +34,7 @@ const TestPage: React.FC = () => {
                   questions={exam.questionCount ?? 10}
                   students={exam.students ?? 10}
                   level={exam.level ?? "BEGINNER"}
+                  attemptCount={exam.attemptCount}
                   image={SRC_IMAGE.TEST}
                   isTest={true}
               />

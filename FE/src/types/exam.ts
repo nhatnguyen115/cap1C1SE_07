@@ -6,6 +6,7 @@ export interface ExamType {
   questionCount?: number;
   students?: number;
   level?: string;
+  attemptCount?: number;
   testType?: string;
   image?: string;
 }
@@ -57,6 +58,8 @@ export type ResultType = {
   correctCount: number;
   incorrectCount: number;
   skipCount: number;
+  startTime?: any;
+  endTime?: any;
 }
 
 export type ResultExamType = {

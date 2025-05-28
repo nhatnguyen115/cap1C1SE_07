@@ -42,7 +42,8 @@ public class PracticeAttemptService extends AttemptService {
                         exam.getDuration(),
                         exam.getQuestionCount(),
                         null,
-                        exam.getLevel()
+                        exam.getLevel(),
+                        null
                 ))
                 .toList();
     }
@@ -50,7 +51,7 @@ public class PracticeAttemptService extends AttemptService {
     public Integer getAttemptId(Integer examId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserLoginData user = (UserLoginData) auth.getPrincipal();
-        UserTestAttempt attempt = userTestAttemptRepository.findByUserIdAndExamIdAndExamTestType(user.getId(), examId, TestType.MINITEST)
+        UserTestAttempt attempt = userTestAttemptRepository.findByUserIdAndExamIdAndExamTestTypeAndCompleteTrue(user.getId(), examId, TestType.MINITEST)
                 .orElse(null);
         return attempt != null ? attempt.getId() : null;
     }
