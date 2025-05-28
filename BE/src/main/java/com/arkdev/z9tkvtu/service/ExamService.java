@@ -5,19 +5,15 @@ import com.arkdev.z9tkvtu.dto.response.*;
 import com.arkdev.z9tkvtu.mapper.ExamMapper;
 import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.mapper.QuestionMapper;
-import com.arkdev.z9tkvtu.model.Exam;
-import com.arkdev.z9tkvtu.model.Part;
-import com.arkdev.z9tkvtu.model.Question;
-import com.arkdev.z9tkvtu.model.Section;
-import com.arkdev.z9tkvtu.repository.ExamRepository;
-import com.arkdev.z9tkvtu.repository.PartRepository;
-import com.arkdev.z9tkvtu.repository.QuestionRepository;
-import com.arkdev.z9tkvtu.repository.SectionRepository;
+import com.arkdev.z9tkvtu.model.*;
+import com.arkdev.z9tkvtu.repository.*;
 import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,12 +27,15 @@ public class ExamService {
     SectionRepository sectionRepository;
     PartRepository partRepository;
     QuestionRepository questionRepository;
+    UserTestAttemptRepository attemptRepository;
     ExamMapper examMapper;
     PartMapper partMapper;
     QuestionMapper questionMapper;
 
     public List<ExamListResponse> getExams(String testType, Integer sectionId) {
         List<Exam> exams;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserLoginData user = (UserLoginData) auth.getPrincipal();
         if (sectionId == null || sectionId.describeConstable().isEmpty()) {
             exams = examRepository.findAllByTestTypeOrderByCreatedAtDesc(TestType.valueOf(testType));
         } else {
@@ -45,6 +44,7 @@ public class ExamService {
         return exams.stream()
                 .map(exam -> {
                     Integer students = examRepository.countByUserTestAttempt(exam.getId());
+                    Integer attemptCount = attemptRepository.countByUserIdAndExamIdAndCompleteTrue(user.getId(), exam.getId());
                     return new ExamListResponse(
                             exam.getId(),
                             exam.getExamName(),
@@ -52,7 +52,8 @@ public class ExamService {
                             exam.getDuration(),
                             exam.getQuestionCount(),
                             students,
-                            exam.getLevel()
+                            exam.getLevel(),
+                            attemptCount
                     );
                 })
                 .toList();

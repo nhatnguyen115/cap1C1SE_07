@@ -54,8 +54,16 @@ const UploadExcelComponent: React.FC<{isPractice?: boolean; sectionId?: any}> = 
         const status = response.data.status;
         if (status === 200 || status === 201) {
             setMessage("Tải lên thành công!");
-        } else {
-            setMessage("Tải lên không thành công");
+        } else if (status === 400){
+            if (response.data.message === "NOT_FOUND_SHEET") {
+                setMessage("Tải lên không thành công." +
+                    response.data.data.errorMessage + response.data.data.sheetName);
+            } else if (response.data.message === "ROW_ERROR") {
+                setMessage("Tải lên không thành công." +
+                    response.data.data.errorMessage + ". Lỗi sheet: " + response.data.data.sheetName + ", Hàng: " +
+                response.data.data.rowNumber + ", Cột: " + response.data.data.fieldName);
+            }
+
         }
     } catch (error) {
       console.error("Upload error:", error);
