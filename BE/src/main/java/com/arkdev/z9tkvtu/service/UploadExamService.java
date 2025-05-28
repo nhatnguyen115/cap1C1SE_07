@@ -65,7 +65,7 @@ public class UploadExamService {
         }
         exam.setTestType(Optional.ofNullable(testType)
                 .map(TestType::valueOf).orElse(TestType.TEST));
-        ImportError error = dataValidator.validateExam(exam, row.getRowNum(), "EXAM");
+        ImportError error = dataValidator.validateExam(exam, row.getRowNum()  + 1, "EXAM");
         if (error != null)
             throw new ImportException(
                     "ROW_ERROR",
@@ -92,7 +92,7 @@ public class UploadExamService {
         while (rows.hasNext()) {
             Row row = rows.next();
             Part part = mapToPart(row);
-            ImportError error = dataValidator.validatePart(part, row.getRowNum(), "PART");
+            ImportError error = dataValidator.validatePart(part, row.getRowNum()  + 1, "PART");
             if (error != null)
                 throw new ImportException(
                         "ROW_ERROR",
@@ -120,8 +120,8 @@ public class UploadExamService {
         if (rows.hasNext()) rows.next();
         while (rows.hasNext()) {
             Row row = rows.next();
-            Question question = mapToQuestion(row);
-            ImportError error = dataValidator.validateQuestion(question, row.getRowNum(), part.getPartName());
+            Question question = mapToQuestion(row,part.getPartName());
+            ImportError error = dataValidator.validateQuestion(question, row.getRowNum()  + 1, part.getPartName());
             if (error != null)
                 throw new ImportException(
                         "ROW_ERROR",
@@ -132,7 +132,7 @@ public class UploadExamService {
         }
     }
 
-    private Question mapToQuestion(Row row) {
+    private Question mapToQuestion(Row row, String sheetName) {
         Question question = new Question();
         question.setOrderNumber(Optional.ofNullable(getCellValue(row.getCell(0)))
                 .map(Double::valueOf)
@@ -154,7 +154,7 @@ public class UploadExamService {
         question.setExplanation(Optional.ofNullable(getCellValue(row.getCell(4)))
                 .map(String::valueOf).orElse(null));
         question.setMedia(Optional.ofNullable(getCellValue(row.getCell(5)))
-                .map(type -> mapToMedia(type, row, 6)).orElse(null));
+                .map(type -> mapToMedia(type, row, 6, sheetName)).orElse(null));
         return question;
     }
 
@@ -177,13 +177,41 @@ public class UploadExamService {
         part.setGradingType(Optional.ofNullable(getCellValue(row.getCell(6)))
                 .map(GradingType::valueOf).orElse(null));
         part.setMedia(Optional.ofNullable(getCellValue(row.getCell(7)))
-                .map(type -> mapToMedia(type, row, 8)).orElse(null));
+                .map(type -> mapToMedia(type, row, 8, "PART")).orElse(null));
         return part;
     }
 
-    private Media mapToMedia(String type, Row row, int i) {
+    private Media mapToMedia(String type, Row row, int i, String sheetName) {
         Media media = new Media();
-        media.setMediaType(MediaType.valueOf(type));
+        MediaType mediaType = Optional.ofNullable(type)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(s -> {
+                    try {
+                        return MediaType.valueOf(s);
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        sheetName,
+                                        row.getRowNum()  + 1,
+                                        "Loại Media",
+                                        "Loại Media dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                })
+                .orElseThrow(() ->  new ImportException(
+                        "ROW_ERROR",
+                        new ImportError(
+                                sheetName,
+                                row.getRowNum()  + 1,
+                                "Loại Media",
+                                "Loại Media dữ liệu không phù hợp"
+                        )
+                ));
+        media.setMediaType(mediaType);
         media.setUrl(Optional.ofNullable(getCellValue(row.getCell(i)))
                 .map(String::valueOf).orElse(null));
         return media;
