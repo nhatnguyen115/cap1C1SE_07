@@ -9,7 +9,8 @@ interface HistoryTestCardProps {
   imageSrc: string; // Đường dẫn ảnh minh họa
   examName: string; // Tên bài test
   totalScore: number; // Điểm (vd "25/100")
-  time: string; // Thời lượng (vd "2h20'")
+  time: string;// Thời lượng (vd "2h20'")
+  date?: any;
 }
 
 const HistoryTestCard: React.FC<HistoryTestCardProps> = ({
@@ -17,7 +18,7 @@ const HistoryTestCard: React.FC<HistoryTestCardProps> = ({
   imageSrc,
   examName,
   totalScore,
-  time,
+  time, date
 }) => {
   return (
     <div
@@ -40,6 +41,10 @@ const HistoryTestCard: React.FC<HistoryTestCardProps> = ({
 
         <p className="text-gray-600 text-sm mb-2">
           Điểm: <span className="text-blue-600 font-bold">{totalScore}</span>
+        </p>
+
+        <p className="text-gray-600 text-sm mb-2">
+          Ngày: {date}
         </p>
 
         {/* Thời lượng + nút bên phải */}

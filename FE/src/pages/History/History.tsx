@@ -191,6 +191,7 @@ const HistoryPage: React.FC = () => {
                     examName={item.examName}
                     totalScore={item.totalScore}
                     time={item.time}
+                    date={item.startTime.split('T')[0]}
                 />
             ))}
           </div>
