@@ -27,6 +27,7 @@ public class SecurityConstant {
             ,"/auth/verify"
             ,"/auth/reset"
             ,"/auth/verify-account"
+            ,"/membership-plans"
 
     };
 

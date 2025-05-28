@@ -1020,6 +1020,28 @@ ALTER TABLE ONLY public.user_test_attempt
     ADD CONSTRAINT user_test_attempt_pkey PRIMARY KEY (attempt_id);
 
 
+drop table if exists password_reset_token;
+drop sequence if exists password_reset_token_seq;
+
+CREATE SEQUENCE password_reset_token_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+CREATE TABLE password_reset_token (
+                                      id BIGINT PRIMARY KEY,
+                                      email VARCHAR(100) NOT NULL,
+                                      otp VARCHAR(6) NOT NULL,
+                                      expiry_time TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE password_reset_token
+    ALTER COLUMN id SET DEFAULT nextval('password_reset_token_seq');
+
 --
 -- PostgreSQL database dump complete
 --

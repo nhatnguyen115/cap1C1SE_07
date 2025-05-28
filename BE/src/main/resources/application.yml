@@ -42,8 +42,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ntn.tools501@gmail.com
-    password: kzyp wpyn fhqn xwea
+    username: websitetoiec@gmail.com
+    password: bsxx fmro edyb buor
     properties:
       mail:
         smtp:
