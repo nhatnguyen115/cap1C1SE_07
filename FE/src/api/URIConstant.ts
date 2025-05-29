@@ -114,4 +114,9 @@ export const API_URIS = {
     CALLBACK: "/user-memberships/payment/callback",
     SUBSCRIBE: (planId: number) => `/user-memberships?planId=${planId}`,
   },
+
+  DASHBOARD: {
+    DASHBOARD: "/dashboard",
+    SUMMARY: "/dashboard/summary",
+  },
 };

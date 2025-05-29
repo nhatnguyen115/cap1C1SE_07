@@ -7,8 +7,11 @@ import jakarta.validation.constraints.Size;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,5 +25,22 @@ public interface UserLoginDataRepository extends JpaRepository<UserLoginData, UU
     Optional<UserLoginData> findByEmail(String email);
 
     Page<UserLoginData> findAllByOrderByUsernameAsc(Pageable pageable);
+
+    @Query(value = """
+                SELECT count(*)
+                FROM USER_ACCOUNT UA
+                INNER JOIN USER_LOGIN_DATA ULD ON UA.USER_ID = ULD.USER_ID
+                WHERE UA.ACTIVE = true;
+            """, nativeQuery = true)
+    Long findUserActive();
+
+    @Query(value = """
+                SELECT COUNT(*)
+                FROM USER_ACCOUNT UA
+                INNER JOIN USER_LOGIN_DATA ULD ON UA.USER_ID = ULD.USER_ID
+                WHERE   UA.ACTIVE = TRUE
+                        AND UA.CREATED_AT::date = CURRENT_DATE;           
+            """, nativeQuery = true)
+    Long findUserActiveToday();
 
 }
