@@ -29,6 +29,7 @@ public class SecurityConstant {
             ,"/auth/verify-account"
             ,"/membership-plans"
             ,"/user-memberships"
+            ,"/user-test/submit-test"
 
     };
 

@@ -45,6 +45,19 @@ public class ExamController {
         }
     }
 
+    @GetMapping("/example")
+    public ResponseData<?> getExampleExam(
+            @RequestParam(defaultValue = "TEST") String testType,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "Get Exams Successfully",
+                    Pagination.paginate(examService.getExampleExam(testType), PageRequest.of(page, size)));
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Exams Failed");
+        }
+    }
+
     @GetMapping("/{examId}")
     public ResponseData<?> getExam(@PathVariable Integer examId) {
         try {

@@ -38,7 +38,6 @@ const PaymentPage: React.FC = () => {
           message: response.data.message,
         });
       } else {
-        debugger;
         const paymentUrl = response.data.data;
         window.location.href = paymentUrl;
       }

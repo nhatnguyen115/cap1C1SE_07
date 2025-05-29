@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,6 +83,8 @@ public class UserTestController {
         try {
             testAttemptService.submitTest(attemptId, answers);
             return new ResponseData<>(HttpStatus.OK.value(), "Submit Test Successfully");
+        } catch (BadCredentialsException e) {
+            return new ResponseError<>(HttpStatus.UNAUTHORIZED.value(), "Bạn cần đăng nhập để Submit Test!");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Submit Test Failed");
         }
