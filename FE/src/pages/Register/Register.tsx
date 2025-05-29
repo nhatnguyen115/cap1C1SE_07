@@ -44,7 +44,7 @@ const Register: React.FC = () => {
 
     try {
       const response = await register(payload);
-      if(response.status !== 201) {
+      if (response.status !== 201) {
         notification.error({
           message: response.message || "Đăng ký thất bại. Vui lòng thử lại.",
         });
@@ -54,8 +54,10 @@ const Register: React.FC = () => {
         message: response.message,
       });
       setTimeout(() => {
-        navigate(PATH_CONSTANTS.AUTH.LOGIN);
-      }, 2000);
+        navigate(
+          PATH_CONSTANTS.AUTH.VERIFY + PATH_CONSTANTS.PARAM.EMAIL + email,
+        );
+      }, 1000);
     } catch (error: any) {
       notification.error({
         message: "Đăng ký thất bại. Vui lòng thử lại.",

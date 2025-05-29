@@ -62,7 +62,7 @@ public class AuthController {
     }
 
     @GetMapping("/external/callback")
-    public ResponseData<?> externalCallback(@RequestHeader("Authorization") String authHeader, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseData<?> externalCallback(@RequestHeader(value = "Authorization" , required = false) String authHeader , HttpServletRequest request, HttpServletResponse response) {
         try {
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 return new ResponseData<>(HttpStatus.UNAUTHORIZED.value(), "Missing or invalid Authorization header!");
@@ -138,7 +138,7 @@ public class AuthController {
     @PostMapping("/verify-account")
     public ResponseData<?> verifyAccountOtp(@RequestBody VerifyOtpRequest request) {
         try {
-            boolean valid = service.verifyAccountOtp(request.getEmail(), request.getOtp());
+            boolean valid = service.verifyAccountOtp(request.getEmail(), request.getOtp().trim());
             return valid
                     ? new ResponseData<>(200, "OTP hợp lệ")
                     : new ResponseData<>(400, "OTP sai hoặc đã hết hạn");

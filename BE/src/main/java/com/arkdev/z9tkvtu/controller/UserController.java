@@ -65,7 +65,7 @@ public class UserController {
             }
 
             userService.addUser(request);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Đăng ký thành công, vui lòng xác minh tài khoản trong Email");
+            return new ResponseData<>(HttpStatus.CREATED.value(), "Đăng ký thành công, vui lòng nhập nhập mã OTP được gửi qua Email");
         }catch (BadCredentialsException be){
             return new ResponseError<>(HttpStatus.BAD_REQUEST.value(), be.getMessage());
         }

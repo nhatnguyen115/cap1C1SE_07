@@ -49,7 +49,7 @@ public class PreFilter extends OncePerRequestFilter {
             UserDetails userDetails = userService.getUserDetailsService().loadUserByUsername(username);
             if (!userDetails.isEnabled()) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Tài khoản của bạn đã bị vô hiệu hóa");
+                response.getWriter().write(username);
                 return;
             }
             if (jwtProvider.validateToken(token, userDetails)) {
