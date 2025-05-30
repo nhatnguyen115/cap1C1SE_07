@@ -39,16 +39,6 @@ public class Section extends AbstractEntity {
     @JoinColumn(name = "module_id", nullable = false)
     private Module module;
 
-    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Lesson> lessons = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "section_part",
-            joinColumns = @JoinColumn(name = "section_id"),
-            inverseJoinColumns = @JoinColumn(name = "part_id"))
-    private Set<Part> parts = new HashSet<>();
-
     @ManyToMany
     @JoinTable(
             name = "section_exam",

@@ -1,10 +1,8 @@
 package com.arkdev.z9tkvtu.mapper;
 
 import com.arkdev.z9tkvtu.dto.request.PartRequest;
-import com.arkdev.z9tkvtu.dto.response.PartDetailsResponse;
 import com.arkdev.z9tkvtu.dto.response.PartResponse;
 import com.arkdev.z9tkvtu.model.Part;
-import com.arkdev.z9tkvtu.model.SectionPartPractice;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -40,41 +38,6 @@ public class PartMapper {
                 part.getQuestionCount(),
                 part.getDescription(),
                 part.getInstructions(),
-                part.getMedia() != null ?
-                        part.getMedia().getUrl() : null,
-                part.getMedia() != null ?
-                        part.getMedia().getMediaType() : null
-        );
-    }
-    public PartDetailsResponse toPartDetailsResponse(SectionPartPractice practice) {
-        if(practice == null) return null;
-        return new PartDetailsResponse(
-                practice.getPart().getId(),
-                practice.getPart().getPartName(),
-                practice.getPart().getQuestionType(),
-                practice.getPart().getQuestionCount(),
-                practice.getPart().getDescription(),
-                practice.getPart().getInstructions(),
-                practice.getCorrectCount(),
-                practice.getTotalTime(),
-                practice.getPart().getMedia() != null ?
-                        practice.getPart().getMedia().getUrl() : null,
-                practice.getPart().getMedia() != null ?
-                        practice.getPart().getMedia().getMediaType() : null
-        );
-    }
-
-    public PartDetailsResponse toPartDetailsResponse(Part part) {
-        if(part == null) return null;
-        return new PartDetailsResponse(
-                part.getId(),
-                part.getPartName(),
-                part.getQuestionType(),
-                part.getQuestionCount(),
-                part.getDescription(),
-                part.getInstructions(),
-                null,
-                null,
                 part.getMedia() != null ?
                         part.getMedia().getUrl() : null,
                 part.getMedia() != null ?

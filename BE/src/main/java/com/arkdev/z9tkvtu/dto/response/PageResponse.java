@@ -17,14 +17,14 @@ public class PageResponse<T> {
     List<T> items;
     int totalPages;
     long totalElements;
-    int PageNumber;
-    int PageSize;
+    int pageNumber;
+    int pageSize;
 
     public PageResponse(Page<T> page) {
         items = page.getContent();
         totalPages = page.getTotalPages();
         totalElements = page.getTotalElements();
-        PageNumber = page.getNumber();
-        PageSize = page.getSize();
+        pageNumber = page.getNumber();
+        pageSize = page.getSize();
     }
 }
