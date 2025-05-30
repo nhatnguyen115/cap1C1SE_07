@@ -1,8 +1,9 @@
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-MONGO_URI = "mongodb+srv://nguyenthienlevu:Vu123@nguyenthienlevu.zvbmpb8.mongodb.net/?retryWrites=true&w=majority&appName=Nguyenthienlevu"
-
-client = MongoClient(MONGO_URI)
+client = MongoClient(os.getenv("MONGODB_URI"))
 db = client["toeic_db"]
 collection = db["questions_semantic"]
 

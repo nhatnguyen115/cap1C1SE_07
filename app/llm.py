@@ -1,9 +1,11 @@
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-TOGETHER_API_KEY = "1ea49e30f8ca82bf0dcb17fe5e92a4ffe28f8f54d329a158f160a508992556bd"  # Thay bằng key của bạn
 
 def ask_llama(prompt: str) -> str:
-    headers = {"Authorization": f"Bearer {TOGETHER_API_KEY}"}
+    headers = {"Authorization": f"Bearer {os.getenv('TOGETHER_API_KEY') }"}
     body = {
         "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
         "messages": [{"role": "user", "content": prompt}],
