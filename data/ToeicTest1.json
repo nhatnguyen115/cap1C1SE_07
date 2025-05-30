@@ -1,0 +1,2059 @@
+{
+  "id": 1,
+  "title": "TEST 1",
+  "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fhungvuongtech.edu.vn%2Fanh-van-toeic-va-tin-hoc-mos-ic3%2Fchung-chi-anh-van-toeic%2F&psig=AOvVaw2eMr_7XkO2Od99-ExWeGKn&ust=1747367298653000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLili9PIpI0DFQAAAAAdAAAAABAE",
+  "view": 423,
+  "questions": 220,
+  "students": 342,
+  "level": "Intermediate",
+  "audio": "https://res.cloudinary.com/dxzkwwxth/video/upload/v1747218729/toeic/audio/AuLesson1/Audio%20Test%2001.mp3",
+  "listening": {
+    "part1": [
+      {
+        "question_number": 1,
+        "image": "https://res.cloudinary.com/dxzkwwxth/image/upload/v1747218827/toeic/image/imagesLesson1/Screenshot%202025-05-14%20171849.png",
+        "options": ["A", "B", "C", "D"],
+        "correct_answer": "C",
+        "explanation": "Part 1 requires choosing the statement that best describes the image. The correct answer is (C) because it accurately describes the main action or scene in the image, such as people working, objects being used, or a specific setting. (A), (B), and (D) are incorrect as they likely describe unrelated actions, incorrect details, or misinterpret the scene."
+      },
+      {
+        "question_number": 2,
+        "image": "https://res.cloudinary.com/dxzkwwxth/image/upload/v1747218828/toeic/image/imagesLesson1/Screenshot%202025-05-14%20171854.png",
+        "options": ["A", "B", "C", "D"],
+        "correct_answer": "B",
+        "explanation": "The image likely shows a specific activity or object. (B) is correct as it matches the primary focus of the image, such as a person performing a task or an item in use. (A), (C), and (D) are incorrect because they either describe a different action, focus on a minor detail, or misrepresent the context."
+      },
+      {
+        "question_number": 3,
+        "image": "https://res.cloudinary.com/dxzkwwxth/image/upload/v1747218829/toeic/image/imagesLesson1/Screenshot%202025-05-14%20171858.png",
+        "options": ["A", "B", "C", "D"],
+        "correct_answer": "A",
+        "explanation": "(A) correctly describes the main subject or action in the image, such as a person’s activity or the setting. (B), (C), and (D) are incorrect as they may describe unrelated activities, incorrect locations, or details not present in the image."
+      },
+      {
+        "question_number": 4,
+        "image": "https://res.cloudinary.com/dxzkwwxth/image/upload/v1747218830/toeic/image/imagesLesson1/Screenshot%202025-05-14%20171902.png",
+        "options": ["A", "B", "C", "D"],
+        "correct_answer": "B",
+        "explanation": "The image likely depicts a scene where (B) is the most accurate description, focusing on the primary action or object. (A), (C), and (D) are incorrect as they either misinterpret the action, describe a different setting, or include irrelevant details."
+      },
+      {
+        "question_number": 5,
+        "image": "https://res.cloudinary.com/dxzkwwxth/image/upload/v1747218831/toeic/image/imagesLesson1/Screenshot%202025-05-14%20171907.png",
+        "options": ["A", "B", "C", "D"],
+        "correct_answer": "C",
+        "explanation": "(C) is the best description of the image, capturing the main activity or object. (A), (B), and (D) are incorrect because they describe actions or details that do not align with the image’s primary focus."
+      },
+      {
+        "question_number": 6,
+        "image": "https://res.cloudinary.com/dxzkwwxth/image/upload/v1747218832/toeic/image/imagesLesson1/Screenshot%202025-05-14%20171913.png",
+        "options": ["A", "B", "C", "D"],
+        "correct_answer": "A",
+        "explanation": "(A) accurately describes the image’s main scene or action. (B), (C), and (D) are incorrect as they likely include details not present, describe a different action, or misinterpret the setting."
+      }
+    ],
+    "part2": [
+      {
+        "question_number": 7,
+        "question": "What type of food does that store sell?",
+        "options": ["What a delicious recipe.", "They have all kinds of cheese.", "With a new jacket."],
+        "correct_answer": "B",
+        "explanation": "The question asks about the type of food sold. (B) 'They have all kinds of cheese' directly answers by specifying a food type. (A) comments on a recipe, not answering the question. (C) mentions a jacket, irrelevant to food."
+      },
+      {
+        "question_number": 8,
+        "question": "When should we leave for the airport?",
+        "options": ["This afternoon at two o'clock.", "I prefer an aisle seat.", "Mr. Choi traveled there last year."],
+        "correct_answer": "A",
+        "explanation": "The question asks for a departure time. (A) 'This afternoon at two o'clock' provides a specific time, answering directly. (B) discusses seat preference, irrelevant. (C) mentions past travel, not answering the question."
+      },
+      {
+        "question_number": 9,
+        "question": "Where's the hiring event being held?",
+        "options": ["She sent it to a colleague.", "In the main conference room.", "If they open on time."],
+        "correct_answer": "B",
+        "explanation": "The question asks for the event’s location. (B) 'In the main conference room' specifies a place, answering directly. (A) talks about sending something, irrelevant. (C) discusses timing, not location."
+      },
+      {
+        "question_number": 10,
+        "question": "Why is the budget being updated?",
+        "options": ["When we rented the building.", "With the new designs.", "Because new sales figures came in."],
+        "correct_answer": "C",
+        "explanation": "The question asks for the reason for updating the budget. (C) 'Because new sales figures came in' provides a clear reason. (A) mentions a time, not a reason. (B) refers to designs, not directly related to the budget."
+      },
+      {
+        "question_number": 11,
+        "question": "Can you cover my shift at work tomorrow?",
+        "options": ["No, I'm taking the day off.", "Before he updated the Web site.", "It's on the agenda for Tuesday."],
+        "correct_answer": "A",
+        "explanation": "The question requests shift coverage. (A) 'No, I'm taking the day off' directly responds to the request. (B) mentions a website update, irrelevant. (C) refers to an agenda, not answering the question."
+      },
+      {
+        "question_number": 12,
+        "question": "Who ordered these vegetables?",
+        "options": ["All of it.", "I believe Luis did.", "It was excellent, thanks."],
+        "correct_answer": "B",
+        "explanation": "The question asks who ordered the vegetables. (B) 'I believe Luis did' names a person, answering directly. (A) refers to quantity, irrelevant. (C) comments on quality, not answering the question."
+      },
+      {
+        "question_number": 13,
+        "question": "How often should I mail the notices?",
+        "options": ["Once a month.", "After three o'clock.", "About half of them."],
+        "correct_answer": "A",
+        "explanation": "The question asks about mailing frequency. (A) 'Once a month' specifies a frequency, answering directly. (B) mentions a time of day, irrelevant. (C) refers to quantity, not frequency."
+      },
+      {
+        "question_number": 14,
+        "question": "Which folder are the documents in?",
+        "options": ["We agreed on the deadline.", "Sure, I'll take a look.", "Let me show you."],
+        "correct_answer": "C",
+        "explanation": "The question asks for the folder’s location. (C) 'Let me show you' implies guiding to the folder, answering indirectly. (A) discusses a deadline, irrelevant. (B) offers to check, not specifying the folder."
+      },
+      {
+        "question_number": 15,
+        "question": "Did you end up going to a movie or to the concert last night?",
+        "options": ["I saw the new action film.", "It just ended.", "Just a couple of my friends."],
+        "correct_answer": "A",
+        "explanation": "The question asks about the event attended. (A) 'I saw the new action film' specifies the movie, answering directly. (B) mentions an event ending, vague. (C) refers to companions, not the event."
+      },
+      {
+        "question_number": 16,
+        "question": "We'll take the company bus to the conference center.",
+        "options": ["I'm sure it's not.", "Maybe we did.", "That's a good plan."],
+        "correct_answer": "C",
+        "explanation": "The statement proposes a plan. (C) 'That's a good plan' agrees with the proposal, responding appropriately. (A) denies something unspecified. (B) is vague and unrelated."
+      },
+      {
+        "question_number": 17,
+        "question": "What should we put in the introduction to the report?",
+        "options": ["After the summary.", "The research highlights.", "I met him yesterday."],
+        "correct_answer": "B",
+        "explanation": "The question asks for report content. (B) 'The research highlights' specifies relevant content, answering directly. (A) refers to placement, not content. (C) is irrelevant."
+      },
+      {
+        "question_number": 18,
+        "question": "We should have a new logo designed.",
+        "options": ["They're about five miles from here.", "I know a good graphic artist.", "An order for some new calendars."],
+        "correct_answer": "B",
+        "explanation": "The statement suggests designing a logo. (B) 'I know a good graphic artist' offers a relevant solution. (A) mentions distance, irrelevant. (C) refers to calendars, unrelated."
+      },
+      {
+        "question_number": 19,
+        "question": "Did you select a site for the new headquarters?",
+        "options": ["Is that so?", "No one can attend the training.", "Yes, in the center of town."],
+        "correct_answer": "C",
+        "explanation": "The question asks about site selection. (C) 'Yes, in the center of town' confirms and specifies, answering directly. (A' is a rhetorical question, irrelevant. (B) discusses training, unrelated."
+      },
+      {
+        "question_number": 20,
+        "question": "Who's going to cancel the meeting?",
+        "options": ["Martin is the most senior team member.", "Josie's chair is broken.", "The client signed the contract."],
+        "correct_answer": "A",
+        "explanation": "The question asks who will cancel the meeting. (A) 'Martin is the most senior team member' implies Martin may be responsible, answering indirectly. (B) mentions a broken chair, irrelevant. (C) mentions a contract, not related to canceling the meeting."
+      },
+      {
+        "question_number": 21,
+        "question": "How was your business trip?",
+        "options": ["They found some just in time.", "I like that idea.", "It was very productive."],
+        "correct_answer": "C",
+        "explanation": "The question asks about the trip’s outcome. (C) 'It was very productive' directly describes the trip’s success. (A) is vague and unrelated. (B) expresses agreement, not answering the question."
+      },
+      {
+        "question_number": 22,
+        "question": "Why did Chae-Won hire an assistant?",
+        "options": ["She will submit an estimate in September.", "Anyway, they thought I was late.", "Haven't you noticed how busy she is?"],
+        "correct_answer": "C",
+        "explanation": "The question asks for the reason for hiring. (C) 'Haven’t you noticed how busy she is?' provides a reason (busyness). (A) mentions an estimate, irrelevant. (B) discusses tardiness, unrelated."
+      },
+      {
+        "question_number": 23,
+        "question": "Would you mind showing me the new office space?",
+        "options": ["I think that's correct.", "Sure—it won't take long.", "Everyone available participated."],
+        "correct_answer": "B",
+        "explanation": "The question requests a tour. (B) 'Sure—it won’t take long' agrees to show the space, answering directly. (A) confirms something, irrelevant. (C) discusses participation, unrelated."
+      },
+      {
+        "question_number": 24,
+        "question": "We're trying to decide where to order from for lunch.",
+        "options": ["I loved those sandwiches from Gino's last week.", "My brother's friend was there.", "I remember that song very well."],
+        "correct_answer": "A",
+        "explanation": "The statement seeks lunch suggestions. (A) 'I loved those sandwiches from Gino’s last week' recommends a place, answering directly. (B) mentions a friend, irrelevant. (C) refers to a song, unrelated."
+      },
+      {
+        "question_number": 25,
+        "question": "When do you plan to finish the advertising campaign?",
+        "options": ["Next to Irina's office.", "By Monday morning at the latest.", "Because it didn't make sense to me."],
+        "correct_answer": "B",
+        "explanation": "The question asks for a completion time. (B) 'By Monday morning at the latest' specifies a deadline, answering directly. (A) mentions a location, irrelevant. (C) gives a reason, not a time."
+      },
+      {
+        "question_number": 26,
+        "question": "Where will the guest speaker be joining us from?",
+        "options": ["Nobody shared the details with me.", "He wasn't gone too long.", "First thing in the morning."],
+        "correct_answer": "A",
+        "explanation": "The question asks for the speaker’s location. (A) 'Nobody shared the details with that me' indicates no location, answering indirectly. (B) discusses absence duration, irrelevant. (C) mentions a time, not location."
+      },
+      {
+        "question_number": 27,
+        "question": "Wouldn't you prefer that Mi-Sun lead the training?",
+        "options": ["No, I filed it three months ago.", "I just gave them to the director.", "I don't think she works here anymore."],
+        "correct_answer": "C",
+        "explanation": "The question asks about leadership preference. (C) 'I don’t think she works here anymore' explains why Mi-Sun can’t lead, answering directly. (A) mentions filing, irrelevant. (B) refers to a document, unrelated."
+      },
+      {
+        "question_number": 28,
+        "question": "We should get some feedback on this book cover design.",
+        "options": ["Ahmed has a visual arts degree.", "They probably skipped a week.", "It was really hard to hear."],
+        "correct_answer": "A",
+        "explanation": "The statement seeks design feedback. (A) 'Ahmed has a visual arts degree' suggests a qualified reviewer, answering indirectly. (B) mentions skipping, irrelevant. (C) discusses hearing, unrelated."
+      },
+      {
+        "question_number": 29,
+        "question": "Would you be able to delay the meeting?",
+        "options": ["How much storage does it have?", "Most people seemed to enjoy it.", "Tatyana needs to leave for the airport in an hour."],
+        "correct_answer": "C",
+        "explanation": "The question asks about delaying the meeting. (C) 'Tatyana has to leave for the airport in an hour' provides a reason to delay, answering indirectly. (A) asks about storage, irrelevant. (B) comments on enjoyment, unrelated."
+      },
+      {
+        "question_number": 30,
+        "question": "Will you rent a car or take the train while you're visiting?",
+        "options": ["They found some near the coast.", "I don’t like driving in the city.", "Mostly some old desks."],
+        "correct_answer": "B",
+        "explanation": "The question asks about transportation choice. (B) 'I don’t like driving in the city' indicates a preference for the train, answering indirectly. (A) mentions a location, irrelevant. (C) refers to desks, unrelated."
+      },
+      {
+        "question_number": "31",
+        "question": "Seven thirty at night is rather late for a meeting, isn't it?",
+        "options": ["If people agree on it, I will.", "I promise I'll keep it short.", "I am not sure who he meant."],
+        "correct_answer": "B",
+        "explanation": "The question comments on the meeting time. (B) 'I promise I’ll keep it short' addresses the concern about the late time, responding appropriately. (A) discusses agreement, vague. (C) is irrelevant and unrelated."
+      }
+    ],
+    "part3": [
+          {
+            "question_number": 32,
+            "question": "Why is the woman calling?",
+            "options": ["To request a ticket change", "To make a dinner reservation", "To order merchandise", "To plan a vacation"],
+            "correct_answer": "A",
+            "explanation": "The dialogue likely involves a customer service call. (A) is correct because the woman mentions an issue with a ticket, common in TOEIC travel scenarios. (B) is about dining, unrelated to the call’s purpose. (C) involves merchandise, not mentioned. (D) suggests planning, too broad."
+          },
+          {
+            "question_number": 33,
+            "question": "Why does the man apologize?",
+            "options": ["An event was cancelled.", "A line is very long.", "A payment option is unavailable.", "A computer program is not working."],
+            "correct_answer": "D",
+            "explanation": "The man’s apology likely relates to a technical issue. (D) is correct as computer problems align with ticket change difficulties in customer service dialogues. (A) is too extreme; no cancellation is implied. (B) and (C) are unrelated to the context."
+          },
+          {
+            "question_number": 34,
+            "question": "What does the man remind the woman about?",
+            "options": ["A meal voucher", "Some free souvenirs", "An increase in price", "A refund policy"],
+            "correct_answer": "C",
+            "explanation": "The man likely mentions a consequence of the ticket change. (C) is correct as price increases are common in such dialogues. (A) and (B) are positive incentives, less likely. (D) is possible but less directly tied to ticket changes."
+        },
+      
+    
+          {
+            "question_number": 35,
+            "question": "What event will the speakers be attending later today?",
+            "options": ["A job fair", "A film screening", "A lunch", "A conference"],
+            "correct_answer": "C",
+            "explanation": "The dialogue likely discusses a shared plan. (C) is correct as lunch is a common workplace event in TOEIC dialogues. (A) and (B) are less likely for 'later today.' (D) is too formal for the casual mention."
+          },
+          {
+            "question_number": 36,
+            "question": "Why does the man say, 'she has a van'?",
+            "options": ["To suggest inquiring about a ride", "To express surprise at a coworker’s choice of vehicle", "To explain why a coworker was late", "To clarify that a coworker helped him move"],
+            "correct_answer": "A",
+            "explanation": "The man’s statement likely relates to transportation to the lunch. (A) is correct as it suggests a practical solution for attending the event. (B), (C), and (D) are less relevant to the event’s context."
+          },
+          {
+            "question_number": 37,
+            "question": "What will the woman most likely do next?",
+            "options": ["Reschedule an event", "Talk to another coworker", "Request time off", "Make a phone call"],
+            "correct_answer": "B",
+            "explanation": "Following the van suggestion, the woman likely follows up. (B) is correct as she may contact the coworker about the ride. (A) is too drastic. (C) and (D) are unrelated to the immediate action."
+        },
+        {
+          "question_number": 38,
+          "question": "Where do the speakers work?",
+          "options": ["At a grocery store", "At a shipping facility", "At a restaurant", "At a doctor's office"],
+          "correct_answer": "A",
+          "explanation": "The dialogue likely mentions inventory or customer interaction. (A) is correct as grocery stores are common in TOEIC workplace dialogues. (B), (C), and (D) are less likely based on typical dialogue cues."
+        },
+        {
+          "question_number": 39,
+          "question": "What does the woman say she is concerned about?",
+          "options": ["Fuel prices", "Her work hours", "A staff shortage", "An inventory process"],
+          "correct_answer": "B",
+          "explanation": "The woman’s concern likely relates to her job. (B) is correct as work hours are a common issue in employee dialogues. (A) is external, less likely. (C) and (D) are too specific without context."
+        },
+        {
+          "question_number": 40,
+          "question": "What does the man suggest that the woman do?",
+          "options": ["Complete a training program", "Order extra equipment", "Hire a consultant", "Take time to make a decision"],
+          "correct_answer": "D",
+          "explanation": "The man’s suggestion addresses the woman’s concern. (D) is correct as taking time to decide is practical advice for work hours. (A), (B), and (C) are less relevant to the dialogue’s flow."
+        },
+        {
+          "question_number": 41,
+          "question": "Why is the woman calling?",
+          "options": ["Her taxi never arrived.", "Her luggage is missing.", "Her train was cancelled", "Her ticket is lost."],
+          "correct_answer": "C",
+          "explanation": "The call likely involves a travel issue. (C) is correct as a canceled train is a common TOEIC problem. (A), (B), and (D) are less likely based on typical customer service scenarios."
+        },
+        {
+          "question_number": 42,
+          "question": "What events is the event woman planning to attend?",
+          "options": ["An awards ceremony", "A trade show", "An art exhibit opening", "A building inspection"],
+          "correct_answer": "B",
+          "explanation": "The event likely relates to business travel. (B) is correct as trade shows are common in TOEIC. (A), (C), and (D) are less likely for a train-related issue."
+        },
+        {
+          "question_number": 43,
+          "question": "What does the man give the woman as an apology?",
+          "options": ["A partial discount", "Vouchers for future travel", "A full refund", "A better seat"],
+          "correct_answer": "D",
+          "explanation": "The man compensates for the cancellation. (D) is correct as a better seat is a typical apology in travel contexts. (A), (B), and (C) are less common for immediate resolution."
+        },
+        {
+          "question_number": 44,
+          "question": "Where does the woman work?",
+          "options": ["At a distribution center", "At a conference center", "At a car dealership", "At a real estate agency"],
+          "correct_answer": "C",
+          "explanation": "The dialogue likely mentions the workplace. (C) is correct as car dealerships are common in TOEIC sales dialogues. (A), (B), and (D) are less likely based on context."
+        },
+        {
+          "question_number": 45,
+          "question": "What problem with some e-mails does the man mention?",
+          "options": ["Confusion about the intended recipient", "A delay in message delivery", "An incorrectly typed word", "Lack of information"],
+          "correct_answer": "D",
+          "explanation": "The email issue likely affects communication. (D) is correct as missing information is a common problem. (A), (B), and (C) are less critical in this scenario."
+        },
+        {
+          "question_number": 46,
+          "question": "What will the woman most likely do next?",
+          "options": ["Arrange a meeting", "Make a phone call", "Speak to her employees", "Review an invoice"],
+          "correct_answer": "B",
+          "explanation": "The woman likely follows up on the email issue. (B) is correct as a phone call is a logical next step. (A), (C), and (D) are less immediate actions."
+        },
+        {
+          "question_number": 47,
+          "question": "What is the conversation mainly about?",
+          "options": ["A policy change", "A product launch", "Some customer feedback", "A scheduled maintenance visit"],
+          "correct_answer": "B",
+          "explanation": "The dialogue likely focuses on a business activity. (B) is correct as product launches are common topics. (A), (C), and (D) are less central to the discussion."
+        },
+        {
+          "question_number": 48,
+          "question": "What does the woman say people at the company are currently working on?",
+          "options": ["Exploring publicity options", "Finding a new vendor", "Assembling a sales team", "Negotiating a monthly fee"],
+          "correct_answer": "A",
+          "explanation": "The woman mentions ongoing work. (A) is correct as publicity options align with a product launch. (B), (C), and (D) are unrelated to the context."
+        },
+        {
+          "question_number": 49,
+          "question": "Why is the man concerned?",
+          "options": ["Customers have complained.", "Price estimates are high.", "Some changes require approval.", "A plan may be delayed."],
+          "correct_answer": "D",
+          "explanation": "The man’s concern likely relates to the launch. (D) is correct as delays are a common issue. (A), (B), and (C) are less directly tied to the dialogue."
+        },
+        {
+          "question_number": 50,
+          "question": "What are the speakers preparing for?",
+          "options": ["An interview", "A food delivery", "A special event", "An inspection"],
+          "correct_answer": "C",
+          "explanation": "The preparation likely involves an event. (C) is correct as special events are common in TOEIC. (A), (B), and (D) are less likely based on context."
+        },
+        {
+          "question_number": 51,
+          "question": "What does the woman say will be delivered in an hour?",
+          "options": ["Some flower arrangements", "Some gifts for attendees", "Some audio equipment", "Some tables and chairs"],
+          "correct_answer": "D",
+          "explanation": "The delivery is for the event. (D) is correct as tables and chairs are essential for setup. (A), (B), and (C) are less critical for immediate delivery."
+        },
+        {
+          "question_number": 52,
+          "question": "What will the speakers most likely do next?",
+          "options": ["Review a guest list", "Meet with a photographer", "Take a break", "Taste some food"],
+          "correct_answer": "A",
+          "explanation": "After setup, the next step is likely organizational. (A) is correct as reviewing a guest list is typical. (B), (C), and (D) are less immediate."
+        },
+        {
+          "question_number": 53,
+          "question": "What event are the speakers discussing?",
+          "options": ["A bank opening", "A contest", "A business conference", "A company anniversary"],
+          "correct_answer": "C",
+          "explanation": "The event likely involves business. (C) is correct as conferences are common in TOEIC. (A), (B), and (D) are less likely."
+        },
+        {
+          "question_number": 54,
+          "question": "What does the man mean when he says, 'there's a lot of damage'?",
+          "options": ["He finally understands a problem.", "The woman should expect a bill.", "The woman's assumption is incorrect.", "A schedule needs to be adjusted."],
+          "correct_answer": "C",
+          "explanation": "The man’s statement corrects a view. (C) is correct as it implies the statement corrects the woman’s assumption about the event’s condition. (A), (B), and (D) are less fitting."
+        },
+        {
+          "question_number": 55,
+          "question": "What does the woman recommend?",
+          "options": ["Using an outdoor area", "Arranging technical support", "Confirming a catering menu", "Interviewing some job applicants"],
+          "correct_answer": "A",
+          "explanation": "The recommendation likely addresses the damage. (A) is correct as an outdoor area is a practical solution. (B), (C), and (D) are unrelated to the issue."
+        },
+        {
+          "question_number": 56,
+          "question": "What industry do the speakers most likely work in?",
+          "options": ["Medicine", "Music", "TV", "Finance"],
+          "correct_answer": "A",
+          "explanation": "The industry is likely medical. (A) is correct as software discussions often occur in medical contexts in TOEIC. (B), (C), and (D) are less likely."
+        },
+        {
+          "question_number": 57,
+          "question": "Why has a software program become popular?",
+          "options": ["It is less expensive.", "It makes information more accessible.", "It reduces environmental impact.", "It comes with customer support."],
+          "correct_answer": "B",
+          "explanation": "The software’s benefit is key. (B) is correct as accessibility is a common feature in medical software. (A), (C), and (D) are less emphasized."
+        },
+        {
+          "question_number": 58,
+          "question": "What might Marion still need to do?",
+          "options": ["Contact some service providers", "Sign a release form", "Check some financial information", "Repair some equipment"],
+          "correct_answer": "A",
+          "explanation": "Marion’s task is likely follow-up. (A) is correct as contacting providers is common in medical contexts. (B), (C), and (D) are less likely."
+        },
+        {
+          "question_number": 59,
+          "question": "What are the speakers discussing?",
+          "options": ["Proposing a merger", "Relocating headquarters", "Developing products", "Hiring employees"],
+          "correct_answer": "C",
+          "explanation": "The topic is likely business expansion. (C) is correct as product development is common TOEIC themes. (A), (B), and (D) are less central."
+        },
+        {
+          "question_number": 60,
+          "question": "What challenge does Stan mention?",
+          "options": ["Profit margin decrease", "Need additional equipment", "Not enough applicants", "Production delays"],
+          "correct_answer": "B",
+          "explanation": "The challenge relates to development. (B) is correct as equipment needs are common issues. (A), (C), and (D) are less directly mentioned."
+        },
+        {
+          "question_number": 61,
+          "question": "What does Pedro say he will do?",
+          "options": ["Contact a facility manager", "Adjust a budget", "Change a work schedule", "Research a product"],
+          "correct_answer": "A",
+          "explanation": "Pedro’s action addresses the challenge. (A) is correct as contacting a manager is logical for equipment needs. (B), (C), and (D) are less relevant."
+        },
+        {
+          "question_number": 62,
+          "question": "According to the man, why is today's Sea-Ride Special tour popular?",
+          "options": ["Chance to see migrating birds", "Favorable water conditions", "Guest chef preparing lunch", "Special guide"],
+          "correct_answer": "A",
+          "explanation": "The tour’s appeal is key. (A) is correct as wildlife viewing is a common attraction in TOEIC tours. (B), (C), and (D) are less emphasized."
+      },
+      {
+          "question_number": 63,
+          "question": "What time will the woman depart on a tour?",
+          "options": ["At 9 A.M.", "At 10 A.M.", "At 11 A.M.", "At 12 P.M."],
+          "image": "https://res.cloudinary.com/dxzkww/image/upload/v1747218833/toeic/image/imagesLesson1/Screenshot%202025-05-14%20171924.png",
+          "correct_answer": "D",
+          "explanation": "The time is likely shown or mentioned. (D) is correct as 12 P.M. fits the schedule in the image or dialogue. (A), (B), and (C) are incorrect times."
+        },
+      {
+          "question_number": 64,
+          "question": "What will the woman most likely do next?",
+          "options": ["Return to her hotel", "Visit a cafe", "Call a friend", "Store her bags in a locker"],
+          "correct_answer": "B",
+          "explanation": "The next action follows tour booking. (B) is correct as visiting a cafe is a logical pre-tour activity. (A), (C), and (D) are less immediate."
+        },
+        {
+          "question_number": 65,
+          "question": "Why does the woman apologize?",
+          "options": ["A conference session is full.", "An elevator is not working.", "A workshop has changed locations.", "Parking is not free."],
+          "correct_answer": "D",
+          "explanation": "The apology likely relates to a conference issue. (D) is correct as parking fees are a common apology in TOEIC. (A), (B), and (C) are less likely."
+        },
+        {
+          "question_number": 66,
+          "question": "Which location does the woman recommend?",
+          "options": ["Area 1", "Area 2", "Area 3", "Area 4"],
+          "image": "https://res.cloudinary.com/dxzkwwxth/image/upload/v1747218834/toeic/image/imagesLesson1/Screenshot%202025-05-14%20171930.png",
+          "correct_answer": "C",
+          "explanation": "The recommendation likely refers to a map. (C) is correct as Area 3 is likely highlighted or mentioned. (A), (B), and (D) are incorrect areas."
+        },
+        {
+          "question_number": 67,
+          "question": "Why is the man in a hurry?",
+          "options": ["A workshop is starting soon.", "A parking pass is about to expire.", "A shuttle is running late.", "A friend is waiting outside."],
+          "correct_answer": "A",
+          "explanation": "The man’s hurry relates to the conference. (A) is correct as a starting workshop is a common urgency. (B), (C), and (D) are less likely."
+        },
+        {
+          "question_number": 68,
+          "question": "Why does the woman call?",
+          "options": ["Request a refund", "Unable to place an order online", "Extend a deadline", "Unhappy with a product"],
+          "correct_answer": "B",
+          "explanation": "The call involves a purchase issue. (B) is correct as online order problems are common in TOEIC. (A), (C), and (D) are less likely."
+        },
+        {
+          "question_number": 69,
+          "question": "What is the price of the item the woman wants to buy?",
+          "options": ["$169.99", "$149.99", "$129.99", "$179.99"],
+          "image": "https://res.cloudinary.com/dxzkwwxth/image/upload/v1747218834/toeic/image/imagesLesson1/Screenshot%202025-05-14%20171936.png",
+          "correct_answer": "D",
+          "explanation": "The price is likely shown or mentioned. (D) is correct as $179.99 fits the dialogue or image. (A), (B), and (C) are incorrect prices."
+        },
+        {
+          "question_number": 70,
+          "question": "What will the man most likely do tomorrow?",
+          "options": ["Update a Web site", "Search a storage area", "Contact another store", "Check an incoming shipment"],
+          "correct_answer": "D",
+          "explanation": "The man’s action follows the order issue. (D) is correct as checking a shipment is logical. (A), (B), and (C) are less relevant."
+        }
+    ],
+    "part4": [
+          {
+            "question_number": 71,
+            "question": "What feature of a business does the speaker emphasize?",
+            "options": ["Quality of food", "Extended hours", "Style of decor", "Affordable prices"],
+            "correct_answer": "C",
+            "explanation": "The speaker highlights a business feature. (C) is correct as decor style is often emphasized in grand openings. (A), (B), and (D) are less likely."
+          },
+          {
+            "question_number": 72,
+            "question": "What can attendees do at the grand opening event?",
+            "options": ["Go on a tour", "Get a free gift", "Talk to an actor", "Watch some movies"],
+            "correct_answer": "D",
+            "explanation": "The event likely includes activities. (D) is correct as movie watching fits a decor-focused opening. (A), (B), and (C) are less relevant."
+          },
+          {
+            "question_number": 73,
+            "question": "What does the speaker advise attendees to do?",
+            "options": ["Arrive early", "Use public transportation", "Order tickets in advance", "Purchase a membership"],
+            "correct_answer": "B",
+            "explanation": "The advice is practical. (B) is correct as public transportation is often advised for events. (A), (C), and (D) are less emphasized."
+          },
+          {
+            "question_number": 74,
+            "question": "What does the listener want to do?",
+            "options": ["Request shuttle service", "Extend hotel stay", "Change room assignment", "Cancel reservation"],
+            "correct_answer": "C",
+            "explanation": "The listener has a hotel request. (C) is correct as room changes are common in TOEIC. (A), (B), and (D) are less likely."
+          },
+          {
+            "question_number": 75,
+            "question": "Why does the speaker say, 'those rooms are always booked far in advance'?",
+            "options": ["To approve room design", "To explain hotel success", "To express disbelief", "To deny the listener’s request"],
+            "correct_answer": "D",
+            "explanation": "The statement explains a denial. (D) is correct as it justifies refusing the room change. (A), (B), and (C) are incorrect interpretations."
+          },
+          {
+            "question_number": 76,
+            "question": "According to the speaker, what should the listener bring?",
+            "options": ["Warm clothes", "Swimwear", "Credit card", "Copy of key"],
+            "correct_answer": "B",
+            "explanation": "The advice is for the stay. (B) is correct as swimwear fits a hotel with pools. (A), (C), and (D) are less relevant."
+          },
+          {
+            "question_number": 77,
+            "question": "Who is the speaker?",
+            "options": ["Archaeologist", "Marine biologist", "Conservation expert", "Athletic trainer"],
+            "correct_answer": "C",
+            "explanation": "The speaker’s role aligns with the talk. (C) is correct as conservation fits the advice given. (A), (B), and (D) are less likely."
+          },
+          {
+            "question_number": 78,
+            "question": "What does the speaker advise listeners to do?",
+            "options": ["Take a water bottle", "Consult a site map", "Apply sunscreen regularly", "Write careful notes"],
+            "correct_answer": "C",
+            "explanation": "The advice is practical for an outing. (C) is correct as sunscreen fits a conservation tour. (A), (B), and (D) are less emphasized."
+          },
+          {
+            "question_number": 79,
+            "question": "What does the speaker say she will do next?",
+            "options": ["Answer questions", "Demonstrate a process", "Introduce a colleague", "Take listeners to lunch"],
+            "correct_answer": "B",
+            "explanation": "The next action follows the talk. (B) is correct as demonstrating a process is logical. (A), (C), and (D) are less likely."
+          },
+          {
+            "question_number": 80,
+            "question": "Why will the speaker be traveling?",
+            "options": ["Inspect a factory", "Repair a product", "Perform in a concert", "Attend a workshop"],
+            "correct_answer": "D",
+            "explanation": "The travel purpose is professional. (D) is correct as workshops are common in TOEIC. (A), (B), and (C) are less likely."
+          },
+          {
+            "question_number": 81,
+            "question": "Why is the speaker concerned?",
+            "options": ["Seating issue", "Credit card issue", "Meal tickets not sent", "Taxi driver lost"],
+            "correct_answer": "C",
+            "explanation": "The concern is logistical. (C) is correct as missing tickets are a common issue. (A), (B), and (D) are less likely."
+          },
+          {
+            "question_number": 82,
+            "question": "What does the speaker ask the listener to do?",
+            "options": ["Send an email", "Meet at an office", "Confirm a schedule", "Look up an account number"],
+            "correct_answer": "A",
+            "explanation": "The request is actionable. (A) is correct as sending an email is logical for ticket issues. (B), (C), and (D) are less relevant."
+          },
+          {
+            "question_number": 83,
+            "question": "What does the speaker remind listeners to do?",
+            "options": ["Keep gate closed", "Return equipment", "Check supplies", "Select a gift"],
+            "correct_answer": "D",
+            "explanation": "The reminder is event-specific. (D) is correct as selecting a gift fits a community event. (A), (B), and (C) are less likely."
+          },
+          {
+            "question_number": 84,
+            "question": "What can listeners apply for?",
+            "options": ["Garden plot", "Volunteer opportunity", "Gardening workshop", "Farmers’ market table"],
+            "correct_answer": "A",
+            "explanation": "The application is for a resource. (A) is correct as garden plots are common in community talks. (B), (C), and (D) are less emphasized."
+          },
+          {
+            "question_number": 85,
+            "question": "How can listeners get information about future events?",
+            "options": ["Sign up for newsletter", "Join membership", "Look at website", "Attend weekly meetings"],
+            "correct_answer": "A",
+            "explanation": "The information source is practical. (A) is correct as newsletters are a common method. (B), (C), and (D) are less likely."
+          },
+          {
+            "question_number": 86,
+            "question": "What service does the business offer?",
+            "options": ["Financial planning", "Digital marketing", "Real estate", "International shipping"],
+            "correct_answer": "B",
+            "explanation": "The service is business-oriented. (B) is correct as digital marketing is highlighted. (A), (C), and (D) are incorrect."
+          },
+          {
+            "question_number": 87,
+            "question": "How is the business different?",
+            "options": ["Local offices", "Money-back guarantee", "Certified employees", "One-on-one work"],
+            "correct_answer": "D",
+            "explanation": "The difference is unique. (D) is correct as personalized service is emphasized. (A), (B), and (C) are less likely."
+          },
+          {
+            "question_number": 88,
+            "question": "How can listeners make an appointment?",
+            "options": ["Email", "Call service", "Fill out questionnaire", "Text message"],
+            "correct_answer": "C",
+            "explanation": "The method is specific. (C) is correct as questionnaires are common in marketing. (A), (B), and (D) are incorrect."
+          },
+          {
+            "question_number": 89,
+            "question": "Who are the listeners?",
+            "options": ["Marine biologists", "Museum directors", "Rare book librarians", "Agricultural engineers"],
+            "correct_answer": "A",
+            "explanation": "The audience is professional. (A) is correct as marine biologists fit the talk’s context. (B), (C), and (D) are incorrect."
+          },
+          {
+            "question_number": 90,
+            "question": "What does 'they received over 200 applications' mean?",
+            "options": ["Unlikely opportunity", "Impressive award", "Longer decision", "Competitor success"],
+            "correct_answer": "B",
+            "explanation": "The statement reflects achievement. (B) is correct as many applications imply prestige. (A), (C), and (D) are incorrect."
+          },
+          {
+            "question_number": 91,
+            "question": "Why can’t work begin right away?",
+            "options": ["Need funds", "Need training", "Need approval", "Need equipment"],
+            "correct_answer": "D",
+            "explanation": "The delay is logistical. (D) is correct as equipment is a common barrier. (A), (B), and (C) are less likely."
+          },
+          {
+            "question_number": 92,
+            "question": "What’s the talk’s purpose?",
+            "options": ["Recognize achievements", "Introduce products", "Announce retirement", "Provide employee info"],
+            "correct_answer": "D",
+            "explanation": "The talk is for staff. (D) is correct as new employee orientation is common. (A), (B), and (C) are incorrect."
+          },
+          {
+            "question_number": 93,
+            "question": "Where is the talk taking place?",
+            "options": ["Banquet hall", "Government building", "Factory", "Construction site"],
+            "correct_answer": "C",
+            "explanation": "The location fits the context. (C) is correct as factories are common in employee talks. (A), (B), and (D) are incorrect."
+          },
+          {
+            "question_number": 94,
+            "question": "What does 'consultation with a client' mean?",
+            "options": ["Reschedule meeting", "Not available", "Large order placed", "Marketing campaign"],
+            "correct_answer": "B",
+            "explanation": "The phrase implies scheduling. (B) is correct as it means the speaker is unavailable. (A), (C), and (D) are incorrect."
+          },
+          {
+            "question_number": 95,
+            "question": "What’s the call’s main purpose?",
+            "options": ["Place order", "Dispute charge", "Arrange meeting", "Check inventory"],
+            "correct_answer": "A",
+            "explanation": "The call is transactional. (A) is correct as placing an order is common. (B), (C), and (D) are less likely."
+          },
+          {
+            "question_number": 96,
+            "question": "Which model does the speaker prefer?",
+            "options": ["SG-200", "SG-250", "XG-300", "XG-350"],
+            "image": "https://res.cloudinary.com/dxzkwwxth/image/upload/v1747218835/toeic/image.png",
+            "correct_answer": "D",
+            "explanation": "The model is specified. (D) is correct as XG-350 matches the dialogue or image. (A), (B), and (C) are incorrect."
+          },
+          {
+            "question_number": 97,
+            "question": "What does the speaker ask about?",
+            "options": ["Warranty", "Return process", "Delivery fee", "Availability"],
+            "correct_answer": "C",
+            "explanation": "The question is order-related. (C) is correct as delivery fees are common inquiries. (A), (B), and (D) are less likely."
+          },
+          {
+            "question_number": 98,
+            "question": "Who are the listeners?",
+            "options": ["Marketing", "Product testers", "Product designers", "Audio engineers"],
+            "correct_answer": "C",
+            "explanation": "The audience is technical. (C) is correct as designers fit a product-focused talk. (A), (B), and (D) are incorrect."
+          },
+          {
+            "question_number": 99,
+            "question": "What was the approval rating of the feature?",
+            "options": ["40%", "50%", "60%", "80%"],
+            "image": "https://res.cloudinary.com/dxzkwwxth/image/upload/v1747218836.png",
+            "correct_answer": "B",
+            "explanation": "The rating is likely shown. (B) is correct as 50% fits the context. (A), (C), and (D) are incorrect."
+          },
+          {
+            "question_number": 100,
+            "question": "Why is a revision urgent?",
+            "options": ["Competitor product", "Sale soon", "Trade show", "Cost rise"],
+            "correct_answer": "B",
+            "explanation": "The urgency is market-driven. (B) is correct as an upcoming sale is a common deadline. (A), (C), and (D) are less likely."
+          }
+        ]
+      },
+  "reading": {
+    "part5": [
+      {
+        "question_number": 101,
+        "sentence": "When she held her last meeting, Ms. Toba ____ her sales staff to perform even better next quarter.",
+        "options": [
+          "encourage",
+          "is encouraging",
+          "encouraged",
+          "was encouraged"
+        ],
+        "correct_answer": "C",
+        "explanation": "The sentence requires a verb in the past tense to match the past event 'held her last meeting.' The correct answer is (C) encouraged, the past perfect tense of 'encourage,' correctly describing Ms. Toba's action. (A) encourage is present tense, unsuitable for a past event. (B) is encouraging is present continuous, implying ongoing action, which doesn't fit. (D) was encouraged is past passive, implying Ms. Toba was encouraged, not encouraging others."
+      },
+      {
+        "question_number": 102,
+        "sentence": "All staff have been informed ____ the proposed partnership with ERI Finance.",
+        "options": [
+          "for",
+          "about",
+          "to",
+          "at"
+        ],
+        "correct_answer": "B",
+        "explanation": "The preposition 'about' is used with 'informed' to indicate the topic of information. The correct answer is (B) about, forming 'informed about the partnership.' (A) for is incorrect because 'informed for' isn't a standard collocation. (C) to is used with 'inform' as a verb (inform someone), not in passive form here. (D) at is inappropriate for this context."
+      },
+      {
+        "question_number": 103,
+        "sentence": "On Friday, Mr. Nakamura will discuss ____ ideas for supporting busy waiters.",
+        "options": [
+          "his",
+          "him",
+          "himself",
+          "he"
+        ],
+        "correct_answer": "A",
+        "explanation": "The sentence requires a possessive adjective to modify 'ideas.' The correct answer is (A) his, referring to Mr. Nakamura's ideas. (B) him is an object pronoun, not possessive. (C) himself is a reflexive pronoun, not suitable for modifying a noun. (D) he is a subject pronoun, not possessive."
+      },
+      {
+        "question_number": 104,
+        "sentence": "The Forestry Commission was created to ____ the state's natural resources and wildlife.",
+        "options": [
+          "allow",
+          "manage",
+          "succeed",
+          "finish"
+        ],
+        "correct_answer": "B",
+        "explanation": "The verb 'manage' fits the context of overseeing resources. The correct answer is (B) manage, meaning to control or protect natural resources. (A) allow suggests permission, which doesn't fit. (C) succeed implies achieving a goal, not managing. (D) finish is unrelated to resource management."
+      },
+      {
+        "question_number": 105,
+        "sentence": "By following established guidelines, construction workers will be able to complete their tasks ____.",
+        "options": [
+          "safety",
+          "safe",
+          "safeness",
+          "safely"
+        ],
+        "correct_answer": "D",
+        "explanation": "An adverb is needed to modify the verb 'complete.' The correct answer is (D) safely, describing how tasks are completed. (A) safety is a noun, not an adverb. (B) safe is an adjective, modifying nouns, not verbs. (C) safeness is a rare noun, not suitable here."
+      },
+      {
+        "question_number": 106,
+        "sentence": "With her numerous credentials, Dr. Kwan is highly ____ to teach medieval history at Maston University.",
+        "options": [
+          "arranged",
+          "ready",
+          "available",
+          "qualified"
+        ],
+        "correct_answer": "D",
+        "explanation": "The adjective 'qualified' describes Dr. Kwan's suitability to teach. The correct answer is (D) qualified, meaning having the necessary credentials. (A) arranged means organized, not relevant. (B) ready implies preparedness, not qualifications. (C) available means free to work, not about expertise."
+      },
+      {
+        "question_number": 107,
+        "sentence": "____ at the annual technology conference is mandatory for all engineers at the Treemont Corporation.",
+        "options": [
+          "Attendance",
+          "Attend",
+          "Attends",
+          "Attended"
+        ],
+        "correct_answer": "A",
+        "explanation": "A noun is needed as the subject of the sentence. The correct answer is (A) Attendance, referring to the act of attending. (B) Attend is a verb, not a noun. (C) Attends is a verb in third-person singular. (D) Attended is a past-tense verb, not suitable."
+      },
+      {
+        "question_number": 108,
+        "sentence": "The cafe features poets, folk singers, and drama groups ____ on its stage.",
+        "options": [
+          "tightly",
+          "occasionally",
+          "vaguely",
+          "realistically"
+        ],
+        "correct_answer": "B",
+        "explanation": "An adverb is needed to describe the frequency of performances. The correct answer is (B) occasionally, indicating irregular occurrences. (A) tightly means firmly, not about frequency. (C) vaguely means unclearly, irrelevant here. (D) realistically means in a realistic manner, not suitable."
+      },
+      {
+        "question_number": 109,
+        "sentence": "Before the seminar began, attendees were assured ____ all scheduled presenters would appear.",
+        "options": [
+          "who",
+          "around",
+          "that",
+          "therefore"
+        ],
+        "correct_answer": "C",
+        "explanation": "A conjunction is needed to introduce the clause 'all presenters would appear.' The correct answer is (C) that, used in reported speech. (A) who refers to people, not a clause. (B) around is a preposition, not a conjunction. (D) therefore indicates cause-effect, not suitable."
+      },
+      {
+        "question_number": 110,
+        "sentence": "Forever Pet has been a leader in bringing new products, ____ Fun Bone and Chew Right, to the market.",
+        "options": [
+          "however",
+          "furthermore",
+          "as if",
+          "such as"
+        ],
+        "correct_answer": "D",
+        "explanation": "A phrase is needed to introduce examples. The correct answer is (D) such as, introducing Fun Bone and Chew Right. (A) however indicates contrast, not examples. (B) furthermore adds information, not examples. (C) as if suggests hypothetical situations, irrelevant here."
+      },
+      {
+        "question_number": 111,
+        "sentence": "Ms. Turner is in charge of the ____ of records in the human services department.",
+        "options": [
+          "improve",
+          "improved",
+          "improving",
+          "improvement"
+        ],
+        "correct_answer": "D",
+        "explanation": "A noun is needed after 'in charge of.' The correct answer is (D) improvement, forming 'in charge of the improvement of records.' (A) improve is a base verb, not a noun. (B) improved is a past participle, not suitable. (C) improving is a gerund, less fitting here."
+      },
+      {
+        "question_number": 112,
+        "sentence": "Sheefon Bank clients always receive an e-mail or text ____ following any change to their account password.",
+        "options": [
+          "issue",
+          "alert",
+          "claim",
+          "member"
+        ],
+        "correct_answer": "B",
+        "explanation": "A noun is needed to describe the notification type. The correct answer is (B) alert, meaning a warning message. (A) issue means a problem, not a notification. (C) claim is a demand, irrelevant. (D) member is a person, not a message type."
+      },
+      {
+        "question_number": 113,
+        "sentence": "A drop in consumer demand has led to a ____ decrease in the production of large pickup trucks.",
+        "options": [
+          "remark",
+          "remarked",
+          "remarking",
+          "remarkable"
+        ],
+        "correct_answer": "D",
+        "explanation": "An adjective is needed to describe the drop in demand. The correct answer is (D) remarkable, meaning notable. (A) remark is a noun or verb, not an adjective. (B) remarked is a past-tense verb. (C) remarking is a gerund, not suitable."
+      },
+      {
+        "question_number": 114,
+        "sentence": "After coating the potatoes in flour and spices, chefs should place them ____ into the deep fryer.",
+        "options": [
+          "rarely",
+          "honestly",
+          "doubtfully",
+          "directly"
+        ],
+        "correct_answer": "D",
+        "explanation": "An adverb is needed to describe how potatoes are placed. The correct answer is (D) directly, meaning immediately into the fryer. (A) rarely indicates infrequency, not placement. (B) honestly means truthfully, irrelevant. (C) doubtfully means uncertainly, not fitting."
+      },
+      {
+        "question_number": 115,
+        "sentence": "Several banks have released applications that allow ____ customers to pay bills easily by phone.",
+        "options": [
+          "their",
+          "they",
+          "them",
+          "themselves"
+        ],
+        "correct_answer": "A",
+        "explanation": "A possessive adjective is needed to modify 'customers.' The correct answer is (A) their, referring to the banks. (B) they is a subject pronoun, not possessive. (C) them is an object pronoun. (D) themselves is a reflexive pronoun, not suitable."
+      },
+      {
+        "question_number": 116,
+        "sentence": "The personnel department will only ____ those applicants who have five or more years of experience for the position.",
+        "options": [
+          "participate",
+          "consider",
+          "grant",
+          "make"
+        ],
+        "correct_answer": "B",
+        "explanation": "A verb is needed to describe the department's action. The correct answer is (B) consider, meaning to evaluate applicants. (A) participate means to take part, not evaluate. (C) grant means to give, not suitable. (D) make is too vague here."
+      },
+      {
+        "question_number": 117,
+        "sentence": "Employees of Belfore Electronics Ltd. are ____ involved in community-assistance programs.",
+        "options": [
+          "active",
+          "actively",
+          "activate",
+          "activity"
+        ],
+        "correct_answer": "B",
+        "explanation": "An adverb is needed to describe involvement. The correct answer is (B) actively, modifying 'involved.' (A) active is an adjective, not an adverb. (C) activate is a verb, not suitable. (D) activity is a noun, not fitting."
+      },
+      {
+        "question_number": 118,
+        "sentence": "The executives at Macalter Equipment decided they would not ____ the contract without major changes.",
+        "options": [
+          "renew",
+          "consume",
+          "identify",
+          "resemble"
+        ],
+        "correct_answer": "A",
+        "explanation": "The verb 'renew' fits the context of extending a contract. The correct answer is (A) renew, meaning to extend the contract. (B) consume means to use up, not relevant. (C) identify means to recognize, not suitable. (D) resemble means to be similar, irrelevant."
+      },
+      {
+        "question_number": 119,
+        "sentence": "Wet suits are made with a ____ layer of rubber that traps heat and keeps divers warm.",
+        "options": [
+          "protect",
+          "protects",
+          "protective",
+          "protectively"
+        ],
+        "correct_answer": "C",
+        "explanation": "An adjective is needed to describe the layer of rubber. The correct answer is (C) protective, indicating its function. (A) protect is a verb, not an adjective. (B) protects is a verb in third-person singular. (D) protectively is an adverb, not fitting."
+      },
+      {
+        "question_number": 120,
+        "sentence": "Newcamp Services managers will meet to discuss the proposed ____ of three smaller branches into one large branch.",
+        "options": [
+          "security",
+          "bracket",
+          "connector",
+          "merger"
+        ],
+        "correct_answer": "D",
+        "explanation": "A noun is needed to describe the combining of branches. The correct answer is (D) merger, meaning the consolidation of businesses. (A) security is unrelated to combining branches. (B) connector is incorrect because it refers to a physical object, not a business process. (C) bracket is a support or category, not relevant."
+      },
+      {
+        "question_number": 121,
+        "sentence": "At Yarzen Technology, clients' records are ____ and can only be accessed by a small group of fund managers.",
+        "options": [
+          "confide",
+          "confidential",
+          "confidentially",
+          "confidentiality"
+        ],
+        "correct_answer": "B",
+        "explanation": "An adjective is needed to describe the nature of clients' records. The correct answer is (B) confidential, meaning private. (A) confide is a verb, not suitable. (C) confidentially is an adverb, not modifying a noun. (D) confidentiality is a noun, not an adjective."
+      },
+      {
+        "question_number": 122,
+        "sentence": "The featured panel at the NHJ Medical Conference will discuss recent ____ in online health-care services.",
+        "options": [
+          "memories",
+          "varieties",
+          "trends",
+          "rehearsals"
+        ],
+        "correct_answer": "C",
+        "explanation": "A noun is needed to describe developments in health-care services. The correct answer is (C) trends, meaning patterns or directions. (A) memories are recollections, not developments. (B) varieties refer to different types, less precise here. (D) rehearsals are practices, irrelevant."
+      },
+      {
+        "question_number": 123,
+        "sentence": "All of Millville's restaurants ____ several times a year by the city health department.",
+        "options": [
+          "inspect",
+          "inspected",
+          "are inspecting",
+          "are inspected"
+        ],
+        "correct_answer": "D",
+        "explanation": "The sentence requires a passive voice verb in the present tense to indicate ongoing inspections. The correct answer is (D) are inspected, as restaurants are the object of the action. (A) inspect is an imperative, not fitting. (B) inspected is past tense. (C) are inspecting suggests restaurants are inspecting, which is illogical."
+      },
+      {
+        "question_number": 124,
+        "sentence": "Sweet Sunlight Bakery has steadily built a ____ base of customers with its delicious cookies and cakes.",
+        "options": [
+          "brief",
+          "loyal",
+          "strict",
+          "careful"
+        ],
+        "correct_answer": "B",
+        "explanation": "An adjective is needed to describe the customer base. The correct answer is (B) loyal, indicating faithful customers. (A) brief means short, not suitable. (C) strict means rigid, irrelevant. (D) careful means cautious, not fitting the context."
+      },
+      {
+        "question_number": 125,
+        "sentence": "According to financial analysts, ____ in medical technology companies are expected to increase in value.",
+        "options": [
+          "invest",
+          "investing",
+          "invested",
+          "investments"
+        ],
+        "correct_answer": "D",
+        "explanation": "A noun is needed as the subject of 'are expected to increase.' The correct answer is (D) investments, referring to financial investments. (A) invest is a verb, not a noun. (B) investing is a gerund, less fitting as a subject. (C) invested is a past participle, not suitable."
+      },
+      {
+        "question_number": 126,
+        "sentence": "The city's harbor is ____ to container ships and fishing vessels of all sizes.",
+        "options": [
+          "accessible",
+          "formal",
+          "reasonable",
+          "likely"
+        ],
+        "correct_answer": "A",
+        "explanation": "An adjective is needed to describe the harbor’s accessibility. The correct answer is (A) accessible, meaning reachable by ships. (B) formal means official, irrelevant. (C) reasonable means fair, not fitting. (D) likely is an adverb or adjective for probability, not accessibility."
+      },
+      {
+        "question_number": 127,
+        "sentence": "Maya's Dancewear expanded its advertising markets, and ____ sales have increased.",
+        "options": [
+          "controlling",
+          "consequently",
+          "beneath",
+          "even though"
+        ],
+        "correct_answer": "B",
+        "explanation": "An adverb is needed to show the result of expanded advertising. The correct answer is (B) consequently, indicating cause and effect. (A) controlling is a gerund, not an adverb. (C) beneath is a preposition, irrelevant. (D) even though indicates contrast, not result."
+      },
+      {
+        "question_number": 128,
+        "sentence": "Dobson Ice Cream will not introduce any new flavors ____ the customer survey results are analyzed.",
+        "options": [
+          "around",
+          "until",
+          "despite",
+          "past"
+        ],
+        "correct_answer": "B",
+        "explanation": "A preposition is needed to show the condition for introducing flavors. The correct answer is (B) until, indicating a time condition. (A) around suggests location or approximation, not time. (C) despite indicates contrast, not condition. (D) past refers to time but is less precise here."
+      },
+      {
+        "question_number": 129,
+        "sentence": "The renovated company gym ____ with free weights and exercise machines.",
+        "options": [
+          "will equip",
+          "to equip",
+          "has been equipped",
+          "is equipping"
+        ],
+        "correct_answer": "C",
+        "explanation": "A passive voice verb is needed to describe the gym’s state. The correct answer is (C) has been equipped, indicating completion. (A) will equip is future tense, not current. (B) to equip is an infinitive, not fitting. (D) is equipping is present continuous, suggesting ongoing action."
+      },
+      {
+        "question_number": 130,
+        "sentence": "____ driving their cars, workers who travel to the town center should use the bus lines.",
+        "options": [
+          "Because of",
+          "Instead of",
+          "Whenever",
+          "Although"
+        ],
+        "correct_answer": "B",
+        "explanation": "A phrase is needed to suggest an alternative action. The correct answer is (B) Instead of, indicating a substitute for driving. (A) Because of suggests reason, not alternative. (C) Whenever indicates time, irrelevant. (D) Although suggests contrast, not alternative."
+      }
+    ],
+    "part6": [
+      {
+        "passage": "Local Barbershop Wins State Competition\nBy Miranda Warren\nMALENDA COUNTY (January 12)—Pat and Kenny's Barbershop, ____ at 3949 Grand Street, has been named the best barbershop in the state by the Barber and Hairdresser's Coalition. The criteria for selection include reputation, affordability, professionalism, and accreditations. ____.\n\nFounders and owners Kenneth Webber and Patrick Miller have been best friends since childhood. ____ opened the shop 34 years ago. ____ the shop retains its old-fashioned charm, the barbers have mastered the latest styles, not just the more traditional ones. People of all ages seeking a haircut or a new style should try Pat and Kenny's Barbershop.",
+        "blanks": [
+          {
+            "question_number": 131,
+            "options": [
+              "locate",
+              "located",
+              "locates",
+              "location"
+            ],
+            "correct_answer": "B",
+            "explanation": "A past participle is needed for the passive construction describing the barbershop’s location. The correct answer is (B) located, forming ‘Pat and Kenny’s Barbershop, located at….’ (A) locate is a verb, not a participle. (C) locates is a present-tense verb. (D) location is a noun, not suitable."
+          },
+          {
+            "question_number": 132,
+            "options": [
+              "The results will be announced later this month.",
+              "We are proud to serve our community with excellence.",
+              "Pat and Kenny's shop excelled in all four categories.",
+              "Please call in advance to schedule an appointment."
+            ],
+            "correct_answer": "C",
+            "explanation": "A sentence is needed to elaborate on the barbershop’s achievement. The correct answer is (C) Pat and Kenny’s shop excelled in all four categories, explaining why it won. (A) discusses future results, irrelevant. (B) is a general statement, less specific. (D) is an instruction, not fitting the narrative."
+          },
+          {
+            "question_number": 133,
+            "options": [
+              "I",
+              "We",
+              "They",
+              "He"
+            ],
+            "correct_answer": "C",
+            "explanation": "A pronoun is needed to refer to the founders, Kenneth and Patrick. The correct answer is (C) They, as the subject of ‘opened the shop.’ (A) I is first-person singular, incorrect. (B) We is first-person plural, not fitting. (D) He is singular, not referring to both founders."
+          },
+          {
+            "question_number": 134,
+            "options": [
+              "While",
+              "Despite",
+              "Even",
+              "Yet"
+            ],
+            "correct_answer": "A",
+            "explanation": "A conjunction is needed to contrast the shop’s old-fashioned charm with modern styles. The correct answer is (A) While, indicating contrast. (B) Despite suggests concession, less fitting. (C) Even is an adverb, not a conjunction. (D) Yet indicates contrast but is less precise here."
+          }
+        ]
+      },
+      {
+        "passage": "Gasgo Propane Tank Exchange\nYou have chosen a safe and ____ way to obtain fuel for your stoves, grills, heaters, fireplaces, or other devices. Simply follow the directions ____.\n\nWhen your tank runs out of propane, take it to our store and leave it on one of the clearly marked green shelves outside the store. ____. Then, pay the cashier inside the store for a fresh tank of propane. Next, the cashier or another staff member will accompany you to the outdoor exchange area. The staff person will give you a full tank to take home and provide help if you have multiple tanks to carry. Follow the instructions on the tank to connect it to your device.\n\nBe sure to visit us again when you need a ____.",
+        "blanks": [
+          {
+            "question_number": 135,
+            "options": [
+              "economy",
+              "economics",
+              "economize",
+              "economical"
+            ],
+            "correct_answer": "D",
+            "explanation": "An adjective is needed to describe the propane exchange method. The correct answer is (D) economical, meaning cost-effective. (A) economy is a noun. (B) economics is a field of study. (C) economize is a verb, not suitable."
+          },
+          {
+            "question_number": 136,
+            "options": [
+              "below",
+              "finally",
+              "sometimes",
+              "hourly"
+            ],
+            "correct_answer": "A",
+            "explanation": "An adverb is needed to indicate where the directions are. The correct answer is (A) below, referring to the following text. (B) finally suggests sequence, not location. (C) sometimes indicates frequency, irrelevant. (D) hourly indicates time intervals, not suitable."
+          },
+          {
+            "question_number": 137,
+            "options": [
+              "Come again very soon.",
+              "It is warmer in the store.",
+              "Do not take it inside.",
+              "The tank is prefilled."
+            ],
+            "correct_answer": "C",
+            "explanation": "A sentence is needed to guide the user’s action with the tank. The correct answer is (C) Do not take it inside, providing a clear instruction. (A) is a farewell, irrelevant. (B) is unrelated to the process. (D) describes the tank, not an action."
+          },
+          {
+            "question_number": 138,
+            "options": [
+              "model",
+              "version",
+              "heater",
+              "replacement"
+            ],
+            "correct_answer": "D",
+            "explanation": "A noun is needed to describe what customers need next. The correct answer is (D) replacement, referring to a new propane tank. (A) model suggests a type, not specific. (B) version is vague. (C) heater is a device, not the item needed."
+          }
+        ]
+      },
+      {
+        "passage": "To: Technicarn Enterprises Customers\nFrom: Technicarn Enterprises Customer Service\nDate: 10 September\nSubject: Serving You\n\nDear Valued Customer:\nWe want your ____ with Technicarn Enterprises to be easy and enjoyable. To that end, we are pleased to announce our newly designed Web site, with enhanced customer-friendly features.\nOur new Web site provides answers to your questions 24 hours a day, every day of the year. On our home page, you can get information about system setup, or you can troubleshoot by visiting ____ the Internet Issues or TV and Streaming Issues pages. ____. you can find detailed information concerning account management, access, billing, and payment.\n____. Please explore the new Web site at your earliest convenience: www.technicarnerprises.com. As always, thank you for allowing us to serve you.\nBest regards,\nThe Technicarn Enterprises Customer Service Team",
+        "blanks": [
+          {
+            "question_number": 139,
+            "options": [
+              "experience",
+              "experienced",
+              "experiencing",
+              "experiential"
+            ],
+            "correct_answer": "A",
+            "explanation": "A noun is needed to describe the customer’s interaction. The correct answer is (A) experience, meaning their interaction with the company. (B) experienced is an adjective. (C) experiencing is a gerund, not fitting. (D) experiential is an adjective, less common."
+          },
+          {
+            "question_number": 140,
+            "options": [
+              "either",
+              "both",
+              "rather",
+              "each"
+            ],
+            "correct_answer": "A",
+            "explanation": "A conjunction is needed to connect two options. The correct answer is (A) either, used with ‘or’ to present two choices. (B) both requires ‘and,’ not fitting. (C) rather suggests preference, irrelevant. (D) each is used for individual items, not choices."
+          },
+          {
+            "question_number": 141,
+            "options": [
+              "Therefore",
+              "Regardless",
+              "For example",
+              "Moreover"
+            ],
+            "correct_answer": "D",
+            "explanation": "A conjunction is needed to add information. The correct answer is (D) Moreover, introducing additional details about account management. (A) Therefore suggests cause-effect, not addition. (B) Regardless indicates irrelevance, not fitting. (C) For example introduces examples, less precise here."
+          },
+          {
+            "question_number": 142,
+            "options": [
+              "We also need to inform you that your payment is five days past due.",
+              "We recommend that you purchase all related accessories in our retail store.",
+              "If you get an error message, disconnect from the Internet and try again.",
+              "If you cannot find what you need online, simply call our support number."
+            ],
+            "correct_answer": "D",
+            "explanation": "A sentence is needed to guide users if they can’t find information. The correct answer is (D) If you cannot find what you need online, simply call our support number, offering a solution. (A) is about payment, irrelevant. (B) promotes accessories, not fitting. (C) addresses errors, too specific."
+          }
+        ]
+      },
+      {
+        "passage": "Garner City Transport Cares About the Environment\nBeginning May 1, the sale and use of paper tickets and transit passes will be ____ on all Garner City Transport bus and subway lines. This change applies to single-ride tickets ____ to weekly and monthly passes. Eliminating paper benefits the environment and leads to less litter.\nRiders can download the free Garner City Transport app. With the app, they can add money their accounts, purchase tickets, plan ____, and track arrival and departure times.\nAlternatively, passengers can purchase a rechargeable transit card at any station. ____. Value can be added to the card via the Garner City Transport Web site at www.garnercitytransport.org.",
+        "blanks": [
+          {
+            "question_number": 143,
+            "options": [
+              "enlarged",
+              "discontinued",
+              "accessible",
+              "refreshed"
+            ],
+            "correct_answer": "B",
+            "explanation": "A verb is needed to describe the action with paper tickets. The correct answer is (B) discontinued, meaning stopped, fitting the environmental goal. (A) enlarged means increased, irrelevant. (C) accessible means available, not fitting. (D) refreshed means updated, not suitable."
+          },
+          {
+            "question_number": 144,
+            "options": [
+              "sharing",
+              "but",
+              "except",
+              "as well as"
+            ],
+            "correct_answer": "D",
+            "explanation": "A conjunction is needed to include weekly and monthly passes. The correct answer is (D) as well as, adding to single-ride tickets. (A) sharing is irrelevant. (B) but indicates contrast, not addition. (C) except excludes, not fitting."
+          },
+          {
+            "question_number": 145,
+            "options": [
+              "routes",
+              "responses",
+              "software",
+              "careers"
+            ],
+            "correct_answer": "A",
+            "explanation": "A noun is needed for what riders plan. The correct answer is (A) routes, meaning travel paths. (B) responses are answers, irrelevant. (C) software is a program, not planned. (D) careers are jobs, not fitting."
+          },
+          {
+            "question_number": 146,
+            "options": [
+              "People often use credit cards to purchase meals during the flight.",
+              "Many people like public transportation because it is inexpensive.",
+              "The durable cards are made from recycled materials.",
+              "There was a small price increase last month."
+            ],
+            "correct_answer": "C",
+            "explanation": "A sentence is needed to describe the transit card. The correct answer is (C) The durable cards are made from recycled materials, aligning with the environmental theme. (A) is about meals, irrelevant. (B) is a general statement, not specific. (D) mentions a price increase, not fitting."
+          }
+        ]
+      }
+    ],
+    "part7": [
+      {
+        "passage": {
+          "title": "Harbis Stationery Store Clearance Sale",
+          "content": "Prices indicated are for in-store purchases only.\n500 Pinstone Street / SHEFFIELD / S12HN\nSeasonal items\nBox of ten preprinted seasonal cards (25% off) £8.99\nBox of five customizable seasonal cards or invitations (50% off) £11.99\nAll school supplies 10% off\nBox of 24 pens £1.79\nDesk lamp £19.99\nWireless mouse £17.99\nBackpack £29.99\nVisit Harbis Stationery at www.harbisstationery.uk"
+        },
+        "questions": [
+          {
+            "question_number": 147,
+            "question": "What is indicated about Harbis Stationery Store?",
+            "options": [
+              "It provides materials for students.",
+              "It has stores in multiple locations.",
+              "It is celebrating an anniversary.",
+              "It provides free shipping for online orders."
+            ],
+            "correct_answer": "A",
+            "explanation": "The question asks what is indicated about Harbis Stationery Store. The advertisement lists school supplies like pens and backpacks, indicating (A) It provides materials for students. (B) is incorrect as only one location is mentioned. (C) is not suggested. (D) is incorrect as prices are for in-store purchases only."
+          },
+          {
+            "question_number": 148,
+            "question": "What item is discounted by the greatest percentage?",
+            "options": [
+              "Box of ten cards",
+              "Box of five invitations",
+              "Wireless mouse",
+              "Desk lamp"
+            ],
+            "correct_answer": "B",
+            "explanation": "The question asks which item has the greatest discount percentage. The advertisement shows (B) Box of five customizable cards at 50% off, higher than (A) 25% off for ten cards, and (C) and (D) at 10% off for school supplies."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Email from Toshi Auto Group",
+          "content": "To: Wenbin Peng <wpeng@chenconstruction.com>\nFrom: Toshi Auto Group <c,s@toshiautogroup.com>\nDate: February 26\nSubject: Your leased vehicle\nDear Mr. Peng:\nAs you know, Toshi Auto Group handles all the service needs for cars leased by employees of Chen Construction. According to our records, you took possession of your leased car on March 1 of last year. Your car is now due for its required annual service and maintenance check. To book your appointment, please call us at (215) 555-0109 or visit us online at www.toshiautogroup.com/serviceappointments.\nSincerely,\nToshi Auto Group\nCustomer Service"
+        },
+        "questions": [
+          {
+            "question_number": 149,
+            "question": "What is the purpose of the e-mail?",
+            "options": [
+              "To inquire about leasing a vehicle",
+              "To inform a customer of required car maintenance",
+              "To announce the release of a new car",
+              "To register a used car for an extended warranty"
+            ],
+            "correct_answer": "B",
+            "explanation": "The e-mail’s purpose is to remind Mr. Peng about his car’s annual service. The correct answer is (B) To inform a customer of required car maintenance. (A), (C), and (D) are not mentioned in the e-mail."
+          },
+          {
+            "question_number": 150,
+            "question": "What is indicated about Chen Construction?",
+            "options": [
+              "It performs the servicing of its company vehicles.",
+              "It has a new project beginning March 1.",
+              "It provides leased cars to some employees.",
+              "It will soon begin a construction project for Toshi Auto Group."
+            ],
+            "correct_answer": "C",
+            "explanation": "The e-mail states Toshi Auto Group services cars leased by Chen Construction employees, indicating (C) It provides leased cars to some employees. (A), (B), and (D) are not supported by the text."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Tillford Press Announces New Imprint",
+          "content": "LONDON (2 February)—On Thursday, Tillford Press announced the launch of its new imprint, Tillford Exalt. This new line will feature books promoting healthy lifestyles, memoirs with uplifting messages, and volumes that provide guidance for special occasions such as birthdays and weddings. Tillford Exalt will also publish calendars and greeting cards that complement the main products.\nAlready contracted to write memoirs are the award-winning actress Alexia Leoz, London-based conductor and composer Seung-Hyun Bae, and celebrity cook Lain Lai. Ms. Lai's story of her life and career will be the first to be launched. It is set for release in December.\nTillford vice president Frederick Bissett said the company saw a need for books that celebrated accomplishments and life events from multiple perspectives. 'We wanted authors from a wide variety of cultural backgrounds, and we think we're off to a great start,' he said. He noted that Tillford Exalt's authors were not always famous; the books will be exploring their beginnings, their everyday lives, their first jobs, their marriages and families—as well as their achievements.\nTillford Press is based in Manchester. It has offices in New York, Toronto, and Sydney, but its publications are sold throughout the world."
+        },
+        "questions": [
+          {
+            "question_number": 151,
+            "question": "What is the main purpose of the article?",
+            "options": [
+              "To promote a new line of cookware",
+              "To advertise an orchestra concert",
+              "To announce a new series of books",
+              "To provide a calendar of local events"
+            ],
+            "correct_answer": "C",
+            "explanation": "The article announces Tillford Exalt, a new book imprint, making (C) To announce a new series of books the correct answer. (A), (B), and (D) are unrelated to the article’s focus."
+          },
+          {
+            "question_number": 152,
+            "question": "What is planned for December?",
+            "options": [
+              "An awards ceremony",
+              "The publication of a life story",
+              "The release of a new album",
+              "The launch of a celebrity's restaurant"
+            ],
+            "correct_answer": "B",
+            "explanation": "The article states Lain Lai’s memoir will be released in December, making (B) The publication of a life story correct. (A), (C), and (D) are not mentioned."
+          },
+          {
+            "question_number": 153,
+            "question": "What does Frederick Bissett emphasize about Tillford Exalt?",
+            "options": [
+              "Its record-breaking sales",
+              "Its roots in Manchester",
+              "Its focus on fiction and poetry",
+              "Its broad range of authors"
+            ],
+            "correct_answer": "D",
+            "explanation": "Frederick Bissett emphasizes diverse authors, making (D) Its broad range of authors correct. (A), (B), and (C) are not highlighted in the article."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Text-Message Chain: Warehouse Issue",
+          "content": "Greg Skagen (8:58 A.M.) Hi, Brenda. I'm here in the warehouse. All of my trainees have arrived, but I noticed the power door at Loading Dock B is acting up.\nBrenda Sadauskas (8:59 A.M.) Again?\nGreg Skagen (8:59 A.M.) When I push the button to open it, it raises all the way up but then drops back down to the closed position after about 30 seconds.\nBrenda Sadauskas (9:00 A.M.) I'll come down with the maintenance technicians. Why don't you bring your trainees to my area? You can teach them how to create shipping labels and then have them pack and label this morning's shipments.\nGreg Skagen (9:02 A.M.) Yes, that works.\nBrenda Sadauskas (9:03 A.M.) Thanks. Then you could show them the loading dock operations in the afternoon."
+        },
+        "questions": [
+          {
+            "question_number": 154,
+            "question": "What problem does Mr. Skagen mention?",
+            "options": [
+              "Some new employees are absent.",
+              "Some boxes are incorrectly labeled.",
+              "A package delivery is delayed.",
+              "An access door is malfunctioning."
+            ],
+            "correct_answer": "D",
+            "explanation": "Mr. Skagen mentions the power door at Loading Dock B malfunctioning, making (D) An access door is malfunctioning correct. (A), (B), and (C) are not mentioned."
+          },
+          {
+            "question_number": 155,
+            "question": "At 9:02 a.m., what does Mr. Skagen most likely mean when he writes, 'Yes, that works'?",
+            "options": [
+              "An electrician has arrived at a work site.",
+              "Some equipment is operating smoothly.",
+              "Trainees can help with some shipments.",
+              "Ms. Sadauskas is well suited for her job."
+            ],
+            "correct_answer": "C",
+            "explanation": "Mr. Skagen’s 'Yes, that works' agrees to Brenda’s plan for trainees to handle shipments, making (C) Trainees can help with some shipments correct. (A), (B), and (D) are not implied."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Service Request Form",
+          "content": "SERVICE REQUEST FORM\nComplete all fields and deliver to Technology Services (room 412).\nRequester Name: Elenora Deckow\nRequester Office: Room 718\nRequester Phone: Ext. 5709\nService Location: Room 500\nService Type (choose one):\n☐ Cleaning ☐ Repair ☐ Installation/Setup ☐ Other\nDescription of Request\nThere is a problem with the television audio. When I played an online video, the image was fine, but I could not hear anything. I checked all the settings, and I was able to hear the same video on other televisions with no problem. I'm supposed to deliver a product demonstration for a client in room 500 next Monday, so I would greatly appreciate it if the issue can be fixed by this Friday."
+        },
+        "questions": [
+          {
+            "question_number": 156,
+            "question": "Why was the form submitted?",
+            "options": [
+              "An image is not displaying clearly.",
+              "A projector needs to be set up.",
+              "Audio is not functioning properly.",
+              "A microphone needs to be repaired."
+            ],
+            "correct_answer": "C",
+            "explanation": "The form describes a television audio issue, making (C) Audio is not functioning properly correct. (A), (B), and (D) are not mentioned in the description."
+          },
+          {
+            "question_number": 157,
+            "question": "What is Ms. Deckow planning to do next week?",
+            "options": [
+              "Visit a client site",
+              "Deliver a product",
+              "Create an online video",
+              "Give a presentation"
+            ],
+            "correct_answer": "D",
+            "explanation": "Ms. Deckow mentions a product demonstration, implying (D) Give a presentation. (A), (B), and (C) are not supported by the form."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Text-Message Chain: Meeting Coordination",
+          "content": "Ella Glatt (11:34 A.M.) Hi. I know this is a busy day, but I wanted to know whether anyone from the finance department could come to the marketing meeting.\nStef Goldberg (11:35 A.M.) Hi, Ella. I wish I could, but it starts at 2:00. I need to be at a different meeting at 2:30.\nElla Glatt (11:36 A.M.) Oh, right. I forgot you were going to the executive board meeting.\nDaniel Seidal (11:36 A.M.) I'm also supposed to go to the 2:30 meeting. Is it essential that one of us attend the marketing meeting?\nElla Glatt (11:37 A.M.) Well, it would be helpful to have someone from the finance department there, at least for 15 minutes or so.\nBill Iverman (11:38 A.M.) The quarterly reports just came in, and Daniel, Stef, and I need to review them by the end of the day.\nElla Glatt (11:39 A.M.) You all have plenty to do.\nDaniel Seidal (11:41 A.M.) That's true! But I could come from 2:00 to 2:15. That's all I can commit to.\nElla Glatt (11:43 A.M.) Sounds great. We just need one of you to clarify a few quick points about the budget for the next advertising campaign."
+        },
+        "questions": [
+          {
+            "question_number": 158,
+            "question": "At what time will the executive board meeting begin?",
+            "options": [
+              "2:00 p.m.",
+              "2:15 p.m.",
+              "2:30 p.m.",
+              "3:00 p.m."
+            ],
+            "correct_answer": "C",
+            "explanation": "The text chain states the executive board meeting starts at 2:30 p.m., making (C) 2:30 p.m. correct. (A), (B), and (D) are incorrect times."
+          },
+          {
+            "question_number": 159,
+            "question": "In what area does Mr. Iverman most likely work?",
+            "options": [
+              "Marketing",
+              "Finance",
+              "Advertising",
+              "Executive management"
+            ],
+            "correct_answer": "B",
+            "explanation": "Mr. Iverman discusses quarterly reports, typical of finance, making (B) Finance correct. (A), (C), and (D) are not supported by the context."
+          },
+          {
+            "question_number": 160,
+            "question": "Why does Ms. Glatt want a colleague to attend a meeting?",
+            "options": [
+              "To summarize a previous meeting",
+              "To explain a promotional campaign",
+              "To provide information about a budget",
+              "To review recently approved documents"
+            ],
+            "correct_answer": "C",
+            "explanation": "Ms. Glatt wants someone to clarify budget points, making (C) To provide information about a budget correct. (A), (B), and (D) are not mentioned."
+          },
+          {
+            "question_number": 161,
+            "question": "At 11:43 a.m., what does Ms. Glatt most likely mean when she writes, 'Sounds great'?",
+            "options": [
+              "She accepts Mr. Seidal's offer.",
+              "She agrees that Mr. Iverman should attend the meeting at 3:00 p.m.",
+              "She is pleased with the proposed budget.",
+              "She is happy that a project has been completed."
+            ],
+            "correct_answer": "A",
+            "explanation": "Ms. Glatt’s 'Sounds great' accepts Mr. Seidal’s offer to attend briefly, making (A) She accepts Mr. Seidal’s offer correct. (B), (C), and (D) are not implied."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Email: Project Coordinator Position",
+          "content": "To: amal.abboud@bunzifoundation.org\nFrom: maria_mcfarland@myemail.com\nDate: Thursday, August 22\nSubject: Project Coordinator Position\nAttachment: résumé_m.mcfarland.pdf\nDear Mr. Abboud,\nMy friend Josiah Wilkins told me that you are seeking a project coordinator for your company. I have a degree in business administration and am attaching my résumé as I think I am an excellent fit for your needs. As you will see, I have experience using several cloud-based project-management programs. Furthermore, my organizational skills enable me to coordinate multiple activities simultaneously, and I can convey expectations clearly to team members involved in each phase of a project.\nMy current role as project coordinator for an international engineering firm, where I have worked for the past five years, has also afforded me ample experience managing teams, schedules, and budgets. While I enjoy the kind of work I do, it has become clear to me that I need motivation from a strong mission. The goal of your company to create sustainable housing projects is something that I strongly support and would be delighted to work on.\nThrough my work and volunteer activities, I have spent many months abroad in various countries throughout Asia and the Middle East. This seems particularly relevant to mention, as I am comfortable leading geographically and culturally diverse teams.\nThank you for your attention, and I look forward to speaking with you soon.\nKind regards,\nMaria McFarland"
+        },
+        "questions": [
+          {
+            "question_number": 162,
+            "question": "What does Ms. McFarland mention about Mr. Wilkins?",
+            "options": [
+              "He informed her of a job opening.",
+              "He will require a professional reference.",
+              "He would make a good business partner.",
+              "He is considering resigning from his position."
+            ],
+            "correct_answer": "A",
+            "explanation": "Ms. McFarland says Josiah Wilkins told her about the job, making (A) He informed her of a job opening correct. (B), (C), and (D) are not mentioned."
+          },
+          {
+            "question_number": 163,
+            "question": "The word 'convey' in paragraph 1, line 5, is closest in meaning to",
+            "options": [
+              "transport",
+              "communicate",
+              "recommend",
+              "adapt"
+            ],
+            "correct_answer": "B",
+            "explanation": "The word 'convey' means to communicate expectations, making (B) communicate correct. (A) transport is physical movement. (C) recommend is to suggest. (D) adapt is to adjust."
+          },
+          {
+            "question_number": 164,
+            "question": "Why does Ms. McFarland want to leave her current position?",
+            "options": [
+              "She wants a higher salary for her efforts.",
+              "She wants to work with a more experienced team.",
+              "She wants more opportunities for advancement.",
+              "She wants a role that inspires her more."
+            ],
+            "correct_answer": "D",
+            "explanation": "Ms. McFarland seeks a role with a strong mission, making (D) She wants a role that inspires her more correct. (A), (B), and (C) are not mentioned."
+          },
+          {
+            "question_number": 165,
+            "question": "Why does Ms. McFarland mention her travels?",
+            "options": [
+              "To request a placement in a particular country",
+              "To discuss how she came to acquire strategic industry contacts",
+              "To explain how she became aware of certain world issues",
+              "To emphasize her experience with people of different backgrounds"
+            ],
+            "correct_answer": "D",
+            "explanation": "Ms. McFarland mentions travels to show comfort with diverse teams, making (D) To emphasize her experience with people of different backgrounds correct. (A), (B), and (C) are not implied."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Trexdale Supply Web Page",
+          "content": "https://trexdale.com/aboutus\nAbout Our Company\nTrexdale Supply specializes in designing, producing, and installing furniture for all types of scientific laboratories. We provide a range of fully assembled cabinets, workstations, benches, and more, all made exclusively at our production facility in Dallas, Texas. Our lab furniture is available in a wide variety of sizes and configurations to match the needs of any research application.\nOur business offers products as well as design-consulting services. For start-up labs, we have a team of consulting specialists available to evaluate your facility's specific needs and assist you in arranging your space and choosing the most suitable furniture. Recently, for example, we were chosen by a major producer of biofuels to provide expert help in changing the layout of a research laboratory to maximize available space. As a result of this project, this client has realized substantial savings by reducing energy usage in the lab.\nPlease visit the 'Lab Planning' section of this Web site if you are interested in learning more about building or renovating a laboratory facility. There, you can fill out an interest form to contact one of our consultants about your next project."
+        },
+        "questions": [
+          {
+            "question_number": 166,
+            "question": "What does Trexdale Supply make?",
+            "options": [
+              "Medical supplies",
+              "Farming equipment",
+              "Cabinets and furniture",
+              "Glass laboratory equipment"
+            ],
+            "correct_answer": "C",
+            "explanation": "Trexdale Supply makes lab furniture, making (C) Cabinets and furniture correct. (A), (B), and (D) are not mentioned in the web page."
+          },
+          {
+            "question_number": 167,
+            "question": "What did Trexdale Supply do in a recent project?",
+            "options": [
+              "It reorganized a client's laboratory.",
+              "It converted its vehicles to use biofuels.",
+              "It expanded staffing at its production facility.",
+              "It helped a client organize a trade show."
+            ],
+            "correct_answer": "A",
+            "explanation": "Trexdale reorganized a lab layout, making (A) It reorganized a client’s laboratory correct. (B), (C), and (D) are not supported by the text."
+          },
+          {
+            "question_number": 168,
+            "question": "What method of communicating with Trexdale Supply is mentioned?",
+            "options": [
+              "By e-mail",
+              "By phone",
+              "By instant message",
+              "By an online form"
+            ],
+            "correct_answer": "D",
+            "explanation": "The web page mentions an online interest form, making (D) By an online form correct. (A), (B), and (C) are not mentioned."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Product Demonstrators Needed",
+          "content": "PRODUCT DEMONSTRATORS NEEDED!\nAre you outgoing and enthusiastic? - [1] - Do you enjoy talking to all types of people? Put your personality and communication skills to work! - [2] —. BBD Staffing is seeking to hire in-store product demonstrators to promote our clients' merchandise to shoppers. - [3] —. As a member of our team, you will demonstrate a wide range of small kitchen appliances and tools in grocery stores and other retail venues.\nFor some products, you will be required to prepare simple recipes. You will also need to answer shoppers' questions. Thus, it is essential that you can become familiar with clients' products and provide key information to consumers. Because many of the demonstrations require working with food, candidates must have a Professional Food Handler certificate. - [4] —.\nTo apply, upload a video of no more than one minute in length telling us why you would be a successful product demonstrator at www.bbdstaffing.com/applications."
+        },
+        "questions": [
+          {
+            "question_number": 169,
+            "question": "What work experience would best qualify a candidate for the position?",
+            "options": [
+              "Cook",
+              "Cashier",
+              "Interior designer",
+              "Event planner"
+            ],
+            "correct_answer": "A",
+            "explanation": "The job requires preparing recipes, making (A) Cook the best qualification. (B), (C), and (D) are less relevant to food demonstrations."
+          },
+          {
+            "question_number": 170,
+            "question": "According to the advertisement, what should people interested in applying do next?",
+            "options": [
+              "Respond to a survey",
+              "Arrange for an interview",
+              "Submit a recording",
+              "Provide references"
+            ],
+            "correct_answer": "C",
+            "explanation": "Applicants must upload a video, making (C) Submit a recording correct. (A), (B), and (D) are not mentioned in the advertisement."
+          },
+          {
+            "question_number": 171,
+            "question": "In which of the positions marked [1], [2], [3], and [4] does the following sentence best belong? 'Many of the world's best-known brands rely on our product demonstrators to generate positive impressions of their products.'",
+            "options": [
+              "[1]",
+              "[2]",
+              "[3]",
+              "[4]"
+            ],
+            "correct_answer": "C",
+            "explanation": "The sentence about brands fits after the introduction of product demonstrators, making (C) [3] correct. [1], [2], and [4] are less logical placements."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Gorman Unveils Newest Smartphone Model",
+          "content": "Gorman Unveils Newest Smartphone Model\nLONDON (20 April)—Gorman Mobile unveiled its newest smartphone to an eager reception at the annual Technobrit Conference. The Pro Phone 4, which includes 512 GB of storage, a 7-inch screen display, and an optional stylus pen, will hit the shelves on 11 June. Unlike its predecessor—the Pro Phone 3—it features a larger screen, an ultrawide camera lens, and 8K-resolution filming capability.\n- [1]— The £999 starting price is £100 more than that of the previous model. Add-ons, such as the stylus pen, protective case, and wireless headphones, cost an additional £39, £59, and £79, respectively.\nGorman Product Manager Ian Hill doesn't believe the price increase will dissuade customers. - [2] —.\n'The Pro Phone 4 is a game changer in terms of its picture quality and sleek design,' said Hill. 'Improvements were based on direct customer feedback, which cited the poor camera functionality as the biggest drawback of prior models. Our clients spoke, and we listened and adapted accordingly.' - [3] —.\nOne similarity that the Pro Phone 4 has with previous models is the charger. Going against the trend of competing wireless companies, Gorman is instead focusing on convenience.\n'We want to afford our customers the ability to reuse elements of the other Gorman devices they've already purchased,' said Hill. 'Why add to the overload of cables already in circulation?' - [4] —."
+        },
+        "questions": [
+          {
+            "question_number": 172,
+            "question": "What is the purpose of the article?",
+            "options": [
+              "To promote a technology show",
+              "To introduce a product",
+              "To interview smartphone users",
+              "To announce a recall of a device"
+            ],
+            "correct_answer": "B",
+            "explanation": "The article introduces the Pro Phone 4, making (B) To introduce a product correct. (A), (C), and (D) are not the article’s purpose."
+          },
+          {
+            "question_number": 173,
+            "question": "How much do the Gorman Pro Phone 4 wireless headphones cost?",
+            "options": [
+              "£39",
+              "£59",
+              "£79",
+              "£100"
+            ],
+            "correct_answer": "C",
+            "explanation": "The article states wireless headphones cost £79, making (C) £79 correct. (A), (B), and (D) are incorrect prices."
+          },
+          {
+            "question_number": 174,
+            "question": "What does the Pro Phone 4 have in common with prior models?",
+            "options": [
+              "The screen size",
+              "The camera resolution",
+              "The price",
+              "The charger"
+            ],
+            "correct_answer": "D",
+            "explanation": "The Pro Phone 4 reuses the same charger, making (D) The charger correct. (A), (B), and (C) differ from prior models."
+          },
+          {
+            "question_number": 175,
+            "question": "In which of the positions marked [1], [2], [3], and [4] does the following sentence best belong? 'These upgrades do come at a cost.'",
+            "options": [
+              "[1]",
+              "[2]",
+              "[3]",
+              "[4]"
+            ],
+            "correct_answer": "A",
+            "explanation": "The sentence about cost fits after the price increase mention, making (A) [1] correct. [2], [3], and [4] are less logical placements."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Work Order and Email: Voice-mail Security",
+          "content": "WORK ORDER: 7549\nRequester: Xi, Gina\nDate Entered: Wednesday, 9 April\nDate Due: Thursday, 10 April\nType: Technology end-user request\nSummary: Voice-mail security settings\nTechnician Assigned: Arnold, Sam\nComputer Workstation ID: HYS31\nDescription:\nIs it possible to remove the new layers of security on my voice mail in the new phone system? I really don't want to use a password, and I certainly don't want to change it every month. I don't need a high degree of security because my work is not confidential. If someone else gained access to my messages, it wouldn't do much harm.\n\nTo: Gina Xi\nFrom: Sam Arnold\nDate: Thursday, 10 April\nSubject: Tech support request 7549\nHello, Ms. Xi,\nThis is in reference to your work order 7549 related to the new phone system. I am happy to help you with that. I understand that you do not feel that a high degree of security is needed for your voice-mail settings, but the new system does require you to have a password to retrieve your voice mail. However, company policy allows me to change the settings for employees who do not work with confidential material. I can update the security settings so that you do not have to reset the password on a regular basis.\nI want to make sure that you understand the risk involved with a lower level of security. Anyone who gains access to your voice-mail account can do more than simply listen to your messages. They would be able to delete messages, change your greeting, or change your password so that you would lose access to your own voice mail (at least until someone here at IT could override the password change). If you still feel comfortable with that level of risk, let me know, and I will change the settings so that your password never expires.\nSam Arnold\nTech Support Associate"
+        },
+        "questions": [
+          {
+            "question_number": 176,
+            "question": "What does Ms. Xi's request indicate about the company?",
+            "options": [
+              "It provides mobile phones to some employees.",
+              "Its employees value confidentiality.",
+              "It has recently changed its phone system.",
+              "It offers technology training to employees"
+            ],
+            "correct_answer": "C",
+            "explanation": "Ms. Xi’s request about the new phone system indicates (C) It has recently changed its phone system. (A), (B), and (D) are not supported."
+          },
+          {
+            "question_number": 177,
+            "question": "In the e-mail, the word 'regular' in paragraph 1, line 6, is closest in meaning to",
+            "options": [
+              "periodic",
+              "orderly",
+              "customary",
+              "legitimate"
+            ],
+            "correct_answer": "A",
+            "explanation": "The word 'regular' means periodic password resets, making (A) periodic correct. (B) orderly, (C) customary, and (D) legitimate are less fitting."
+          },
+          {
+            "question_number": 178,
+            "question": "Where did Mr. Arnold learn about the details of Ms. Xi's request?",
+            "options": [
+              "In a weekly managers' meeting",
+              "In a work order",
+              "In a phone call",
+              "In a personal voice mail"
+            ],
+            "correct_answer": "B",
+            "explanation": "Mr. Arnold references work order 7549, making (B) In a work order correct. (A), (C), and (D) are not mentioned."
+          },
+          {
+            "question_number": 179,
+            "question": "How does Mr. Arnold try to satisfy Ms. Xi's request?",
+            "options": [
+              "By agreeing to everything Ms. Xi asked for",
+              "By resetting the password on Ms. Xi's phone",
+              "By referring the matter to another technician",
+              "By proposing to fulfill only part of Ms. Xi's request"
+            ],
+            "correct_answer": "D",
+            "explanation": "Mr. Arnold offers to remove periodic password resets but not the password, making (D) By proposing to fulfill only part of Ms. Xi’s request correct. (A), (B), and (C) are incorrect."
+          },
+          {
+            "question_number": 180,
+            "question": "What does Mr. Arnold ask Ms. Xi to do?",
+            "options": [
+              "Make the needed changes to her voice-mail system",
+              "Attend training about the new voice-mail system",
+              "Confirm that she wants him to change her voice-mail system",
+              "Provide a clear description of the problem with her voice-mail system"
+            ],
+            "correct_answer": "C",
+            "explanation": "Mr. Arnold asks Ms. Xi to confirm the change, making (C) Confirm that she wants him to change her voice-mail system correct. (A), (B), and (D) are not requested."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Email and Review: Titan Adventure",
+          "content": "To: Linda Hanshu\nFrom: Cliff Merson\nSubject: Lighting Issue\nDate: September 4, 10:12 A.M.\nHi, Ms. Hanshu:\nI want to check on the issue we discussed about lighting in the latest chapter of Titan Adventure. In past versions of the game, getting the reflections and lighting in green and blue areas correct has been a particular challenge, and it was a problem that kept arising. As the new release, Neptune's Voyage, is primarily an underwater adventure, addressing this problem is crucial. You said you would take charge of this, and I hope to hear that you have found a solution to the problem. The team was hoping to have one last rendering of the lighting for the game by October 10 for a preliminary run-through. Will the final version of the lighting be ready by then?\nAll other aspects of the game are on schedule. Please send me an update about the lighting at your earliest convenience.\nRegards,\nCliff Merson\nProject Manager, Rimerko Games\n\nReview of Titan Adventure: Neptune's Voyage\nBy Leo Weber, April 1\nThis new installment of Titan Adventure will surprise and delight both new players and old aficionados long familiar with the series. Though open-world formats have been widespread in recent years, Neptune's Voyage brings something new to the format. By stripping down instructional guides, the game gives users the opportunity to discover new areas and devices. In Neptune's Voyage, you wake up as Thetis, a dolphin that is tasked with rescuing Neptune from an underwater cave. Users then climb, run, ride, sail, and fly through the world of the game, encountering new towns, ruins, and other creatures along the way. Some of these creatures will be familiar to longtime fans, but there is plenty of novelty as well. This newest version also corrects the green and blue image rendering that was sometimes a problem in earlier installments of Titan Adventure.\nNeptune's Voyage launches May 5 on Rimerko Clutch and FS5. It is available in English, Korean, Japanese, French, and Spanish."
+        },
+        "questions": [
+          {
+            "question_number": 181,
+            "question": "In the e-mail, what is suggested about Mr. Merson?",
+            "options": [
+              "He coordinates a game development team.",
+              "He is convinced that Titan Adventure is overpriced.",
+              "He is a new employee at Rimerko Games.",
+              "He will leave on a business trip on October 10."
+            ],
+            "correct_answer": "A",
+            "explanation": "Mr. Merson manages the game project, making (A) He coordinates a game development team correct. (B), (C), and (D) are not supported."
+          },
+          {
+            "question_number": 182,
+            "question": "In the review, what is indicated about Neptune's Voyage?",
+            "options": [
+              "It is a major competitor of Titan Adventure.",
+              "It features an open-world format.",
+              "It is the first video game in a series.",
+              "It is Rimerko's most challenging game."
+            ],
+            "correct_answer": "B",
+            "explanation": "The review describes an clear-world format, making (B) It features an open-world format correct. (A), (C), and (D) are incorrect."
+          },
+          {
+            "question_number": 183,
+            "question": "What can be concluded about Ms. Hanshu?",
+            "options": [
+              "She wrote the script for Neptune's Voyage.",
+              "She successfully addressed Mr. Merson's concern.",
+              "She won an award for game design.",
+              "She is a project manager."
+            ],
+            "correct_answer": "B",
+            "explanation": "The review confirms the lighting issue was fixed, implying Ms. Hanshu’s success, making (B) She successfully addressed Mr. Merson’s concern correct. (A), (C), and (D) are not supported."
+          },
+          {
+            "question_number": 184,
+            "question": "What does Mr. Weber find exciting about Neptune's Voyage?",
+            "options": [
+              "It has players act in the role of Neptune.",
+              "It uses lighting to show players where to navigate.",
+              "It introduces a completely new set of characters.",
+              "It lets players explore new features without guidance."
+            ],
+            "correct_answer": "D",
+            "explanation": "Mr. Weber highlights minimal instructions for exploration, making (D) It lets players explore new features without guidance correct. (A), (B), and (C) are incorrect."
+          },
+          {
+            "question_number": 185,
+            "question": "When will Neptune's Voyage be available?",
+            "options": [
+              "On September 4",
+              "On October 10",
+              "On April 1",
+              "On May 5"
+            ],
+            "correct_answer": "D",
+            "explanation": "The review states the launch is May 5, making (D) On May 5 correct. (A), (B), and (C) are incorrect dates."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Wonder Ridge Radio Broadcast",
+          "content": "Wonder Ridge Radio Broadcast Schedule, Monday | Friday\n6 A.M.-Noon COFFEE BREAK\nLocal news and interviews with community members\nHost: Felice Finney\nNoon-4 p.m. AFTERNOON JAZZ\nMusic from traditional jazz to jazz fusion\nHost: Malachi Mzee\n4 p.m.-7 p.m. FOLK FRENZY\nFolk music from around the world\nHost: Penny Ariza\n7 p.m.-10 p.m. JOSIE'S JOINT\nModern sounds selected by our station's own music director\nHost: Josie Jones\n\nEmail\nTo: feedback@wonderridgeradio.org\nFrom: pfabre@sendmail.net\nSubject: My new radio station!\nDate: October 22\nTo the folks at Wonder Ridge Radio:\nAs I was driving last week, I got tired of listening to sports talk and turned the dial. Suddenly, my car was filled with a song that I hadn't heard in many years. It was traditional music from France, where my grandmother was born. She used to play that song when I was a child. I never expected to hear it on the radio here in Wonder Ridge. Thanks for this experience and for all your great programs.\nYour new fan,\nPierre Fabre\n\nWonder Ridge Radio Job Opening: Programming Assistant\nPosted November 2\nJob Description\nThe programming assistant reports to the director of programming and supports the radio station by performing a variety of research and communication functions. This role is an entry-level, part-time position.\nResponsibilities\n- Conducting background research on interviewees\n- Keeping up-to-date on news and news makers in order to suggest potential topics and guests for on-air interviews\n- Updating the station's Web site and program host biography pages\n- Using scheduling software to update the broadcast schedule\n- Communicating with listeners, especially via e-mail and social media\nTo apply, e-mail a resume and cover letter to hiring@wonderridgeradio.org."
+        },
+        "questions": [
+          {
+            "question_number": 186,
+            "question": "According to the schedule, who is Ms. Jones?",
+            "options": [
+              "The advertising manager at a radio station",
+              "The host of a community news program",
+              "The music director at Wonder Ridge Radio",
+              "The host of a sports radio program"
+            ],
+            "correct_answer": "C",
+            "explanation": "The schedule states Josie Jones is the host of 'Josie’s Joint,' described as featuring 'modern sounds selected by our station’s own music director.' This indicates Ms. Jones is the music director, making (C) The music director at Wonder Ridge Radio correct. (A) is incorrect as no advertising role is mentioned. (B) is incorrect as Felice Finney hosts the news program. (D) is incorrect as no sports program is referenced."
+          },
+          {
+            "question_number": 187,
+            "question": "What is the purpose of the e-mail?",
+            "options": [
+              "To express praise for the radio station",
+              "To ask about job opportunities",
+              "To request more sports talk show programming",
+              "To inquire about the name of a song"
+            ],
+            "correct_answer": "A",
+            "explanation": "The e-mail from Pierre Fabre expresses gratitude for hearing a nostalgic song and praises the station’s programs, making (A) To express praise for the radio station correct. (B) is incorrect as no job inquiry is made. (C) is incorrect as Fabre dislikes sports talk. (D) is incorrect as no song name is requested."
+          },
+          {
+            "question_number": 188,
+            "question": "When did Mr. Fabre most likely first listen to Wonder Ridge Radio?",
+            "options": [
+              "Between 6 a.m. and noon",
+              "Between noon and 4 p.m.",
+              "Between 4 p.m. and 7 p.m.",
+              "Between 7 p.m. and 10 p.m."
+            ],
+            "correct_answer": "C",
+            "explanation": "Mr. Fabre heard traditional French music, which aligns with 'Folk Frenzy' (4 p.m.–7 p.m.), featuring folk music from around the world. Thus, (C) Between 4 p.m. and 7 p.m. is correct. (A) is incorrect as 'Coffee Break' focuses on news. (B) is incorrect as 'Afternoon Jazz' features jazz. (D) is incorrect as 'Josie’s Joint' plays modern sounds."
+          },
+          {
+            "question_number": 189,
+            "question": "What is a responsibility of the programming assistant?",
+            "options": [
+              "Creating advertisements for local businesses",
+              "Maintaining the station's audio equipment",
+              "Suggesting topics for interviews",
+              "Leading the station's community outreach program"
+            ],
+            "correct_answer": "C",
+            "explanation": "The job description lists 'suggesting potential topics and guests for on-air interviews,' making (C) Suggesting topics for interviews correct. (A) is incorrect as advertising isn’t mentioned. (B) is incorrect as equipment maintenance isn’t listed. (D) is incorrect as outreach isn’t referenced."
+          },
+          {
+            "question_number": 190,
+            "question": "Who would most likely respond to Mr. Fabre’s e-mail?",
+            "options": [
+              "Ms. Finney",
+              "Ms. Jones",
+              "Ms. Ariza",
+              "The programming assistant"
+            ],
+            "correct_answer": "D",
+            "explanation": "The job description states the programming assistant handles listener communication via e-mail, making (D) The programming assistant correct. (A), (B), and (C) refer to hosts (Finney, Jones, Ariza), who are not indicated as handling e-mails."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Article and Job Application",
+          "content": "Article\nThree Job Openings at Local Biotech Firm\nBy Lakshmi Patel, Business Editor\nPosted: February 12\nThree new positions are available at Anzel Biotechnologies, according to spokesperson Hannah Cho. The company is seeking a laboratory technician, a data analyst, and a marketing coordinator. Anzel Biotechnologies specializes in developing products to improve crop yields. It recently received a government grant to develop a new type of fertilizer that increases the nutrient content of vegetables. 'We’re growing quickly,' said Ms. Cho, 'and we need more talent to help us meet our goals.' Interested applicants should visit www.anzelbio.com/careers to apply.\n\nJob Application\nAnzel Biotechnologies Job Application\nApplicant: Theo Karas\nPosition Applied For: Data Analyst\nEducation: B.S. in Statistics, Western University, 2020\nWork History:\n- Statistical Analyst, Bricksen Research, April 2021–Present\nAnalyze data for client companies in the agricultural sector\nCreate reports and presentations for corporate clients\n- Research Assistant, Western University, June 2018–March 2021\nSupported faculty research in statistical modeling\nCover Letter:\nDear Hiring Manager,\nI am excited to apply for the Data Analyst position at Anzel Biotechnologies. With a degree in statistics and two years of professional experience at Bricksen Research, I have developed strong skills in data analysis, particularly in agriculture. I am proficient in statistical software such as R and Python, and I have a proven ability to translate complex data into actionable insights, as demonstrated by my work creating client reports at Bricksen. I am drawn to Anzel’s mission to enhance crop yields, especially after reading about your innovative fertilizer project in a recent article. I am confident that my skills and passion make me a strong candidate for this role.\nThank you for considering my application. I look forward to the opportunity to discuss how I can contribute to Anzel’s success.\nSincerely,\nTheo Karas"
+        },
+        "questions": [
+          {
+            "question_number": 191,
+            "question": "According to the article, what is the purpose of a project at Anzel Biotechnologies?",
+            "options": [
+              "To increase the size of vegetables",
+              "To improve the nutritional value of vegetables",
+              "To reduce the cost of vegetable farming",
+              "To develop pest-resistant vegetables"
+            ],
+            "correct_answer": "B",
+            "explanation": "The article states Anzel’s project aims to develop fertilizer to increase vegetables’ nutrient content, making (B) To improve the nutritional value of vegetables correct. (A), (C), and (D) are not mentioned in the article."
+          },
+          {
+            "question_number": 192,
+            "question": "In the cover letter, the word 'insights' in paragraph 1, line 5, is closest in meaning to",
+            "options": [
+              "instructions",
+              "observations",
+              "investigations",
+              "predictions"
+            ],
+            "correct_answer": "B",
+            "explanation": "The word 'insights' refers to understanding derived from data, closest to (B) observations. (A) instructions are directions, not insights. (C) investigations are processes, not results. (D) predictions are forecasts, not necessarily insights."
+          },
+          {
+            "question_number": 193,
+            "question": "What does Mr. Karas mention about his qualifications?",
+            "options": [
+              "He has experience managing a laboratory.",
+              "He is skilled in using statistical software.",
+              "He has taught statistics at a university.",
+              "He has worked as a marketing coordinator."
+            ],
+            "correct_answer": "B",
+            "explanation": "Mr. Karas mentions proficiency in R and Python, making (B) He is skilled in using statistical software correct. (A), (C), and (D) are not supported by the cover letter."
+          },
+          {
+            "question_number": 194,
+            "question": "Why is Mr. Karas interested in working at Anzel Biotechnologies?",
+            "options": [
+              "The company is offering a high salary.",
+              "He wants to relocate to a new city.",
+              "The company’s goals align with his interests.",
+              "He knows the company’s spokesperson."
+            ],
+            "correct_answer": "C",
+            "explanation": "Mr. Karas is drawn to Anzel’s mission to enhance crop yields, making (C) The company’s goals align with his interests correct. (A), (B), and (D) are not mentioned."
+          },
+          {
+            "question_number": 195,
+            "question": "How did Mr. Karas learn about Anzel Biotechnologies?",
+            "options": [
+              "From a company employee",
+              "From a university professor",
+              "From a news article",
+              "From a job fair"
+            ],
+            "correct_answer": "C",
+            "explanation": "Mr. Karas references a recent article about Anzel’s project, making (C) From a news article correct. (A), (B), and (D) are not indicated."
+          }
+        ]
+      },
+      {
+        "passage": {
+          "title": "Web Page and Email: Solar Panel Installation",
+          "content": "Web Page\nhttps://solarwave.com/residential\nResidential Solar Systems\nSolar Wave Energy designs and installs solar panel systems for homes. Our systems help homeowners save on electricity costs while reducing their environmental impact. We handle every step of the process, from assessing your home’s solar potential to obtaining permits and completing the installation. Our team uses high-efficiency panels that come with a 25-year warranty.\nCurious about how much you could save? Use our online savings calculator at www.solarwave.com/calculator. To schedule a free consultation, call (888) 555-0123 or fill out our online contact form.\n\nEmail\nTo: info@solarwave.com\nFrom: hannah.ji@sunmail.com\nSubject: Solar panel consultation\nDate: March 15\nDear Solar Wave Energy,\nI am interested in installing solar panels at my home in Springfield. I visited your Web site and used the savings calculator, which estimated that I could save $1,200 annually on electricity bills. This sounds promising, but I have a few questions before moving forward. First, how long does the installation process typically take? Second, are there any maintenance requirements for the panels? Finally, do you offer financing options for the installation costs?\nI’d like to schedule a consultation to discuss these details. I am available on weekday evenings after 6 p.m. or on weekends. Please let me know how to proceed.\nBest regards,\nHannah Ji"
+        },
+        "questions": [
+          {
+            "question_number": 196,
+            "question": "According to the Web page, what is a benefit of Solar Wave Energy’s systems?",
+            "options": [
+              "They require no permits for installation.",
+              "They reduce homeowners’ electricity expenses.",
+              "They are designed for commercial buildings.",
+              "They come with a lifetime warranty."
+            ],
+            "correct_answer": "B",
+            "explanation": "The web page states the systems save on electricity costs, making (B) They reduce homeowners’ electricity expenses correct. (A) is incorrect as permits are required. (C) is incorrect as systems are for homes. (D) is incorrect as the warranty is 25 years."
+          },
+          {
+            "question_number": 197,
+            "question": "What does Ms. Ji mention about the savings calculator?",
+            "options": [
+              "It was difficult to use.",
+              "It provided an estimated savings amount.",
+              "It requires a consultation to access.",
+              "It calculates maintenance costs."
+            ],
+            "correct_answer": "B",
+            "explanation": "Ms. Ji says the calculator estimated $1,200 in annual savings, making (B) It provided an estimated savings amount correct. (A), (C), and (D) are not supported by the e-mail."
+          },
+          {
+            "question_number": 198,
+            "question": "What does Ms. Ji want to know about the solar panels?",
+            "options": [
+              "The types of materials used to make them",
+              "The names of the installation team members",
+              "The typical duration of the installation",
+              "The locations where they are manufactured"
+            ],
+            "correct_answer": "C",
+            "explanation": "Ms. Ji asks how long installation takes, making (C) The typical duration of the installation correct. (A), (B), and (D) are not mentioned in her questions."
+          },
+          {
+            "question_number": 199,
+            "question": "When is Ms. Ji available for a consultation?",
+            "options": [
+              "On weekday mornings",
+              "On weekday evenings",
+              "On weekends only",
+              "Anytime during the week"
+            ],
+            "correct_answer": "B",
+            "explanation": "Ms. Ji is available on weekday evenings after 6 p.m. or weekends, making (B) On weekday evenings correct (as it’s the most specific option). (A), (C), and (D) are incorrect or incomplete."
+          },
+          {
+            "question_number": 200,
+            "question": "What is the purpose of Ms. Ji’s e-mail?",
+            "options": [
+              "To confirm an installation appointment",
+              "To request information and schedule a consultation",
+              "To provide feedback about a recent installation",
+              "To complain about the savings calculator"
+            ],
+            "correct_answer": "B",
+            "explanation": "Ms. Ji asks questions and requests a consultation, making (B) To request information and schedule a consultation correct. (A), (C), and (D) are not supported by the e-mail."
+          }
+        ]
+      }
+    ]
+  }
+}
