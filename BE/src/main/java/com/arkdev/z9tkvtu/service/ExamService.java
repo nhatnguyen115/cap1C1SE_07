@@ -92,7 +92,8 @@ public class ExamService {
                             exam.getQuestionCount(),
                             students,
                             exam.getLevel(),
-                            0
+                            0,
+                            null
                     );
                 })
                 .toList();

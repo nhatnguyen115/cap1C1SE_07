@@ -53,6 +53,8 @@ public class ExamController {
             return new ResponseData<>(HttpStatus.OK.value(), "Change Premium Successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Change Premium Failed");
+        }
+    }
 
     @GetMapping("/example")
     public ResponseData<?> getExampleExam(

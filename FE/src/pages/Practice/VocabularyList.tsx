@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {http} from "../../service/Http";
 import {useNavigate, useParams} from "react-router-dom";
+import SearchComponent from "../../components/SearchComponent";
 
 const VocabularyList = () => {
     const [words, setWords] = useState([]);
@@ -31,6 +32,7 @@ const VocabularyList = () => {
 
     return (
         <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-md">
+            <SearchComponent/>
             <h2 className="text-2xl font-semibold mb-4">📘 Vocabulary List</h2>
             <table className="w-full table-auto border-collapse">
                 <thead>

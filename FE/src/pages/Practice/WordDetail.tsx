@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import SearchComponent from "../../components/SearchComponent";
 
 function WordDetail() {
     const { word } = useParams();
@@ -26,6 +27,7 @@ function WordDetail() {
 
     return (
         <div className="p-6 max-w-3xl mx-auto">
+            <SearchComponent/>
             <h2 className="text-2xl font-bold mb-4">Kết quả cho: <span className="text-blue-600">{word}</span></h2>
 
             {error && <p className="text-red-600">{error}</p>}

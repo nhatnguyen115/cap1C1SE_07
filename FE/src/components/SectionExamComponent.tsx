@@ -9,6 +9,7 @@ import {Lesson, Part, SectionType} from "../types/section";
 import {ExamType, Grammar} from "../types/exam";
 import ExamCardComponent from "./ExamCardComponent";
 import {SRC_IMAGE} from "../constant/SrcImage";
+import SearchComponent from "./SearchComponent";
 
 interface SectionDetailsComponentProps {
     section: SectionType;
@@ -47,6 +48,7 @@ const SectionExamComponent: React.FC<SectionDetailsComponentProps> = ({
 
     return (
         <div className="p-4 max-w-6xl flex flex-col min-h-screen mx-auto">
+            <SearchComponent/>
             <h1 className="text-3xl font-bold mb-6 text-center">{section.sectionName}</h1>
             <div className="flex flex-col md:flex-row gap-6">
 
