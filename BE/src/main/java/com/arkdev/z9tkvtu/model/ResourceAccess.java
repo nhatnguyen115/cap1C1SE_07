@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -13,6 +14,7 @@ import org.hibernate.type.SqlTypes;
 @Setter
 @Entity
 @Table(name = "resource_access")
+@NoArgsConstructor
 public class ResourceAccess extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +32,9 @@ public class ResourceAccess extends AbstractEntity {
     @Column(name = "resource_type")
     private ResourceType resourceType;
 
+    public ResourceAccess(Integer resourceId, String tableName, ResourceType resourceType) {
+        this.resourceId = resourceId;
+        this.tableName = tableName;
+        this.resourceType = resourceType;
+    }
 }

@@ -43,6 +43,7 @@ public class PracticeAttemptService extends AttemptService {
                         exam.getQuestionCount(),
                         null,
                         exam.getLevel(),
+                        null,
                         null
                 ))
                 .toList();

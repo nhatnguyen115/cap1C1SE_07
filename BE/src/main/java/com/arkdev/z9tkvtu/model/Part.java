@@ -54,8 +54,5 @@ public class Part extends AbstractEntity {
     private Media media;
 
     @ManyToMany(mappedBy = "parts")
-    private Set<Section> sections = new HashSet<>();
-
-    @ManyToMany(mappedBy = "parts")
     private Set<Exam> exams = new HashSet<>();
 }

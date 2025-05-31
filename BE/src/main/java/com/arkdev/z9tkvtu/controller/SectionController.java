@@ -1,12 +1,8 @@
 package com.arkdev.z9tkvtu.controller;
 
-import com.arkdev.z9tkvtu.dto.request.LessonRequest;
-import com.arkdev.z9tkvtu.dto.request.PartRequest;
 import com.arkdev.z9tkvtu.dto.request.SectionRequest;
 import com.arkdev.z9tkvtu.dto.response.ResponseData;
 import com.arkdev.z9tkvtu.dto.response.ResponseError;
-import com.arkdev.z9tkvtu.service.LessonService;
-import com.arkdev.z9tkvtu.service.PartService;
 import com.arkdev.z9tkvtu.service.SectionService;
 import com.arkdev.z9tkvtu.util.Pagination;
 import jakarta.validation.Valid;
@@ -25,8 +21,6 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SectionController {
     SectionService sectionService;
-    LessonService lessonService;
-    PartService partService;
 
     @GetMapping("")
     public ResponseData<?> getSections(@RequestParam(required = false) Integer moduleId,
@@ -52,28 +46,6 @@ public class SectionController {
                     sectionService.getSection(sectionId));
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Section Failed");
-        }
-    }
-
-    @PostMapping("/{sectionId}/lessons")
-    public ResponseData<?> addLesson(@PathVariable Integer sectionId,
-                                     @RequestBody @Valid LessonRequest request) {
-        try {
-            lessonService.addLesson(sectionId, request);
-            return new ResponseData<>(HttpStatus.OK.value(), "Add Lesson Successfully");
-        } catch (Exception e) {
-            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Lesson could not be added");
-        }
-    }
-
-    @PostMapping("/{sectionId}/parts")
-    public ResponseData<?> addPart(@PathVariable Integer sectionId ,
-                                   @Valid @RequestBody PartRequest request) {
-        try {
-            partService.addPartToSection(sectionId, request);
-            return new ResponseData<>(HttpStatus.CREATED.value(), "Add Part To Section Successfully");
-        } catch (Exception e) {
-            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Part could not be added");
         }
     }
 

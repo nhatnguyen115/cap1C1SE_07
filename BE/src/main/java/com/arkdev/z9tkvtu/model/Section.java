@@ -40,14 +40,10 @@ public class Section extends AbstractEntity {
     private Module module;
 
     @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Lesson> lessons = new HashSet<>();
+    private Set<Grammar>  grammars = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "section_part",
-            joinColumns = @JoinColumn(name = "section_id"),
-            inverseJoinColumns = @JoinColumn(name = "part_id"))
-    private Set<Part> parts = new HashSet<>();
+    @OneToMany(mappedBy = "section",  cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<VocabularyWord>  vocabularyWords = new HashSet<>();
 
     @ManyToMany
     @JoinTable(

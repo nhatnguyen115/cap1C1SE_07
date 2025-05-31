@@ -1,5 +1,5 @@
 export interface ExamType {
-  id?: number;
+  id: number;
   examName: string;
   totalScore: number;
   duration?: number;
@@ -8,7 +8,15 @@ export interface ExamType {
   level?: string;
   attemptCount?: number;
   testType?: string;
+  isPremium?: boolean;
   image?: string;
+}
+
+export type Grammar = {
+  grammarName: string;
+  grammarText: string;
+  mediaType: string;
+  url: string
 }
 
 export type PartType = {

@@ -41,23 +41,6 @@ public class PartService {
     }
 
     @Transactional
-    public void addPartToSection(Integer sectionId, PartRequest request) {
-        partRepository.findByPartNameAndSectionsId(request.getPartName(), sectionId)
-            .ifPresent(part -> {
-                throw new RuntimeException("Part already exists");
-            });
-        if (!sectionRepository.existsById(sectionId))
-            throw new RuntimeException("Section not found");
-        Section section = sectionRepository.getReferenceById(sectionId);
-        Integer max = partRepository.findMaxOrderNumberBySectionsId(sectionId);
-        Part part = partMapper.toPart(request);
-        part.setOrderNumber(max != null ? max + 1 : 1);
-        part.getSections().add(section);
-        section.getParts().add(part);
-        partRepository.save(part);
-    }
-
-    @Transactional
     public void addPartToExam(Integer examId, PartRequest request) {
         partRepository.findByPartNameAndExamsId(request.getPartName(), examId)
                 .ifPresent(part -> {

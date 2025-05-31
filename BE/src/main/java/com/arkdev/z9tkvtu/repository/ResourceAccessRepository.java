@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ResourceAccessRepository extends JpaRepository<ResourceAccess, Integer> {
-    Optional<ResourceAccess> findByResourceId(Integer resourceId);
+    Optional<ResourceAccess> findByResourceIdAndTableName(Integer resourceId, String tableName);
 }

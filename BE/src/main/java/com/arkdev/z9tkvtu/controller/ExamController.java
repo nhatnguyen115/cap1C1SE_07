@@ -45,6 +45,15 @@ public class ExamController {
         }
     }
 
+
+    @PostMapping("/{examId}/change-premium")
+    public ResponseData<?> changePremium(@PathVariable Integer examId, @RequestParam Boolean premium) {
+        try {
+            examService.changePremium(examId, premium);
+            return new ResponseData<>(HttpStatus.OK.value(), "Change Premium Successfully");
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Change Premium Failed");
+
     @GetMapping("/example")
     public ResponseData<?> getExampleExam(
             @RequestParam(defaultValue = "TEST") String testType,
