@@ -48,7 +48,9 @@ const SectionExamComponent: React.FC<SectionDetailsComponentProps> = ({
 
     return (
         <div className="p-4 max-w-6xl flex flex-col min-h-screen mx-auto">
-            <SearchComponent/>
+            {(section.sectionType === "VOCABULARY" || section.sectionType === "GRAMMAR") && (
+                <SearchComponent/>
+            )}
             <h1 className="text-3xl font-bold mb-6 text-center">{section.sectionName}</h1>
             <div className="flex flex-col md:flex-row gap-6">
 
