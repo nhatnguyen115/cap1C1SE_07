@@ -12,5 +12,6 @@ public record ExamListResponse (
         Integer questionCount,
         Integer students,
         DifficultyLevel level,
-        Integer attemptCount) implements Serializable {
+        Integer attemptCount,
+        Boolean isPremium) implements Serializable {
 }

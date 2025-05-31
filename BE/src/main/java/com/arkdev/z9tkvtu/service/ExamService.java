@@ -7,6 +7,7 @@ import com.arkdev.z9tkvtu.mapper.PartMapper;
 import com.arkdev.z9tkvtu.mapper.QuestionMapper;
 import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.*;
+import com.arkdev.z9tkvtu.util.ResourceType;
 import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,9 +30,17 @@ public class ExamService {
     PartRepository partRepository;
     QuestionRepository questionRepository;
     UserTestAttemptRepository attemptRepository;
+    ResourceAccessRepository resourceAccessRepository;
     ExamMapper examMapper;
     PartMapper partMapper;
     QuestionMapper questionMapper;
+
+    @Transactional
+    public void changePremium(Integer examId, Boolean premium) {
+        ResourceAccess access = resourceAccessRepository.findByResourceIdAndTableName(examId, "EXAM")
+                .orElseThrow(() -> new RuntimeException("Resource Not Found"));
+        access.setResourceType(premium ? ResourceType.MEMBER : ResourceType.FREE);
+    }
 
     public List<ExamListResponse> getExams(String testType, Integer sectionId) {
         List<Exam> exams;
@@ -45,6 +55,12 @@ public class ExamService {
                 .map(exam -> {
                     Integer students = examRepository.countByUserTestAttempt(exam.getId());
                     Integer attemptCount = attemptRepository.countByUserIdAndExamIdAndCompleteTrue(user.getId(), exam.getId());
+                    ResourceAccess access = resourceAccessRepository.findByResourceIdAndTableName(exam.getId(), "EXAM")
+                            .orElse(null);
+                    if (access == null) {
+                        access = new ResourceAccess(exam.getId(), "EXAM", ResourceType.FREE);
+                        access = resourceAccessRepository.save(access);
+                    }
                     return new ExamListResponse(
                             exam.getId(),
                             exam.getExamName(),
@@ -53,7 +69,10 @@ public class ExamService {
                             exam.getQuestionCount(),
                             students,
                             exam.getLevel(),
-                            attemptCount
+                            attemptCount,
+                            Optional.ofNullable(access.getResourceType())
+                                    .map(a -> a == ResourceType.MEMBER)
+                                    .orElse(false)
                     );
                 })
                 .toList();

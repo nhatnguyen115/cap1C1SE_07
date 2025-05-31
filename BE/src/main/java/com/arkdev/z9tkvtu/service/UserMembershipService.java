@@ -76,7 +76,7 @@ public class UserMembershipService {
     public boolean checkResourceAccess(Integer resourceId, String tableName) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserLoginData user = (UserLoginData) auth.getPrincipal();
-        ResourceAccess resourceAccess = resourceAccessRepository.findByResourceId(resourceId)
+        ResourceAccess resourceAccess = resourceAccessRepository.findByResourceIdAndTableName(resourceId, tableName)
                 .orElse(new ResourceAccess());
         return resourceAccess.getResourceType() == ResourceType.MEMBER &&
                 !userMembershipRepository.existsActiveMembership(user.getId());

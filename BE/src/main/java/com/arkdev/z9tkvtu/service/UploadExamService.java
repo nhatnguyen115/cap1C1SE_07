@@ -135,7 +135,22 @@ public class UploadExamService {
     private Question mapToQuestion(Row row, String sheetName) {
         Question question = new Question();
         question.setOrderNumber(Optional.ofNullable(getCellValue(row.getCell(0)))
-                .map(Double::valueOf)
+                .map(n -> {
+                    try {
+                        return Double.valueOf(n);
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        sheetName,
+                                        row.getRowNum()  + 1,
+                                        "STT",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                })
                 .map(Double::intValue).orElse(null));
         question.setContent(Optional.ofNullable(getCellValue(row.getCell(1)))
                 .map(String::valueOf).orElse(null));
@@ -145,7 +160,16 @@ public class UploadExamService {
                         return new ObjectMapper().readValue(value,
                                 new TypeReference<Map<String, Object>>() {});
                     } catch (JsonProcessingException e) {
-                        return null;
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        sheetName,
+                                        row.getRowNum()  + 1,
+                                        "Lựa Chọn",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
                     }
                 })
                 .orElse(null));
@@ -161,21 +185,83 @@ public class UploadExamService {
     private Part mapToPart(Row row) {
         Part part = new Part();
         part.setOrderNumber(Optional.ofNullable(getCellValue(row.getCell(0)))
-                .map(Double::valueOf)
+                .map(n -> {
+                    try {
+                        return Double.valueOf(n);
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        "PART",
+                                        row.getRowNum()  + 1,
+                                        "STT",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                })
                 .map(Double::intValue).orElse(null));
         part.setPartName(Optional.ofNullable(getCellValue(row.getCell(1)))
                 .map(String::valueOf).orElse(null));
         part.setDescription(Optional.ofNullable(getCellValue(row.getCell(2)))
                 .map(String::valueOf).orElse(null));
         part.setQuestionType(Optional.ofNullable(getCellValue(row.getCell(3)))
-                .map(QuestionType::valueOf).orElse(null));
+                .map(s -> {
+                    try {
+                        return QuestionType.valueOf(s);
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        "PART",
+                                        row.getRowNum()  + 1,
+                                        "Loại Câu Hỏi",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                })
+                .orElse(null));
         part.setInstructions(Optional.ofNullable(getCellValue(row.getCell(4)))
                 .map(String::valueOf).orElse(null));
         part.setQuestionCount(Optional.ofNullable(getCellValue(row.getCell(5)))
-                .map(Double::valueOf)
+                .map(n -> {
+                    try {
+                        return Double.valueOf(n);
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        "EXAM",
+                                        row.getRowNum()  + 1,
+                                        "Tổng điểm",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                })
                 .map(Double::intValue).orElse(null));
         part.setGradingType(Optional.ofNullable(getCellValue(row.getCell(6)))
-                .map(GradingType::valueOf).orElse(null));
+                .map(s -> {
+                    try {
+                        return GradingType.valueOf(s);
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        "PART",
+                                        row.getRowNum()  + 1,
+                                        "Chấm điểm",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                })
+                .orElse(null));
         part.setMedia(Optional.ofNullable(getCellValue(row.getCell(7)))
                 .map(type -> mapToMedia(type, row, 8, "PART")).orElse(null));
         return part;
@@ -196,7 +282,7 @@ public class UploadExamService {
                                         sheetName,
                                         row.getRowNum()  + 1,
                                         "Loại Media",
-                                        "Loại Media dữ liệu không phù hợp"
+                                        "Kiểu dữ liệu không phù hợp"
 
                                 )
                         );
@@ -208,7 +294,7 @@ public class UploadExamService {
                                 sheetName,
                                 row.getRowNum()  + 1,
                                 "Loại Media",
-                                "Loại Media dữ liệu không phù hợp"
+                                "Kiểu dữ liệu không phù hợp"
                         )
                 ));
         media.setMediaType(mediaType);
@@ -219,18 +305,95 @@ public class UploadExamService {
 
     private Exam mapToExam(Row row) {
         Exam exam = new Exam();
-        exam.setExamName(getCellValue(row.getCell(0)));
+        exam.setExamName(Optional.ofNullable(getCellValue(row.getCell(0)))
+                .map(s -> {
+                    try {
+                        return s;
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        "EXAM",
+                                        row.getRowNum()  + 1,
+                                        "Tên Bài Kiểm Tra ",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                }).orElse(null));
         exam.setTotalScore(Optional.ofNullable(getCellValue(row.getCell(1)))
-                .map(Double::valueOf)
+                .map(n -> {
+                    try {
+                        return Double.valueOf(n);
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        "EXAM",
+                                        row.getRowNum()  + 1,
+                                        "Tổng điểm",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                })
                 .map(Double::intValue).orElse(null));
         exam.setDuration(Optional.ofNullable(getCellValue(row.getCell(2)))
-                .map(Double::valueOf)
+                .map(n -> {
+                    try {
+                        return Double.valueOf(n);
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        "EXAM",
+                                        row.getRowNum()  + 1,
+                                        "Thởi gian làm",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                })
                 .map(Double::intValue).orElse(null));
         exam.setQuestionCount(Optional.ofNullable(getCellValue(row.getCell(3)))
-                .map(Double::valueOf)
+                .map(n -> {
+                    try {
+                        return Double.valueOf(n);
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        "EXAM",
+                                        row.getRowNum()  + 1,
+                                        "Số câu hỏi",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                })
                 .map(Double::intValue).orElse(null));
         exam.setLevel(Optional.ofNullable(getCellValue(row.getCell(4)))
-                .map(DifficultyLevel::valueOf).orElse(DifficultyLevel.BEGINNER));
+                .map(s -> {
+                    try {
+                        return DifficultyLevel.valueOf(s);
+                    } catch (IllegalArgumentException e) {
+                        throw new ImportException(
+                                "ROW_ERROR",
+                                new ImportError(
+                                        "EXAM",
+                                        row.getRowNum()  + 1,
+                                        "Cấp độ",
+                                        "Kiểu dữ liệu không phù hợp"
+
+                                )
+                        );
+                    }
+                })
+                .orElse(DifficultyLevel.BEGINNER));
         return exam;
     }
 

@@ -200,7 +200,7 @@ const SectionDetailsManagement: React.FC = () => {
                                         <td className="py-3 px-4 text-center space-x-2">
                                             <button
                                                 onClick={() => setAddPartModalOpen(true)}
-                                                className="px-3 py-1 bg-blue-600 text-white text-sm rounded"
+                                                className="px-2 py-1 text-xs bg-blue-600 text-white rounded"
                                             >
                                                 Thêm phần
                                             </button>
