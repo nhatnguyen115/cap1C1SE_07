@@ -40,7 +40,9 @@ import { TestTemp } from "./../pages/MockTest/TestTemp";
 import PartDetailsPage from "./../pages/Part/PartDetailsPage";
 import VerifyAccountPage from "./../pages/Register/VerifyAccountPage";
 import TestPage from "./../pages/Test/TestPage";
-const isAuthenticated = false; // Kiểm tra trạng thái đăng nhập
+import WordDetail from "../pages/Practice/WordDetail";
+import VocabularyList from "../pages/Practice/VocabularyList";
+const isAuthenticated = false;
 
 // Cấu hình routes
 const routes = [
@@ -301,6 +303,22 @@ const routes = [
   {
     path: PATH_CONSTANTS.LESSON.GET_BY_ID(":lessonId"),
     element: <PartDetailsPage />,
+  },
+  {
+    path: PATH_CONSTANTS.VOCABULARY.WORD(":word"),
+    element: (
+        <MainLayout>
+          <WordDetail />
+        </MainLayout>
+    ),
+  },
+  {
+    path: PATH_CONSTANTS.VOCABULARY.VOCAB(":sectionId"),
+    element: (
+        <MainLayout>
+          <VocabularyList />
+        </MainLayout>
+    )
   },
   {
     path: PATH_CONSTANTS.PART.DETAIL_PATH,

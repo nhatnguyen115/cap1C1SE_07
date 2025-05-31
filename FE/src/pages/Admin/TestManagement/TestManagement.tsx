@@ -225,6 +225,15 @@ const TestManagementPage: React.FC = () => {
                       >
                         Xoá
                       </button>
+                      <button
+                          className="px-2 py-1 text-xs bg-green-600 text-white rounded"
+                          onClick={() => {
+                            setTestToEdit(test);
+                            setEditTestModalOpen(true);
+                          }}
+                      >
+                        Sửa
+                      </button>
                     </td>
                   </tr>
                   {expandedRowId === test.id && ( // Hiển thị chi tiết khi dòng được mở rộng

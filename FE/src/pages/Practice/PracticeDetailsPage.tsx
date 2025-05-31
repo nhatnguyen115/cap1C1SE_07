@@ -9,11 +9,11 @@ import { SectionType } from "../../types/section";
 const PracticeDetailsPage = () => {
   const { sectionId } = useParams<{ sectionId: string }>();
   const location = useLocation();
-  const sectionName = location.state?.sectionName;
   const sectionsState = location.state?.sections;
   const moduleId = location.state?.moduleId;
 
   const [sections, setSections] = useState<SectionType[]>(sectionsState);
+  const [section, setSection] = useState<SectionType>()
   useEffect(() => {
     const fetchSections = async () => {
       if (sections == null || sections.length == 0) {
@@ -33,17 +33,26 @@ const PracticeDetailsPage = () => {
         }
       }
     };
+    const fetchSection = async () => {
+      try {
+        const res = await http.get(`/sections/${sectionId}`)
+        return res.data
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
     fetchSections();
+    fetchSection().then(res => {
+      setSection(res.data)
+    })
   }, [moduleId]);
   return (
     <div>
-      {sectionId && sectionName && sections ? (
+      {section && sections ? (
         <SectionExamComponent
-          sectionId={sectionId}
-          sectionName={sectionName}
+          section={section}
           sections={sections}
-          moduleId={moduleId}
         />
       ) : (
         <div className="text-red-500">Invalid section</div>

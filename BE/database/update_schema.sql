@@ -14,8 +14,8 @@ CREATE TYPE public.test_type AS ENUM (
 ALTER TABLE public.exam
     ADD test public."test_type" NOT NULL;
 
-DROP SEQUENCE lesson_seq;
 DROP TABLE lesson;
+DROP SEQUENCE lesson_seq;
 CREATE SEQUENCE grammar_seq START WITH 1 INCREMENT BY 50;
 CREATE SEQUENCE vocabulary_word_seq START WITH 1 INCREMENT BY 50;
 CREATE TABLE IF NOT EXISTS grammar
@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS grammar
     created_at   timestamp default CURRENT_TIMESTAMP,
     created_by   uuid,
     updated_at   timestamp,
-    updated_by   uuid
+    updated_by   uuid,
+    primary key (grammar_id)
 );
 
 CREATE TABLE IF NOT EXISTS vocabulary_word
@@ -41,5 +42,11 @@ CREATE TABLE IF NOT EXISTS vocabulary_word
     created_at timestamp default CURRENT_TIMESTAMP,
     created_by uuid,
     updated_at timestamp,
-    updated_by uuid
+    updated_by uuid,
+    primary key (word_id)
 );
+
+DROP TABLE section_part_practice;
+DROP SEQUENCE section_part_practice_seq;
+DROP TABLE section_part_answer;
+DROP SEQUENCE section_part_answer_seq;

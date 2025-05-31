@@ -67,6 +67,11 @@ export const PATH_CONSTANTS = {
     GET_BY_ID: (lessonId: number | string) => `/lesson/${lessonId}`,
   },
 
+  VOCABULARY: {
+    WORD: (word: string) => `/word/${word}`,
+    VOCAB: (sectionId: number | string) => `/vocabularies/${sectionId}`
+  },
+
   MENU: {
     GET_ALL: "/menu",
     GET_BY_ID: (id: number | string) => `/menu/${id}`,

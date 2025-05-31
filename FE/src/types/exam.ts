@@ -11,6 +11,13 @@ export interface ExamType {
   image?: string;
 }
 
+export type Grammar = {
+  grammarName: string;
+  grammarText: string;
+  mediaType: string;
+  url: string
+}
+
 export type PartType = {
   id: number;
   partName: string;
