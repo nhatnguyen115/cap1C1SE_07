@@ -1,5 +1,6 @@
 package com.arkdev.z9tkvtu.repository;
 
+import com.arkdev.z9tkvtu.dto.response.ScoreProjection;
 import com.arkdev.z9tkvtu.model.UserAccount;
 import com.arkdev.z9tkvtu.model.UserTestAttempt;
 import com.arkdev.z9tkvtu.util.TestType;
@@ -115,4 +116,41 @@ public interface UserTestAttemptRepository extends JpaRepository<UserTestAttempt
     List<UserTestAttempt> findByUserIdAndCompleteTrueAndExamTestType(UUID id, TestType testType);
 
     Optional<UserTestAttempt> findByUserIdAndExamIdAndExamTestTypeAndCompleteTrue(UUID id, Integer examId, TestType testType);
+
+
+
+    @Query(value = """
+                  SELECT COUNT(*)
+                  FROM USER_TEST_ATTEMPT UTA
+                  WHERE UTA.COMPLETE = true;
+            """, nativeQuery = true)
+    Long findTestComplete();
+
+    @Query(value = """
+                   SELECT COUNT(*)
+                   FROM USER_TEST_ATTEMPT UTA
+                   WHERE UTA.COMPLETE = TRUE
+                       AND UTA.END_TIME >= DATE_TRUNC('week', CURRENT_DATE)
+                       AND UTA.END_TIME < DATE_TRUNC('week', CURRENT_DATE) + INTERVAL '7 days';                                                        
+            """, nativeQuery = true)
+    Long findTestCompleteToday();
+
+
+    @Query(value = """
+       SELECT UTA.LISTENING_SCORE AS listeningScore,
+              UTA.READING_SCORE AS readingScore
+       FROM USER_TEST_ATTEMPT UTA
+       WHERE UTA.COMPLETE = true;
+       """, nativeQuery = true)
+    List<ScoreProjection> findTestCompletePass();
+
+    @Query(value = """
+       SELECT UTA.LISTENING_SCORE AS listeningScore,
+              UTA.READING_SCORE AS readingScore
+       FROM USER_TEST_ATTEMPT UTA
+       WHERE UTA.COMPLETE = true 
+            and UTA.END_TIME::date = CURRENT_DATE;
+       """, nativeQuery = true)
+    List<ScoreProjection> findTestCompletePassToday();
+
 }

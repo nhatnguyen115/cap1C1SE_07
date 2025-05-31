@@ -9,6 +9,7 @@ import com.arkdev.z9tkvtu.model.*;
 import com.arkdev.z9tkvtu.repository.*;
 import com.arkdev.z9tkvtu.util.TestType;
 import jakarta.transaction.Transactional;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,13 @@ public class TestAttemptService extends AttemptService{
     @Transactional
     public void submitTest(Integer attemptId,
                            List<UserAnswerRequest> answers) {
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            UserLoginData user = (UserLoginData) auth.getPrincipal();
+        } catch (Exception e) {
+            throw new BadCredentialsException(e.getMessage());
+        }
+
         UserTestAttempt attempt = submit(attemptId, answers, false);
         List<Integer[]> list = userTestAttemptRepository.answerParameterCalculation(attempt.getId());
         Integer listeningScore = userTestAttemptRepository.findListeningScore(getInt(list.getFirst()[2]));

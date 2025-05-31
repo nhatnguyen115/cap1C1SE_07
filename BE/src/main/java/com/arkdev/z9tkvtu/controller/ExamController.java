@@ -45,6 +45,7 @@ public class ExamController {
         }
     }
 
+
     @PostMapping("/{examId}/change-premium")
     public ResponseData<?> changePremium(@PathVariable Integer examId, @RequestParam Boolean premium) {
         try {
@@ -52,6 +53,17 @@ public class ExamController {
             return new ResponseData<>(HttpStatus.OK.value(), "Change Premium Successfully");
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Change Premium Failed");
+
+    @GetMapping("/example")
+    public ResponseData<?> getExampleExam(
+            @RequestParam(defaultValue = "TEST") String testType,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        try {
+            return new ResponseData<>(HttpStatus.OK.value(), "Get Exams Successfully",
+                    Pagination.paginate(examService.getExampleExam(testType), PageRequest.of(page, size)));
+        } catch (Exception e) {
+            return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get Exams Failed");
         }
     }
 

@@ -28,6 +28,8 @@ public class SecurityConstant {
             ,"/auth/reset"
             ,"/auth/verify-account"
             ,"/membership-plans"
+            ,"/user-memberships"
+            ,"/user-test/submit-test"
 
     };
 

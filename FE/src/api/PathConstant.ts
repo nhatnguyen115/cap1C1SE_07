@@ -14,6 +14,10 @@ export const PATH_CONSTANTS = {
     VERIFY: "/auth/verify",
   },
 
+  PARAM: {
+    EMAIL: "?email=",
+  },
+
   USER: {
     ADD: "/user/add",
     GET_PROFILE: "/user/profile",

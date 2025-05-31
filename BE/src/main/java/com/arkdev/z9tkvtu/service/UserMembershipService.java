@@ -54,23 +54,28 @@ public class UserMembershipService {
     public String registerMembership(Integer planId,
                                    HttpServletRequest request,
                                    HttpServletResponse response) throws IOException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserLoginData user = (UserLoginData) auth.getPrincipal();
-        MembershipPlan membershipPlan = membershipPlanRepository.findById(planId)
-                .orElseThrow(() -> new RuntimeException("Membership Plan Not Found"));
-        UserMembership userMembership = userMembershipRepository.findByUserId(user.getId())
-                .orElse(new UserMembership());
-        if (userMembership.getStatus() == MembershipStatus.ACTIVE)
-            throw new RuntimeException("Membership Status is Active");
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            UserLoginData user = (UserLoginData) auth.getPrincipal();
+            MembershipPlan membershipPlan = membershipPlanRepository.findById(planId)
+                    .orElseThrow(() -> new RuntimeException("Membership Plan Not Found"));
+            UserMembership userMembership = userMembershipRepository.findByUserId(user.getId())
+                    .orElse(new UserMembership());
+            if (userMembership.getStatus() == MembershipStatus.ACTIVE)
+                throw new RuntimeException("Membership Status is Active");
 
-        userMembership.setUser(user);
-        userMembership.setPlan(membershipPlan);
-        userMembership.setStartDate(Timestamp.valueOf(LocalDateTime.now()));
-        userMembership.setEndDate(calculateEndDate(membershipPlan));
-        userMembership.setStatus(MembershipStatus.PENDING);
+            userMembership.setUser(user);
+            userMembership.setPlan(membershipPlan);
+            userMembership.setStartDate(Timestamp.valueOf(LocalDateTime.now()));
+            userMembership.setEndDate(calculateEndDate(membershipPlan));
+            userMembership.setStatus(MembershipStatus.PENDING);
 
-        userMembershipRepository.save(userMembership);
-        return paymentService.createPaymentUrl(membershipPlan.getPrice().intValue(), request, response);
+            userMembershipRepository.save(userMembership);
+            return paymentService.createPaymentUrl(membershipPlan.getPrice().intValue(), request, response);
+        } catch (Exception e) {
+            throw e;
+        }
+
     }
 
     public boolean checkResourceAccess(Integer resourceId, String tableName) {

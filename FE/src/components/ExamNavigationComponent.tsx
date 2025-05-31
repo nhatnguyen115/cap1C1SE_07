@@ -1,9 +1,9 @@
 import { notification } from "antd";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API_URIS } from "../api/URIConstant";
 import { http } from "../service/Http";
 import { QuestionType, TestNavigationProps } from "../types/exam";
-import { useNavigate } from "react-router-dom";
 
 const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   isView,
@@ -11,13 +11,14 @@ const ExamNavigationComponent: React.FC<TestNavigationProps> = ({
   details,
   currentQuestion,
   answers,
-  duration, isPractice,
+  duration,
+  isPractice,
   onNavigate,
 }) => {
   const [time, setTime] = useState<number>(120);
 
   let questionCounter = 1;
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmitTest = async (isAutoSubmit = false) => {
     try {
@@ -44,7 +45,7 @@ const navigate = useNavigate();
 
       const message = response.data.message;
 
-      if (statusHttp == 500) {
+      if (statusHttp == 500 || statusHttp == 401) {
         notification.error({
           message: message,
         });

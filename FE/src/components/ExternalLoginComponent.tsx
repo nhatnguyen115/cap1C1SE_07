@@ -36,9 +36,17 @@ const ExternalLoginComponent: React.FC = () => {
         setTimeout(() => {
           navigate(PATH_CONSTANTS.ROOT.ROOT);
         }, 3000);
-      } catch (error) {
-        console.error("External login failed:", error);
-        setErrorMsg("Vui lòng kiểm tra Email và kích hoạt tài khoản!");
+      } catch (error: any) {
+        if (error.response.status == 401) {
+          navigate(
+            PATH_CONSTANTS.AUTH.VERIFY +
+              PATH_CONSTANTS.PARAM.EMAIL +
+              error.response.data,
+          );
+        } else {
+          console.error("External login failed:", error);
+          setErrorMsg("Vui lòng kiểm tra lại Email!");
+        }
       }
     };
     handleExternalLogin();

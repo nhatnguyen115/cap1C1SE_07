@@ -78,6 +78,26 @@ public class ExamService {
                 .toList();
     }
 
+    public List<ExamListResponse> getExampleExam(String testType) {
+        List<Exam> exams;
+        exams = examRepository.findAllByTestTypeOrderByCreatedAtDesc(TestType.valueOf(testType));
+        return exams.stream()
+                .map(exam -> {
+                    Integer students = examRepository.countByUserTestAttempt(exam.getId());
+                    return new ExamListResponse(
+                            exam.getId(),
+                            exam.getExamName(),
+                            exam.getTotalScore(),
+                            exam.getDuration(),
+                            exam.getQuestionCount(),
+                            students,
+                            exam.getLevel(),
+                            0
+                    );
+                })
+                .toList();
+    }
+
     public ExamContentResponse<?> getExam(Integer examId) {
         Exam exam = examRepository.findById(examId)
                 .orElseThrow(() -> new IllegalArgumentException("Exam not found"));

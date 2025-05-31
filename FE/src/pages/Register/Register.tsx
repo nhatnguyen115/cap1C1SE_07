@@ -18,11 +18,23 @@ const Register: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [dob, setDob] = useState<string | null>(null);
 
+  const [loading, setLoading] = useState(false);
+
   // Trong component
   const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,})/;
+
+    if (!passwordRegex.test(password)) {
+      notification.error({
+        message:
+          "Mật khẩu phải có ít nhất 8 ký tự, 1 chữ in hoa và 1 ký tự đặc biệt!",
+      });
+      return;
+    }
 
     if (password !== confirmPassword) {
       notification.error({
@@ -43,8 +55,9 @@ const Register: React.FC = () => {
     };
 
     try {
+      setLoading(true);
       const response = await register(payload);
-      if(response.status !== 201) {
+      if (response.status !== 201) {
         notification.error({
           message: response.message || "Đăng ký thất bại. Vui lòng thử lại.",
         });
@@ -54,13 +67,17 @@ const Register: React.FC = () => {
         message: response.message,
       });
       setTimeout(() => {
-        navigate(PATH_CONSTANTS.AUTH.LOGIN);
-      }, 2000);
+        navigate(
+          PATH_CONSTANTS.AUTH.VERIFY + PATH_CONSTANTS.PARAM.EMAIL + email,
+        );
+      }, 1000);
     } catch (error: any) {
       notification.error({
         message: "Đăng ký thất bại. Vui lòng thử lại.",
       });
       console.error("Registration error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -209,9 +226,14 @@ const Register: React.FC = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3 mt-6 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+              className={`w-full py-3 mt-6 rounded-lg transition text-white ${
+                loading
+                  ? "bg-blue-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              }`}
+              disabled={loading}
             >
-              Đăng ký
+              {loading ? "Đang đăng ký..." : "Đăng ký"}
             </button>
           </form>
 

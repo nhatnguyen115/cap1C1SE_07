@@ -59,6 +59,8 @@ export const API_URIS = {
 
   EXAMS: {
     GET_ALL: `/exams`,
+    GET_EXAMPLE: `/exams/example`,
+
     GET_BY_TEST_ID: (testId: number | string) => `/exams?testId=${testId}`,
     DO_BY_EXAM_ID: (examId: number | string) => `/exams/${examId}`,
   },
@@ -113,5 +115,10 @@ export const API_URIS = {
     INFO: "user-memberships/info",
     CALLBACK: "/user-memberships/payment/callback",
     SUBSCRIBE: (planId: number) => `/user-memberships?planId=${planId}`,
+  },
+
+  DASHBOARD: {
+    DASHBOARD: "/dashboard",
+    SUMMARY: "/dashboard/summary",
   },
 };

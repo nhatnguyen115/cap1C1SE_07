@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { API_URIS } from "../../api/URIConstant";
+import ExamCardComponent from "../../components/ExamCardComponent";
 import { SRC_IMAGE } from "../../constant/SrcImage";
 import { http } from "../../service/Http";
-import ExamCardComponent from "../../components/ExamCardComponent";
-import {ExamType} from "../../types/exam";
+import { ExamType } from "../../types/exam";
 
 const TestPage: React.FC = () => {
   const [exams, setExams] = useState<ExamType[]>([]);
@@ -11,7 +11,12 @@ const TestPage: React.FC = () => {
   useEffect(() => {
     const fetchExams = async () => {
       const res = await http.get(API_URIS.EXAMS.GET_ALL);
-      setExams(res.data.data.items);
+      if (res.data.status == 500) {
+        const res = await http.get(API_URIS.EXAMS.GET_EXAMPLE);
+        setExams(res.data.data.items);
+      } else {
+        setExams(res.data.data.items);
+      }
     };
     fetchExams();
   }, []);
@@ -19,25 +24,27 @@ const TestPage: React.FC = () => {
   return (
     <div className="p-4 max-w-4xl flex flex-col justify-center items-center min-h-screen mx-auto">
       <div>
-        <h1 className="text-4xl font-bold mb-2">Luyện đề thi thử TOEIC Online</h1>
+        <h1 className="text-4xl font-bold mb-2">
+          Luyện đề thi thử TOEIC Online
+        </h1>
       </div>
       <div className="min-h-screen flex flex-col items-center p-4">
         <h1 className="text-2xl font-bold mb-6">Danh sách bài thi</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {exams.map((exam) => (
-              <ExamCardComponent
-                  key={exam.id}
-                  examName={exam.examName}
-                  duration={exam.duration ?? 0}
-                  totalScore={exam.totalScore}
-                  id={exam.id ?? 0}
-                  questions={exam.questionCount ?? 10}
-                  students={exam.students ?? 10}
-                  level={exam.level ?? "BEGINNER"}
-                  attemptCount={exam.attemptCount}
-                  image={SRC_IMAGE.TEST}
-                  isTest={true}
-              />
+            <ExamCardComponent
+              key={exam.id}
+              examName={exam.examName}
+              duration={exam.duration ?? 0}
+              totalScore={exam.totalScore}
+              id={exam.id ?? 0}
+              questions={exam.questionCount ?? 10}
+              students={exam.students ?? 10}
+              level={exam.level ?? "BEGINNER"}
+              attemptCount={exam.attemptCount}
+              image={SRC_IMAGE.TEST}
+              isTest={true}
+            />
           ))}
         </div>
       </div>
