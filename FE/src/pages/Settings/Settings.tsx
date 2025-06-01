@@ -5,10 +5,10 @@ import { API_URIS } from "../../api/URIConstant";
 import LeftSidebarUser from "../../components/LeftSidebarUser";
 import { LOCAL_STORAGE_CONSTANT } from "../../constant/LocalStorageConstant";
 import { http } from "../../service/Http";
-import { UserType } from "../../types/user";
+import { UserInfoType } from "../../types/user";
 
 const Settings: React.FC = () => {
-  const [user, setUser] = useState<UserType | null>(null);
+  const [user, setUser] = useState<UserInfoType | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {

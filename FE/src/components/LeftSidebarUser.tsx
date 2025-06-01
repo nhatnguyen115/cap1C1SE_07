@@ -1,10 +1,13 @@
 // LeftSidebar.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaCog, FaHistory, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { PATH_CONSTANTS } from "../api/PathConstant";
+import { API_URIS } from "../api/URIConstant";
 import { LOCAL_STORAGE_CONSTANT } from "../constant/LocalStorageConstant";
 import { useUser } from "../context/UserContext";
+import { http } from "../service/Http";
+import { UserInfoType } from "../types/user";
 
 interface LeftSidebarUserProps {
   customHeight?: string; // Cho phép truyền chiều cao tùy ý
@@ -14,6 +17,7 @@ const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
   const { setUserRole } = useUser();
 
   const fullName = localStorage.getItem(LOCAL_STORAGE_CONSTANT.FULL_NAME);
+  const [user, setUser] = useState<UserInfoType | null>(null);
 
   function deleteAllCookies() {
     const cookies = document.cookie.split(";");
@@ -32,6 +36,22 @@ const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
     }
   }
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await http.get(API_URIS.USER.INFO);
+        localStorage.setItem(
+          LOCAL_STORAGE_CONSTANT.FULL_NAME,
+          response.data.data.lastName + " " + response.data.data.firstName,
+        );
+        setUser(response.data.data);
+      } catch (error) {
+        console.error("Lỗi khi lấy thông tin người dùng:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
   const handleLogout = () => {
     localStorage.clear();
     deleteAllCookies();
@@ -45,11 +65,20 @@ const LeftSidebarUser: React.FC<LeftSidebarUserProps> = ({ customHeight }) => {
     >
       {/* Phần thông tin người dùng */}
       <div className="flex items-center mb-6">
-        <img
-          src="src/assets/images/ai-image.png"
-          alt="Avatar"
-          className="w-10 h-10 rounded-full mr-3"
-        />
+        <div className="relative w-10 h-10 mr-3">
+          <img
+            src="src/assets/images/ai-image.png"
+            alt="Avatar"
+            className="w-10 h-10 rounded-full"
+          />
+          {user?.isVIP === 1 && (
+            <img
+              src="src/assets/crown1.png"
+              alt="Crown"
+              className="w-4 h-4 absolute -top-1 -right-1 rotate-[45deg]"
+            />
+          )}
+        </div>
         <div>
           <h2 className="text-lg font-semibold">{fullName}</h2>
           <p className="text-sm text-gray-500 flex items-center">

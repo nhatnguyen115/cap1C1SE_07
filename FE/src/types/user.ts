@@ -18,4 +18,5 @@ export type UserInfoType = {
   email: string;
   phoneNumber: string;
   createdAt: string;
+  isVIP?: number;
 };

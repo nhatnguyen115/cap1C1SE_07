@@ -4,6 +4,7 @@ import com.arkdev.z9tkvtu.dto.request.PagingRequest;
 import com.arkdev.z9tkvtu.dto.request.UserCreationRequest;
 import com.arkdev.z9tkvtu.dto.request.UserUpdateRequest;
 import com.arkdev.z9tkvtu.dto.response.UserResponse;
+import com.arkdev.z9tkvtu.dto.response.UserVIPResponse;
 import com.arkdev.z9tkvtu.mapper.UserLoginDataMapper;
 import com.arkdev.z9tkvtu.model.PasswordResetToken;
 import com.arkdev.z9tkvtu.model.Role;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -72,6 +74,12 @@ public class UserService {
         return userRepository.findById(user.getId())
                 .map(dataMapper::toUserResponse)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public UserVIPResponse findAllUsersWithVIPStatus(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserLoginData user = (UserLoginData) auth.getPrincipal();
+        return userRepository.findAllUsersWithVIPStatus(user.getId());
     }
 
     @Transactional
