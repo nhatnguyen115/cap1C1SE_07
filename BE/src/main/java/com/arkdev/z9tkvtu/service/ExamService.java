@@ -56,11 +56,11 @@ public class ExamService {
                     Integer students = examRepository.countByUserTestAttempt(exam.getId());
                     Integer attemptCount = attemptRepository.countByUserIdAndExamIdAndCompleteTrue(user.getId(), exam.getId());
                     ResourceAccess access = resourceAccessRepository.findByResourceIdAndTableName(exam.getId(), "EXAM")
-                            .orElse(null);
-                    if (access == null) {
-                        access = new ResourceAccess(exam.getId(), "EXAM", ResourceType.FREE);
-                        access = resourceAccessRepository.save(access);
-                    }
+                            .orElseGet(() -> resourceAccessRepository.save(new ResourceAccess(
+                                    exam.getId(),
+                                    "EXAM",
+                                    ResourceType.FREE
+                            )));
                     return new ExamListResponse(
                             exam.getId(),
                             exam.getExamName(),
@@ -84,6 +84,12 @@ public class ExamService {
         return exams.stream()
                 .map(exam -> {
                     Integer students = examRepository.countByUserTestAttempt(exam.getId());
+                    ResourceAccess access = resourceAccessRepository.findByResourceIdAndTableName(exam.getId(), "EXAM")
+                            .orElseGet(() -> resourceAccessRepository.save(new ResourceAccess(
+                                    exam.getId(),
+                                    "EXAM",
+                                    ResourceType.FREE
+                            )));
                     return new ExamListResponse(
                             exam.getId(),
                             exam.getExamName(),
@@ -93,7 +99,9 @@ public class ExamService {
                             students,
                             exam.getLevel(),
                             0,
-                            null
+                            Optional.ofNullable(access.getResourceType())
+                                    .map(a -> a == ResourceType.MEMBER)
+                                    .orElse(false)
                     );
                 })
                 .toList();
@@ -134,7 +142,9 @@ public class ExamService {
             exam.getSections().add(section);
             section.getExams().add(exam);
         }
-        examRepository.save(exam);
+        exam = examRepository.save(exam);
+        ResourceAccess access = new ResourceAccess(exam.getId(), "EXAM", ResourceType.FREE);
+        resourceAccessRepository.save(access);
     }
 
     @Transactional
@@ -148,6 +158,9 @@ public class ExamService {
     public void deleteExam(Integer examId) {
         Exam exam = examRepository.findById(examId)
                 .orElseThrow(() -> new RuntimeException("Exam not found"));
+        ResourceAccess access = resourceAccessRepository.findByResourceIdAndTableName(exam.getId(), "EXAM")
+                        .orElseThrow(() -> new RuntimeException("Resource Not Found"));
         examRepository.delete(exam);
+        resourceAccessRepository.delete(access);
     }
 }

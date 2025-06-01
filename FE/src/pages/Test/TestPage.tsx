@@ -44,6 +44,7 @@ const TestPage: React.FC = () => {
               attemptCount={exam.attemptCount}
               image={SRC_IMAGE.TEST}
               isTest={true}
+              isPremium={exam.isPremium}
             />
           ))}
         </div>

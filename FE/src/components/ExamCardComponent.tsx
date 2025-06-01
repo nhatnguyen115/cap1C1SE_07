@@ -16,6 +16,7 @@ type ExamCardProps = {
   isTest?: boolean;
   isPractice?: boolean;
   attemptCount?: number;
+  isPremium?: boolean;
   image?: string;
 };
 
@@ -26,7 +27,7 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
   id,
   questions,
   students,
-  level, isTest, isPractice, attemptCount,
+  level, isTest, isPractice, attemptCount, isPremium,
   image,
 }) => {
   const navigate = useNavigate();
@@ -39,74 +40,101 @@ const ExamCardComponent: React.FC<ExamCardProps> = ({
         }
     };
   return (
-    <div className="border rounded-xl shadow-md p-4 bg-white w-full max-w-sm">
-      <img
-        src={image}
-        alt={examName}
-        className="w-full h-40 object-cover rounded-md"
-      />
-      <h2 className="text-lg font-semibold mt-3">{examName}</h2>
-      <div className="flex items-center gap-2 text-gray-600 text-sm mt-2">
-        <BookOpen size={12} /> <span>Questions: {questions}</span>
-          {isTest && (<><Users size={12} className="ml-3"/><span>Students: {students}</span></>)}
-      </div>
-      <div className="flex items-center gap-2 text-gray-600 text-sm mt-2">
-        <Award size={12} /> <span className="font-medium">{level}</span>
-          {isTest && (<><Workflow size={12} className="ml-3"/><span>Attempts: {students}</span></>)}
-      </div>
-      <div className="flex flex-col justify-center items-center">
-          {isTest && (
-              <button
-                  onClick={() =>
-                      navigate(
-                          PATH_CONSTANTS.USER_TEST.RANK.replace(":id", id.toString()),
-                      )
-                  }
-                  className="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-all"
-              >
-                  Bảng xếp hạng
-              </button>
+      <div
+          className={`relative border rounded-xl shadow-md p-4 w-full max-w-sm transition-all ${
+              isPremium ? "bg-yellow-50 border-yellow-400" : "bg-white"
+          }`}
+      >
+          {/* PREMIUM BADGE */}
+          {isPremium && (
+              <div className="absolute top-2 right-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded">
+                  PREMIUM
+              </div>
           )}
-          {isPractice && (
+
+          <img
+              src={image}
+              alt={examName}
+              className="w-full h-40 object-cover rounded-md"
+          />
+          <h2 className="text-lg font-semibold mt-3">{examName}</h2>
+
+          <div className="flex items-center gap-2 text-gray-600 text-sm mt-2">
+              <BookOpen size={12} />
+              <span>Questions: {questions}</span>
+              {isTest && (
+                  <>
+                      <Users size={12} className="ml-3" />
+                      <span>Students: {students}</span>
+                  </>
+              )}
+          </div>
+
+          <div className="flex items-center gap-2 text-gray-600 text-sm mt-2">
+              <Award size={12} />
+              <span className="font-medium">{level}</span>
+              {isTest && (
+                  <>
+                      <Workflow size={12} className="ml-3" />
+                      <span>Attempts: {students}</span>
+                  </>
+              )}
+          </div>
+
+          <div className="flex flex-col justify-center items-center">
+              {isTest && (
+                  <button
+                      onClick={() =>
+                          navigate(
+                              PATH_CONSTANTS.USER_TEST.RANK.replace(":id", id.toString()),
+                          )
+                      }
+                      className="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-all"
+                  >
+                      Bảng xếp hạng
+                  </button>
+              )}
+
+              {isPractice && (
+                  <button
+                      onClick={() => {
+                          fetchResult()
+                              .then((res) => {
+                                  if (res.data != null) {
+                                      navigate(PATH_CONSTANTS.EXAM.PRACTICE_RESUL_BY_ID(res.data));
+                                  } else {
+                                      notification.error({
+                                          message: "Bạn chưa làm bài lần nào",
+                                      });
+                                  }
+                              })
+                              .catch(() =>
+                                  notification.error({ message: "Lấy kết quả thất bại" }),
+                              );
+                      }}
+                      className="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-all"
+                  >
+                      Kết Quả
+                  </button>
+              )}
+
               <button
                   onClick={() => {
-                      fetchResult().then(res => {
-                          if (res.data != null) {
-                              navigate(PATH_CONSTANTS.EXAM.PRACTICE_RESUL_BY_ID(res.data))
-                          } else {
-                              notification.error({
-                                  message: "Bạn chưa làm bài lần nào"
-                              })
-                          }
-
-                      }).catch(error => notification.error({
-                          message: "Lấy kết quả thất bại"
-                      }))
-                  }
-              }
-                  className="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-all"
+                      if (isTest) {
+                          navigate(PATH_CONSTANTS.EXAM.EXAMS_DO_BY_ID.replace(":id", id.toString()));
+                      } else {
+                          navigate(PATH_CONSTANTS.EXAM.PRACTICE.replace(":id", id.toString()));
+                      }
+                  }}
+                  className={`mt-4 w-full text-white py-2 rounded-md transition-all ${
+                      isPremium ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"
+                  }`}
               >
-                  Kết Quả
+                  Luyện tập ngay
               </button>
-          )}
-        <button
-          onClick={() => {
-              if (isTest) {
-                  navigate(
-                      PATH_CONSTANTS.EXAM.EXAMS_DO_BY_ID.replace(":id", id.toString()),
-                  )
-              } else {
-                  navigate(
-                      PATH_CONSTANTS.EXAM.PRACTICE.replace(":id", id.toString()),
-                  )
-              }
-          }}
-          className="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-all"
-        >
-          Luyện tập ngay
-        </button>
+          </div>
       </div>
-    </div>
+
   );
 };
 
