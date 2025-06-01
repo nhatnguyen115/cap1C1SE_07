@@ -1,5 +1,6 @@
 package com.arkdev.z9tkvtu.repository;
 
+import com.arkdev.z9tkvtu.dto.response.UserVIPResponse;
 import com.arkdev.z9tkvtu.model.UserLoginData;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -42,5 +43,26 @@ public interface UserLoginDataRepository extends JpaRepository<UserLoginData, UU
                         AND UA.CREATED_AT::date = CURRENT_DATE;           
             """, nativeQuery = true)
     Long findUserActiveToday();
+
+    @Query(value = """
+    SELECT 
+        ua.user_id AS id,
+        ua.first_name AS firstName,
+        ua.last_name AS lastName,
+        ua.gender AS gender,
+        ua.dob AS dob,
+        uld.email AS email,
+        uld.phone_number AS phoneNumber,
+        CASE 
+            WHEN um.status = 'ACTIVE' THEN 1
+            ELSE 0
+        END AS isVIP
+    FROM user_account ua
+    JOIN user_login_data uld ON ua.user_id = uld.user_id
+    LEFT JOIN user_membership um ON ua.user_id = um.user_id AND um.status = 'ACTIVE'
+    WHERE ua.user_id = :userId
+    """, nativeQuery = true)
+    UserVIPResponse findAllUsersWithVIPStatus(@Param("userId") UUID userId);
+
 
 }

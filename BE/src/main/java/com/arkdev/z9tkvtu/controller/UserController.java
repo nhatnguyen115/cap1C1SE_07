@@ -49,7 +49,7 @@ public class UserController {
     public ResponseData<?> getUserById() {
         try {
             return new ResponseData<>(HttpStatus.OK.value(),
-                    "Get User Successfully", userService.getUser());
+                    "Get User Successfully", userService.findAllUsersWithVIPStatus());
         } catch (Exception e) {
             return new ResponseError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Get User Failed");
         }
